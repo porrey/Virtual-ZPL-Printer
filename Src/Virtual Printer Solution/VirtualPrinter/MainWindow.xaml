@@ -1,0 +1,110 @@
+﻿<Window x:Class="VirtualPrinter.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:system="clr-namespace:System;assembly=System.Runtime"
+		mc:Ignorable="d"
+		Title="Virtual Printer"
+		Height="450"
+		Width="800">
+
+	<Window.Resources>
+		<system:Double x:Key="ControlHeight">25</system:Double>
+		<Thickness x:Key="ControlMargin">5,5,5,5</Thickness>
+
+		<DataTemplate x:Key="Resolution">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<TextBlock Text="{Binding Dpmm}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Left" />
+			</Grid>
+		</DataTemplate>
+	</Window.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<Border Grid.Row="0"
+				BorderBrush="#545454"
+				BorderThickness="1"
+				CornerRadius="5"
+				Margin="5">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*" />
+					<RowDefinition Height="1*" />
+					<RowDefinition Height="1*" />
+					<RowDefinition Height="1*" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="2*" />
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="2*" />
+				</Grid.ColumnDefinitions>
+
+				<TextBlock Grid.Row="0"
+						   Grid.Column="0"
+						   Text="TCP Listening Port"
+						   Margin="{StaticResource ControlMargin}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Left" />
+				<TextBox Grid.Row="0"
+						 Grid.Column="1"
+						 Margin="5"
+						 Height="{StaticResource ControlHeight}"
+						 VerticalContentAlignment="Center"
+						 HorizontalContentAlignment="Left" />
+
+				<TextBlock Grid.Row="1"
+						   Grid.Column="0"
+						   Text="Resolution"
+						   Margin="{StaticResource ControlMargin}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Left" />
+				<ComboBox Grid.Row="1"
+						  Grid.Column="1"
+						  Margin="5"
+						  ItemsSource="{Binding Resolutions}"
+						  SelectedItem="{Binding SelectedResolution}"
+						  ItemTemplate="{StaticResource Resolution}" />
+
+				<TextBlock Grid.Row="0"
+						   Grid.Column="2"
+						   Text="Label Height"
+						   Margin="{StaticResource ControlMargin}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Left" />
+				<TextBox Grid.Row="0"
+						 Grid.Column="3"
+						 Margin="{StaticResource ControlMargin}"
+						 Height="{StaticResource ControlHeight}"
+						 VerticalContentAlignment="Center"
+						 HorizontalContentAlignment="Left" />
+
+				<TextBlock Grid.Row="1"
+						   Grid.Column="2"
+						   Text="Label Width"
+						   Margin="{StaticResource ControlMargin}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Left" />
+				<TextBox Grid.Row="1"
+						 Grid.Column="3"
+						 Margin="{StaticResource ControlMargin}"
+						 Height="{StaticResource ControlHeight}"
+						 VerticalContentAlignment="Center"
+						 HorizontalContentAlignment="Left" />
+			</Grid>
+		</Border>
+	</Grid>
+</Window>
