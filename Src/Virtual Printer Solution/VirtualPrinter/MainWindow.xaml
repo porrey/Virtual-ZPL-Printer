@@ -5,23 +5,34 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:system="clr-namespace:System;assembly=System.Runtime"
 		mc:Ignorable="d"
-		Title="Virtual Printer"
-		Height="450"
-		Width="800">
+		Title="Virtual ZPL Printer"
+		Height="850"
+		Width="800"
+		Icon="/virtual-printer.ico"
+		ResizeMode="CanResizeWithGrip"
+		WindowStartupLocation="CenterScreen">
 
 	<Window.Resources>
-		<system:Double x:Key="ControlHeight">25</system:Double>
+		<SolidColorBrush x:Key="BorderColor">#AA4472C4</SolidColorBrush>
+		<system:Double x:Key="ControlHeight">29</system:Double>
 		<Thickness x:Key="ControlMargin">5,5,5,5</Thickness>
+		<system:Double x:Key="ButtonWidth">100</system:Double>
 
 		<DataTemplate x:Key="Resolution">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
-				<TextBlock Text="{Binding Dpmm}"
+				<Image Grid.Column="0"
+					   Source="/Assets/resolution.png"
+					   Height="24"
+					   Width="24"
+					   Margin="0,0,10,0" />
+
+				<TextBlock Grid.Column="1"
+						   Text="{Binding Display}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Left" />
 			</Grid>
@@ -31,80 +42,164 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
-		<Border Grid.Row="0"
-				BorderBrush="#545454"
-				BorderThickness="1"
-				CornerRadius="5"
-				Margin="5">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="1*" />
-					<RowDefinition Height="1*" />
-					<RowDefinition Height="1*" />
-					<RowDefinition Height="1*" />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="1*" />
-					<ColumnDefinition Width="2*" />
-					<ColumnDefinition Width="1*" />
-					<ColumnDefinition Width="2*" />
-				</Grid.ColumnDefinitions>
+		<Grid Grid.Row="0"
+			  IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
 
-				<TextBlock Grid.Row="0"
-						   Grid.Column="0"
-						   Text="TCP Listening Port"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left" />
-				<TextBox Grid.Row="0"
-						 Grid.Column="1"
-						 Margin="5"
-						 Height="{StaticResource ControlHeight}"
-						 VerticalContentAlignment="Center"
-						 HorizontalContentAlignment="Left" />
+			<Image Source="/Assets/virtual-printer.png"
+				   Width="82"
+				   Height="82"
+				   Margin="15" />
 
-				<TextBlock Grid.Row="1"
-						   Grid.Column="0"
-						   Text="Resolution"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left" />
-				<ComboBox Grid.Row="1"
-						  Grid.Column="1"
-						  Margin="5"
-						  ItemsSource="{Binding Resolutions}"
-						  SelectedItem="{Binding SelectedResolution}"
-						  ItemTemplate="{StaticResource Resolution}" />
+			<Border Grid.Column="1"
+					BorderBrush="{StaticResource BorderColor}"
+					BorderThickness="1"
+					CornerRadius="5"
+					Margin="5">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="1*" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="1*" />
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="1*" />
+						<ColumnDefinition Width="2*" />
+					</Grid.ColumnDefinitions>
 
-				<TextBlock Grid.Row="0"
-						   Grid.Column="2"
-						   Text="Label Height"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left" />
-				<TextBox Grid.Row="0"
-						 Grid.Column="3"
-						 Margin="{StaticResource ControlMargin}"
-						 Height="{StaticResource ControlHeight}"
-						 VerticalContentAlignment="Center"
-						 HorizontalContentAlignment="Left" />
+					<TextBlock Grid.Row="0"
+							   Grid.Column="0"
+							   Text="TCP Listening Port"
+							   Margin="{StaticResource ControlMargin}"
+							   VerticalAlignment="Center"
+							   HorizontalAlignment="Left" />
+					<TextBox Grid.Row="0"
+							 Grid.Column="1"
+							 Text="{Binding Port, Mode=TwoWay}"
+							 Margin="5"
+							 Height="{StaticResource ControlHeight}"
+							 VerticalContentAlignment="Center"
+							 HorizontalContentAlignment="Left" />
 
-				<TextBlock Grid.Row="1"
-						   Grid.Column="2"
-						   Text="Label Width"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left" />
-				<TextBox Grid.Row="1"
-						 Grid.Column="3"
-						 Margin="{StaticResource ControlMargin}"
-						 Height="{StaticResource ControlHeight}"
-						 VerticalContentAlignment="Center"
-						 HorizontalContentAlignment="Left" />
-			</Grid>
-		</Border>
+					<TextBlock Grid.Row="1"
+							   Grid.Column="0"
+							   Text="Resolution"
+							   Margin="{StaticResource ControlMargin}"
+							   VerticalAlignment="Center"
+							   HorizontalAlignment="Left" />
+					<ComboBox Grid.Row="1"
+							  Grid.Column="1"
+							  Margin="5"
+							  ItemsSource="{Binding Resolutions}"
+							  SelectedItem="{Binding SelectedResolution, Mode=TwoWay}"
+							  ItemTemplate="{StaticResource Resolution}" />
+
+					<TextBlock Grid.Row="0"
+							   Grid.Column="2"
+							   Text="Label Height(mm)"
+							   Margin="{StaticResource ControlMargin}"
+							   VerticalAlignment="Center"
+							   HorizontalAlignment="Left" />
+					<TextBox Grid.Row="0"
+							 Grid.Column="3"
+							 Text="{Binding LableHeight}"
+							 Margin="{StaticResource ControlMargin}"
+							 Height="{StaticResource ControlHeight}"
+							 VerticalContentAlignment="Center"
+							 HorizontalContentAlignment="Left" />
+
+					<TextBlock Grid.Row="1"
+							   Grid.Column="2"
+							   Text="Label Width (mm)"
+							   Margin="{StaticResource ControlMargin}"
+							   VerticalAlignment="Center"
+							   HorizontalAlignment="Left" />
+					<TextBox Grid.Row="1"
+							 Grid.Column="3"
+							 Text="{Binding LableWidth}"
+							 Margin="{StaticResource ControlMargin}"
+							 Height="{StaticResource ControlHeight}"
+							 VerticalContentAlignment="Center"
+							 HorizontalContentAlignment="Left" />
+				</Grid>
+			</Border>
+		</Grid>
+
+		<Grid Grid.Row="1"
+			  Margin="0,10,0,5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<Button Grid.Column="0"
+					VerticalAlignment="Bottom"
+					HorizontalAlignment="Right"
+					Command="{Binding StopCommand}"
+					Width="{StaticResource ButtonWidth}"
+					Margin="5,0,0,0">
+				<Button.Content>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Image Source="/Assets/stop.png"
+							   Width="24"
+							   Height="24" />
+
+						<TextBlock Grid.Column="1"
+								   Text="Stop"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Left"
+								   Margin="5,5,5,5" />
+					</Grid>
+				</Button.Content>
+			</Button>
+
+			<Button Grid.Column="1"
+					VerticalAlignment="Bottom"
+					HorizontalAlignment="Right"
+					Command="{Binding StartCommand}"
+					Width="{StaticResource ButtonWidth}"
+					Margin="5,0,0,0">
+				<Button.Content>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Image Source="/Assets/stop.png"
+							   Width="24"
+							   Height="24" />
+
+						<TextBlock Grid.Column="1"
+								   Text="Start"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Left"
+								   Margin="5,5,5,5" />
+					</Grid>
+				</Button.Content>
+			</Button>
+		</Grid>
+
+		<Grid Grid.Row="2"
+			  Background="#CF000000">
+
+			<Image Source="{Binding ImagePath}"
+				   Stretch="None" />
+		</Grid>
 	</Grid>
 </Window>

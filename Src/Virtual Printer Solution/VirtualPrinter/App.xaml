@@ -2,8 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:VirtualPrinter"
-             StartupUri="MainWindow.xaml">
+			 xmlns:converters="clr-namespace:VirtualPrinter.Converters"
+			 StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
-    </Application.Resources>
+		<converters:NotBooleanConverter x:Key="NotBooleanConverter" />
+	</Application.Resources>
 </Application>

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Reflection;
+using System.Windows;
 using VirtualPrinter.ViewModels;
 
 namespace VirtualPrinter
