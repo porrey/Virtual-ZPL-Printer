@@ -154,6 +154,13 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 
+			<TextBlock Grid.Column="0"
+					   Text="{Binding MyIpAddress,FallbackValue =127.0.0.1}"
+					   VerticalAlignment="Center"
+					   HorizontalAlignment="Left"
+					   Margin="5"
+					   FontSize="14" />
+
 			<CheckBox Grid.Column="1"
 					  Content="Auto-start"
 					  VerticalAlignment="Center"

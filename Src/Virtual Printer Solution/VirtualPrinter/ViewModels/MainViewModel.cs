@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Prism.Commands;
@@ -34,12 +36,12 @@ namespace VirtualPrinter.ViewModels
 			// status of the UI.
 			//
 			this.EventAggregator.GetEvent<RunningStateChangedEvent>().Subscribe((a) => this.IsRunning = a.IsRunning, ThreadOption.UIThread);
-			
+
 			//
 			// Subscribe to the label created event to add all new labels
 			// to the UI.
 			//
-			this.EventAggregator.GetEvent<LabelCreatedEvent>().Subscribe((a) => 
+			this.EventAggregator.GetEvent<LabelCreatedEvent>().Subscribe((a) =>
 			{
 				this.Labels.Add(a.Label);
 				this.SelectedLabel = a.Label;
@@ -185,6 +187,17 @@ namespace VirtualPrinter.ViewModels
 			{
 				this.SetProperty(ref _autoStart, value);
 				this.RefreshCommands();
+			}
+		}
+
+		public string MyIpAddress
+		{
+			get
+			{
+				string host = Dns.GetHostName();
+				IPHostEntry entry = Dns.GetHostEntry(host);
+				IPAddress a = entry.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).SingleOrDefault();
+				return $"IP Address: {a.ToString()}";
 			}
 		}
 

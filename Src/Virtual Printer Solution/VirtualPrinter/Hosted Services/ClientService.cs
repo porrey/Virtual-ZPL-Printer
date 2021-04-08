@@ -39,25 +39,27 @@ namespace VirtualPrinter.Client
 					//
 					// Read the data into the buffer.
 					//
-					await stream.ReadAsync(buffer.AsMemory(0, buffer.Length));
-					string zpl = ASCIIEncoding.UTF8.GetString(buffer);
-					string imagePath = await this.GetLabel(labelConfiguration, zpl);
+					int bytesRead = await stream.ReadAsync(buffer.AsMemory(0, buffer.Length));
 
-					this.EventAggregator.GetEvent<LabelCreatedEvent>().Publish(new LabelCreatedEventArgs()
+					if (bytesRead > 0)
 					{
-						PrintRequest = new PrintRequestEventArgs()
-						{
-							LabelConfiguration = labelConfiguration,
-							Zpl = zpl
-						},
-						Label = new Label()
-						{
-							ImagePath = imagePath,
-							Zpl = zpl
-						}
-					});
+						string zpl = ASCIIEncoding.UTF8.GetString(buffer);
+						string imagePath = await this.GetLabel(labelConfiguration, zpl);
 
-					client.Close();
+						this.EventAggregator.GetEvent<LabelCreatedEvent>().Publish(new LabelCreatedEventArgs()
+						{
+							PrintRequest = new PrintRequestEventArgs()
+							{
+								LabelConfiguration = labelConfiguration,
+								Zpl = zpl
+							},
+							Label = new Label()
+							{
+								ImagePath = imagePath,
+								Zpl = zpl
+							}
+						});
+					}
 				}
 			}
 		}

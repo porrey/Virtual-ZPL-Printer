@@ -60,6 +60,12 @@ namespace VirtualPrinter.HostedServices
 								// Accept the connection.
 								//
 								TcpClient tcpClient = await this.Listener.AcceptTcpClientAsync();
+								tcpClient.ReceiveTimeout = 1000;
+								tcpClient.SendTimeout = 1000;
+								tcpClient.LingerState = new LingerOption(false, 1);
+								tcpClient.NoDelay = true;
+								tcpClient.ReceiveBufferSize = 8192;
+								tcpClient.SendBufferSize = 8192;
 
 								using (IServiceScope scope = this.ServiceScopeFactory.CreateScope())
 								{
