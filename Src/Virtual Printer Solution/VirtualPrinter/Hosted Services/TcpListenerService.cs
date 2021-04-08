@@ -1,0 +1,131 @@
+﻿using System;
+using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
+using Diamond.Core.Extensions.Hosting.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Prism.Events;
+using VirtualPrinter.Client;
+using VirtualPrinter.Events;
+using VirtualPrinter.Models;
+
+namespace VirtualPrinter.HostedServices
+{
+	public class TcpListenerService : HostedServiceTemplate
+	{
+		public TcpListenerService(ILogger<TcpListenerService> logger, IHostApplicationLifetime hostApplicationLifetime, IEventAggregator eventAggregator, IServiceScopeFactory serviceScopeFactory)
+			: base(hostApplicationLifetime, logger, serviceScopeFactory)
+		{
+			this.EventAggregator = eventAggregator;
+			this.ServiceScopeFactory = serviceScopeFactory;
+
+			this.EventAggregator.GetEvent<StartEvent>().Subscribe(async (e) =>
+			{
+				this.LabelConfiguration = e.LabelConfiguration;
+				this.Port = e.Port;
+				await this.StartListener();
+			}, ThreadOption.BackgroundThread);
+
+			this.EventAggregator.GetEvent<StopEvent>().Subscribe(async (e) =>
+			{
+				this.LabelConfiguration = null;
+				this.Port = 0;
+				await this.StopListener();
+				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false });
+			}, ThreadOption.BackgroundThread);
+		}
+
+		protected IEventAggregator EventAggregator { get; set; }
+		protected bool IsRunning { get; set; } = false;
+		protected LabelConfiguration LabelConfiguration { get; set; }
+		protected int Port { get; set; }
+		protected TcpListener Listener { get; set; }
+		protected ManualResetEvent ResetEvent { get; } = new(false);
+
+		protected override void OnStarted()
+		{
+			Task.Factory.StartNew(async () =>
+			{
+				while (!this.CancellationToken.IsCancellationRequested)
+				{
+					try
+					{
+						if (this.ResetEvent.WaitOne())
+						{
+							try
+							{
+								//
+								// Accept the connection.
+								//
+								TcpClient tcpClient = await this.Listener.AcceptTcpClientAsync();
+
+								using (IServiceScope scope = this.ServiceScopeFactory.CreateScope())
+								{
+									ClientService clientService = scope.ServiceProvider.GetRequiredService<ClientService>();
+									await clientService.StartSessionAsync(tcpClient, this.LabelConfiguration);
+								}
+							}
+							catch (SocketException)
+							{
+								//
+								// Happens when the socket s closed while listening.
+								//
+							}
+						}
+					}
+					catch (Exception ex)
+					{
+						this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });
+					}
+				}
+			});
+		}
+
+		protected Task<bool> StartListener()
+		{
+			bool returnValue = false;
+
+			try
+			{
+				this.Listener = TcpListener.Create(this.Port);
+				this.Listener.Start();
+				returnValue = true;
+				this.ResetEvent.Set();
+				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = true });
+			}
+			catch (Exception ex)
+			{
+				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });
+				this.ResetEvent.Reset();
+				returnValue = false;
+			}
+
+			return Task.FromResult(returnValue);
+		}
+
+		protected Task<bool> StopListener()
+		{
+			bool returnValue = false;
+
+			try
+			{
+				this.Listener.Stop();
+				this.Listener = null;
+				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false });
+			}
+			catch (Exception ex)
+			{
+				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });
+				returnValue = false;
+			}
+			finally
+			{
+				this.ResetEvent.Reset();
+			}
+
+			return Task.FromResult(returnValue);
+		}
+	}
+}

@@ -2,22 +2,24 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
+using VirtualPrinter.Events;
 using VirtualPrinter.Models;
 
 namespace VirtualPrinter.ViewModels
 {
 	public class MainViewModel : BindableBase
 	{
-		public MainViewModel()
+		public MainViewModel(IEventAggregator eventAggregator)
 		{
+			this.EventAggregator = eventAggregator;
+
 			this.Resolutions.Add(new Resolution() { Dpmm = 6 });
 			this.Resolutions.Add(new Resolution() { Dpmm = 8 });
 			this.Resolutions.Add(new Resolution() { Dpmm = 12 });
@@ -26,11 +28,46 @@ namespace VirtualPrinter.ViewModels
 
 			this.StartCommand = new DelegateCommand(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning);
 			this.StopCommand = new DelegateCommand(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
+			this.PreviousLabelCommand = new DelegateCommand(() => _ = this.PreviousLabelAsync(), () => !this.IsBusy && this.SelectedLabelIndex > 0);
+			this.NextLabelCommand = new DelegateCommand(() => _ = this.NextLabelAsync(), () => !this.IsBusy && this.SelectedLabelIndex < this.Labels.Count - 1);
+			this.RemoveLabelCommand = new DelegateCommand(() => _ = this.RemoveLabelAsync(), () => !this.IsBusy && this.SelectedLabel != null);
+			this.ClearLabelsCommand = new DelegateCommand(() => _ = this.ClearLabelsAsync(), () => !this.IsBusy && this.Labels.Count > 0);
+
+			//
+			// Subscribe to the running state changed event to update the running
+			// status of the UI.
+			//
+			this.EventAggregator.GetEvent<RunningStateChangedEvent>().Subscribe((a) => this.IsRunning = a.IsRunning, ThreadOption.UIThread);
+			
+			//
+			// Subscribe to the label created event to add all new labels
+			// to the UI.
+			//
+			this.EventAggregator.GetEvent<LabelCreatedEvent>().Subscribe((a) => 
+			{
+				this.Labels.Add(a.Label);
+				this.SelectedLabel = a.Label;
+				this.ImagePath = a.Label.ImagePath;
+			}, ThreadOption.UIThread);
 		}
 
+		public async Task InitializeAsync()
+		{
+			if (this.AutoStart)
+			{
+				await this.StartAsync();
+			}
+		}
+
+		protected IEventAggregator EventAggregator { get; set; }
 		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
+		public ObservableCollection<Label> Labels { get; } = new ObservableCollection<Label>();
 		public DelegateCommand StartCommand { get; set; }
 		public DelegateCommand StopCommand { get; set; }
+		public DelegateCommand PreviousLabelCommand { get; set; }
+		public DelegateCommand NextLabelCommand { get; set; }
+		public DelegateCommand RemoveLabelCommand { get; set; }
+		public DelegateCommand ClearLabelsCommand { get; set; }
 
 		protected CancellationTokenSource TokenSource { get; set; }
 
@@ -44,6 +81,19 @@ namespace VirtualPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _selectedResolution, value);
+			}
+		}
+
+		private Label _selectedLabel = null;
+		public Label SelectedLabel
+		{
+			get
+			{
+				return _selectedLabel;
+			}
+			set
+			{
+				this.SetProperty(ref _selectedLabel, value);
 			}
 		}
 
@@ -89,7 +139,7 @@ namespace VirtualPrinter.ViewModels
 		}
 
 		private int _lableWidth = 2;
-		public int LableWidth
+		public int LabelWidth
 		{
 			get
 			{
@@ -102,7 +152,7 @@ namespace VirtualPrinter.ViewModels
 		}
 
 		private int _lableHeight = 2;
-		public int LableHeight
+		public int LabelHeight
 		{
 			get
 			{
@@ -114,7 +164,7 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private string _imagePath = "Assets/carton-label.png";
+		private string _imagePath = null;
 		public string ImagePath
 		{
 			get
@@ -127,93 +177,119 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
+		private string _statusText = "No labels";
+		public string StatusText
+		{
+			get
+			{
+				return _statusText;
+			}
+			set
+			{
+				this.SetProperty(ref _statusText, value);
+			}
+		}
+
+		private bool _autoStart = false;
+		public bool AutoStart
+		{
+			get
+			{
+				return _autoStart;
+			}
+			set
+			{
+				this.SetProperty(ref _autoStart, value);
+				this.RefreshCommands();
+			}
+		}
+
 		protected void RefreshCommands()
 		{
 			this.StartCommand.RaiseCanExecuteChanged();
 			this.StopCommand.RaiseCanExecuteChanged();
+			this.PreviousLabelCommand.RaiseCanExecuteChanged();
+			this.NextLabelCommand.RaiseCanExecuteChanged();
+			this.RemoveLabelCommand.RaiseCanExecuteChanged();
+			this.ClearLabelsCommand.RaiseCanExecuteChanged();
 		}
 
 		protected Task StartAsync()
 		{
-			return Task.Factory.StartNew(async () =>
+			this.EventAggregator.GetEvent<StartEvent>().Publish(new StartEventArgs()
 			{
-				this.IsRunning = true;
-				this.TokenSource = new CancellationTokenSource();
-
-				TcpListener listener = new(IPAddress.Any, this.Port);
-				listener.Start();
-
-				while (!this.TokenSource.IsCancellationRequested)
+				LabelConfiguration = new LabelConfiguration()
 				{
-					try
-					{
-						//
-						// Accept the connection.
-						//
-						TcpClient client = await listener.AcceptTcpClientAsync();
-
-						//
-						// Get the network stream.
-						//
-						NetworkStream stream = client.GetStream();
-
-						while (client.Connected && stream.CanRead)
-						{
-							if (stream.DataAvailable)
-							{
-								//
-								// Create a buffer for the data that is available.
-								//
-								byte[] buffer = new byte[client.Available];
-
-								//
-								// Read the data into the buffer.
-								//
-								await stream.ReadAsync(buffer.AsMemory(0, buffer.Length));
-								string zpl = ASCIIEncoding.UTF8.GetString(buffer);
-								this.ImagePath = await this.GetLabel(zpl);
-							}
-						}
-					}
-					catch
-					{
-					}
-				}
+					Dpmm = this.SelectedResolution.Dpmm,
+					LabelHeight = this.LabelHeight,
+					LabelWidth = this.LabelWidth
+				},
+				Port = this.Port
 			});
+
+			return Task.CompletedTask;
 		}
 
 		protected Task StopAsync()
 		{
-			this.IsRunning = false;
+			this.EventAggregator.GetEvent<StopEvent>().Publish(new StopEventArgs()
+			{
+			});
+
 			return Task.CompletedTask;
 		}
 
-		protected async Task<string> GetLabel(string zpl)
+		protected Task PreviousLabelAsync()
 		{
-			string returnValue = null;
 
-			using (HttpClient client = new HttpClient())
+			return Task.CompletedTask;
+		}
+
+		protected Task NextLabelAsync()
+		{
+			return Task.CompletedTask;
+		}
+
+		protected Task RemoveLabelAsync()
+		{
+			int i = this.SelectedLabelIndex;
+			this.Labels.Remove(this.SelectedLabel);
+
+			if (this.Labels.Count > 0)
 			{
-				using (StringContent content = new StringContent(zpl, Encoding.UTF8, "application/x-www-form-urlencoded"))
+				if (i > 0 && i < this.Labels.Count)
 				{
-					Console.WriteLine("Retrieving label...");
-					using (HttpResponseMessage response = await client.PostAsync($"http://api.labelary.com/v1/printers/{this.SelectedResolution.Dpmm}dpmm/labels/{this.LableHeight}x{this.LableWidth}/0/", content))
-					{
-						if (response.IsSuccessStatusCode)
-						{
-							byte[] image = await response.Content.ReadAsByteArrayAsync();
-							returnValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\zpl-label-image.png";
-							File.WriteAllBytes(returnValue, image);
-						}
-						else
-						{
-							throw new Exception(response.ReasonPhrase);
-						}
-					}
+					this.SelectedLabel = this.Labels.ElementAt(i);
+				}
+				else
+				{
+					this.SelectedLabel = this.Labels.ElementAt(this.Labels.Count - 1);
 				}
 			}
+			else
+			{
+				this.SelectedLabel = null;
+			}
 
-			return returnValue;
+			return Task.CompletedTask;
+		}
+
+		protected Task ClearLabelsAsync()
+		{
+			this.Labels.Clear();
+			return Task.CompletedTask;
+		}
+
+		protected int SelectedLabelIndex
+		{
+			get
+			{
+				int returnValue = -1;
+
+				returnValue = this.Labels.IndexOf(this.SelectedLabel);
+
+				return returnValue;
+			}
 		}
 	}
 }

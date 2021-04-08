@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using Diamond.Core.Extensions.DependencyInjection;
+using Diamond.Core.Wpf;
+using Microsoft.Extensions.Hosting;
 
 namespace VirtualPrinter
 {
-	/// <summary>
-	/// Interaction logic for App.xaml
-	/// </summary>
-	public partial class App : Application
+	public partial class App : HostedApplication
 	{
+		protected override IHostBuilder OnConfigureHost(IHostBuilder hostBuilder)
+		{
+			return hostBuilder.ConfigureServicesFolder("Services");
+		}
 	}
 }

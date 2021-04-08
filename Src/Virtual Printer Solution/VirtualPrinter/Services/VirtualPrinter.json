@@ -1,0 +1,41 @@
+{
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "IHostedService",
+			"TypeDefinition": "Microsoft.Extensions.Hosting.IHostedService, Microsoft.Extensions.Hosting.Abstractions"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "Prism.Events.IEventAggregator, Prism",
+			"ImplementationType": "Prism.Events.EventAggregator, Prism",
+			"Lifetime": "Singleton"
+		},
+		{
+			//
+			// IMainWindow is used for the startup window.
+			//
+			"ServiceType": "Diamond.Core.Wpf.IMainWindow, Diamond.Core.Wpf.Abstractions",
+			"ImplementationType": "VirtualPrinter.Views.MainView, VirtualPrinter",
+			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.MainViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.MainViewModel, VirtualPrinter",
+			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "<IHostedService>",
+			"ImplementationType": "VirtualPrinter.HostedServices.TcpListenerService, VirtualPrinter",
+			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Client.ClientService, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Client.ClientService, VirtualPrinter",
+			"Lifetime": "Transient"
+		}
+	]
+}
