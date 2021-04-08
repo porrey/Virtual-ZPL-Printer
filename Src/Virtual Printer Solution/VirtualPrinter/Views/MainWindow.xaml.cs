@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using Diamond.Core.Wpf;
 using VirtualPrinter.ViewModels;
@@ -11,8 +12,8 @@ namespace VirtualPrinter.Views
 		public MainView(MainViewModel viewModel)
 		{
 			this.DataContext = viewModel;
-			this.InitializeComponent();
 			this.RestoreWindow();
+			this.InitializeComponent();
 		}
 
 		protected MainViewModel ViewModel => (MainViewModel)this.DataContext;
@@ -41,6 +42,10 @@ namespace VirtualPrinter.Views
 					this.Top = Properties.Settings.Default.Top;
 					this.WindowState = (WindowState)Properties.Settings.Default.WindowState;
 					this.ViewModel.AutoStart = Properties.Settings.Default.AutoStart;
+					this.ViewModel.Port = Properties.Settings.Default.Port;
+					this.ViewModel.LabelHeight = Properties.Settings.Default.LabelHeight;
+					this.ViewModel.LabelWidth = Properties.Settings.Default.LabelWidth;
+					this.ViewModel.SelectedResolution = this.ViewModel.Resolutions.Where(t => t.Dpmm == Properties.Settings.Default.Dpmm).SingleOrDefault();
 				}
 				else
 				{
@@ -82,7 +87,11 @@ namespace VirtualPrinter.Views
 				Properties.Settings.Default.WindowState = (int)WindowState.Maximized;
 			}
 
+			Properties.Settings.Default.Port = this.ViewModel.Port;
 			Properties.Settings.Default.AutoStart = this.ViewModel.AutoStart;
+			Properties.Settings.Default.LabelHeight = this.ViewModel.LabelHeight;
+			Properties.Settings.Default.LabelWidth = this.ViewModel.LabelWidth;
+			Properties.Settings.Default.Dpmm = this.ViewModel.SelectedResolution.Dpmm;
 			Properties.Settings.Default.Initialized = true;
 			Properties.Settings.Default.Save();
 		}

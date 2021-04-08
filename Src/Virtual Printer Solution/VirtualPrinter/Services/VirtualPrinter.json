@@ -36,6 +36,11 @@
 			"ServiceType": "VirtualPrinter.Client.ClientService, VirtualPrinter",
 			"ImplementationType": "VirtualPrinter.Client.ClientService, VirtualPrinter",
 			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "<IHostedService>",
+			"ImplementationType": "VirtualPrinter.HostedServices.TestClientService, VirtualPrinter",
+			"Lifetime": "Singleton"
 		}
 	]
 }

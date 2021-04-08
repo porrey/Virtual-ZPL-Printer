@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.IO;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Prism.Commands;
@@ -47,7 +43,6 @@ namespace VirtualPrinter.ViewModels
 			{
 				this.Labels.Add(a.Label);
 				this.SelectedLabel = a.Label;
-				this.ImagePath = a.Label.ImagePath;
 			}, ThreadOption.UIThread);
 		}
 
@@ -94,6 +89,8 @@ namespace VirtualPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _selectedLabel, value);
+				this.StatusText = $"Viewing label {this.SelectedLabelIndex + 1} of {this.Labels.Count}.";
+				this.RefreshCommands();
 			}
 		}
 
@@ -125,7 +122,7 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private int _port = 9100;
+		private int _port = 0;
 		public int Port
 		{
 			get
@@ -138,8 +135,8 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private int _lableWidth = 2;
-		public int LabelWidth
+		private double _lableWidth = 0;
+		public double LabelWidth
 		{
 			get
 			{
@@ -151,8 +148,8 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private int _lableHeight = 2;
-		public int LabelHeight
+		private double _lableHeight = 0;
+		public double LabelHeight
 		{
 			get
 			{
@@ -161,19 +158,6 @@ namespace VirtualPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _lableHeight, value);
-			}
-		}
-
-		private string _imagePath = null;
-		public string ImagePath
-		{
-			get
-			{
-				return _imagePath;
-			}
-			set
-			{
-				this.SetProperty(ref _imagePath, value);
 			}
 		}
 
@@ -241,12 +225,13 @@ namespace VirtualPrinter.ViewModels
 
 		protected Task PreviousLabelAsync()
 		{
-
+			this.SelectedLabel = this.Labels.ElementAt(this.SelectedLabelIndex - 1);
 			return Task.CompletedTask;
 		}
 
 		protected Task NextLabelAsync()
 		{
+			this.SelectedLabel = this.Labels.ElementAt(this.SelectedLabelIndex + 1);
 			return Task.CompletedTask;
 		}
 
@@ -277,6 +262,7 @@ namespace VirtualPrinter.ViewModels
 		protected Task ClearLabelsAsync()
 		{
 			this.Labels.Clear();
+			this.SelectedLabel = null;
 			return Task.CompletedTask;
 		}
 

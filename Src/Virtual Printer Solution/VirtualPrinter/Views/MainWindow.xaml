@@ -116,7 +116,7 @@
 
 					<TextBlock Grid.Row="0"
 							   Grid.Column="2"
-							   Text="Label Height(in)"
+							   Text="Label Height (in)"
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left" />
@@ -158,8 +158,8 @@
 					  Content="Auto-start"
 					  VerticalAlignment="Center"
 					  HorizontalAlignment="Center"
-					  Margin="10,3,10,3" 
-					  IsChecked="{Binding AutoStart}"/>
+					  Margin="10,3,10,3"
+					  IsChecked="{Binding AutoStart}" />
 
 			<Button Grid.Column="2"
 					VerticalAlignment="Bottom"
@@ -217,14 +217,17 @@
 		<Grid Grid.Row="2"
 			  Background="#CF000000">
 
-			<Image Source="{Binding ImagePath}"
-				   Stretch="None"
-				   Visibility="{Binding SelectedLabel, Converter={StaticResource ObjectToVisibilityConverter}}" />
+			<Image Source="{Binding SelectedLabel.ImagePath}"
+				   Stretch="Uniform"
+				   Visibility="{Binding SelectedLabel, Converter={StaticResource ObjectToVisibilityConverter}}"
+				   Margin="10,20,10,20">
+			</Image>
 
 			<Border Margin="45"
 					BorderBrush="Wheat"
 					BorderThickness="1"
-					Background="White">
+					Background="White"
+					Visibility="{Binding SelectedLabel, Converter={StaticResource NotObjectToVisibilityConverter}}">
 				<TextBlock Text="No Labels"
 						   FontSize="56"
 						   Foreground="#CF000000"

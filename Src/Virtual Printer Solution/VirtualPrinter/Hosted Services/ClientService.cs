@@ -18,6 +18,7 @@ namespace VirtualPrinter.Client
 		}
 
 		protected IEventAggregator EventAggregator { get; set; }
+		private static int id = 0;
 
 		public async Task StartSessionAsync(TcpClient client, LabelConfiguration labelConfiguration)
 		{
@@ -55,6 +56,8 @@ namespace VirtualPrinter.Client
 							Zpl = zpl
 						}
 					});
+
+					client.Close();
 				}
 			}
 		}
@@ -67,12 +70,13 @@ namespace VirtualPrinter.Client
 			{
 				using (StringContent content = new StringContent(zpl, Encoding.UTF8, "application/x-www-form-urlencoded"))
 				{
-					using (HttpResponseMessage response = await client.PostAsync($"http://api.labelary.com/v1/printers/{labelConfiguration.Dpmm}dpmm/labels/{labelConfiguration.LabelHeight}x{labelConfiguration.LabelWidth}/0/", content))
+					using (HttpResponseMessage response = await client.PostAsync($"http://api.labelary.com/v1/printers/{labelConfiguration.Dpmm}dpmm/labels/{labelConfiguration.LabelWidth}x{labelConfiguration.LabelHeight}/0/", content))
 					{
 						if (response.IsSuccessStatusCode)
 						{
 							byte[] image = await response.Content.ReadAsByteArrayAsync();
-							returnValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\zpl-label-image.png";
+							returnValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\zpl-label-image-{id}.png";
+							id++;
 							File.WriteAllBytes(returnValue, image);
 						}
 						else

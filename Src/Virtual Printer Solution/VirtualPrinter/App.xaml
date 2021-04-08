@@ -6,6 +6,7 @@
 	<Application.Resources>
 		<converters:NotBooleanConverter x:Key="NotBooleanConverter" />
 		<converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter" />
+		<converters:NotObjectToVisibilityConverter x:Key="NotObjectToVisibilityConverter" />
 		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 		<converters:NotBooleanToVisibilityConverter x:Key="NotBooleanToVisibilityConverter" />
 	</Application.Resources>
