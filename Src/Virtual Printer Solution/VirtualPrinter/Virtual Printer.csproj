@@ -77,8 +77,8 @@
 
   <ItemGroup>
     <PackageReference Include="Diamond.Core.Wpf" Version="5.0.9" />
-    <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
-	  <PackageReference Include="Diamond.Core.Extensions.Hosting" Version="5.0.10" />
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+	  <PackageReference Include="Diamond.Core.Extensions.Hosting" Version="5.0.12" />
   </ItemGroup>
 
   <ItemGroup>

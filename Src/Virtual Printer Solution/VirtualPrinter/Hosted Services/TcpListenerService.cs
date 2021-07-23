@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Diamond.Core.Extensions.Hosting.Models;
+using Diamond.Core.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -16,7 +16,7 @@ namespace VirtualPrinter.HostedServices
 	public class TcpListenerService : HostedServiceTemplate
 	{
 		public TcpListenerService(ILogger<TcpListenerService> logger, IHostApplicationLifetime hostApplicationLifetime, IEventAggregator eventAggregator, IServiceScopeFactory serviceScopeFactory)
-			: base(hostApplicationLifetime, logger, serviceScopeFactory)
+			: base( hostApplicationLifetime, logger, serviceScopeFactory)
 		{
 			this.EventAggregator = eventAggregator;
 			this.ServiceScopeFactory = serviceScopeFactory;

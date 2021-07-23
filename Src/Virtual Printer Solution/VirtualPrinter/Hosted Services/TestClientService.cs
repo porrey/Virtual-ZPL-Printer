@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Diamond.Core.Extensions.Hosting.Models;
+using Diamond.Core.Extensions.Hosting;
 using Microsoft.Extensions.Hosting;
 using Prism.Events;
 using VirtualPrinter.Events;
