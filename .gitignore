@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 .DS_Store
 Src/Virtual Printer Solution/VirtualPrinter/Thumbs.db
+*.db
