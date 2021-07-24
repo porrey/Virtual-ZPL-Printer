@@ -351,3 +351,4 @@ MigrationBackup/
 .DS_Store
 Src/Virtual Printer Solution/VirtualPrinter/Thumbs.db
 *.db
+*.db

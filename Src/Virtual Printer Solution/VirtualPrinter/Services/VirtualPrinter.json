@@ -36,11 +36,6 @@
 			"ServiceType": "<IHostedService>",
 			"ImplementationType": "VirtualPrinter.HostedServices.TcpListenerService, VirtualPrinter",
 			"Lifetime": "Singleton"
-		},
-		{
-			"ServiceType": "<IHostedService>",
-			"ImplementationType": "VirtualPrinter.HostedServices.TestClientService, VirtualPrinter",
-			"Lifetime": "Singleton"
 		}
 	]
 }

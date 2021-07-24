@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Prism.Commands;
@@ -28,9 +29,7 @@ namespace VirtualPrinter.ViewModels
 
 			this.StartCommand = new DelegateCommand(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning);
 			this.StopCommand = new DelegateCommand(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
-			this.PreviousLabelCommand = new DelegateCommand(() => _ = this.PreviousLabelAsync(), () => !this.IsBusy && this.SelectedLabelIndex > 0);
-			this.NextLabelCommand = new DelegateCommand(() => _ = this.NextLabelAsync(), () => !this.IsBusy && this.SelectedLabelIndex < this.Labels.Count - 1);
-			this.RemoveLabelCommand = new DelegateCommand(() => _ = this.RemoveLabelAsync(), () => !this.IsBusy && this.SelectedLabel != null);
+			this.TestLabelCommand = new DelegateCommand(() => _ = this.TestLabelAsync(), () => !this.IsBusy);
 			this.ClearLabelsCommand = new DelegateCommand(() => _ = this.ClearLabelsAsync(), () => !this.IsBusy && this.Labels.Count > 0);
 
 			//
@@ -45,6 +44,7 @@ namespace VirtualPrinter.ViewModels
 			//
 			this.EventAggregator.GetEvent<LabelCreatedEvent>().Subscribe((a) =>
 			{
+				a.Label.Index = this.Labels.Count + 1;
 				this.Labels.Add(a.Label);
 				this.SelectedLabel = a.Label;
 			}, ThreadOption.UIThread);
@@ -64,14 +64,13 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
+		protected Random Rnd { get; } = new Random();
 		protected IEventAggregator EventAggregator { get; set; }
 		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
 		public ObservableCollection<Label> Labels { get; } = new ObservableCollection<Label>();
 		public DelegateCommand StartCommand { get; set; }
 		public DelegateCommand StopCommand { get; set; }
-		public DelegateCommand PreviousLabelCommand { get; set; }
-		public DelegateCommand NextLabelCommand { get; set; }
-		public DelegateCommand RemoveLabelCommand { get; set; }
+		public DelegateCommand TestLabelCommand { get; set; }
 		public DelegateCommand ClearLabelsCommand { get; set; }
 
 		protected CancellationTokenSource TokenSource { get; set; }
@@ -99,7 +98,16 @@ namespace VirtualPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _selectedLabel, value);
-				this.StatusText = $"Viewing label {this.SelectedLabelIndex + 1} of {this.Labels.Count}.";
+
+				if (this.SelectedLabel != null)
+				{
+					this.StatusText = $"Viewing label {this.SelectedLabel.Index} of {this.Labels.Count}.";
+				}
+				else
+				{
+					this.StatusText = "No Labels";
+				}
+
 				this.RefreshCommands();
 			}
 		}
@@ -226,9 +234,7 @@ namespace VirtualPrinter.ViewModels
 		{
 			this.StartCommand.RaiseCanExecuteChanged();
 			this.StopCommand.RaiseCanExecuteChanged();
-			this.PreviousLabelCommand.RaiseCanExecuteChanged();
-			this.NextLabelCommand.RaiseCanExecuteChanged();
-			this.RemoveLabelCommand.RaiseCanExecuteChanged();
+			this.TestLabelCommand.RaiseCanExecuteChanged();
 			this.ClearLabelsCommand.RaiseCanExecuteChanged();
 		}
 
@@ -260,38 +266,31 @@ namespace VirtualPrinter.ViewModels
 
 		protected Task PreviousLabelAsync()
 		{
-			this.SelectedLabel = this.Labels.ElementAt(this.SelectedLabelIndex - 1);
+			this.SelectedLabel = this.Labels.ElementAt(this.SelectedLabel.Index - 1);
 			return Task.CompletedTask;
 		}
 
 		protected Task NextLabelAsync()
 		{
-			this.SelectedLabel = this.Labels.ElementAt(this.SelectedLabelIndex + 1);
+			this.SelectedLabel = this.Labels.ElementAt(this.SelectedLabel.Index + 1);
 			return Task.CompletedTask;
 		}
 
-		protected Task RemoveLabelAsync()
+		protected async Task TestLabelAsync()
 		{
-			int i = this.SelectedLabelIndex;
-			this.Labels.Remove(this.SelectedLabel);
-
-			if (this.Labels.Count > 0)
+			using (TcpClient client = new())
 			{
-				if (i > 0 && i < this.Labels.Count)
+				await client.ConnectAsync("127.0.0.1", this.Port);
+
+				using (Stream stream = client.GetStream())
 				{
-					this.SelectedLabel = this.Labels.ElementAt(i);
-				}
-				else
-				{
-					this.SelectedLabel = this.Labels.ElementAt(this.Labels.Count - 1);
+					int id = this.Rnd.Next(1, 99999999);
+					string zpl = File.ReadAllText("./samples/zpl.txt"); ;
+					byte[] buffer = ASCIIEncoding.UTF8.GetBytes(zpl.Replace("{id}", id.ToString("00000000")));
+					await stream.WriteAsync(buffer.AsMemory(0, buffer.Length));
+					client.Close();
 				}
 			}
-			else
-			{
-				this.SelectedLabel = null;
-			}
-
-			return Task.CompletedTask;
 		}
 
 		protected Task ClearLabelsAsync()
@@ -299,18 +298,6 @@ namespace VirtualPrinter.ViewModels
 			this.Labels.Clear();
 			this.SelectedLabel = null;
 			return Task.CompletedTask;
-		}
-
-		protected int SelectedLabelIndex
-		{
-			get
-			{
-				int returnValue = -1;
-
-				returnValue = this.Labels.IndexOf(this.SelectedLabel);
-
-				return returnValue;
-			}
 		}
 	}
 }

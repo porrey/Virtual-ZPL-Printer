@@ -12,15 +12,13 @@
   <ItemGroup>
     <None Remove="Assets\clear-label.png" />
     <None Remove="Assets\label.png" />
-    <None Remove="Assets\next-label.png" />
-    <None Remove="Assets\previous-label.png" />
     <None Remove="Assets\printer-running.png" />
     <None Remove="Assets\printer-stopped.png" />
-    <None Remove="Assets\remove-label.png" />
     <None Remove="Assets\resolution.png" />
     <None Remove="Assets\save-label.png" />
     <None Remove="Assets\start.png" />
     <None Remove="Assets\stop.png" />
+    <None Remove="Assets\test-label.png" />
     <None Remove="Assets\virtual-printer.png" />
     <None Remove="Samples\zpl.txt" />
     <None Remove="Services\VirtualPrinter.json" />
@@ -34,19 +32,13 @@
     <Content Include="Assets\label.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\next-label.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\previous-label.png">
+    <Content Include="Assets\test-label.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\printer-running.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\printer-stopped.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\remove-label.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\resolution.png">

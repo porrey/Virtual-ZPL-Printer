@@ -55,6 +55,9 @@ namespace VirtualPrinter.HostedServices
 				{
 					try
 					{
+						//
+						// Hold here until enabled.
+						//
 						if (this.ResetEvent.WaitOne())
 						{
 							try
