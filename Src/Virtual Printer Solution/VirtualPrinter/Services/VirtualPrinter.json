@@ -28,14 +28,14 @@
 			"Lifetime": "Singleton"
 		},
 		{
+			"ServiceType": "VirtualPrinter.Client.TcpListenerClientHandler, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Client.TcpListenerClientHandler, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
 			"ServiceType": "<IHostedService>",
 			"ImplementationType": "VirtualPrinter.HostedServices.TcpListenerService, VirtualPrinter",
 			"Lifetime": "Singleton"
-		},
-		{
-			"ServiceType": "VirtualPrinter.Client.ClientService, VirtualPrinter",
-			"ImplementationType": "VirtualPrinter.Client.ClientService, VirtualPrinter",
-			"Lifetime": "Transient"
 		},
 		{
 			"ServiceType": "<IHostedService>",

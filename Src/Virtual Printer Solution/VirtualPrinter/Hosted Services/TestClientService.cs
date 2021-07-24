@@ -50,7 +50,7 @@ namespace VirtualPrinter.HostedServices
 							}
 						}
 
-						await Task.Delay(4000);
+						await Task.Delay(6000);
 					}
 				}
 			});

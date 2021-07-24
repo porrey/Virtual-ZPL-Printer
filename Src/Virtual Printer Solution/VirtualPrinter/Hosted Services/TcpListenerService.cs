@@ -16,7 +16,7 @@ namespace VirtualPrinter.HostedServices
 	public class TcpListenerService : HostedServiceTemplate
 	{
 		public TcpListenerService(ILogger<TcpListenerService> logger, IHostApplicationLifetime hostApplicationLifetime, IEventAggregator eventAggregator, IServiceScopeFactory serviceScopeFactory)
-			: base( hostApplicationLifetime, logger, serviceScopeFactory)
+			: base(hostApplicationLifetime, logger, serviceScopeFactory)
 		{
 			this.EventAggregator = eventAggregator;
 			this.ServiceScopeFactory = serviceScopeFactory;
@@ -25,6 +25,7 @@ namespace VirtualPrinter.HostedServices
 			{
 				this.LabelConfiguration = e.LabelConfiguration;
 				this.Port = e.Port;
+				this.ImagePathRoot = e.ImagePath;
 				await this.StartListener();
 			}, ThreadOption.BackgroundThread);
 
@@ -32,6 +33,7 @@ namespace VirtualPrinter.HostedServices
 			{
 				this.LabelConfiguration = null;
 				this.Port = 0;
+				this.ImagePathRoot = null;
 				await this.StopListener();
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false });
 			}, ThreadOption.BackgroundThread);
@@ -43,6 +45,7 @@ namespace VirtualPrinter.HostedServices
 		protected int Port { get; set; }
 		protected TcpListener Listener { get; set; }
 		protected ManualResetEvent ResetEvent { get; } = new(false);
+		protected string ImagePathRoot { get; set; }
 
 		protected override void OnStarted()
 		{
@@ -69,14 +72,14 @@ namespace VirtualPrinter.HostedServices
 
 								using (IServiceScope scope = this.ServiceScopeFactory.CreateScope())
 								{
-									ClientService clientService = scope.ServiceProvider.GetRequiredService<ClientService>();
-									await clientService.StartSessionAsync(tcpClient, this.LabelConfiguration);
+									TcpListenerClientHandler clientService = scope.ServiceProvider.GetRequiredService<TcpListenerClientHandler>();
+									await clientService.StartSessionAsync(tcpClient, this.LabelConfiguration, this.ImagePathRoot);
 								}
 							}
 							catch (SocketException)
 							{
 								//
-								// Happens when the socket s closed while listening.
+								// Happens when the socket is closed while listening.
 								//
 							}
 						}

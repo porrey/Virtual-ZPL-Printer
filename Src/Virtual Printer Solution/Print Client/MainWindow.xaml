@@ -41,27 +41,34 @@
 
 				<TextBlock Grid.Row="0"
 						   Grid.Column="0"
-						   Text="Device Connection"
+						   Text="Printer Address"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Left"
 						   Margin="{StaticResource ControlMargin}" />
 
-				<ComboBox Grid.Row="0"
-						  Grid.Column="1"
-						  Margin="{StaticResource ControlMargin}" />
-
-				<TextBlock Grid.Row="1"
-						   Grid.Column="0"
-						   Text="Printer (address:port or path)"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Margin="{StaticResource ControlMargin}" />
-
-				<TextBox Grid.Row="1"
+				<TextBox x:Name="Printer"
+						 Grid.Row="0"
 						 Grid.Column="1"
 						 Margin="{StaticResource ControlMargin}"
 						 VerticalContentAlignment="Center"
-						 HorizontalContentAlignment="Left" />
+						 HorizontalContentAlignment="Left"
+						 Text="127.0.0.1" />
+
+				<TextBlock Grid.Row="1"
+						   Grid.Column="0"
+						   Text="Printer Port"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Left"
+						   Margin="{StaticResource ControlMargin}" 
+						   />
+
+				<TextBox x:Name="Port"
+						 Grid.Row="1"
+						 Grid.Column="1"
+						 Margin="{StaticResource ControlMargin}"
+						 VerticalContentAlignment="Center"
+						 HorizontalContentAlignment="Left" 
+						 Text="9100"/>
 			</Grid>
 		</Border>
 
@@ -69,7 +76,8 @@
 				   Text="ZPL:"
 				   Margin="5,5,0,0" />
 
-		<TextBox Grid.Row="2"
+		<TextBox x:Name="Zpl"
+				 Grid.Row="2"
 				 VerticalContentAlignment="Top"
 				 HorizontalContentAlignment="Left"
 				 Margin="5"
@@ -82,7 +90,7 @@
 			<Button Grid.Column="3"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Right"
-					Command="{Binding StartCommand}"
+					Click="Button_Click"
 					Width="{StaticResource ButtonWidth}"
 					Margin="5,0,20,0">
 				<Button.Content>

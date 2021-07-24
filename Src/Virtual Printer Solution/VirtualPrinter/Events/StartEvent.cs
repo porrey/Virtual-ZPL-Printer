@@ -11,5 +11,6 @@ namespace VirtualPrinter.Events
 	{
 		public LabelConfiguration LabelConfiguration { get; set; }
 		public int Port { get; set; }
+		public string ImagePath { get; set; }
 	}
 }

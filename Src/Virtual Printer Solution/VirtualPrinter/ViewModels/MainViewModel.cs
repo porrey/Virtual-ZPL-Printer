@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -46,13 +48,19 @@ namespace VirtualPrinter.ViewModels
 				this.Labels.Add(a.Label);
 				this.SelectedLabel = a.Label;
 			}, ThreadOption.UIThread);
+
+			if (this.ImagePath == null)
+			{
+				this.ImagePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\Images";
+			}
 		}
 
 		public async Task InitializeAsync()
 		{
 			if (this.AutoStart)
 			{
-				await this.StartAsync();
+				await Task.Delay(150);
+				_ = this.StartAsync();
 			}
 		}
 
@@ -190,6 +198,19 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
+		private string _imagePath = null;
+		public string ImagePath
+		{
+			get
+			{
+				return _imagePath;
+			}
+			set
+			{
+				this.SetProperty(ref _imagePath, value);
+			}
+		}
+
 		public string MyIpAddress
 		{
 			get
@@ -219,9 +240,10 @@ namespace VirtualPrinter.ViewModels
 				{
 					Dpmm = this.SelectedResolution.Dpmm,
 					LabelHeight = this.LabelHeight,
-					LabelWidth = this.LabelWidth
+					LabelWidth = this.LabelWidth,
 				},
-				Port = this.Port
+				Port = this.Port,
+				ImagePath = this.ImagePath
 			});
 
 			return Task.CompletedTask;

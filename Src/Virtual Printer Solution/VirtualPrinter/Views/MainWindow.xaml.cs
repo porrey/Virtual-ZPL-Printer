@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using Diamond.Core.Wpf;
@@ -46,6 +47,11 @@ namespace VirtualPrinter.Views
 					this.ViewModel.LabelHeight = Properties.Settings.Default.LabelHeight;
 					this.ViewModel.LabelWidth = Properties.Settings.Default.LabelWidth;
 					this.ViewModel.SelectedResolution = this.ViewModel.Resolutions.Where(t => t.Dpmm == Properties.Settings.Default.Dpmm).SingleOrDefault();
+
+					if (Directory.Exists(Properties.Settings.Default.ImagePath))
+					{
+						this.ViewModel.ImagePath = Properties.Settings.Default.ImagePath;
+					}
 				}
 				else
 				{
@@ -87,6 +93,7 @@ namespace VirtualPrinter.Views
 				Properties.Settings.Default.WindowState = (int)WindowState.Maximized;
 			}
 
+			Properties.Settings.Default.ImagePath = this.ViewModel.ImagePath;
 			Properties.Settings.Default.Port = this.ViewModel.Port;
 			Properties.Settings.Default.AutoStart = this.ViewModel.AutoStart;
 			Properties.Settings.Default.LabelHeight = this.ViewModel.LabelHeight;

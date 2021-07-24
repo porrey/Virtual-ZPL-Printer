@@ -141,6 +141,21 @@
 							 Height="{StaticResource ControlHeight}"
 							 VerticalContentAlignment="Center"
 							 HorizontalContentAlignment="Left" />
+
+					<TextBlock Grid.Row="2"
+							   Grid.Column="0"
+							   Text="Image Path"
+							   Margin="{StaticResource ControlMargin}"
+							   VerticalAlignment="Center"
+							   HorizontalAlignment="Left" />
+					<TextBox Grid.Row="2"
+							 Grid.Column="1"
+							 Grid.ColumnSpan="3"
+							 Text="{Binding ImagePath, Mode=TwoWay}"
+							 Margin="5"
+							 Height="{StaticResource ControlHeight}"
+							 VerticalContentAlignment="Center"
+							 HorizontalContentAlignment="Left" />
 				</Grid>
 			</Border>
 		</Grid>

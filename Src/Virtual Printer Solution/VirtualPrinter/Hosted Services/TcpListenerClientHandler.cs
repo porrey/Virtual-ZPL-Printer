@@ -10,9 +10,9 @@ using VirtualPrinter.Models;
 
 namespace VirtualPrinter.Client
 {
-	public class ClientService
+	public class TcpListenerClientHandler
 	{
-		public ClientService(IEventAggregator eventAggregator)
+		public TcpListenerClientHandler(IEventAggregator eventAggregator)
 		{
 			this.EventAggregator = eventAggregator;
 		}
@@ -20,7 +20,7 @@ namespace VirtualPrinter.Client
 		protected IEventAggregator EventAggregator { get; set; }
 		private static int id = 0;
 
-		public async Task StartSessionAsync(TcpClient client, LabelConfiguration labelConfiguration)
+		public async Task StartSessionAsync(TcpClient client, LabelConfiguration labelConfiguration, string imagePathRoot)
 		{
 			//
 			// Get the network stream.
@@ -44,7 +44,7 @@ namespace VirtualPrinter.Client
 					if (bytesRead > 0)
 					{
 						string zpl = ASCIIEncoding.UTF8.GetString(buffer);
-						string imagePath = await this.GetLabel(labelConfiguration, zpl);
+						string imagePath = await this.GetLabel(imagePathRoot, labelConfiguration, zpl);
 
 						this.EventAggregator.GetEvent<LabelCreatedEvent>().Publish(new LabelCreatedEventArgs()
 						{
@@ -60,13 +60,20 @@ namespace VirtualPrinter.Client
 							}
 						});
 					}
+
+					client.Close();
 				}
 			}
 		}
 
-		protected async Task<string> GetLabel(LabelConfiguration labelConfiguration, string zpl)
+		protected async Task<string> GetLabel(string imagePathRoot, LabelConfiguration labelConfiguration, string zpl)
 		{
 			string returnValue = null;
+
+			if (!Directory.Exists(imagePathRoot))
+			{
+				Directory.CreateDirectory(imagePathRoot);
+			}
 
 			using (HttpClient client = new HttpClient())
 			{
@@ -77,7 +84,7 @@ namespace VirtualPrinter.Client
 						if (response.IsSuccessStatusCode)
 						{
 							byte[] image = await response.Content.ReadAsByteArrayAsync();
-							returnValue = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\zpl-label-image-{id}.png";
+							returnValue = $@"{imagePathRoot}\zpl-label-image-{id}.png";
 							id++;
 							File.WriteAllBytes(returnValue, image);
 						}
