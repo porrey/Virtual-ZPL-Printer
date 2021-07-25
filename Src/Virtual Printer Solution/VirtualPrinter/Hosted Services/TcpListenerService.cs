@@ -69,7 +69,7 @@ namespace VirtualPrinter.HostedServices
 								  TcpClient tcpClient = await this.Listener.AcceptTcpClientAsync();
 								  tcpClient.ReceiveTimeout = 1000;
 								  tcpClient.SendTimeout = 1000;
-								  tcpClient.LingerState = new LingerOption(false, 1);
+								  tcpClient.LingerState = new LingerOption(false, 0);
 								  tcpClient.NoDelay = true;
 								  tcpClient.ReceiveBufferSize = 8192;
 								  tcpClient.SendBufferSize = 8192;
@@ -104,9 +104,9 @@ namespace VirtualPrinter.HostedServices
 			{
 				this.Listener = new TcpListener(IPAddress.Any, this.Port);
 				this.Listener.Start();
-				returnValue = true;
 				_ = this.ResetEvent.Set();
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = true });
+				returnValue = true;
 			}
 			catch (Exception ex)
 			{
@@ -118,14 +118,14 @@ namespace VirtualPrinter.HostedServices
 			return Task.FromResult(returnValue);
 		}
 
-		protected Task<bool> StopListener()
+		protected async Task<bool> StopListener()
 		{
 			bool returnValue = false;
 
 			try
 			{
 				this.Listener.Stop();
-				this.Listener = null;
+				await Task.Delay(1000);
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false });
 			}
 			catch (Exception ex)
@@ -136,9 +136,10 @@ namespace VirtualPrinter.HostedServices
 			finally
 			{
 				_ = this.ResetEvent.Reset();
+				this.Listener = null;
 			}
 
-			return Task.FromResult(returnValue);
+			return returnValue;
 		}
 	}
 }

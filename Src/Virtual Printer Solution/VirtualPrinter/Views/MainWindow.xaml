@@ -168,7 +168,7 @@
 
 					<TextBlock Grid.Row="2"
 							   Grid.Column="0"
-							   Text="Image Path"
+							   Text="Label Cache"
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left" />
