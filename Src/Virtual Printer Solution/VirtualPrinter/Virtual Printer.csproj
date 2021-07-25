@@ -20,7 +20,7 @@
     <None Remove="Assets\stop.png" />
     <None Remove="Assets\test-label.png" />
     <None Remove="Assets\virtual-printer.png" />
-    <None Remove="Samples\zpl.txt" />
+    <None Remove="Samples\6x4-203dpi.txt" />
     <None Remove="Services\VirtualPrinter.json" />
     <None Remove="virtual-printer.ico" />
   </ItemGroup>
@@ -56,7 +56,7 @@
     <Content Include="Assets\virtual-printer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Samples\zpl.txt">
+    <Content Include="Samples\6x4-203dpi.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Services\VirtualPrinter.json">

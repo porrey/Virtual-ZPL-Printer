@@ -15,11 +15,13 @@
 
 	<Window.Resources>
 		<SolidColorBrush x:Key="BackgroundColor">#BB000000</SolidColorBrush>
+		<SolidColorBrush x:Key="ForegroundColor">#FF454545</SolidColorBrush>
 		<SolidColorBrush x:Key="BorderColor">#AA4472C4</SolidColorBrush>
 		<system:Double x:Key="ControlHeight">29</system:Double>
 		<Thickness x:Key="ControlMargin">5,5,5,5</Thickness>
 		<system:Double x:Key="ButtonWidth">100</system:Double>
 		<system:Double x:Key="StatusButtonWidth">48</system:Double>
+		<system:Double x:Key="StatusButtonHeight">48</system:Double>
 
 		<DataTemplate x:Key="Resolution">
 			<Grid>
@@ -116,7 +118,8 @@
 							   Text="TCP Port"
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
-							   HorizontalAlignment="Left" />
+							   HorizontalAlignment="Left"
+							   Foreground="{StaticResource ForegroundColor}"/>
 					<TextBox Grid.Row="0"
 							 Grid.Column="1"
 							 Text="{Binding Port, Mode=TwoWay}"
@@ -130,7 +133,8 @@
 							   Text="Resolution"
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
-							   HorizontalAlignment="Left" />
+							   HorizontalAlignment="Left"
+							   Foreground="{StaticResource ForegroundColor}" />
 					<ComboBox Grid.Row="1"
 							  Grid.Column="1"
 							  Margin="5"
@@ -143,7 +147,8 @@
 							   Text="Label Height (in)"
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
-							   HorizontalAlignment="Left" />
+							   HorizontalAlignment="Left"
+							   Foreground="{StaticResource ForegroundColor}" />
 					<TextBox Grid.Row="0"
 							 Grid.Column="3"
 							 Text="{Binding LabelHeight}"
@@ -157,7 +162,8 @@
 							   Text="Label Width (in)"
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
-							   HorizontalAlignment="Left" />
+							   HorizontalAlignment="Left"
+							   Foreground="{StaticResource ForegroundColor}" />
 					<TextBox Grid.Row="1"
 							 Grid.Column="3"
 							 Text="{Binding LabelWidth}"
@@ -171,7 +177,8 @@
 							   Text="Label Cache"
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
-							   HorizontalAlignment="Left" />
+							   HorizontalAlignment="Left"
+							   Foreground="{StaticResource ForegroundColor}" />
 					<TextBox Grid.Row="2"
 							 Grid.Column="1"
 							 Grid.ColumnSpan="3"
@@ -198,21 +205,24 @@
 					   VerticalAlignment="Center"
 					   HorizontalAlignment="Left"
 					   Margin="5"
-					   FontSize="14" />
+					   FontSize="14"
+					   Foreground="{StaticResource ForegroundColor}" />
 
 			<CheckBox Grid.Column="1"
 					  Content="Auto-start"
 					  VerticalAlignment="Center"
 					  HorizontalAlignment="Center"
 					  Margin="10,3,10,3"
-					  IsChecked="{Binding AutoStart}" />
+					  IsChecked="{Binding AutoStart}"
+					  Foreground="{StaticResource ForegroundColor}" />
 
 			<Button Grid.Column="2"
 					VerticalAlignment="Bottom"
 					HorizontalAlignment="Right"
 					Command="{Binding StopCommand}"
 					Width="{StaticResource ButtonWidth}"
-					Margin="5,0,0,0">
+					Margin="5,0,0,0"
+					ToolTip="Stop the virtual printer from accepting label request.">
 				<Button.Content>
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -238,7 +248,8 @@
 					HorizontalAlignment="Right"
 					Command="{Binding StartCommand}"
 					Width="{StaticResource ButtonWidth}"
-					Margin="5,0,0,0">
+					Margin="5,0,0,0"
+					ToolTip="Start the virtual printer.">
 				<Button.Content>
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -276,7 +287,7 @@
 					Visibility="{Binding SelectedLabel, Converter={StaticResource NotObjectToVisibilityConverter}}">
 				<TextBlock Text="No selection"
 						   FontSize="56"
-						   Foreground="#CF000000"
+						   Foreground="{StaticResource ForegroundColor}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Center" />
 			</Border>
@@ -298,7 +309,7 @@
 			<ListView x:Name="ListView"
 					  Grid.Row="0"
 					  Grid.Column="0"
-					  Grid.ColumnSpan="6"
+					  Grid.ColumnSpan="4"
 					  SelectionChanged="ListView_SelectionChanged"
 					  
 					  ItemsSource="{Binding Labels}"
@@ -317,7 +328,8 @@
 					   VerticalAlignment="Center"
 					   HorizontalAlignment="Left"
 					   FontSize="18"
-					   Margin="10,0,0,0" />
+					   Margin="10,0,0,0"
+					   Foreground="{StaticResource ForegroundColor}" />
 
 			<Button Grid.Column="1"
 					Grid.Row="1"
@@ -325,7 +337,7 @@
 					HorizontalAlignment="Center"
 					Command="{Binding TestLabelCommand}"
 					Width="{StaticResource StatusButtonWidth}"
-					Height="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
 					Margin="5,3,0,3"
 					ToolTip="Send a test label.">
 				<Button.Content>
@@ -352,7 +364,7 @@
 					HorizontalAlignment="Center"
 					Command="{Binding ClearLabelsCommand}"
 					Width="{StaticResource StatusButtonWidth}"
-					Height="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
 					Margin="5,3,0,3"
 					ToolTip="Clear all labels.">
 				<Button.Content>

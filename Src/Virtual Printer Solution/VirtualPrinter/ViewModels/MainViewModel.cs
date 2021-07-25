@@ -48,10 +48,20 @@ namespace VirtualPrinter.ViewModels
 			//
 			_ = this.EventAggregator.GetEvent<LabelCreatedEvent>().Subscribe((a) =>
 			  {
+				  //
+				  // Add the new label to the collection.
+				  //
 				  this.Labels.Add(a.Label);
+
+				  //
+				  // Make the new label the currently selected label.
+				  //
 				  this.SelectedLabel = a.Label;
 			  }, ThreadOption.UIThread);
 
+			//
+			// If the image path has not been initialized, set to the documents folder.
+			//
 			if (this.ImagePath == null)
 			{
 				this.ImagePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Virtual ZPL Printer Images";
@@ -242,14 +252,20 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
+				//
+				// Gets the machine IP address and formats it into a displayable value.
+				//
 				IPHostEntry entry = Dns.GetHostEntry(Dns.GetHostName());
-				IPAddress a = entry.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).SingleOrDefault();
+				IPAddress a = entry.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
 				return $"IP Address: {a.ToString()}";
 			}
 		}
 
 		protected void RefreshCommands()
 		{
+			//
+			// refresh the state of all of the command buttons.
+			//
 			this.StartCommand.RaiseCanExecuteChanged();
 			this.StopCommand.RaiseCanExecuteChanged();
 			this.TestLabelCommand.RaiseCanExecuteChanged();
@@ -260,6 +276,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			try
 			{
+				//
+				// Publish an event to start the listener. The arguments of the message
+				// specify the label size, DPMM of the label, TCP port and the folder
+				// location to use for label storage.
+				//
 				this.EventAggregator.GetEvent<StartEvent>().Publish(new StartEventArgs()
 				{
 					LabelConfiguration = new LabelConfiguration()
@@ -288,6 +309,9 @@ namespace VirtualPrinter.ViewModels
 		{
 			try
 			{
+				//
+				// Publish an event to stop the listener.
+				//
 				this.EventAggregator.GetEvent<StopEvent>().Publish(new StopEventArgs() { });
 			}
 			catch (Exception ex)
@@ -308,14 +332,39 @@ namespace VirtualPrinter.ViewModels
 			{
 				using (TcpClient client = new())
 				{
+					//
+					// Connect to the local host.
+					//
 					await client.ConnectAsync("127.0.0.1", this.Port);
 
+					//
+					// Create a stream to send th ZPL.
+					//
 					using (Stream stream = client.GetStream())
 					{
+						//
+						// Create a random bar code value for the label.
+						//
 						int id = this.Rnd.Next(1, 99999999);
-						string zpl = File.ReadAllText("./samples/zpl.txt"); ;
+
+						//
+						// Read the sample ZPL.
+						//
+						string zpl = File.ReadAllText("./samples/6x4-203dpi.txt"); ;
+
+						//
+						// Convert the ZPL to a byte array.
+						//
 						byte[] buffer = ASCIIEncoding.UTF8.GetBytes(zpl.Replace("{id}", id.ToString("00000000")));
+
+						//
+						// Send the ZPL string.
+						//
 						await stream.WriteAsync(buffer.AsMemory(0, buffer.Length));
+
+						//
+						// Close the connection.
+						//
 						client.Close();
 					}
 				}
@@ -330,14 +379,24 @@ namespace VirtualPrinter.ViewModels
 		{
 			try
 			{
-				this.Labels.Clear();
+				//
+				// Set the selected label to null.
+				//
 				this.SelectedLabel = null;
-				await Task.Delay(1000);
-				await this.ImageCacheRepository.ClearAllAsync(this.ImagePath);
+
+				//
+				// Clear the collection.
+				//
+				this.Labels.Clear();
+
+				//
+				// Remove the labels from storage.
+				//
+				_ = await this.ImageCacheRepository.ClearAllAsync(this.ImagePath);
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				_ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -348,14 +407,29 @@ namespace VirtualPrinter.ViewModels
 		protected async Task LoadLabelsAsync()
 		{
 			//
-			// Load the previous labels
+			// Clea the current list.
 			//
 			this.Labels.Clear();
+
+			//
+			// Load the previous labels
+			//
 			IEnumerable<IStoredImage> labels = await this.ImageCacheRepository.GetAllAsync(this.ImagePath);
 
+			//
+			// Add the labels to the collection.
+			//
 			foreach (IStoredImage label in labels)
 			{
 				this.Labels.Add(label);
+			}
+
+			//
+			// Select the last label.
+			//
+			if (this.Labels.Any())
+			{
+				this.SelectedLabel = this.Labels.Last();
 			}
 		}
 	}
