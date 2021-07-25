@@ -14,6 +14,7 @@
 		ResizeMode="CanResizeWithGrip">
 
 	<Window.Resources>
+		<SolidColorBrush x:Key="BackgroundColor">#BB000000</SolidColorBrush>
 		<SolidColorBrush x:Key="BorderColor">#AA4472C4</SolidColorBrush>
 		<system:Double x:Key="ControlHeight">29</system:Double>
 		<Thickness x:Key="ControlMargin">5,5,5,5</Thickness>
@@ -41,22 +42,24 @@
 		</DataTemplate>
 
 		<DataTemplate x:Key="LabelTemplate">
-			<Grid>
+			<Grid Background="{StaticResource BackgroundColor}">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*" />
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 
 				<Image Grid.Row="0"
-					   Source="{Binding ImagePath}"
+					   Margin="3"
+					   Source="{Binding FullPath, Converter={StaticResource StringToImageSourceConverter}}"
 					   HorizontalAlignment="Center"
 					   Width="64"
 					   Height="64" />
 
 				<TextBlock Grid.Row="1"
-						   Text="{Binding Index, StringFormat=Label {0}}"
+						   Text="{Binding Id, StringFormat=Label {0}}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Center"
+						   Foreground="White"
 						   Margin="3" />
 			</Grid>
 		</DataTemplate>
@@ -258,9 +261,9 @@
 		</Grid>
 
 		<Grid Grid.Row="2"
-			  Background="#CF000000">
+			  Background="{StaticResource BackgroundColor}">
 
-			<Image Source="{Binding SelectedLabel.ImagePath}"
+			<Image Source="{Binding SelectedLabel.FullPath, Converter={StaticResource StringToImageSourceConverter}}"
 				   Stretch="Uniform"
 				   Visibility="{Binding SelectedLabel, Converter={StaticResource ObjectToVisibilityConverter}}"
 				   Margin="10,20,10,20">
@@ -271,7 +274,7 @@
 					BorderThickness="1"
 					Background="White"
 					Visibility="{Binding SelectedLabel, Converter={StaticResource NotObjectToVisibilityConverter}}">
-				<TextBlock Text="No Labels"
+				<TextBlock Text="No selection"
 						   FontSize="56"
 						   Foreground="#CF000000"
 						   VerticalAlignment="Center"
@@ -292,9 +295,12 @@
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 
-			<ListView Grid.Row="0"
+			<ListView x:Name="ListView"
+					  Grid.Row="0"
 					  Grid.Column="0"
 					  Grid.ColumnSpan="6"
+					  SelectionChanged="ListView_SelectionChanged"
+					  
 					  ItemsSource="{Binding Labels}"
 					  ItemTemplate="{StaticResource LabelTemplate}"
 					  SelectedItem="{Binding SelectedLabel}">

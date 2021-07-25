@@ -1,6 +1,8 @@
-﻿namespace VirtualPrinter.Models
+﻿using Labelary.Abstractions;
+
+namespace VirtualPrinter.Models
 {
-	public class LabelConfiguration
+	public class LabelConfiguration : ILabelConfiguration
 	{
 		public int Dpmm { get; set; }
 		public double LabelWidth { get; set; }

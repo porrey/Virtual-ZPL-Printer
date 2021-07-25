@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using Diamond.Core.Wpf;
 using VirtualPrinter.ViewModels;
 
@@ -101,6 +102,17 @@ namespace VirtualPrinter.Views
 			Properties.Settings.Default.Dpmm = this.ViewModel.SelectedResolution.Dpmm;
 			Properties.Settings.Default.Initialized = true;
 			Properties.Settings.Default.Save();
+		}
+
+		private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (sender is ListView listView)
+			{
+				if (e.AddedItems.Count > 0)
+				{
+					listView.ScrollIntoView(e.AddedItems[e.AddedItems.Count - 1]);
+				}
+			}
 		}
 	}
 }

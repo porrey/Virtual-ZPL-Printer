@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,26 +22,26 @@ namespace VirtualPrinter.HostedServices
 			this.EventAggregator = eventAggregator;
 			this.ServiceScopeFactory = serviceScopeFactory;
 
-			this.EventAggregator.GetEvent<StartEvent>().Subscribe(async (e) =>
-			{
-				this.LabelConfiguration = e.LabelConfiguration;
-				this.Port = e.Port;
-				this.ImagePathRoot = e.ImagePath;
-				await this.StartListener();
-			}, ThreadOption.BackgroundThread);
+			_ = this.EventAggregator.GetEvent<StartEvent>().Subscribe(async (e) =>
+			  {
+				  this.LabelConfiguration = e.LabelConfiguration;
+				  this.Port = e.Port;
+				  this.ImagePathRoot = e.ImagePath;
+				  _ = await this.StartListener();
+			  }, ThreadOption.BackgroundThread);
 
-			this.EventAggregator.GetEvent<StopEvent>().Subscribe(async (e) =>
-			{
-				this.LabelConfiguration = null;
-				this.Port = 0;
-				this.ImagePathRoot = null;
-				await this.StopListener();
-				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false });
-			}, ThreadOption.BackgroundThread);
+			_ = this.EventAggregator.GetEvent<StopEvent>().Subscribe(async (e) =>
+			  {
+				  this.LabelConfiguration = null;
+				  this.Port = 0;
+				  this.ImagePathRoot = null;
+				  await this.StopListener();
+				  this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false });
+			  }, ThreadOption.BackgroundThread);
 		}
 
 		protected IEventAggregator EventAggregator { get; set; }
-		protected bool IsRunning { get; set; } = false;
+		protected bool IsRunning { get; set; }
 		protected LabelConfiguration LabelConfiguration { get; set; }
 		protected int Port { get; set; }
 		protected TcpListener Listener { get; set; }
@@ -49,50 +50,50 @@ namespace VirtualPrinter.HostedServices
 
 		protected override void OnStarted()
 		{
-			Task.Factory.StartNew(async () =>
-			{
-				while (!this.CancellationToken.IsCancellationRequested)
-				{
-					try
-					{
-						//
-						// Hold here until enabled.
-						//
-						if (this.ResetEvent.WaitOne())
-						{
-							try
-							{
-								//
-								// Accept the connection.
-								//
-								TcpClient tcpClient = await this.Listener.AcceptTcpClientAsync();
-								tcpClient.ReceiveTimeout = 1000;
-								tcpClient.SendTimeout = 1000;
-								tcpClient.LingerState = new LingerOption(false, 1);
-								tcpClient.NoDelay = true;
-								tcpClient.ReceiveBufferSize = 8192;
-								tcpClient.SendBufferSize = 8192;
+			_ = Task.Factory.StartNew(async () =>
+			  {
+				  while (!this.CancellationToken.IsCancellationRequested)
+				  {
+					  try
+					  {
+						  //
+						  // Hold here until enabled.
+						  //
+						  if (this.ResetEvent.WaitOne())
+						  {
+							  try
+							  {
+								  //
+								  // Accept the connection.
+								  //
+								  TcpClient tcpClient = await this.Listener.AcceptTcpClientAsync();
+								  tcpClient.ReceiveTimeout = 1000;
+								  tcpClient.SendTimeout = 1000;
+								  tcpClient.LingerState = new LingerOption(false, 1);
+								  tcpClient.NoDelay = true;
+								  tcpClient.ReceiveBufferSize = 8192;
+								  tcpClient.SendBufferSize = 8192;
 
-								using (IServiceScope scope = this.ServiceScopeFactory.CreateScope())
-								{
-									TcpListenerClientHandler clientService = scope.ServiceProvider.GetRequiredService<TcpListenerClientHandler>();
-									await clientService.StartSessionAsync(tcpClient, this.LabelConfiguration, this.ImagePathRoot);
-								}
-							}
-							catch (SocketException)
-							{
-								//
-								// Happens when the socket is closed while listening.
-								//
-							}
-						}
-					}
-					catch (Exception ex)
-					{
-						this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });
-					}
-				}
-			});
+								  using (IServiceScope scope = this.ServiceScopeFactory.CreateScope())
+								  {
+									  TcpListenerClientHandler clientService = scope.ServiceProvider.GetRequiredService<TcpListenerClientHandler>();
+									  _ = clientService.StartSessionAsync(tcpClient, this.LabelConfiguration, this.ImagePathRoot);
+								  }
+							  }
+							  catch (SocketException)
+							  {
+								  //
+								  // Happens when the socket is closed while listening.
+								  //
+							  }
+						  }
+					  }
+					  catch (Exception ex)
+					  {
+						  this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });
+					  }
+				  }
+			  });
 		}
 
 		protected Task<bool> StartListener()
@@ -101,16 +102,16 @@ namespace VirtualPrinter.HostedServices
 
 			try
 			{
-				this.Listener = TcpListener.Create(this.Port);
+				this.Listener = new TcpListener(IPAddress.Any, this.Port);
 				this.Listener.Start();
 				returnValue = true;
-				this.ResetEvent.Set();
+				_ = this.ResetEvent.Set();
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = true });
 			}
 			catch (Exception ex)
 			{
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });
-				this.ResetEvent.Reset();
+				_ = this.ResetEvent.Reset();
 				returnValue = false;
 			}
 
@@ -134,7 +135,7 @@ namespace VirtualPrinter.HostedServices
 			}
 			finally
 			{
-				this.ResetEvent.Reset();
+				_ = this.ResetEvent.Reset();
 			}
 
 			return Task.FromResult(returnValue);

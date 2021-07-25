@@ -74,6 +74,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ImageCache.Abstractions\ImageCache.Abstractions.csproj" />
+    <ProjectReference Include="..\ImageCache.Repository\ImageCache.Repository.csproj" />
+    <ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
+    <ProjectReference Include="..\Labelary.Service\Labelary.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>

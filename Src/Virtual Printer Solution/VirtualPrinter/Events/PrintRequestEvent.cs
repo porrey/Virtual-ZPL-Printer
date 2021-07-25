@@ -1,5 +1,5 @@
-﻿using Prism.Events;
-using VirtualPrinter.Models;
+﻿using Labelary.Abstractions;
+using Prism.Events;
 
 namespace VirtualPrinter.Events
 {
@@ -9,7 +9,7 @@ namespace VirtualPrinter.Events
 
 	public class PrintRequestEventArgs
 	{
-		public LabelConfiguration LabelConfiguration { get; set; }
+		public ILabelConfiguration LabelConfiguration { get; set; }
 		public string Zpl { get; set; }
 	}
 }

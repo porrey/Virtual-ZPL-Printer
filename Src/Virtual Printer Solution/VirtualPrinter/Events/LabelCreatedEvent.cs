@@ -1,5 +1,5 @@
-﻿using Prism.Events;
-using VirtualPrinter.Models;
+﻿using ImageCache.Abstractions;
+using Prism.Events;
 
 namespace VirtualPrinter.Events
 {
@@ -10,6 +10,6 @@ namespace VirtualPrinter.Events
 	public class LabelCreatedEventArgs
 	{
 		public PrintRequestEventArgs PrintRequest { get; set; }
-		public Label Label { get; set; }
+		public IStoredImage Label { get; set; }
 	}
 }

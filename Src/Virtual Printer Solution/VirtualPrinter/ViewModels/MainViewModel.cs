@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using ImageCache.Abstractions;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -17,9 +20,10 @@ namespace VirtualPrinter.ViewModels
 {
 	public class MainViewModel : BindableBase
 	{
-		public MainViewModel(IEventAggregator eventAggregator)
+		public MainViewModel(IEventAggregator eventAggregator, IImageCacheRepository imageCacheRepository)
 		{
 			this.EventAggregator = eventAggregator;
+			this.ImageCacheRepository = imageCacheRepository;
 
 			this.Resolutions.Add(new Resolution() { Dpmm = 6 });
 			this.Resolutions.Add(new Resolution() { Dpmm = 8 });
@@ -29,51 +33,42 @@ namespace VirtualPrinter.ViewModels
 
 			this.StartCommand = new DelegateCommand(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning);
 			this.StopCommand = new DelegateCommand(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
-			this.TestLabelCommand = new DelegateCommand(() => _ = this.TestLabelAsync(), () => !this.IsBusy);
+			this.TestLabelCommand = new DelegateCommand(() => _ = this.TestLabelAsync(), () => !this.IsBusy && this.IsRunning);
 			this.ClearLabelsCommand = new DelegateCommand(() => _ = this.ClearLabelsAsync(), () => !this.IsBusy && this.Labels.Count > 0);
 
 			//
 			// Subscribe to the running state changed event to update the running
 			// status of the UI.
 			//
-			this.EventAggregator.GetEvent<RunningStateChangedEvent>().Subscribe((a) => this.IsRunning = a.IsRunning, ThreadOption.UIThread);
+			_ = this.EventAggregator.GetEvent<RunningStateChangedEvent>().Subscribe((a) => this.IsRunning = a.IsRunning, ThreadOption.UIThread);
 
 			//
 			// Subscribe to the label created event to add all new labels
 			// to the UI.
 			//
-			this.EventAggregator.GetEvent<LabelCreatedEvent>().Subscribe((a) =>
-			{
-				a.Label.Index = this.Labels.Count + 1;
-				this.Labels.Add(a.Label);
-				this.SelectedLabel = a.Label;
-			}, ThreadOption.UIThread);
+			_ = this.EventAggregator.GetEvent<LabelCreatedEvent>().Subscribe((a) =>
+			  {
+				  this.Labels.Add(a.Label);
+				  this.SelectedLabel = a.Label;
+			  }, ThreadOption.UIThread);
 
 			if (this.ImagePath == null)
 			{
-				this.ImagePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\Images";
-			}
-		}
-
-		public async Task InitializeAsync()
-		{
-			if (this.AutoStart)
-			{
-				await Task.Delay(150);
-				_ = this.StartAsync();
+				this.ImagePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Virtual ZPL Printer Images";
 			}
 		}
 
 		protected Random Rnd { get; } = new Random();
 		protected IEventAggregator EventAggregator { get; set; }
+		protected IImageCacheRepository ImageCacheRepository { get; set; }
+		protected CancellationTokenSource TokenSource { get; set; }
+
 		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
-		public ObservableCollection<Label> Labels { get; } = new ObservableCollection<Label>();
+		public ObservableCollection<IStoredImage> Labels { get; } = new ObservableCollection<IStoredImage>();
 		public DelegateCommand StartCommand { get; set; }
 		public DelegateCommand StopCommand { get; set; }
 		public DelegateCommand TestLabelCommand { get; set; }
 		public DelegateCommand ClearLabelsCommand { get; set; }
-
-		protected CancellationTokenSource TokenSource { get; set; }
 
 		private Resolution _selectedResolution = null;
 		public Resolution SelectedResolution
@@ -88,8 +83,8 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private Label _selectedLabel = null;
-		public Label SelectedLabel
+		private IStoredImage _selectedLabel = null;
+		public IStoredImage SelectedLabel
 		{
 			get
 			{
@@ -101,11 +96,18 @@ namespace VirtualPrinter.ViewModels
 
 				if (this.SelectedLabel != null)
 				{
-					this.StatusText = $"Viewing label {this.SelectedLabel.Index} of {this.Labels.Count}.";
+					this.StatusText = $"Viewing label {this.SelectedLabel.Id}/ {this.Labels.Count} label(s)";
 				}
 				else
 				{
-					this.StatusText = "No Labels";
+					if (this.Labels.Any())
+					{
+						this.StatusText = $"{this.Labels.Count} label(s)";
+					}
+					else
+					{
+						this.StatusText = "No selection";
+					}
 				}
 
 				this.RefreshCommands();
@@ -179,7 +181,7 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private string _statusText = "No labels";
+		private string _statusText = "No selection";
 		public string StatusText
 		{
 			get
@@ -219,12 +221,28 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
+		public async Task InitializeAsync()
+		{
+			//
+			// Load any pre-existing labels.
+			//
+			_ = this.LoadLabelsAsync();
+
+			//
+			// Auto start
+			//
+			if (this.AutoStart && this.Port > 0)
+			{
+				await Task.Delay(150);
+				_ = this.StartAsync();
+			}
+		}
+
 		public string MyIpAddress
 		{
 			get
 			{
-				string host = Dns.GetHostName();
-				IPHostEntry entry = Dns.GetHostEntry(host);
+				IPHostEntry entry = Dns.GetHostEntry(Dns.GetHostName());
 				IPAddress a = entry.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).SingleOrDefault();
 				return $"IP Address: {a.ToString()}";
 			}
@@ -240,64 +258,105 @@ namespace VirtualPrinter.ViewModels
 
 		protected Task StartAsync()
 		{
-			this.EventAggregator.GetEvent<StartEvent>().Publish(new StartEventArgs()
+			try
 			{
-				LabelConfiguration = new LabelConfiguration()
+				this.EventAggregator.GetEvent<StartEvent>().Publish(new StartEventArgs()
 				{
-					Dpmm = this.SelectedResolution.Dpmm,
-					LabelHeight = this.LabelHeight,
-					LabelWidth = this.LabelWidth,
-				},
-				Port = this.Port,
-				ImagePath = this.ImagePath
-			});
+					LabelConfiguration = new LabelConfiguration()
+					{
+						Dpmm = this.SelectedResolution.Dpmm,
+						LabelHeight = this.LabelHeight,
+						LabelWidth = this.LabelWidth,
+					},
+					Port = this.Port,
+					ImagePath = this.ImagePath
+				});
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+			finally
+			{
+				this.RefreshCommands();
+			}
 
 			return Task.CompletedTask;
 		}
 
 		protected Task StopAsync()
 		{
-			this.EventAggregator.GetEvent<StopEvent>().Publish(new StopEventArgs()
+			try
 			{
-			});
+				this.EventAggregator.GetEvent<StopEvent>().Publish(new StopEventArgs() { });
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+			finally
+			{
+				this.RefreshCommands();
+			}
 
-			return Task.CompletedTask;
-		}
-
-		protected Task PreviousLabelAsync()
-		{
-			this.SelectedLabel = this.Labels.ElementAt(this.SelectedLabel.Index - 1);
-			return Task.CompletedTask;
-		}
-
-		protected Task NextLabelAsync()
-		{
-			this.SelectedLabel = this.Labels.ElementAt(this.SelectedLabel.Index + 1);
 			return Task.CompletedTask;
 		}
 
 		protected async Task TestLabelAsync()
 		{
-			using (TcpClient client = new())
+			try
 			{
-				await client.ConnectAsync("127.0.0.1", this.Port);
-
-				using (Stream stream = client.GetStream())
+				using (TcpClient client = new())
 				{
-					int id = this.Rnd.Next(1, 99999999);
-					string zpl = File.ReadAllText("./samples/zpl.txt"); ;
-					byte[] buffer = ASCIIEncoding.UTF8.GetBytes(zpl.Replace("{id}", id.ToString("00000000")));
-					await stream.WriteAsync(buffer.AsMemory(0, buffer.Length));
-					client.Close();
+					await client.ConnectAsync("127.0.0.1", this.Port);
+
+					using (Stream stream = client.GetStream())
+					{
+						int id = this.Rnd.Next(1, 99999999);
+						string zpl = File.ReadAllText("./samples/zpl.txt"); ;
+						byte[] buffer = ASCIIEncoding.UTF8.GetBytes(zpl.Replace("{id}", id.ToString("00000000")));
+						await stream.WriteAsync(buffer.AsMemory(0, buffer.Length));
+						client.Close();
+					}
 				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
 
-		protected Task ClearLabelsAsync()
+		protected async Task ClearLabelsAsync()
 		{
+			try
+			{
+				this.Labels.Clear();
+				this.SelectedLabel = null;
+				await Task.Delay(1000);
+				await this.ImageCacheRepository.ClearAllAsync(this.ImagePath);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+			finally
+			{
+				this.RefreshCommands();
+			}
+		}
+
+		protected async Task LoadLabelsAsync()
+		{
+			//
+			// Load the previous labels
+			//
 			this.Labels.Clear();
-			this.SelectedLabel = null;
-			return Task.CompletedTask;
+			IEnumerable<IStoredImage> labels = await this.ImageCacheRepository.GetAllAsync(this.ImagePath);
+
+			foreach (IStoredImage label in labels)
+			{
+				this.Labels.Add(label);
+			}
 		}
 	}
 }

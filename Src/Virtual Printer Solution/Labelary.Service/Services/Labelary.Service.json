@@ -1,0 +1,9 @@
+{
+	"services": [
+		{
+			"ServiceType": "<ILabelService>",
+			"ImplementationType": "Labelary.Service.LabelService, Labelary.Service",
+			"Lifetime": "Singleton"
+		}
+	]
+}

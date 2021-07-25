@@ -9,5 +9,6 @@
 		<converters:NotObjectToVisibilityConverter x:Key="NotObjectToVisibilityConverter" />
 		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 		<converters:NotBooleanToVisibilityConverter x:Key="NotBooleanToVisibilityConverter" />
+		<converters:StringToImageSourceConverter x:Key="StringToImageSourceConverter" />
 	</Application.Resources>
 </wpf:HostedApplication>

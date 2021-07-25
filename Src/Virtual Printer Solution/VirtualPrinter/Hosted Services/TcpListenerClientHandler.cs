@@ -1,9 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using ImageCache.Abstractions;
+using Labelary.Abstractions;
 using Prism.Events;
 using VirtualPrinter.Events;
 using VirtualPrinter.Models;
@@ -12,15 +12,18 @@ namespace VirtualPrinter.Client
 {
 	public class TcpListenerClientHandler
 	{
-		public TcpListenerClientHandler(IEventAggregator eventAggregator)
+		public TcpListenerClientHandler(IEventAggregator eventAggregator, ILabelService labelService, IImageCacheRepository imageCacheRepository)
 		{
 			this.EventAggregator = eventAggregator;
+			this.LabelService = labelService;
+			this.ImageCacheRepository = imageCacheRepository;
 		}
 
 		protected IEventAggregator EventAggregator { get; set; }
-		private static int id = 0;
+		protected ILabelService LabelService { get; set; }
+		protected IImageCacheRepository ImageCacheRepository { get; set; }
 
-		public async Task StartSessionAsync(TcpClient client, LabelConfiguration labelConfiguration, string imagePathRoot)
+		public async Task StartSessionAsync(TcpClient client, ILabelConfiguration labelConfiguration, string imagePathRoot)
 		{
 			//
 			// Get the network stream.
@@ -31,72 +34,55 @@ namespace VirtualPrinter.Client
 			{
 				if (stream.DataAvailable)
 				{
-					//
-					// Create a buffer for the data that is available.
-					//
-					byte[] buffer = new byte[client.Available];
-
-					//
-					// Read the data into the buffer.
-					//
-					int bytesRead = await stream.ReadAsync(buffer.AsMemory(0, buffer.Length));
-
-					if (bytesRead > 0)
+					try
 					{
-						string zpl = ASCIIEncoding.UTF8.GetString(buffer);
-						string imagePath = await this.GetLabel(imagePathRoot, labelConfiguration, zpl);
+						//
+						// Create a buffer for the data that is available.
+						//
+						byte[] buffer = new byte[client.Available];
 
-						this.EventAggregator.GetEvent<LabelCreatedEvent>().Publish(new LabelCreatedEventArgs()
+						//
+						// Read the data into the buffer.
+						//
+						int bytesRead = await stream.ReadAsync(buffer.AsMemory(0, buffer.Length));
+
+						if (bytesRead > 0)
 						{
-							PrintRequest = new PrintRequestEventArgs()
+							//
+							// Get the label image
+							//
+							string zpl = Encoding.UTF8.GetString(buffer);
+							byte[] image = await this.LabelService.GetLabelAsync(labelConfiguration, zpl);
+
+							//
+							// Save the image.
+							//
+							IStoredImage storedImage = await this.ImageCacheRepository.StoreImageAsync(imagePathRoot, image);
+
+							//
+							// Publish the new label.
+							//
+							this.EventAggregator.GetEvent<LabelCreatedEvent>().Publish(new LabelCreatedEventArgs()
 							{
-								LabelConfiguration = labelConfiguration,
-								Zpl = zpl
-							},
-							Label = new Label()
-							{
-								ImagePath = imagePath,
-								Zpl = zpl
-							}
-						});
+								PrintRequest = new PrintRequestEventArgs()
+								{
+									LabelConfiguration = labelConfiguration,
+									Zpl = zpl
+								},
+								Label = storedImage
+							});
+						}
 					}
-
-					client.Close();
-				}
-			}
-		}
-
-		protected async Task<string> GetLabel(string imagePathRoot, LabelConfiguration labelConfiguration, string zpl)
-		{
-			string returnValue = null;
-
-			if (!Directory.Exists(imagePathRoot))
-			{
-				Directory.CreateDirectory(imagePathRoot);
-			}
-
-			using (HttpClient client = new HttpClient())
-			{
-				using (StringContent content = new StringContent(zpl, Encoding.UTF8, "application/x-www-form-urlencoded"))
-				{
-					using (HttpResponseMessage response = await client.PostAsync($"http://api.labelary.com/v1/printers/{labelConfiguration.Dpmm}dpmm/labels/{labelConfiguration.LabelWidth}x{labelConfiguration.LabelHeight}/0/", content))
+					catch
 					{
-						if (response.IsSuccessStatusCode)
-						{
-							byte[] image = await response.Content.ReadAsByteArrayAsync();
-							returnValue = $@"{imagePathRoot}\zpl-label-image-{id}.png";
-							id++;
-							File.WriteAllBytes(returnValue, image);
-						}
-						else
-						{
-							//throw new Exception(response.ReasonPhrase);
-						}
+
+					}
+					finally
+					{
+						client.Close();
 					}
 				}
 			}
-
-			return returnValue;
 		}
 	}
 }

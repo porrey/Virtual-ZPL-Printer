@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Services\ImageCache.Repository.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Services\ImageCache.Repository.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ImageCache.Abstractions\ImageCache.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

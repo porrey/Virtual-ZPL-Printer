@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Services\Labelary.Service.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Services\Labelary.Service.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,9 @@
+{
+	"services": [
+		{
+			"ServiceType": "<IImageCacheRepository>",
+			"ImplementationType": "ImageCache.Repository.ImageCacheRepository, ImageCache.Repository",
+			"Lifetime": "Singleton"
+		}
+	]
+}

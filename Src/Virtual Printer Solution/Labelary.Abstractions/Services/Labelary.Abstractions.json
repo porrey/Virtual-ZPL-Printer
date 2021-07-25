@@ -1,0 +1,11 @@
+{
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "ILabelService",
+			"TypeDefinition": "Labelary.Abstractions.ILabelService, Labelary.Abstractions"
+		}
+	]
+}

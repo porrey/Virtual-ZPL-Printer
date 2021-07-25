@@ -1,0 +1,11 @@
+{
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "IImageCacheRepository",
+			"TypeDefinition": "ImageCache.Abstractions.IImageCacheRepository, ImageCache.Abstractions"
+		}
+	]
+}
