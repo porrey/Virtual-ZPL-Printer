@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
 using Prism.Events;
-using VirtualPrinter.Events;
-using VirtualPrinter.Models;
+using VirtualZplPrinter.Events;
+using VirtualZplPrinter.Models;
 
-namespace VirtualPrinter.Client
+namespace VirtualZplPrinter.Client
 {
 	public class TcpListenerClientHandler
 	{

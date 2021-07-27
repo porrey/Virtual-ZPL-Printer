@@ -1,7 +1,7 @@
 ﻿using Labelary.Abstractions;
 using Prism.Events;
 
-namespace VirtualPrinter.Events
+namespace VirtualZplPrinter.Events
 {
 	public class PrintRequestEvent : PubSubEvent<PrintRequestEventArgs>
 	{

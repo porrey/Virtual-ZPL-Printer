@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Diamond.Core.Extensions.Hosting;
 using Microsoft.Extensions.Hosting;
 using Prism.Events;
-using VirtualPrinter.Events;
+using VirtualZplPrinter.Events;
 
-namespace VirtualPrinter.HostedServices
+namespace VirtualZplPrinter.HostedServices
 {
 	public class TestClientService : HostedServiceTemplate
 	{

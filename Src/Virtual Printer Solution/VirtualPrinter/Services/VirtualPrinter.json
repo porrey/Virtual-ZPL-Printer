@@ -19,22 +19,22 @@
 			// IMainWindow is used for the startup window.
 			//
 			"ServiceType": "Diamond.Core.Wpf.IMainWindow, Diamond.Core.Wpf.Abstractions",
-			"ImplementationType": "VirtualPrinter.Views.MainView, VirtualPrinter",
+			"ImplementationType": "VirtualZplPrinter.Views.MainView, VirtualZplPrinter",
 			"Lifetime": "Singleton"
 		},
 		{
-			"ServiceType": "VirtualPrinter.ViewModels.MainViewModel, VirtualPrinter",
-			"ImplementationType": "VirtualPrinter.ViewModels.MainViewModel, VirtualPrinter",
+			"ServiceType": "VirtualZplPrinter.ViewModels.MainViewModel, VirtualZplPrinter",
+			"ImplementationType": "VirtualZplPrinter.ViewModels.MainViewModel, VirtualZplPrinter",
 			"Lifetime": "Singleton"
 		},
 		{
-			"ServiceType": "VirtualPrinter.Client.TcpListenerClientHandler, VirtualPrinter",
-			"ImplementationType": "VirtualPrinter.Client.TcpListenerClientHandler, VirtualPrinter",
+			"ServiceType": "VirtualZplPrinter.Client.TcpListenerClientHandler, VirtualZplPrinter",
+			"ImplementationType": "VirtualZplPrinter.Client.TcpListenerClientHandler, VirtualZplPrinter",
 			"Lifetime": "Transient"
 		},
 		{
 			"ServiceType": "<IHostedService>",
-			"ImplementationType": "VirtualPrinter.HostedServices.TcpListenerService, VirtualPrinter",
+			"ImplementationType": "VirtualZplPrinter.HostedServices.TcpListenerService, VirtualZplPrinter",
 			"Lifetime": "Singleton"
 		}
 	]

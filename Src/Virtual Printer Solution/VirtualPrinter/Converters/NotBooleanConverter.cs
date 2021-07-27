@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace VirtualPrinter.Converters
+namespace VirtualZplPrinter.Converters
 {
 	public class NotBooleanConverter : IValueConverter
 	{

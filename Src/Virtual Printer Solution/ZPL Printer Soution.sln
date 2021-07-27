@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Virtual Printer", "VirtualPrinter\Virtual Printer.csproj", "{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Virtual ZPL Printer", "VirtualPrinter\Virtual ZPL Printer.csproj", "{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Labelary Example", "Labelary Example\Labelary Example.csproj", "{471F6992-FEFC-40AD-BCBB-8C3365FC8A58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labelary.Service", "Labelary.Service\Labelary.Service.csproj", "{9CE16721-4F4F-494F-BA94-AB188341FAF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Labelary.Service", "Labelary.Service\Labelary.Service.csproj", "{9CE16721-4F4F-494F-BA94-AB188341FAF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labelary.Abstractions", "Labelary.Abstractions\Labelary.Abstractions.csproj", "{11E169BF-2804-4D7F-A9EE-F4F4B16C7E5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Labelary.Abstractions", "Labelary.Abstractions\Labelary.Abstractions.csproj", "{11E169BF-2804-4D7F-A9EE-F4F4B16C7E5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageCache.Abstractions", "ImageCache.Abstractions\ImageCache.Abstractions.csproj", "{D1CB31B6-8579-44B5-B6FE-6B8B89A7B5A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageCache.Abstractions", "ImageCache.Abstractions\ImageCache.Abstractions.csproj", "{D1CB31B6-8579-44B5-B6FE-6B8B89A7B5A3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageCache.Repository", "ImageCache.Repository\ImageCache.Repository.csproj", "{184BBFDD-E5EB-477F-BC6A-6990E92BDC0C}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Virtual ZPL Printer Setup", "VirtualPrinter-Setup\VirtualPrinter-Setup.vdproj", "{6F2A4B7F-333D-4910-87F8-E9A255C50F65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,8 @@ Global
 		{184BBFDD-E5EB-477F-BC6A-6990E92BDC0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{184BBFDD-E5EB-477F-BC6A-6990E92BDC0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{184BBFDD-E5EB-477F-BC6A-6990E92BDC0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F2A4B7F-333D-4910-87F8-E9A255C50F65}.Debug|Any CPU.ActiveCfg = Debug
+		{6F2A4B7F-333D-4910-87F8-E9A255C50F65}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,7 @@
 ﻿using ImageCache.Abstractions;
 using Prism.Events;
 
-namespace VirtualPrinter.Events
+namespace VirtualZplPrinter.Events
 {
 	public class LabelCreatedEvent : PubSubEvent<LabelCreatedEventArgs>
 	{

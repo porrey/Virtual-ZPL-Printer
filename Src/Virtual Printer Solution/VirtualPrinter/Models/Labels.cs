@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VirtualPrinter.Models
+namespace VirtualZplPrinter.Models
 {
 	//public class Label
 	//{

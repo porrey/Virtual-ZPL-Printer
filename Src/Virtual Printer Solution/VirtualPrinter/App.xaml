@@ -1,8 +1,8 @@
 ﻿<wpf:HostedApplication  xmlns:wpf="clr-namespace:Diamond.Core.Wpf;assembly=Diamond.Core.Wpf"
-						x:Class="VirtualPrinter.App"
+						x:Class="VirtualZplPrinter.App"
 						xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 						xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-						xmlns:converters="clr-namespace:VirtualPrinter.Converters">
+						xmlns:converters="clr-namespace:VirtualZplPrinter.Converters">
 	<Application.Resources>
 		<converters:NotBooleanConverter x:Key="NotBooleanConverter" />
 		<converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter" />

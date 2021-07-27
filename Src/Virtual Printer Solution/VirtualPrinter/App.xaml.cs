@@ -2,7 +2,7 @@
 using Diamond.Core.Wpf;
 using Microsoft.Extensions.Hosting;
 
-namespace VirtualPrinter
+namespace VirtualZplPrinter
 {
 	public partial class App : HostedApplication
 	{

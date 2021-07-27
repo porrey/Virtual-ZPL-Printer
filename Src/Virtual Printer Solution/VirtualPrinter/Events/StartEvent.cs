@@ -1,7 +1,7 @@
 ﻿using Prism.Events;
-using VirtualPrinter.Models;
+using VirtualZplPrinter.Models;
 
-namespace VirtualPrinter.Events
+namespace VirtualZplPrinter.Events
 {
 	public class StartEvent : PubSubEvent<StartEventArgs>
 	{

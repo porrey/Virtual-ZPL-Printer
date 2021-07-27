@@ -13,10 +13,10 @@ using ImageCache.Abstractions;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using VirtualPrinter.Events;
-using VirtualPrinter.Models;
+using VirtualZplPrinter.Events;
+using VirtualZplPrinter.Models;
 
-namespace VirtualPrinter.ViewModels
+namespace VirtualZplPrinter.ViewModels
 {
 	public class MainViewModel : BindableBase
 	{

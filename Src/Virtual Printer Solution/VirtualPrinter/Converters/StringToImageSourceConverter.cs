@@ -4,7 +4,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace VirtualPrinter.Converters
+namespace VirtualZplPrinter.Converters
 {
 	[ValueConversion(typeof(String), typeof(ImageSource))]
     public class StringToImageSourceConverter : IValueConverter

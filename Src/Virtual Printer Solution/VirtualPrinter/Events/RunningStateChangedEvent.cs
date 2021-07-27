@@ -1,6 +1,6 @@
 ﻿using Prism.Events;
 
-namespace VirtualPrinter.Events
+namespace VirtualZplPrinter.Events
 {
 	public class RunningStateChangedEvent : PubSubEvent<RunningStateChangedEventArgs>
 	{

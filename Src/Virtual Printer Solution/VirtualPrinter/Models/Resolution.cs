@@ -1,4 +1,4 @@
-﻿namespace VirtualPrinter.Models
+﻿namespace VirtualZplPrinter.Models
 {
 	public class Resolution
 	{

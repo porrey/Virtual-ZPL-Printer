@@ -5,9 +5,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Diamond.Core.Wpf;
-using VirtualPrinter.ViewModels;
+using VirtualZplPrinter.ViewModels;
 
-namespace VirtualPrinter.Views
+namespace VirtualZplPrinter.Views
 {
 	public partial class MainView : Window, IMainWindow
 	{

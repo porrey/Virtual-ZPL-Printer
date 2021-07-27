@@ -1,6 +1,6 @@
 ﻿using Labelary.Abstractions;
 
-namespace VirtualPrinter.Models
+namespace VirtualZplPrinter.Models
 {
 	public class LabelConfiguration : ILabelConfiguration
 	{
