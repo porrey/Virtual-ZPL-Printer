@@ -69,7 +69,7 @@ namespace VirtualZplPrinter.ViewModels
 			//
 			if (this.ImagePath == null)
 			{
-				this.ImagePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Virtual ZPL Printer Images";
+				this.ImagePath = this.ImageCacheRepository.DefaultFolder;
 			}
 		}
 
@@ -250,16 +250,12 @@ namespace VirtualZplPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _imagePath, value);
+				_ = this.LoadLabelsAsync();
 			}
 		}
 
 		public async Task InitializeAsync()
 		{
-			//
-			// Load any pre-existing labels.
-			//
-			_ = this.LoadLabelsAsync();
-
 			//
 			// Auto start
 			//
@@ -394,7 +390,7 @@ namespace VirtualZplPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				this.StatusText = $"Error: {ex.Message}";
 			}
 		}
 
@@ -419,7 +415,7 @@ namespace VirtualZplPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				_ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				this.StatusText = $"Error: {ex.Message}";
 			}
 			finally
 			{
@@ -429,30 +425,41 @@ namespace VirtualZplPrinter.ViewModels
 
 		protected async Task LoadLabelsAsync()
 		{
-			//
-			// Clea the current list.
-			//
-			this.Labels.Clear();
-
-			//
-			// Load the previous labels
-			//
-			IEnumerable<IStoredImage> labels = await this.ImageCacheRepository.GetAllAsync(this.ImagePath);
-
-			//
-			// Add the labels to the collection.
-			//
-			foreach (IStoredImage label in labels)
+			try
 			{
-				this.Labels.Add(label);
+				//
+				// Clea the current list.
+				//
+				this.Labels.Clear();
+
+				//
+				// Load the previous labels
+				//
+				IEnumerable<IStoredImage> labels = await this.ImageCacheRepository.GetAllAsync(this.ImagePath);
+
+				//
+				// Add the labels to the collection.
+				//
+				foreach (IStoredImage label in labels)
+				{
+					this.Labels.Add(label);
+				}
+
+				//
+				// Select the last label.
+				//
+				if (this.Labels.Any())
+				{
+					this.SelectedLabel = this.Labels.Last();
+				}
 			}
-
-			//
-			// Select the last label.
-			//
-			if (this.Labels.Any())
+			catch (Exception ex)
 			{
-				this.SelectedLabel = this.Labels.Last();
+				this.StatusText = $"Error: {ex.Message}";
+			}
+			finally
+			{
+				this.RefreshCommands();
 			}
 		}
 	}

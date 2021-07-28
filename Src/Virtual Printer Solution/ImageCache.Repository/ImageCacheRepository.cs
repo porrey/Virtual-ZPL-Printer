@@ -9,6 +9,7 @@ namespace ImageCache.Repository
 {
 	public class ImageCacheRepository : IImageCacheRepository
 	{
+		public string DefaultFolder => $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Virtual ZPL Printer Images";
 		protected string FileName(DirectoryInfo imagePathRoot, int id) => $@"{imagePathRoot.FullName}\zpl-label-image-{id}.png";
 		protected FileInfo[] GetFiles(DirectoryInfo imagePathRoot) => imagePathRoot.GetFiles("zpl-label-image-*.png").OrderBy(t => t.CreationTime).ToArray();
 		protected int GetFileIndex(FileInfo file) => Convert.ToInt32(Path.GetFileNameWithoutExtension(file.Name).Split(new char[] { '-' })[3]);
@@ -16,14 +17,21 @@ namespace ImageCache.Repository
 
 		protected DirectoryInfo GetDirectory(string imagePathRoot)
 		{
-			DirectoryInfo dir = new DirectoryInfo(imagePathRoot);
+			DirectoryInfo returnValue = null;
 
-			if (!dir.Exists)
+			if (string.IsNullOrWhiteSpace(imagePathRoot))
 			{
-				dir.Create();
+				imagePathRoot = this.DefaultFolder;
 			}
 
-			return dir;
+			returnValue = new(imagePathRoot);
+
+			if (!returnValue.Exists)
+			{
+				returnValue.Create();
+			}
+
+			return returnValue;
 		}
 
 		protected int GetNextIndex(DirectoryInfo imagePathRoot)

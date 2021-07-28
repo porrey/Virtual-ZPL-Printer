@@ -15,7 +15,7 @@
 
 	<Window.Resources>
 		<SolidColorBrush x:Key="BackgroundColor">#BB000000</SolidColorBrush>
-		<SolidColorBrush x:Key="ForegroundColor">#FF454545</SolidColorBrush>
+		<SolidColorBrush x:Key="ForegroundColor">#FF252525</SolidColorBrush>
 		<SolidColorBrush x:Key="BorderColor">#AA4472C4</SolidColorBrush>
 		<system:Double x:Key="ControlHeight">29</system:Double>
 		<Thickness x:Key="ControlMargin">5,5,5,5</Thickness>
@@ -39,7 +39,8 @@
 				<TextBlock Grid.Column="1"
 						   Text="{Binding Display}"
 						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left" />
+						   HorizontalAlignment="Left"
+						   Foreground="{StaticResource ForegroundColor}" />
 			</Grid>
 		</DataTemplate>
 
@@ -59,7 +60,8 @@
 				<TextBlock Grid.Column="1"
 						   Text="{Binding Display}"
 						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left" />
+						   HorizontalAlignment="Left"
+						   Foreground="{StaticResource ForegroundColor}" />
 			</Grid>
 		</DataTemplate>
 
@@ -140,14 +142,15 @@
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
 							   Foreground="{StaticResource ForegroundColor}" />
-					<TextBlock Grid.Row="0"
-							   Grid.Column="1"
-							   Text="{Binding MyIpAddress,FallbackValue =127.0.0.1}"
-							   VerticalAlignment="Center"
-							   HorizontalAlignment="Left"
-							   Margin="5"
-							   FontSize="14"
-							   Foreground="{StaticResource ForegroundColor}" />
+					<TextBox Grid.Row="0"
+							 Grid.Column="1"
+							 Text="{Binding MyIpAddress, FallbackValue=127.0.0.1, Mode=OneWay}"
+							 Margin="{StaticResource ControlMargin}"
+							 Height="{StaticResource ControlHeight}"
+							 VerticalContentAlignment="Center"
+							 HorizontalContentAlignment="Left"
+							 IsReadOnly="true"
+							 Foreground="{StaticResource ForegroundColor}" />
 
 					<TextBlock Grid.Row="0"
 							   Grid.Column="2"
@@ -176,7 +179,9 @@
 							 Margin="5"
 							 Height="{StaticResource ControlHeight}"
 							 VerticalContentAlignment="Center"
-							 HorizontalContentAlignment="Left" />
+							 HorizontalContentAlignment="Left"
+							 InputScope="Number"
+							 Foreground="{StaticResource ForegroundColor}" />
 
 					<TextBlock Grid.Row="2"
 							   Grid.Column="0"
@@ -205,7 +210,9 @@
 							 Margin="{StaticResource ControlMargin}"
 							 Height="{StaticResource ControlHeight}"
 							 VerticalContentAlignment="Center"
-							 HorizontalContentAlignment="Left" />
+							 HorizontalContentAlignment="Left"
+							 InputScope="Number"
+							 Foreground="{StaticResource ForegroundColor}" />
 
 					<TextBlock Grid.Row="2"
 							   Grid.Column="2"
@@ -220,7 +227,9 @@
 							 Margin="{StaticResource ControlMargin}"
 							 Height="{StaticResource ControlHeight}"
 							 VerticalContentAlignment="Center"
-							 HorizontalContentAlignment="Left" />
+							 HorizontalContentAlignment="Left"
+							 InputScope="Number"
+							 Foreground="{StaticResource ForegroundColor}" />
 
 					<TextBlock Grid.Row="3"
 							   Grid.Column="0"
@@ -229,14 +238,42 @@
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
 							   Foreground="{StaticResource ForegroundColor}" />
-					<TextBox Grid.Row="3"
-							 Grid.Column="1"
-							 Grid.ColumnSpan="3"
-							 Text="{Binding ImagePath, Mode=TwoWay}"
-							 Margin="5"
-							 Height="{StaticResource ControlHeight}"
-							 VerticalContentAlignment="Center"
-							 HorizontalContentAlignment="Left" />
+					<Grid Grid.Row="3"
+						  Grid.Column="1"
+						  Grid.ColumnSpan="3">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						
+						<TextBox Grid.Column="0" Text="{Binding ImagePath, Mode=TwoWay, Delay=750, UpdateSourceTrigger=PropertyChanged}"
+								 Margin="5"
+								 Height="{StaticResource ControlHeight}"
+								 VerticalContentAlignment="Center"
+								 HorizontalContentAlignment="Left"
+								 InputScope="FullFilePath"
+								 Foreground="{StaticResource ForegroundColor}" />
+
+						<Button Grid.Column="1"
+								VerticalAlignment="Center"
+								HorizontalAlignment="Right"
+								Command="{Binding BrowseCommand}"
+								Margin="{StaticResource ControlMargin}"
+								ToolTip="Browse for a folder to specify where label images are cached.">
+							<Button.Content>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto" />
+										<ColumnDefinition Width="*" />
+									</Grid.ColumnDefinitions>
+
+									<Image Source="/Assets/browse.png"
+										   Width="24"
+										   Height="24" />
+								</Grid>
+							</Button.Content>
+						</Button>
+					</Grid>
 				</Grid>
 			</Border>
 		</Grid>

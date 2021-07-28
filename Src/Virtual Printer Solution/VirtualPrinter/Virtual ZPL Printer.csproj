@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\browse.png" />
     <None Remove="Assets\clear-label.png" />
     <None Remove="Assets\label.png" />
     <None Remove="Assets\printer-running.png" />
@@ -27,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\browse.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\clear-label.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
