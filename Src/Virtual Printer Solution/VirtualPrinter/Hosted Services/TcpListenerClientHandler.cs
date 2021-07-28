@@ -6,7 +6,6 @@ using ImageCache.Abstractions;
 using Labelary.Abstractions;
 using Prism.Events;
 using VirtualZplPrinter.Events;
-using VirtualZplPrinter.Models;
 
 namespace VirtualZplPrinter.Client
 {

@@ -38,5 +38,8 @@
     <Setting Name="ImagePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="LabelUnit" Type="UnitsNet.Units.LengthUnit" Scope="User">
+      <Value Profile="(Default)">Inch</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -166,5 +166,17 @@ namespace VirtualZplPrinter.Properties {
                 this["ImagePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Inch")]
+        public global::UnitsNet.Units.LengthUnit LabelUnit {
+            get {
+                return ((global::UnitsNet.Units.LengthUnit)(this["LabelUnit"]));
+            }
+            set {
+                this["LabelUnit"] = value;
+            }
+        }
     }
 }

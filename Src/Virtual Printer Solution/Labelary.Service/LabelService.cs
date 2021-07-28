@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Labelary.Abstractions;
+using UnitsNet;
 
 namespace Labelary.Service
 {
@@ -21,7 +22,10 @@ namespace Labelary.Service
 			{
 				using (StringContent content = new(zpl, Encoding.UTF8, "application/x-www-form-urlencoded"))
 				{
-					using (HttpResponseMessage response = await client.PostAsync($"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{labelConfiguration.LabelWidth}x{labelConfiguration.LabelHeight}/0/", content))
+					double width = (new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
+					double height = (new Length(labelConfiguration.LabelHeight, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
+					
+					using (HttpResponseMessage response = await client.PostAsync($"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width}x{height}/0/", content))
 					{
 						if (response.IsSuccessStatusCode)
 						{
@@ -43,19 +47,23 @@ namespace Labelary.Service
 			byte[] returnValue = null;
 
 			//
+			// Get the label size in mm
+			//
+			double labelWidthMm = (new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Millimeter).Value;
+			double labelHeightMm = (new Length(labelConfiguration.LabelHeight, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Millimeter).Value;
+
+			//
 			// Get the size in pixels
 			//
-			int width = (int)(labelConfiguration.LabelWidth * 25.4 * labelConfiguration.Dpmm);
-			int height = (int)(labelConfiguration.LabelHeight * 25.4 * labelConfiguration.Dpmm);
+			int width = (int)(labelWidthMm * labelConfiguration.Dpmm);
+			int height = (int)(labelHeightMm * labelConfiguration.Dpmm);
 
 			//
 			// Create an image.
 			//
-			Bitmap bmp = null;
-
-			using (bmp = new Bitmap(width, height))
+			using (Bitmap bmp = new Bitmap(width, height))
 			{
-				Rectangle rect = new Rectangle(0, 0, width, height);
+				Rectangle rect = new(0, 0, width, height);
 
 				using (Graphics graphics = Graphics.FromImage(bmp))
 				{

@@ -31,7 +31,12 @@ namespace VirtualZplPrinter.ViewModels
 			this.Resolutions.Add(new Resolution() { Dpmm = 24 });
 			this.SelectedResolution = this.Resolutions.ElementAt(1);
 
-			this.StartCommand = new DelegateCommand(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning);
+			this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Inch });
+			this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Millimeter });
+			this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Centimeter });
+			this.SelectedLabelUnit = this.LabelUnits.ElementAt(0);
+
+			this.StartCommand = new DelegateCommand(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning && this.Port > 0 && this.LabelWidth > 0 && this.LabelHeight > 0);
 			this.StopCommand = new DelegateCommand(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
 			this.TestLabelCommand = new DelegateCommand(() => _ = this.TestLabelAsync(), () => !this.IsBusy && this.IsRunning);
 			this.ClearLabelsCommand = new DelegateCommand(() => _ = this.ClearLabelsAsync(), () => !this.IsBusy && this.Labels.Count > 0);
@@ -74,6 +79,7 @@ namespace VirtualZplPrinter.ViewModels
 		protected CancellationTokenSource TokenSource { get; set; }
 
 		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
+		public ObservableCollection<LabelUnit> LabelUnits { get; } = new ObservableCollection<LabelUnit>();
 		public ObservableCollection<IStoredImage> Labels { get; } = new ObservableCollection<IStoredImage>();
 		public DelegateCommand StartCommand { get; set; }
 		public DelegateCommand StopCommand { get; set; }
@@ -90,6 +96,19 @@ namespace VirtualZplPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _selectedResolution, value);
+			}
+		}
+
+		private LabelUnit _selectedLabelUnit = null;
+		public LabelUnit SelectedLabelUnit
+		{
+			get
+			{
+				return _selectedLabelUnit;
+			}
+			set
+			{
+				this.SetProperty(ref _selectedLabelUnit, value);
 			}
 		}
 
@@ -162,6 +181,7 @@ namespace VirtualZplPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _port, value);
+				this.RefreshCommands();
 			}
 		}
 
@@ -175,6 +195,7 @@ namespace VirtualZplPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _lableWidth, value);
+				this.RefreshCommands();
 			}
 		}
 
@@ -188,6 +209,7 @@ namespace VirtualZplPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _lableHeight, value);
+				this.RefreshCommands();
 			}
 		}
 
@@ -243,7 +265,7 @@ namespace VirtualZplPrinter.ViewModels
 			//
 			if (this.AutoStart && this.Port > 0)
 			{
-				await Task.Delay(150);
+				await Task.Delay(250);
 				_ = this.StartAsync();
 			}
 		}
@@ -257,7 +279,7 @@ namespace VirtualZplPrinter.ViewModels
 				//
 				IPHostEntry entry = Dns.GetHostEntry(Dns.GetHostName());
 				IPAddress a = entry.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
-				return $"IP Address: {a.ToString()}";
+				return a.ToString();
 			}
 		}
 
@@ -288,6 +310,7 @@ namespace VirtualZplPrinter.ViewModels
 						Dpmm = this.SelectedResolution.Dpmm,
 						LabelHeight = this.LabelHeight,
 						LabelWidth = this.LabelWidth,
+						Unit = this.SelectedLabelUnit.Unit
 					},
 					Port = this.Port,
 					ImagePath = this.ImagePath

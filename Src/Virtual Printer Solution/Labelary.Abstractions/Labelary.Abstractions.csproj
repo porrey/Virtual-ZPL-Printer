@@ -14,4 +14,8 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="UnitsNet" Version="4.99.0" />
+  </ItemGroup>
+
 </Project>

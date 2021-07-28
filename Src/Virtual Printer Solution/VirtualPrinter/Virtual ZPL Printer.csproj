@@ -15,6 +15,7 @@
     <None Remove="Assets\printer-running.png" />
     <None Remove="Assets\printer-stopped.png" />
     <None Remove="Assets\resolution.png" />
+    <None Remove="Assets\ruler.png" />
     <None Remove="Assets\save-label.png" />
     <None Remove="Assets\start.png" />
     <None Remove="Assets\stop.png" />
@@ -51,6 +52,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\stop.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ruler.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\virtual-printer.png">

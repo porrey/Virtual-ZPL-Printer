@@ -44,6 +44,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -164,15 +172,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Virtual ZPL Printer"
-        "ProductCode" = "8:{0C93C0DE-5542-4D8E-897B-16138A78E2BE}"
-        "PackageCode" = "8:{E497F2EF-DBC2-440C-AE20-F56533279AC3}"
+        "ProductCode" = "8:{7AD65FB2-BBB4-4C65-A3EA-B8F9ED3C3DCC}"
+        "PackageCode" = "8:{0A4F8B7A-8056-41B8-8E97-6875BA8FFE01}"
         "UpgradeCode" = "8:{32EBCEBE-7298-4898-A855-DE97B7DDACEA}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "InstallAllUsers" = "11:TRUE"
+        "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:Daniel Porrey"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
