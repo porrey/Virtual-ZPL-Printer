@@ -240,10 +240,10 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="1*" />
-						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="1*" />
-						<ColumnDefinition Width="2*" />
 					</Grid.ColumnDefinitions>
 
 					<TextBlock Grid.Row="0"
@@ -359,7 +359,7 @@
 
 						<TextBox Grid.Column="0"
 								 Text="{Binding ImagePath, Mode=TwoWay, Delay=750, UpdateSourceTrigger=PropertyChanged}"
-								 Margin="5"
+								 Margin="5,5,0,5"
 								 Height="{StaticResource ControlHeight}"
 								 VerticalContentAlignment="Center"
 								 HorizontalContentAlignment="Left"
@@ -451,7 +451,7 @@
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
 
-						<Image Source="/Assets/stop.png"
+						<Image Source="/Assets/start.png"
 							   Width="24"
 							   Height="24" />
 
