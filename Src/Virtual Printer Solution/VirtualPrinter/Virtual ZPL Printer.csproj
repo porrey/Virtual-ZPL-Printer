@@ -6,7 +6,12 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>virtual-printer.ico</ApplicationIcon>
     <AssemblyName>VirtualZplPrinter</AssemblyName>
+    <StartupObject>VirtualZplPrinter.App</StartupObject>
     <RootNamespace>VirtualZplPrinter</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
