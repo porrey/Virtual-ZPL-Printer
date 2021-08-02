@@ -8,6 +8,9 @@
     <AssemblyName>VirtualZplPrinter</AssemblyName>
     <StartupObject>VirtualZplPrinter.App</StartupObject>
     <RootNamespace>VirtualZplPrinter</RootNamespace>
+    <Version>1.0.4</Version>
+    <FileVersion>1.0.4</FileVersion>
+    <AssemblyVersion>1.0.4</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
