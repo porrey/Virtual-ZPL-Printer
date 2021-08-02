@@ -46,10 +46,14 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.CoreRuntime.5.0.x64"
                     {
-                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    "Name" = "8:.NET Runtime 5.0.8 (x64)"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.CoreRuntime.5.0.x86"
+                    {
+                    "Name" = "8:.NET Runtime 5.0.8 (x86)"
+                    "ProductCode" = "8:Microsoft.NetCore.CoreRuntime.5.0.x86"
                     }
                 }
             }
@@ -173,11 +177,11 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Virtual ZPL Printer"
         "ProductCode" = "8:{A57A6683-7893-46DF-A878-3852F419F1CB}"
-        "PackageCode" = "8:{17D4FC26-1433-43E3-BC44-E6F457ACCFBD}"
+        "PackageCode" = "8:{0F79E5AA-C345-4052-B8D7-798BBAAB610B}"
         "UpgradeCode" = "8:{32EBCEBE-7298-4898-A855-DE97B7DDACEA}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.3"
