@@ -12,11 +12,7 @@
     <FileVersion>1.0.5</FileVersion>
     <AssemblyVersion>1.0.5</AssemblyVersion>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
-
+	
   <ItemGroup>
     <None Remove="Assets\browse.png" />
     <None Remove="Assets\clear-label.png" />
