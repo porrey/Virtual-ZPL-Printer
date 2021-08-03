@@ -12,7 +12,7 @@
 		MinWidth="600"
 		Icon="/virtual-printer.ico"
 		ResizeMode="CanResizeWithGrip"
-		WindowStartupLocation="CenterScreen"
+		WindowStartupLocation="Manual"
 		WindowStyle="SingleBorderWindow">
 
 	<Window.Resources>
