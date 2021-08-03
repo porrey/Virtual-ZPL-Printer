@@ -11,12 +11,12 @@
 		Width="800"
 		MinWidth="600"
 		Icon="/virtual-printer.ico"
-		ResizeMode="CanResizeWithGrip"
+		ResizeMode="CanResize"
 		WindowStartupLocation="Manual"
-		WindowStyle="SingleBorderWindow">
+		WindowStyle="ThreeDBorderWindow">
 
 	<Window.Resources>
-		<SolidColorBrush x:Key="BackgroundColor">#BB000000</SolidColorBrush>
+		<SolidColorBrush x:Key="BackgroundColor">#FF3C7FB1</SolidColorBrush>
 		<SolidColorBrush x:Key="ForegroundColor">#FF252525</SolidColorBrush>
 		<SolidColorBrush x:Key="BorderColor">#AA4472C4</SolidColorBrush>
 		<system:Double x:Key="ControlHeight">29</system:Double>
@@ -209,7 +209,8 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
-			<RowDefinition Height="180" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
 		<Grid Grid.Row="0"
@@ -416,34 +417,6 @@
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Bottom"
 					HorizontalAlignment="Right"
-					Command="{Binding StopCommand}"
-					Width="{StaticResource ButtonWidth}"
-					Margin="5,0,0,0"
-					ToolTip="Stop the virtual printer from accepting label request.">
-				<Button.Content>
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="*" />
-						</Grid.ColumnDefinitions>
-
-						<Image Source="/Assets/stop.png"
-							   Width="24"
-							   Height="24" />
-
-						<TextBlock Grid.Column="1"
-								   Text="Stop"
-								   VerticalAlignment="Center"
-								   HorizontalAlignment="Left"
-								   Margin="5,5,5,5" />
-					</Grid>
-				</Button.Content>
-			</Button>
-
-			<Button Grid.Column="3"
-					Style="{DynamicResource ButtonStyle1}"
-					VerticalAlignment="Bottom"
-					HorizontalAlignment="Right"
 					Command="{Binding StartCommand}"
 					Width="{StaticResource ButtonWidth}"
 					Margin="5,0,0,0"
@@ -467,6 +440,34 @@
 					</Grid>
 				</Button.Content>
 			</Button>
+
+			<Button Grid.Column="3"
+					Style="{DynamicResource ButtonStyle1}"
+					VerticalAlignment="Bottom"
+					HorizontalAlignment="Right"
+					Command="{Binding StopCommand}"
+					Width="{StaticResource ButtonWidth}"
+					Margin="5,0,0,0"
+					ToolTip="Stop the virtual printer from accepting label request.">
+				<Button.Content>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Image Source="/Assets/stop.png"
+							   Width="24"
+							   Height="24" />
+
+						<TextBlock Grid.Column="1"
+								   Text="Stop"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Left"
+								   Margin="5,5,5,5" />
+					</Grid>
+				</Button.Content>
+			</Button>
 		</Grid>
 
 		<Grid Grid.Row="2"
@@ -477,54 +478,32 @@
 				   Visibility="{Binding SelectedLabel, Converter={StaticResource ObjectToVisibilityConverter}}"
 				   Margin="10,20,10,20">
 			</Image>
-
-			<Border x:Name="DefaultLabel"
-					Margin="45"
-					BorderBrush="Wheat"
-					BorderThickness="1"
-					Background="White"
-					Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
-					Visibility="{Binding SelectedLabel, Converter={StaticResource NotObjectToVisibilityConverter}}">
-				<TextBlock Text="No selection"
-						   FontSize="46"
-						   Foreground="{StaticResource ForegroundColor}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Center"
-						   TextWrapping="WrapWithOverflow" />
-			</Border>
 		</Grid>
 
-		<Grid Grid.Row="3">
+		<ListView x:Name="ListView"
+				  Grid.Row="3"
+				  BorderThickness="0"
+				  SelectionChanged="ListView_SelectionChanged"
+				  ItemsSource="{Binding Labels}"
+				  ItemTemplate="{StaticResource LabelTemplate}"
+				  SelectedItem="{Binding SelectedLabel}">
+			<ListView.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</ListView.ItemsPanel>
+		</ListView>
+
+		<Grid Grid.Row="4">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="25" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 
-			<Grid.RowDefinitions>
-				<RowDefinition Height="1*" />
-				<RowDefinition Height="Auto" />
-			</Grid.RowDefinitions>
-
-			<ListView x:Name="ListView"
-					  Grid.Row="0"
-					  Grid.Column="0"
-					  Grid.ColumnSpan="4"
-					  BorderThickness="0"
-					  SelectionChanged="ListView_SelectionChanged"
-					  ItemsSource="{Binding Labels}"
-					  ItemTemplate="{StaticResource LabelTemplate}"
-					  SelectedItem="{Binding SelectedLabel}">
-				<ListView.ItemsPanel>
-					<ItemsPanelTemplate>
-						<StackPanel Orientation="Horizontal" />
-					</ItemsPanelTemplate>
-				</ListView.ItemsPanel>
-			</ListView>
-
 			<TextBlock Grid.Column="0"
-					   Grid.Row="1"
 					   Text="{Binding StatusText}"
 					   VerticalAlignment="Center"
 					   HorizontalAlignment="Left"
@@ -532,8 +511,41 @@
 					   Margin="10,0,0,0"
 					   Foreground="{StaticResource ForegroundColor}" />
 
-			<Button Grid.Column="1"
-					Grid.Row="1"
+			<Rectangle Grid.Column="1"
+					   VerticalAlignment="Stretch"
+					   Margin="10,10,0,10"
+					   Width="1"
+					   Fill="{StaticResource ForegroundColor}" />
+			<!-- Idle -->
+			<StackPanel Grid.Column="2"
+						Orientation="Horizontal"
+						Margin="20,0,20,0"
+						Visibility="{Binding IsRunning, Converter={StaticResource NotBooleanToVisibilityConverter}}">
+				<Image Source="/Assets/idle.png"
+					   Width="24" />
+				<TextBlock Text="Idle"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   FontSize="18"
+						   Margin="5,0,0,0"
+						   Foreground="{StaticResource ForegroundColor}" />
+			</StackPanel>
+
+			<StackPanel Grid.Column="2"
+						Orientation="Horizontal"
+						Margin="20,0,20,0"
+						Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}">
+				<Image Source="/Assets/listening.png"
+					   Width="24" />
+				<TextBlock Text="Listening"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   FontSize="18"
+						   Margin="5,0,0,0"
+						   Foreground="{StaticResource ForegroundColor}" />
+			</StackPanel>
+
+			<Button Grid.Column="3"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
@@ -560,15 +572,14 @@
 				</Button.Content>
 			</Button>
 
-			<Button Grid.Column="2"
-					Grid.Row="1"
+			<Button Grid.Column="4"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
 					Command="{Binding ClearLabelsCommand}"
 					Width="{StaticResource StatusButtonWidth}"
 					Height="{StaticResource StatusButtonHeight}"
-					Margin="5,3,0,3"
+					Margin="5,3,5,3"
 					ToolTip="Clear all labels.">
 				<Button.Content>
 					<Grid>

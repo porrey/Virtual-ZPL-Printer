@@ -20,12 +20,16 @@
   <ItemGroup>
     <None Remove="Assets\browse.png" />
     <None Remove="Assets\clear-label.png" />
+    <None Remove="Assets\idle.png" />
     <None Remove="Assets\label.png" />
+    <None Remove="Assets\listening.png" />
+    <None Remove="Assets\printer-running-base.png" />
     <None Remove="Assets\printer-running.png" />
     <None Remove="Assets\printer-stopped.png" />
     <None Remove="Assets\resolution.png" />
     <None Remove="Assets\ruler.png" />
     <None Remove="Assets\save-label.png" />
+    <None Remove="Assets\small-label.png" />
     <None Remove="Assets\start.png" />
     <None Remove="Assets\stop.png" />
     <None Remove="Assets\test-label.png" />
@@ -42,7 +46,19 @@
     <Content Include="Assets\clear-label.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\idle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\label.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\listening.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\printer-running-base.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\small-label.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\test-label.png">

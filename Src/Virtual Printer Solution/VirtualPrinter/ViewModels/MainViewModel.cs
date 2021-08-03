@@ -125,7 +125,7 @@ namespace VirtualZplPrinter.ViewModels
 
 				if (this.SelectedLabel != null)
 				{
-					this.StatusText = $"Viewing label {this.SelectedLabel.Id}/ {this.Labels.Count} label(s)";
+					this.StatusText = $"Viewing label {this.SelectedLabel.Id} of {this.Labels.Count}";
 				}
 				else
 				{
@@ -399,14 +399,14 @@ namespace VirtualZplPrinter.ViewModels
 			try
 			{
 				//
-				// Set the selected label to null.
-				//
-				this.SelectedLabel = null;
-
-				//
 				// Clear the collection.
 				//
 				this.Labels.Clear();
+
+				//
+				// Set the selected label to null.
+				//
+				this.SelectedLabel = null;
 
 				//
 				// Remove the labels from storage.
