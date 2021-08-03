@@ -116,5 +116,10 @@ namespace VirtualZplPrinter.Views
 				}
 			}
 		}
+
+		private void ContextMenu_Opened(object sender, RoutedEventArgs e)
+		{
+			this.ViewModel.RefreshCommands();
+		}
 	}
 }

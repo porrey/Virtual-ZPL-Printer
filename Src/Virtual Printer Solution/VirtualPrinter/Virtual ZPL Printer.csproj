@@ -29,6 +29,7 @@
     <None Remove="Assets\start.png" />
     <None Remove="Assets\stop.png" />
     <None Remove="Assets\test-label.png" />
+    <None Remove="Assets\trash-bin.png" />
     <None Remove="Assets\virtual-printer.png" />
     <None Remove="Samples\6x4-203dpi.txt" />
     <None Remove="Services\VirtualPrinter.json" />
@@ -79,6 +80,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\ruler.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\trash-bin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\virtual-printer.png">

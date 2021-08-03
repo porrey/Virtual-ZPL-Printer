@@ -117,5 +117,25 @@ namespace ImageCache.Repository
 
 			return Task.FromResult(returnValue);
 		}
+
+		public Task<bool> DeleteImageAsync(string imagePathRoot, string imageName)
+		{
+			bool returnValue = false;
+
+			DirectoryInfo dir = this.GetDirectory(imagePathRoot);
+
+			if (dir.Exists)
+			{
+				FileInfo file = dir.GetFiles().Where(t => t.Name == imageName).SingleOrDefault();
+
+				if (file != null)
+				{
+					file.Delete();
+					returnValue = true;
+				}
+			}
+
+			return Task.FromResult(returnValue);
+		}
 	}
 }

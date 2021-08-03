@@ -486,12 +486,23 @@
 				  SelectionChanged="ListView_SelectionChanged"
 				  ItemsSource="{Binding Labels}"
 				  ItemTemplate="{StaticResource LabelTemplate}"
-				  SelectedItem="{Binding SelectedLabel}">
+				  SelectedItem="{Binding SelectedLabel}"
+				  SelectionMode="Single">
 			<ListView.ItemsPanel>
 				<ItemsPanelTemplate>
 					<StackPanel Orientation="Horizontal" />
 				</ItemsPanelTemplate>
 			</ListView.ItemsPanel>
+			<ListView.ContextMenu>
+				<ContextMenu Opened="ContextMenu_Opened">
+					<MenuItem Header="Delete"
+							  Command="{Binding DeleteLabelCommand}">
+						<MenuItem.Icon>
+							<Image Source="/Assets/trash-bin.png" />
+						</MenuItem.Icon>
+					</MenuItem>
+				</ContextMenu>
+			</ListView.ContextMenu>
 		</ListView>
 
 		<Grid Grid.Row="4">

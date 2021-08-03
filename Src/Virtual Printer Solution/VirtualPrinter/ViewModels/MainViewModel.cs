@@ -40,6 +40,8 @@ namespace VirtualZplPrinter.ViewModels
 			this.StopCommand = new DelegateCommand(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
 			this.TestLabelCommand = new DelegateCommand(() => _ = this.TestLabelAsync(), () => !this.IsBusy && this.IsRunning);
 			this.ClearLabelsCommand = new DelegateCommand(() => _ = this.ClearLabelsAsync(), () => !this.IsBusy && this.Labels.Count > 0);
+			this.BrowseCommand = new DelegateCommand(() => _ = this.BrowseCommandAsync(), () => !this.IsBusy && !this.IsRunning & false);
+			this.DeleteLabelCommand = new DelegateCommand(() => _ = this.DeleteLabelAsync(), () => !this.IsBusy & this.SelectedLabel != null);
 
 			//
 			// Subscribe to the running state changed event to update the running
@@ -81,10 +83,13 @@ namespace VirtualZplPrinter.ViewModels
 		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
 		public ObservableCollection<LabelUnit> LabelUnits { get; } = new ObservableCollection<LabelUnit>();
 		public ObservableCollection<IStoredImage> Labels { get; } = new ObservableCollection<IStoredImage>();
+
 		public DelegateCommand StartCommand { get; set; }
 		public DelegateCommand StopCommand { get; set; }
 		public DelegateCommand TestLabelCommand { get; set; }
 		public DelegateCommand ClearLabelsCommand { get; set; }
+		public DelegateCommand BrowseCommand { get; set; }
+		public DelegateCommand DeleteLabelCommand { get; set; }
 
 		private Resolution _selectedResolution = null;
 		public Resolution SelectedResolution
@@ -279,7 +284,7 @@ namespace VirtualZplPrinter.ViewModels
 			}
 		}
 
-		protected void RefreshCommands()
+		public void RefreshCommands()
 		{
 			//
 			// refresh the state of all of the command buttons.
@@ -451,6 +456,34 @@ namespace VirtualZplPrinter.ViewModels
 				if (this.Labels.Any())
 				{
 					this.SelectedLabel = this.Labels.Last();
+				}
+			}
+			catch (Exception ex)
+			{
+				this.StatusText = $"Error: {ex.Message}";
+			}
+			finally
+			{
+				this.RefreshCommands();
+			}
+		}
+
+		protected Task BrowseCommandAsync()
+		{
+			return Task.CompletedTask;
+		}
+
+		private async Task DeleteLabelAsync()
+		{
+			try
+			{
+				if (this.SelectedLabel != null)
+				{
+					if (await this.ImageCacheRepository.DeleteImageAsync(this.ImagePath, Path.GetFileName(this.SelectedLabel.FullPath)))
+					{
+						this.Labels.Remove(this.SelectedLabel);
+						this.SelectedLabel = null;
+					}
 				}
 			}
 			catch (Exception ex)
