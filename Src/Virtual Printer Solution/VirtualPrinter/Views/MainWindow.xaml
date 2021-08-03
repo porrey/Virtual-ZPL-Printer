@@ -515,7 +515,7 @@
 					   VerticalAlignment="Stretch"
 					   Margin="10,10,0,10"
 					   Width="1"
-					   Fill="{StaticResource ForegroundColor}" />
+					   Fill="{StaticResource BorderColor}" />
 			<!-- Idle -->
 			<StackPanel Grid.Column="2"
 						Orientation="Horizontal"
