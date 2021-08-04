@@ -36,24 +36,26 @@ namespace VirtualZplPrinter.Views
 		{
 			try
 			{
+				this.WindowState = (WindowState)Properties.Settings.Default.WindowState;
+				this.ViewModel.AutoStart = Properties.Settings.Default.AutoStart;
+				this.ViewModel.Port = Properties.Settings.Default.Port;
+				this.ViewModel.LabelHeight = Properties.Settings.Default.LabelHeight;
+				this.ViewModel.LabelWidth = Properties.Settings.Default.LabelWidth;
+				this.ViewModel.SelectedResolution = this.ViewModel.Resolutions.Where(t => t.Dpmm == Properties.Settings.Default.Dpmm).SingleOrDefault();
+				this.ViewModel.SelectedLabelUnit = this.ViewModel.LabelUnits.Where(t => t.Unit == Properties.Settings.Default.LabelUnit).SingleOrDefault();
+				this.ViewModel.SelectedIpAddress = this.ViewModel.IpAddresses.Where(t => t.ToString() == Properties.Settings.Default.IpAddress).SingleOrDefault();
+
+				if (Directory.Exists(Properties.Settings.Default.ImagePath))
+				{
+					this.ViewModel.ImagePath = Properties.Settings.Default.ImagePath;
+				}
+
 				if (Properties.Settings.Default.Initialized)
 				{
 					this.Width = Properties.Settings.Default.Width;
 					this.Height = Properties.Settings.Default.Height;
 					this.Left = Properties.Settings.Default.Left;
 					this.Top = Properties.Settings.Default.Top;
-					this.WindowState = (WindowState)Properties.Settings.Default.WindowState;
-					this.ViewModel.AutoStart = Properties.Settings.Default.AutoStart;
-					this.ViewModel.Port = Properties.Settings.Default.Port;
-					this.ViewModel.LabelHeight = Properties.Settings.Default.LabelHeight;
-					this.ViewModel.LabelWidth = Properties.Settings.Default.LabelWidth;
-					this.ViewModel.SelectedResolution = this.ViewModel.Resolutions.Where(t => t.Dpmm == Properties.Settings.Default.Dpmm).SingleOrDefault();
-					this.ViewModel.SelectedLabelUnit = this.ViewModel.LabelUnits.Where(t => t.Unit == Properties.Settings.Default.LabelUnit).SingleOrDefault();
-
-					if (Directory.Exists(Properties.Settings.Default.ImagePath))
-					{
-						this.ViewModel.ImagePath = Properties.Settings.Default.ImagePath;
-					}
 				}
 				else
 				{
@@ -102,6 +104,7 @@ namespace VirtualZplPrinter.Views
 			Properties.Settings.Default.LabelWidth = this.ViewModel.LabelWidth;
 			Properties.Settings.Default.Dpmm = this.ViewModel.SelectedResolution.Dpmm;
 			Properties.Settings.Default.LabelUnit = this.ViewModel.SelectedLabelUnit.Unit;
+			Properties.Settings.Default.IpAddress = this.ViewModel.SelectedIpAddress?.ToString();
 			Properties.Settings.Default.Initialized = true;
 			Properties.Settings.Default.Save();
 		}

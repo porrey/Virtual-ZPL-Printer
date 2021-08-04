@@ -26,7 +26,7 @@
 		<system:Double x:Key="StatusButtonHeight">48</system:Double>
 		<CornerRadius x:Key="Radius">4</CornerRadius>
 
-		<DataTemplate x:Key="Resolution">
+		<DataTemplate x:Key="ResolutionTemplate">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
@@ -47,7 +47,7 @@
 			</Grid>
 		</DataTemplate>
 
-		<DataTemplate x:Key="LabelUnit">
+		<DataTemplate x:Key="LabelUnitTemplate">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
@@ -70,7 +70,8 @@
 
 		<DataTemplate x:Key="LabelTemplate">
 			<Border Background="{StaticResource BackgroundColor}"
-					CornerRadius="{StaticResource Radius}">
+					CornerRadius="{StaticResource Radius}"
+					Margin="5">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*" />
@@ -92,6 +93,27 @@
 							   Margin="3" />
 				</Grid>
 			</Border>
+		</DataTemplate>
+
+		<DataTemplate x:Key="IpAddressTemplate">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<Image Grid.Column="0"
+					   Source="/Assets/ip.png"
+					   Height="24"
+					   Width="24"
+					   Margin="0,0,10,0" />
+
+				<TextBlock Grid.Column="1"
+						   Text="{Binding ., Converter={StaticResource IpAddressToStringConverter}}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Left"
+						   Foreground="{StaticResource ForegroundColor}" />
+			</Grid>
 		</DataTemplate>
 
 		<Style x:Key="FocusVisual">
@@ -258,15 +280,17 @@
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
 							   Foreground="{StaticResource ForegroundColor}" />
-					<TextBox Grid.Row="0"
-							 Grid.Column="1"
-							 Text="{Binding MyIpAddress, FallbackValue=127.0.0.1, Mode=OneWay}"
-							 Margin="{StaticResource ControlMargin}"
-							 Height="{StaticResource ControlHeight}"
-							 VerticalContentAlignment="Center"
-							 HorizontalContentAlignment="Left"
-							 IsReadOnly="true"
-							 Foreground="{StaticResource ForegroundColor}" />
+					<ComboBox Grid.Row="0"
+							  Grid.Column="1"
+							  Margin="{StaticResource ControlMargin}"
+							  Height="{StaticResource ControlHeight}"
+							  VerticalContentAlignment="Center"
+							  HorizontalContentAlignment="Left"
+							  IsReadOnly="true"
+							  Foreground="{StaticResource ForegroundColor}"
+							  ItemsSource="{Binding IpAddresses}"
+							  SelectedItem="{Binding SelectedIpAddress}"
+							  ItemTemplate="{StaticResource IpAddressTemplate}"/>
 
 					<TextBlock Grid.Row="0"
 							   Grid.Column="2"
@@ -280,7 +304,7 @@
 							  Margin="5"
 							  ItemsSource="{Binding LabelUnits}"
 							  SelectedItem="{Binding SelectedLabelUnit, Mode=TwoWay}"
-							  ItemTemplate="{StaticResource LabelUnit}" />
+							  ItemTemplate="{StaticResource LabelUnitTemplate}" />
 
 					<TextBlock Grid.Row="1"
 							   Grid.Column="0"
@@ -311,7 +335,7 @@
 							  Margin="5"
 							  ItemsSource="{Binding Resolutions}"
 							  SelectedItem="{Binding SelectedResolution, Mode=TwoWay}"
-							  ItemTemplate="{StaticResource Resolution}" />
+							  ItemTemplate="{StaticResource ResolutionTemplate}" />
 
 					<TextBlock Grid.Row="1"
 							   Grid.Column="2"

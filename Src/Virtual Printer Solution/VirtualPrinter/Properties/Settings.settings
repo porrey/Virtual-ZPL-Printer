@@ -41,5 +41,8 @@
     <Setting Name="LabelUnit" Type="UnitsNet.Units.LengthUnit" Scope="User">
       <Value Profile="(Default)">Inch</Value>
     </Setting>
+    <Setting Name="IpAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0.0.0.0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

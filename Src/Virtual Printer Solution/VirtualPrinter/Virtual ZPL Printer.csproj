@@ -8,15 +8,16 @@
     <AssemblyName>VirtualZplPrinter</AssemblyName>
     <StartupObject>VirtualZplPrinter.App</StartupObject>
     <RootNamespace>VirtualZplPrinter</RootNamespace>
-    <Version>1.0.5</Version>
-    <FileVersion>1.0.5</FileVersion>
-    <AssemblyVersion>1.0.5</AssemblyVersion>
+    <Version>1.0.6</Version>
+    <FileVersion>1.0.6</FileVersion>
+    <AssemblyVersion>1.0.6</AssemblyVersion>
   </PropertyGroup>
 	
   <ItemGroup>
     <None Remove="Assets\browse.png" />
     <None Remove="Assets\clear-label.png" />
     <None Remove="Assets\idle.png" />
+    <None Remove="Assets\ip.png" />
     <None Remove="Assets\label.png" />
     <None Remove="Assets\listening.png" />
     <None Remove="Assets\printer-running-base.png" />
@@ -44,6 +45,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\idle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\ip.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\label.png">

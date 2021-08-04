@@ -25,16 +25,9 @@ namespace VirtualZplPrinter.ViewModels
 			this.EventAggregator = eventAggregator;
 			this.ImageCacheRepository = imageCacheRepository;
 
-			this.Resolutions.Add(new Resolution() { Dpmm = 6 });
-			this.Resolutions.Add(new Resolution() { Dpmm = 8 });
-			this.Resolutions.Add(new Resolution() { Dpmm = 12 });
-			this.Resolutions.Add(new Resolution() { Dpmm = 24 });
-			this.SelectedResolution = this.Resolutions.ElementAt(1);
-
-			this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Inch });
-			this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Millimeter });
-			this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Centimeter });
-			this.SelectedLabelUnit = this.LabelUnits.ElementAt(0);
+			this.LoadResolutions();
+			this.LoadIpAddresses();
+			this.LoadLabelUnits();
 
 			this.StartCommand = new DelegateCommand(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning && this.Port > 0 && this.LabelWidth > 0 && this.LabelHeight > 0);
 			this.StopCommand = new DelegateCommand(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
@@ -83,6 +76,7 @@ namespace VirtualZplPrinter.ViewModels
 		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
 		public ObservableCollection<LabelUnit> LabelUnits { get; } = new ObservableCollection<LabelUnit>();
 		public ObservableCollection<IStoredImage> Labels { get; } = new ObservableCollection<IStoredImage>();
+		public ObservableCollection<IPAddress> IpAddresses { get; } = new ObservableCollection<IPAddress>();
 
 		public DelegateCommand StartCommand { get; set; }
 		public DelegateCommand StopCommand { get; set; }
@@ -259,6 +253,20 @@ namespace VirtualZplPrinter.ViewModels
 			}
 		}
 
+		private IPAddress _selectedIpAddress = null;
+		public IPAddress SelectedIpAddress
+		{
+			get
+			{
+				return _selectedIpAddress;
+			}
+			set
+			{
+				this.SetProperty(ref _selectedIpAddress, value);
+				_ = this.LoadLabelsAsync();
+			}
+		}
+
 		public async Task InitializeAsync()
 		{
 			//
@@ -271,19 +279,6 @@ namespace VirtualZplPrinter.ViewModels
 			}
 		}
 
-		public string MyIpAddress
-		{
-			get
-			{
-				//
-				// Gets the machine IP address and formats it into a displayable value.
-				//
-				IPHostEntry entry = Dns.GetHostEntry(Dns.GetHostName());
-				IPAddress a = entry.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
-				return a.ToString();
-			}
-		}
-
 		public void RefreshCommands()
 		{
 			//
@@ -293,6 +288,53 @@ namespace VirtualZplPrinter.ViewModels
 			this.StopCommand.RaiseCanExecuteChanged();
 			this.TestLabelCommand.RaiseCanExecuteChanged();
 			this.ClearLabelsCommand.RaiseCanExecuteChanged();
+		}
+
+		protected void LoadResolutions()
+		{
+			try
+			{
+				this.Resolutions.Add(new Resolution() { Dpmm = 6 });
+				this.Resolutions.Add(new Resolution() { Dpmm = 8 });
+				this.Resolutions.Add(new Resolution() { Dpmm = 12 });
+				this.Resolutions.Add(new Resolution() { Dpmm = 24 });
+				this.SelectedResolution = this.Resolutions.ElementAt(1);
+			}
+			catch (Exception ex)
+			{
+				this.StatusText = $"Error: {ex.Message}";
+			}
+		}
+
+		protected void LoadIpAddresses()
+		{
+			try
+			{
+				IPHostEntry entry = Dns.GetHostEntry(Dns.GetHostName());
+				IPAddress a = entry.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
+				this.IpAddresses.Add(IPAddress.Any);
+				this.IpAddresses.Add(IPAddress.Loopback);
+				this.IpAddresses.Add(a);
+			}
+			catch (Exception ex)
+			{
+				this.StatusText = $"Error: {ex.Message}";
+			}
+		}
+
+		protected void LoadLabelUnits()
+		{
+			try
+			{
+				this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Inch });
+				this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Millimeter });
+				this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Centimeter });
+				this.SelectedLabelUnit = this.LabelUnits.ElementAt(0);
+			}
+			catch (Exception ex)
+			{
+				this.StatusText = $"Error: {ex.Message}";
+			}
 		}
 
 		protected Task StartAsync()
@@ -313,6 +355,7 @@ namespace VirtualZplPrinter.ViewModels
 						LabelWidth = this.LabelWidth,
 						Unit = this.SelectedLabelUnit.Unit
 					},
+					IpAddress = this.SelectedIpAddress,
 					Port = this.Port,
 					ImagePath = this.ImagePath
 				});

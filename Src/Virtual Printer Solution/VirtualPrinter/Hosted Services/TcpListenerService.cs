@@ -25,6 +25,7 @@ namespace VirtualZplPrinter.HostedServices
 			_ = this.EventAggregator.GetEvent<StartEvent>().Subscribe(async (e) =>
 			  {
 				  this.LabelConfiguration = e.LabelConfiguration;
+				  this.IpAddress = e.IpAddress;
 				  this.Port = e.Port;
 				  this.ImagePathRoot = e.ImagePath;
 				  _ = await this.StartListener();
@@ -43,6 +44,7 @@ namespace VirtualZplPrinter.HostedServices
 		protected IEventAggregator EventAggregator { get; set; }
 		protected bool IsRunning { get; set; }
 		protected LabelConfiguration LabelConfiguration { get; set; }
+		protected IPAddress IpAddress { get; set; }
 		protected int Port { get; set; }
 		protected TcpListener Listener { get; set; }
 		protected ManualResetEvent ResetEvent { get; } = new(false);
@@ -102,7 +104,7 @@ namespace VirtualZplPrinter.HostedServices
 
 			try
 			{
-				this.Listener = new TcpListener(IPAddress.Any, this.Port);
+				this.Listener = new TcpListener(this.IpAddress, this.Port);
 				this.Listener.Start();
 				_ = this.ResetEvent.Set();
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = true });

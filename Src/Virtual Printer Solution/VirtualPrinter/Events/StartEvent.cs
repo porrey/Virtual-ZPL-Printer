@@ -1,4 +1,5 @@
-﻿using Prism.Events;
+﻿using System.Net;
+using Prism.Events;
 using VirtualZplPrinter.Models;
 
 namespace VirtualZplPrinter.Events
@@ -10,6 +11,7 @@ namespace VirtualZplPrinter.Events
 	public class StartEventArgs
 	{
 		public LabelConfiguration LabelConfiguration { get; set; }
+		public IPAddress IpAddress { get; set; }
 		public int Port { get; set; }
 		public string ImagePath { get; set; }
 	}
