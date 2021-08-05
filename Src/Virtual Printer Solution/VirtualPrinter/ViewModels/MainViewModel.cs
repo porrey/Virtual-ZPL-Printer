@@ -124,7 +124,7 @@ namespace VirtualZplPrinter.ViewModels
 
 				if (this.SelectedLabel != null)
 				{
-					this.StatusText = $"Viewing label {this.SelectedLabel.Id} of {this.Labels.Count}";
+					this.StatusText = $"Viewing label {this.Labels.IndexOf(this.SelectedLabel) + 1} of {this.Labels.Count}";
 				}
 				else
 				{
