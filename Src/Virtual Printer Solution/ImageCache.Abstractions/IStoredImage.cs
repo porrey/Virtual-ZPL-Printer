@@ -6,6 +6,8 @@ namespace ImageCache.Abstractions
 	{
 		int Id { get; set; }
 		string FullPath { get; set; }
-		public DateTime Timestamp { get; set; }
+		public DateTime Timestamp { get;  }
+		public string DisplayLabel { get; }
+		string ActualTime { get; }
 	}
 }

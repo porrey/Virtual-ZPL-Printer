@@ -71,7 +71,8 @@
 		<DataTemplate x:Key="LabelTemplate">
 			<Border Background="{StaticResource BackgroundColor}"
 					CornerRadius="{StaticResource Radius}"
-					Margin="5">
+					Margin="5"
+					ToolTip="{Binding ActualTime}">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*" />
@@ -86,7 +87,7 @@
 						   Height="64" />
 
 					<TextBlock Grid.Row="1"
-							   Text="{Binding Id, StringFormat=Label {0}}"
+							   Text="{Binding DisplayLabel}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Center"
 							   Foreground="White"

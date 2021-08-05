@@ -81,7 +81,6 @@ namespace ImageCache.Repository
 					{
 						Id = this.GetFileIndex(file),
 						FullPath = file.FullName,
-						Timestamp = file.CreationTime
 					});
 				}
 			}
