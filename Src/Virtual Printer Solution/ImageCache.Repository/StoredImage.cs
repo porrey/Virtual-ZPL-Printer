@@ -20,9 +20,14 @@ namespace ImageCache.Repository
 				{
 					returnValue = $"Today at {this.Timestamp.ToShortTimeString()}";
 				}
+				else if (this.Timestamp.Date == DateTime.Now.Date.AddDays(-1))
+				{
+					returnValue = $"Yesterday at {this.Timestamp.ToShortTimeString()}";
+				}
 				else
 				{
-					returnValue = $"{this.Timestamp.ToShortDateString()} {this.Timestamp.ToShortTimeString()}";
+					int days = (int)DateTime.Now.Date.Subtract(this.Timestamp).TotalDays;
+					returnValue = $"{days:#,###} Days Ago at {this.Timestamp.ToShortTimeString()}";
 				}
 
 				return returnValue;

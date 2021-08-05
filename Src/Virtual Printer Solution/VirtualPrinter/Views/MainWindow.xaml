@@ -72,7 +72,8 @@
 			<Border Background="{StaticResource BackgroundColor}"
 					CornerRadius="{StaticResource Radius}"
 					Margin="5"
-					ToolTip="{Binding ActualTime}">
+					ToolTip="{Binding ActualTime}"
+					Width="95">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*" />
@@ -80,7 +81,7 @@
 					</Grid.RowDefinitions>
 
 					<Image Grid.Row="0"
-						   Margin="3"
+						   Margin="3,8,3,2"
 						   Source="{Binding FullPath, Converter={StaticResource StringToImageSourceConverter}}"
 						   HorizontalAlignment="Center"
 						   Width="64"
@@ -91,7 +92,9 @@
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Center"
 							   Foreground="White"
-							   Margin="3" />
+							   Margin="4,2,8,3"
+							   TextWrapping="Wrap"
+							   TextAlignment="Center" />
 				</Grid>
 			</Border>
 		</DataTemplate>
@@ -291,7 +294,7 @@
 							  Foreground="{StaticResource ForegroundColor}"
 							  ItemsSource="{Binding IpAddresses}"
 							  SelectedItem="{Binding SelectedIpAddress}"
-							  ItemTemplate="{StaticResource IpAddressTemplate}"/>
+							  ItemTemplate="{StaticResource IpAddressTemplate}" />
 
 					<TextBlock Grid.Row="0"
 							   Grid.Column="2"
