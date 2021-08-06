@@ -6,17 +6,16 @@
 		xmlns:system="clr-namespace:System;assembly=System.Runtime"
 		mc:Ignorable="d"
 		Title="Virtual ZPL Printer"
-		Height="850"
 		MinHeight="700"
-		Width="800"
 		MinWidth="600"
 		Icon="/virtual-printer.ico"
 		ResizeMode="CanResize"
 		WindowStartupLocation="Manual"
-		WindowStyle="ThreeDBorderWindow">
+		WindowStyle="ThreeDBorderWindow"
+		Background="White">
 
 	<Window.Resources>
-		<SolidColorBrush x:Key="BackgroundColor">#FF3C7FB1</SolidColorBrush>
+		<SolidColorBrush x:Key="BackgroundColor">#FF4490c9</SolidColorBrush>
 		<SolidColorBrush x:Key="ForegroundColor">#FF252525</SolidColorBrush>
 		<SolidColorBrush x:Key="BorderColor">#AA4472C4</SolidColorBrush>
 		<system:Double x:Key="ControlHeight">29</system:Double>
@@ -134,9 +133,9 @@
 			</Setter>
 		</Style>
 		<SolidColorBrush x:Key="Button.Static.Background"
-						 Color="#FFDDDDDD" />
+						 Color="#55cbedff" />
 		<SolidColorBrush x:Key="Button.Static.Border"
-						 Color="#FF707070" />
+						 Color="#FF8fa8b4" />
 		<SolidColorBrush x:Key="Button.MouseOver.Background"
 						 Color="#FFBEE6FD" />
 		<SolidColorBrush x:Key="Button.MouseOver.Border"
@@ -162,7 +161,7 @@
 			<Setter Property="Foreground"
 					Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
 			<Setter Property="BorderThickness"
-					Value="1" />
+					Value="2" />
 			<Setter Property="HorizontalContentAlignment"
 					Value="Center" />
 			<Setter Property="VerticalContentAlignment"
@@ -228,6 +227,98 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
+
+		<SolidColorBrush x:Key="ProgressBar.Progress"
+						 Color="#FF4490c9" />
+		<SolidColorBrush x:Key="ProgressBar.Background"
+						 Color="#FFE6E6E6" />
+		<SolidColorBrush x:Key="ProgressBar.Border"
+						 Color="#FFBCBCBC" />
+		<Style x:Key="ProgressBarStyle1"
+			   TargetType="{x:Type ProgressBar}">
+			<Setter Property="Foreground"
+					Value="{StaticResource ProgressBar.Progress}" />
+			<Setter Property="Background"
+					Value="{StaticResource ProgressBar.Background}" />
+			<Setter Property="BorderBrush"
+					Value="{StaticResource ProgressBar.Border}" />
+			<Setter Property="BorderThickness"
+					Value="1" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type ProgressBar}">
+						<Grid x:Name="TemplateRoot">
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualState x:Name="Determinate" />
+									<VisualState x:Name="Indeterminate">
+										<Storyboard RepeatBehavior="Forever">
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetName="Animation"
+																		   Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+												<EasingDoubleKeyFrame KeyTime="0"
+																	  Value="0.25" />
+												<EasingDoubleKeyFrame KeyTime="0:0:1"
+																	  Value="0.25" />
+												<EasingDoubleKeyFrame KeyTime="0:0:2"
+																	  Value="0.25" />
+											</DoubleAnimationUsingKeyFrames>
+											<PointAnimationUsingKeyFrames Storyboard.TargetName="Animation"
+																		  Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)">
+												<EasingPointKeyFrame KeyTime="0"
+																	 Value="-0.5,0.5" />
+												<EasingPointKeyFrame KeyTime="0:0:1"
+																	 Value="0.5,0.5" />
+												<EasingPointKeyFrame KeyTime="0:0:2"
+																	 Value="1.5,0.5" />
+											</PointAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<Border Background="{TemplateBinding Background}"
+									BorderThickness="{TemplateBinding BorderThickness}"
+									BorderBrush="{TemplateBinding BorderBrush}" />
+							<Rectangle x:Name="PART_Track" />
+							<Grid x:Name="PART_Indicator"
+								  ClipToBounds="true"
+								  HorizontalAlignment="Left">
+								<Rectangle x:Name="Indicator"
+										   Fill="{TemplateBinding Foreground}" />
+								<Rectangle x:Name="Animation"
+										   Fill="{TemplateBinding Foreground}"
+										   RenderTransformOrigin="0.5,0.5">
+									<Rectangle.RenderTransform>
+										<TransformGroup>
+											<ScaleTransform />
+											<SkewTransform />
+											<RotateTransform />
+											<TranslateTransform />
+										</TransformGroup>
+									</Rectangle.RenderTransform>
+								</Rectangle>
+							</Grid>
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="Orientation"
+									 Value="Vertical">
+								<Setter Property="LayoutTransform"
+										TargetName="TemplateRoot">
+									<Setter.Value>
+										<RotateTransform Angle="-90" />
+									</Setter.Value>
+								</Setter>
+							</Trigger>
+							<Trigger Property="IsIndeterminate"
+									 Value="true">
+								<Setter Property="Visibility"
+										TargetName="Indicator"
+										Value="Collapsed" />
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
 	</Window.Resources>
 
 	<Grid>
@@ -262,7 +353,8 @@
 					BorderBrush="{StaticResource BorderColor}"
 					BorderThickness="1"
 					CornerRadius="{StaticResource Radius}"
-					Margin="5,5,5,0">
+					Margin="5,5,5,0"
+					IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
@@ -425,7 +517,8 @@
 		</Grid>
 
 		<Grid Grid.Row="1"
-			  Margin="0,5,5,5">
+			  Margin="0,5,5,5"
+			  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />
@@ -515,7 +608,8 @@
 				  ItemsSource="{Binding Labels}"
 				  ItemTemplate="{StaticResource LabelTemplate}"
 				  SelectedItem="{Binding SelectedLabel}"
-				  SelectionMode="Single">
+				  SelectionMode="Single"
+				  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}">
 			<ListView.ItemsPanel>
 				<ItemsPanelTemplate>
 					<StackPanel Orientation="Horizontal" />
@@ -540,7 +634,16 @@
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
+
+			<ProgressBar Style="{DynamicResource ProgressBarStyle1}"
+						 Grid.Column="1"
+						 Width="50"
+						 IsIndeterminate="True"
+						 Margin="3,15,3,15"
+						 Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
+						 Orientation="Horizontal" />
 
 			<TextBlock Grid.Column="0"
 					   Text="{Binding StatusText}"
@@ -550,13 +653,14 @@
 					   Margin="10,0,0,0"
 					   Foreground="{StaticResource ForegroundColor}" />
 
-			<Rectangle Grid.Column="1"
+			<Rectangle Grid.Column="2"
 					   VerticalAlignment="Stretch"
 					   Margin="10,10,0,10"
 					   Width="1"
 					   Fill="{StaticResource BorderColor}" />
+
 			<!-- Idle -->
-			<StackPanel Grid.Column="2"
+			<StackPanel Grid.Column="3"
 						Orientation="Horizontal"
 						Margin="20,0,20,0"
 						Visibility="{Binding IsRunning, Converter={StaticResource NotBooleanToVisibilityConverter}}">
@@ -570,7 +674,8 @@
 						   Foreground="{StaticResource ForegroundColor}" />
 			</StackPanel>
 
-			<StackPanel Grid.Column="2"
+			<!-- Listening -->
+			<StackPanel Grid.Column="3"
 						Orientation="Horizontal"
 						Margin="20,0,20,0"
 						Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -584,7 +689,7 @@
 						   Foreground="{StaticResource ForegroundColor}" />
 			</StackPanel>
 
-			<Button Grid.Column="3"
+			<Button Grid.Column="4"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
@@ -611,7 +716,7 @@
 				</Button.Content>
 			</Button>
 
-			<Button Grid.Column="4"
+			<Button Grid.Column="5"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"

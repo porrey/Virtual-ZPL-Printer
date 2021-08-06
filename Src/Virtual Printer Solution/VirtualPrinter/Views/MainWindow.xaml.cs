@@ -49,6 +49,10 @@ namespace VirtualZplPrinter.Views
 				{
 					this.ViewModel.ImagePath = Properties.Settings.Default.ImagePath;
 				}
+				else
+				{
+					this.ViewModel.ImagePath = this.ViewModel.ImageCacheRepository.DefaultFolder;
+				}
 
 				if (Properties.Settings.Default.Initialized)
 				{

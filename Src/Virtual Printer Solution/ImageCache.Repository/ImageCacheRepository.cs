@@ -93,7 +93,7 @@ namespace ImageCache.Repository
 				}
 			}
 
-			return Task.FromResult<IEnumerable<IStoredImage>>(returnValue.OrderBy(t => t.Timestamp));
+			return Task.FromResult<IEnumerable<IStoredImage>>(returnValue.OrderBy(t => t.Timestamp).ToArray());
 		}
 
 		public Task<bool> ClearAllAsync(string imagePathRoot)

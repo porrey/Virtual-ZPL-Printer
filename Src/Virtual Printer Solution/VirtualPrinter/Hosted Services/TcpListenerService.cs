@@ -110,6 +110,19 @@ namespace VirtualZplPrinter.HostedServices
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = true });
 				returnValue = true;
 			}
+			catch (SocketException socketEx)
+			{
+				string message = socketEx.Message;
+
+				if (socketEx.SocketErrorCode == SocketError.AddressAlreadyInUse)
+				{
+					message = "Address/port already in use.";
+				}
+
+				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = message });
+				_ = this.ResetEvent.Reset();
+				returnValue = false;
+			}
 			catch (Exception ex)
 			{
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });

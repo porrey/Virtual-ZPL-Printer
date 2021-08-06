@@ -25,9 +25,9 @@ namespace VirtualZplPrinter.ViewModels
 			this.EventAggregator = eventAggregator;
 			this.ImageCacheRepository = imageCacheRepository;
 
-			this.LoadResolutions();
-			this.LoadIpAddresses();
-			this.LoadLabelUnits();
+			_ = this.LoadResolutions();
+			_ = this.LoadIpAddresses();
+			_ = this.LoadLabelUnits();
 
 			this.StartCommand = new DelegateCommand(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning && this.Port > 0 && this.LabelWidth > 0 && this.LabelHeight > 0);
 			this.StopCommand = new DelegateCommand(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
@@ -40,7 +40,16 @@ namespace VirtualZplPrinter.ViewModels
 			// Subscribe to the running state changed event to update the running
 			// status of the UI.
 			//
-			_ = this.EventAggregator.GetEvent<RunningStateChangedEvent>().Subscribe((a) => this.IsRunning = a.IsRunning, ThreadOption.UIThread);
+			_ = this.EventAggregator.GetEvent<RunningStateChangedEvent>().Subscribe((a) =>
+			{
+				this.IsRunning = a.IsRunning;
+
+				if (a.IsError)
+				{
+					this.StatusText = a.ErrorMessage;
+				}
+
+			}, ThreadOption.UIThread);
 
 			//
 			// Subscribe to the label created event to add all new labels
@@ -58,19 +67,11 @@ namespace VirtualZplPrinter.ViewModels
 				  //
 				  this.SelectedLabel = a.Label;
 			  }, ThreadOption.UIThread);
-
-			//
-			// If the image path has not been initialized, set to the documents folder.
-			//
-			if (this.ImagePath == null)
-			{
-				this.ImagePath = this.ImageCacheRepository.DefaultFolder;
-			}
 		}
 
 		protected Random Rnd { get; } = new Random();
 		protected IEventAggregator EventAggregator { get; set; }
-		protected IImageCacheRepository ImageCacheRepository { get; set; }
+		public IImageCacheRepository ImageCacheRepository { get; set; }
 		protected CancellationTokenSource TokenSource { get; set; }
 
 		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
@@ -124,7 +125,7 @@ namespace VirtualZplPrinter.ViewModels
 
 				if (this.SelectedLabel != null)
 				{
-					this.StatusText = $"Viewing label {this.Labels.IndexOf(this.SelectedLabel) + 1} of {this.Labels.Count}";
+					this.StatusText = $"Viewing label {this.Labels.IndexOf(this.SelectedLabel) + 1:#,###} of {this.Labels.Count:#,###}";
 				}
 				else
 				{
@@ -263,7 +264,6 @@ namespace VirtualZplPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _selectedIpAddress, value);
-				_ = this.LoadLabelsAsync();
 			}
 		}
 
@@ -290,7 +290,7 @@ namespace VirtualZplPrinter.ViewModels
 			this.ClearLabelsCommand.RaiseCanExecuteChanged();
 		}
 
-		protected void LoadResolutions()
+		protected Task LoadResolutions()
 		{
 			try
 			{
@@ -304,9 +304,11 @@ namespace VirtualZplPrinter.ViewModels
 			{
 				this.StatusText = $"Error: {ex.Message}";
 			}
+
+			return Task.CompletedTask;
 		}
 
-		protected void LoadIpAddresses()
+		protected Task LoadIpAddresses()
 		{
 			try
 			{
@@ -320,9 +322,11 @@ namespace VirtualZplPrinter.ViewModels
 			{
 				this.StatusText = $"Error: {ex.Message}";
 			}
+
+			return Task.CompletedTask;
 		}
 
-		protected void LoadLabelUnits()
+		protected Task LoadLabelUnits()
 		{
 			try
 			{
@@ -335,6 +339,8 @@ namespace VirtualZplPrinter.ViewModels
 			{
 				this.StatusText = $"Error: {ex.Message}";
 			}
+
+			return Task.CompletedTask;
 		}
 
 		protected Task StartAsync()
@@ -478,6 +484,8 @@ namespace VirtualZplPrinter.ViewModels
 				//
 				// Clea the current list.
 				//
+				this.IsBusy = true;
+				this.StatusText = "Loading cached labels...";
 				this.Labels.Clear();
 
 				//
@@ -490,6 +498,7 @@ namespace VirtualZplPrinter.ViewModels
 				//
 				foreach (IStoredImage label in labels)
 				{
+					await Task.Delay(1);
 					this.Labels.Add(label);
 				}
 
@@ -500,6 +509,10 @@ namespace VirtualZplPrinter.ViewModels
 				{
 					this.SelectedLabel = this.Labels.Last();
 				}
+				else
+				{
+					this.SelectedLabel = null;
+				}
 			}
 			catch (Exception ex)
 			{
@@ -507,6 +520,7 @@ namespace VirtualZplPrinter.ViewModels
 			}
 			finally
 			{
+				this.IsBusy = false;
 				this.RefreshCommands();
 			}
 		}
@@ -522,10 +536,29 @@ namespace VirtualZplPrinter.ViewModels
 			{
 				if (this.SelectedLabel != null)
 				{
+					int currentIndex = this.Labels.IndexOf(this.SelectedLabel);
+
 					if (await this.ImageCacheRepository.DeleteImageAsync(this.ImagePath, Path.GetFileName(this.SelectedLabel.FullPath)))
 					{
 						this.Labels.Remove(this.SelectedLabel);
-						this.SelectedLabel = null;
+
+						if (this.Labels.Any())
+						{
+							IStoredImage label = this.Labels.ElementAt(currentIndex >= this.Labels.Count() ? currentIndex - 1 : currentIndex);
+
+							if (label != null)
+							{
+								this.SelectedLabel = label;
+							}
+							else
+							{
+								this.SelectedLabel = this.Labels.Last();
+							}
+						}
+						else
+						{
+							this.SelectedLabel = null;
+						}
 					}
 				}
 			}
