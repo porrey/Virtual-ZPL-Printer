@@ -408,7 +408,7 @@ namespace VirtualZplPrinter.ViewModels
 					//
 					// Connect to the local host.
 					//
-					await client.ConnectAsync("127.0.0.1", this.Port);
+					await client.ConnectAsync(this.SelectedIpAddress == IPAddress.Any ? IPAddress.Loopback : this.SelectedIpAddress, this.Port);
 
 					//
 					// Create a stream to send th ZPL.
