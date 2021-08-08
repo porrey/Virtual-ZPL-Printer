@@ -25,6 +25,16 @@ namespace VirtualZplPrinter.Client
 		public async Task StartSessionAsync(TcpClient client, ILabelConfiguration labelConfiguration, string imagePathRoot)
 		{
 			//
+			// Set parameters.
+			//
+			client.ReceiveTimeout = 1000;
+			client.SendTimeout = 1000;
+			client.LingerState = new LingerOption(false, 0);
+			client.NoDelay = true;
+			client.ReceiveBufferSize = 8192;
+			client.SendBufferSize = 8192;
+
+			//
 			// Get the network stream.
 			//
 			NetworkStream stream = client.GetStream();
@@ -51,25 +61,29 @@ namespace VirtualZplPrinter.Client
 							// Get the label image
 							//
 							string zpl = Encoding.UTF8.GetString(buffer);
-							byte[] image = await this.LabelService.GetLabelAsync(labelConfiguration, zpl);
 
-							//
-							// Save the image.
-							//
-							IStoredImage storedImage = await this.ImageCacheRepository.StoreImageAsync(imagePathRoot, image);
-
-							//
-							// Publish the new label.
-							//
-							this.EventAggregator.GetEvent<LabelCreatedEvent>().Publish(new LabelCreatedEventArgs()
+							if (zpl != "NOP")
 							{
-								PrintRequest = new PrintRequestEventArgs()
+								byte[] image = await this.LabelService.GetLabelAsync(labelConfiguration, zpl);
+
+								//
+								// Save the image.
+								//
+								IStoredImage storedImage = await this.ImageCacheRepository.StoreImageAsync(imagePathRoot, image);
+
+								//
+								// Publish the new label.
+								//
+								this.EventAggregator.GetEvent<LabelCreatedEvent>().Publish(new LabelCreatedEventArgs()
 								{
-									LabelConfiguration = labelConfiguration,
-									Zpl = zpl
-								},
-								Label = storedImage
-							});
+									PrintRequest = new PrintRequestEventArgs()
+									{
+										LabelConfiguration = labelConfiguration,
+										Zpl = zpl
+									},
+									Label = storedImage
+								});
+							}
 						}
 					}
 					catch

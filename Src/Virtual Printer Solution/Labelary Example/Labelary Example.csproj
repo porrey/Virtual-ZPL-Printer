@@ -5,9 +5,9 @@
     <TargetFramework>net4.6</TargetFramework>
     <RootNamespace>Labelary.Example</RootNamespace>
     <AssemblyName>LabelaryExample</AssemblyName>
-    <Version>1.0.9</Version>
-    <FileVersion>1.0.9</FileVersion>
-    <AssemblyVersion>1.0.9</AssemblyVersion>
+    <Version>1.0.10</Version>
+    <FileVersion>1.0.10</FileVersion>
+    <AssemblyVersion>1.0.10</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -54,45 +54,42 @@ namespace VirtualZplPrinter.HostedServices
 		{
 			_ = Task.Factory.StartNew(async () =>
 			  {
-				  while (!this.CancellationToken.IsCancellationRequested)
+				  using (IServiceScope scope = this.ServiceScopeFactory.CreateScope())
 				  {
-					  try
+					  while (!this.CancellationToken.IsCancellationRequested)
 					  {
-						  //
-						  // Hold here until enabled.
-						  //
-						  if (this.ResetEvent.WaitOne())
+						  try
 						  {
-							  try
+							  //
+							  // Hold here until enabled.
+							  //
+							  if (this.ResetEvent.WaitOne())
 							  {
-								  //
-								  // Accept the connection.
-								  //
-								  TcpClient tcpClient = await this.Listener.AcceptTcpClientAsync();
-								  tcpClient.ReceiveTimeout = 1000;
-								  tcpClient.SendTimeout = 1000;
-								  tcpClient.LingerState = new LingerOption(false, 0);
-								  tcpClient.NoDelay = true;
-								  tcpClient.ReceiveBufferSize = 8192;
-								  tcpClient.SendBufferSize = 8192;
-
-								  using (IServiceScope scope = this.ServiceScopeFactory.CreateScope())
+								  try
 								  {
+									  //
+									  // Accept the connection.
+									  //
+									  TcpClient tcpClient = await this.Listener.AcceptTcpClientAsync();
+									  
+									  //
+									  // Start the client.
+									  //
 									  TcpListenerClientHandler clientService = scope.ServiceProvider.GetRequiredService<TcpListenerClientHandler>();
 									  _ = clientService.StartSessionAsync(tcpClient, this.LabelConfiguration, this.ImagePathRoot);
 								  }
-							  }
-							  catch (SocketException)
-							  {
-								  //
-								  // Happens when the socket is closed while listening.
-								  //
+								  catch (SocketException)
+								  {
+								  }
+								  catch (InvalidOperationException)
+								  {
+								  }
 							  }
 						  }
-					  }
-					  catch (Exception ex)
-					  {
-						  this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });
+						  catch (Exception ex)
+						  {
+							  this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });
+						  }
 					  }
 				  }
 			  });
@@ -140,7 +137,7 @@ namespace VirtualZplPrinter.HostedServices
 			try
 			{
 				this.Listener.Stop();
-				await Task.Delay(1000);
+				await Task.Delay(1);
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false });
 			}
 			catch (Exception ex)

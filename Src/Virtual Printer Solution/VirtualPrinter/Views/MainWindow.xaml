@@ -532,6 +532,7 @@
 					  HorizontalAlignment="Left"
 					  Margin="10,3,10,3"
 					  IsChecked="{Binding AutoStart}"
+					  IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}"
 					  Foreground="{StaticResource ForegroundColor}" />
 
 			<Button Grid.Column="2"
@@ -625,6 +626,10 @@
 					</MenuItem>
 				</ContextMenu>
 			</ListView.ContextMenu>
+			<ListView.InputBindings>
+				<KeyBinding Key="Del"
+							Command="{Binding DeleteLabelCommand}" />
+			</ListView.InputBindings>
 		</ListView>
 
 		<Grid Grid.Row="4">

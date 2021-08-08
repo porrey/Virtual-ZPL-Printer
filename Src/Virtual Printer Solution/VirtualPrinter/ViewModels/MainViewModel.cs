@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -33,7 +34,7 @@ namespace VirtualZplPrinter.ViewModels
 			this.StopCommand = new DelegateCommand(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
 			this.TestLabelCommand = new DelegateCommand(() => _ = this.TestLabelAsync(), () => !this.IsBusy && this.IsRunning);
 			this.ClearLabelsCommand = new DelegateCommand(() => _ = this.ClearLabelsAsync(), () => !this.IsBusy && this.Labels.Count > 0);
-			this.BrowseCommand = new DelegateCommand(() => _ = this.BrowseCommandAsync(), () => !this.IsBusy && !this.IsRunning & false);
+			this.BrowseCommand = new DelegateCommand(() => _ = this.BrowseCommandAsync(), () => !this.IsBusy);
 			this.DeleteLabelCommand = new DelegateCommand(() => _ = this.DeleteLabelAsync(), () => !this.IsBusy & this.SelectedLabel != null);
 
 			//
@@ -69,7 +70,6 @@ namespace VirtualZplPrinter.ViewModels
 			  }, ThreadOption.UIThread);
 		}
 
-		protected Random Rnd { get; } = new Random();
 		protected IEventAggregator EventAggregator { get; set; }
 		public IImageCacheRepository ImageCacheRepository { get; set; }
 		protected CancellationTokenSource TokenSource { get; set; }
@@ -288,6 +288,8 @@ namespace VirtualZplPrinter.ViewModels
 			this.StopCommand.RaiseCanExecuteChanged();
 			this.TestLabelCommand.RaiseCanExecuteChanged();
 			this.ClearLabelsCommand.RaiseCanExecuteChanged();
+			this.BrowseCommand.RaiseCanExecuteChanged();
+			this.DeleteLabelCommand.RaiseCanExecuteChanged();
 		}
 
 		protected Task LoadResolutions()
@@ -378,10 +380,16 @@ namespace VirtualZplPrinter.ViewModels
 			return Task.CompletedTask;
 		}
 
-		protected Task StopAsync()
+		protected async Task StopAsync()
 		{
 			try
 			{
+				//
+				// Send a NOP command.
+				//
+				var ip = this.SelectedIpAddress == IPAddress.Any ? IPAddress.Loopback : this.SelectedIpAddress;
+				(bool result, string errorMessage) = await TestClient.SendStringAsync(ip, this.Port, "NOP");
+
 				//
 				// Publish an event to stop the listener.
 				//
@@ -395,51 +403,18 @@ namespace VirtualZplPrinter.ViewModels
 			{
 				this.RefreshCommands();
 			}
-
-			return Task.CompletedTask;
 		}
 
 		protected async Task TestLabelAsync()
 		{
 			try
 			{
-				using (TcpClient client = new())
+				var ip = this.SelectedIpAddress == IPAddress.Any ? IPAddress.Loopback : this.SelectedIpAddress;
+				(bool result, string errorMessage) = await TestClient.SendStringAsync(ip, this.Port, await TestLabel.GetZplAsync());
+
+				if (!result)
 				{
-					//
-					// Connect to the local host.
-					//
-					await client.ConnectAsync(this.SelectedIpAddress == IPAddress.Any ? IPAddress.Loopback : this.SelectedIpAddress, this.Port);
-
-					//
-					// Create a stream to send th ZPL.
-					//
-					using (Stream stream = client.GetStream())
-					{
-						//
-						// Create a random bar code value for the label.
-						//
-						int id = this.Rnd.Next(1, 99999999);
-
-						//
-						// Read the sample ZPL.
-						//
-						string zpl = File.ReadAllText("./samples/6x4-203dpi.txt"); ;
-
-						//
-						// Convert the ZPL to a byte array.
-						//
-						byte[] buffer = ASCIIEncoding.UTF8.GetBytes(zpl.Replace("{id}", id.ToString("00000000")));
-
-						//
-						// Send the ZPL string.
-						//
-						await stream.WriteAsync(buffer.AsMemory(0, buffer.Length));
-
-						//
-						// Close the connection.
-						//
-						client.Close();
-					}
+					this.StatusText = errorMessage;
 				}
 			}
 			catch (Exception ex)
@@ -527,6 +502,10 @@ namespace VirtualZplPrinter.ViewModels
 
 		protected Task BrowseCommandAsync()
 		{
+			//
+			// Open the image with the default system viewer.
+			//
+			Process.Start(new ProcessStartInfo(this.ImagePath) { UseShellExecute = true });
 			return Task.CompletedTask;
 		}
 
