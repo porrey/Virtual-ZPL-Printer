@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,6 +53,7 @@ namespace VirtualZplPrinter.ViewModels
 			this.ClearLabelsCommand = new DelegateCommand(() => _ = this.ClearLabelsAsync(), () => !this.IsBusy && this.Labels.Count > 0);
 			this.BrowseCommand = new DelegateCommand(() => _ = this.BrowseCommandAsync(), () => !this.IsBusy);
 			this.DeleteLabelCommand = new DelegateCommand(() => _ = this.DeleteLabelAsync(), () => !this.IsBusy & this.SelectedLabel != null);
+			this.LabelPreviewCommand = new DelegateCommand(() => _ = this.LabelPreviewAsync(), () => !this.IsBusy & this.SelectedLabel != null);
 
 			//
 			// Subscribe to the running state changed event to update the running
@@ -101,6 +103,7 @@ namespace VirtualZplPrinter.ViewModels
 		public DelegateCommand ClearLabelsCommand { get; set; }
 		public DelegateCommand BrowseCommand { get; set; }
 		public DelegateCommand DeleteLabelCommand { get; set; }
+		public DelegateCommand LabelPreviewCommand { get; set; }
 
 		private Resolution _selectedResolution = null;
 		public Resolution SelectedResolution
@@ -306,6 +309,7 @@ namespace VirtualZplPrinter.ViewModels
 			this.ClearLabelsCommand.RaiseCanExecuteChanged();
 			this.BrowseCommand.RaiseCanExecuteChanged();
 			this.DeleteLabelCommand.RaiseCanExecuteChanged();
+			this.LabelPreviewCommand.RaiseCanExecuteChanged();
 		}
 
 		protected Task LoadResolutions()
@@ -525,7 +529,7 @@ namespace VirtualZplPrinter.ViewModels
 			return Task.CompletedTask;
 		}
 
-		private async Task DeleteLabelAsync()
+		protected async Task DeleteLabelAsync()
 		{
 			try
 			{
@@ -564,6 +568,33 @@ namespace VirtualZplPrinter.ViewModels
 			finally
 			{
 				this.RefreshCommands();
+			}
+		}
+
+		public Task LabelPreviewAsync(IStoredImage item = null)
+		{
+			if (this.SelectedLabel != null)
+			{
+				Process.Start(new ProcessStartInfo(item == null ? this.SelectedLabel.FullPath : item.FullPath) { UseShellExecute = true });
+			}
+
+			return Task.CompletedTask;
+		}
+
+		public string Version
+		{
+			get
+			{
+				Version version = Assembly.GetEntryAssembly().GetName().Version;
+				return $"{version.Major}.{version.Minor}.{version.Build}";
+			}
+		}
+
+		public string Title
+		{
+			get
+			{
+				return $"Virtual ZPL Printer v{this.Version}";
 			}
 		}
 	}

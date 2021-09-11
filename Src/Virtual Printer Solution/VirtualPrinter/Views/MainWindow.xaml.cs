@@ -20,7 +20,9 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Diamond.Core.Wpf;
+using ImageCache.Abstractions;
 using VirtualZplPrinter.ViewModels;
 
 namespace VirtualZplPrinter.Views
@@ -32,6 +34,8 @@ namespace VirtualZplPrinter.Views
 			this.DataContext = viewModel;
 			this.RestoreWindow();
 			this.InitializeComponent();
+
+			this.ListView.MouseDoubleClick += this.ListView_MouseDoubleClick;
 		}
 
 		protected MainViewModel ViewModel => (MainViewModel)this.DataContext;
@@ -143,6 +147,16 @@ namespace VirtualZplPrinter.Views
 		private void ContextMenu_Opened(object sender, RoutedEventArgs e)
 		{
 			this.ViewModel.RefreshCommands();
+		}
+
+		private async void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			IStoredImage item = ((FrameworkElement)e.OriginalSource).DataContext as IStoredImage;
+
+			if (item != null)
+			{
+				await this.ViewModel.LabelPreviewAsync(item);
+			}
 		}
 	}
 }

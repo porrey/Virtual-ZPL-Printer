@@ -5,7 +5,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:system="clr-namespace:System;assembly=System.Runtime"
 		mc:Ignorable="d"
-		Title="Virtual ZPL Printer"
+		Title="{Binding Title}"
 		MinHeight="700"
 		MinWidth="600"
 		Icon="/virtual-printer.ico"
@@ -15,8 +15,10 @@
 		Background="White">
 
 	<Window.Resources>
-		<SolidColorBrush x:Key="BackgroundColor">#FF4490c9</SolidColorBrush>
-		<SolidColorBrush x:Key="ForegroundColor">#FF252525</SolidColorBrush>
+		<SolidColorBrush x:Key="BackgroundColor1">#4490c9</SolidColorBrush>
+		<SolidColorBrush x:Key="BackgroundColor2">#B7C945</SolidColorBrush>
+		<SolidColorBrush x:Key="ForegroundColor1">#252525</SolidColorBrush>
+		<SolidColorBrush x:Key="ForegroundColor2">#FFFFFF</SolidColorBrush>
 		<SolidColorBrush x:Key="BorderColor">#AA4472C4</SolidColorBrush>
 		<system:Double x:Key="ControlHeight">29</system:Double>
 		<Thickness x:Key="ControlMargin">5,5,5,5</Thickness>
@@ -42,7 +44,7 @@
 						   Text="{Binding Display}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor}" />
+						   Foreground="{StaticResource ForegroundColor1}" />
 			</Grid>
 		</DataTemplate>
 
@@ -63,12 +65,12 @@
 						   Text="{Binding Display}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor}" />
+						   Foreground="{StaticResource ForegroundColor1}" />
 			</Grid>
 		</DataTemplate>
 
 		<DataTemplate x:Key="LabelTemplate">
-			<Border Background="{StaticResource BackgroundColor}"
+			<Border Background="{StaticResource BackgroundColor1}"
 					CornerRadius="{StaticResource Radius}"
 					Margin="5"
 					ToolTip="{Binding ActualTime}"
@@ -115,7 +117,7 @@
 						   Text="{Binding ., Converter={StaticResource IpAddressToStringConverter}}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor}" />
+						   Foreground="{StaticResource ForegroundColor1}" />
 			</Grid>
 		</DataTemplate>
 
@@ -330,6 +332,7 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
+		<!-- Properties -->
 		<Grid Grid.Row="0"
 			  IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}">
 			<Grid.ColumnDefinitions>
@@ -375,7 +378,7 @@
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
-							   Foreground="{StaticResource ForegroundColor}" />
+							   Foreground="{StaticResource ForegroundColor1}" />
 					<ComboBox Grid.Row="0"
 							  Grid.Column="1"
 							  Margin="{StaticResource ControlMargin}"
@@ -383,7 +386,7 @@
 							  VerticalContentAlignment="Center"
 							  HorizontalContentAlignment="Left"
 							  IsReadOnly="true"
-							  Foreground="{StaticResource ForegroundColor}"
+							  Foreground="{StaticResource ForegroundColor1}"
 							  ItemsSource="{Binding IpAddresses}"
 							  SelectedItem="{Binding SelectedIpAddress}"
 							  ItemTemplate="{StaticResource IpAddressTemplate}" />
@@ -394,7 +397,7 @@
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
-							   Foreground="{StaticResource ForegroundColor}" />
+							   Foreground="{StaticResource ForegroundColor1}" />
 					<ComboBox Grid.Row="0"
 							  Grid.Column="3"
 							  Margin="5"
@@ -408,7 +411,7 @@
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
-							   Foreground="{StaticResource ForegroundColor}" />
+							   Foreground="{StaticResource ForegroundColor1}" />
 					<TextBox Grid.Row="1"
 							 Grid.Column="1"
 							 Text="{Binding Port, Mode=TwoWay}"
@@ -417,7 +420,7 @@
 							 VerticalContentAlignment="Center"
 							 HorizontalContentAlignment="Left"
 							 InputScope="Number"
-							 Foreground="{StaticResource ForegroundColor}" />
+							 Foreground="{StaticResource ForegroundColor1}" />
 
 					<TextBlock Grid.Row="2"
 							   Grid.Column="0"
@@ -425,7 +428,7 @@
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
-							   Foreground="{StaticResource ForegroundColor}" />
+							   Foreground="{StaticResource ForegroundColor1}" />
 					<ComboBox Grid.Row="2"
 							  Grid.Column="1"
 							  Margin="5"
@@ -439,7 +442,7 @@
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
-							   Foreground="{StaticResource ForegroundColor}" />
+							   Foreground="{StaticResource ForegroundColor1}" />
 					<TextBox Grid.Row="1"
 							 Grid.Column="3"
 							 Text="{Binding LabelHeight}"
@@ -448,7 +451,7 @@
 							 VerticalContentAlignment="Center"
 							 HorizontalContentAlignment="Left"
 							 InputScope="Number"
-							 Foreground="{StaticResource ForegroundColor}" />
+							 Foreground="{StaticResource ForegroundColor1}" />
 
 					<TextBlock Grid.Row="2"
 							   Grid.Column="2"
@@ -456,7 +459,7 @@
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
-							   Foreground="{StaticResource ForegroundColor}" />
+							   Foreground="{StaticResource ForegroundColor1}" />
 					<TextBox Grid.Row="2"
 							 Grid.Column="3"
 							 Text="{Binding LabelWidth}"
@@ -465,7 +468,7 @@
 							 VerticalContentAlignment="Center"
 							 HorizontalContentAlignment="Left"
 							 InputScope="Number"
-							 Foreground="{StaticResource ForegroundColor}" />
+							 Foreground="{StaticResource ForegroundColor1}" />
 
 					<TextBlock Grid.Row="3"
 							   Grid.Column="0"
@@ -473,7 +476,7 @@
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
-							   Foreground="{StaticResource ForegroundColor}" />
+							   Foreground="{StaticResource ForegroundColor1}" />
 					<Grid Grid.Row="3"
 						  Grid.Column="1"
 						  Grid.ColumnSpan="3">
@@ -489,7 +492,7 @@
 								 VerticalContentAlignment="Center"
 								 HorizontalContentAlignment="Left"
 								 InputScope="FullFilePath"
-								 Foreground="{StaticResource ForegroundColor}" />
+								 Foreground="{StaticResource ForegroundColor1}" />
 
 						<Button Grid.Column="1"
 								Style="{DynamicResource ButtonStyle1}"
@@ -516,6 +519,7 @@
 			</Border>
 		</Grid>
 
+		<!-- Buttons -->
 		<Grid Grid.Row="1"
 			  Margin="0,5,5,5"
 			  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}">
@@ -533,7 +537,7 @@
 					  Margin="10,3,10,3"
 					  IsChecked="{Binding AutoStart}"
 					  IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}"
-					  Foreground="{StaticResource ForegroundColor}" />
+					  Foreground="{StaticResource ForegroundColor1}" />
 
 			<Button Grid.Column="2"
 					Style="{DynamicResource ButtonStyle1}"
@@ -592,46 +596,97 @@
 			</Button>
 		</Grid>
 
+		<!-- Label Image -->
 		<Grid Grid.Row="2"
-			  Background="{StaticResource BackgroundColor}">
+			  Background="{StaticResource BackgroundColor1}">
 
-			<Image Source="{Binding SelectedLabel.FullPath, Converter={StaticResource StringToImageSourceConverter}}"
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<Button Grid.Column="1"
+					Grid.Row="0"
+					Style="{DynamicResource ButtonStyle1}"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Center"
+					Command="{Binding LabelPreviewCommand}"
+					Width="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
+					Margin="0, 10, 10, 0"
+					ToolTip="View the label image in an external viewer.">
+				<Button.Content>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<Image Source="/Assets/label-preview.png"
+							   Width="24"
+							   Height="24" />
+					</Grid>
+				</Button.Content>
+			</Button>
+
+			<Image Grid.Column="0"
+				   Grid.ColumnSpan="2"
+				   Grid.Row="0"
+				   Grid.RowSpan="2"
+				   Source="{Binding SelectedLabel.FullPath, Converter={StaticResource StringToImageSourceConverter}}"
 				   Stretch="Uniform"
 				   Visibility="{Binding SelectedLabel, Converter={StaticResource ObjectToVisibilityConverter}}"
 				   Margin="10,20,10,20">
 			</Image>
 		</Grid>
 
-		<ListView x:Name="ListView"
-				  Grid.Row="3"
-				  BorderThickness="0"
-				  SelectionChanged="ListView_SelectionChanged"
-				  ItemsSource="{Binding Labels}"
-				  ItemTemplate="{StaticResource LabelTemplate}"
-				  SelectedItem="{Binding SelectedLabel}"
-				  SelectionMode="Single"
-				  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}">
-			<ListView.ItemsPanel>
-				<ItemsPanelTemplate>
-					<StackPanel Orientation="Horizontal" />
-				</ItemsPanelTemplate>
-			</ListView.ItemsPanel>
-			<ListView.ContextMenu>
-				<ContextMenu Opened="ContextMenu_Opened">
-					<MenuItem Header="Delete"
-							  Command="{Binding DeleteLabelCommand}">
-						<MenuItem.Icon>
-							<Image Source="/Assets/trash-bin.png" />
-						</MenuItem.Icon>
-					</MenuItem>
-				</ContextMenu>
-			</ListView.ContextMenu>
-			<ListView.InputBindings>
-				<KeyBinding Key="Del"
-							Command="{Binding DeleteLabelCommand}" />
-			</ListView.InputBindings>
-		</ListView>
+		<!-- Label History -->
+		<Grid Grid.Row="3"
+			  Background="{StaticResource BackgroundColor1}">
+			<ListView x:Name="ListView"
+					  BorderThickness="0"
+					  SelectionChanged="ListView_SelectionChanged"
+					  ItemsSource="{Binding Labels}"
+					  ItemTemplate="{StaticResource LabelTemplate}"
+					  SelectedItem="{Binding SelectedLabel}"
+					  SelectionMode="Single"
+					  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}"
+					  Margin="0,0,0,1">
+				<ListView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</ListView.ItemsPanel>
+				<ListView.ContextMenu>
+					<ContextMenu Opened="ContextMenu_Opened">
+						<MenuItem Header="View"
+								  Command="{Binding LabelPreviewCommand}">
+							<MenuItem.Icon>
+								<Image Source="/Assets/label-preview.png" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<Separator />
+						<MenuItem Header="Delete"
+								  Command="{Binding DeleteLabelCommand}">
+							<MenuItem.Icon>
+								<Image Source="/Assets/trash-bin.png" />
+							</MenuItem.Icon>
+						</MenuItem>
+					</ContextMenu>
+				</ListView.ContextMenu>
+				<ListView.InputBindings>
+					<KeyBinding Key="Del"
+								Command="{Binding DeleteLabelCommand}" />
+				</ListView.InputBindings>
+			</ListView>
+		</Grid>
 
+		<!-- Status Bar -->
 		<Grid Grid.Row="4">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
@@ -656,7 +711,7 @@
 					   HorizontalAlignment="Left"
 					   FontSize="18"
 					   Margin="10,0,0,0"
-					   Foreground="{StaticResource ForegroundColor}" />
+					   Foreground="{StaticResource ForegroundColor1}" />
 
 			<Rectangle Grid.Column="2"
 					   VerticalAlignment="Stretch"
@@ -676,7 +731,7 @@
 						   HorizontalAlignment="Center"
 						   FontSize="18"
 						   Margin="5,0,0,0"
-						   Foreground="{StaticResource ForegroundColor}" />
+						   Foreground="{StaticResource ForegroundColor1}" />
 			</StackPanel>
 
 			<!-- Listening -->
@@ -691,7 +746,7 @@
 						   HorizontalAlignment="Center"
 						   FontSize="18"
 						   Margin="5,0,0,0"
-						   Foreground="{StaticResource ForegroundColor}" />
+						   Foreground="{StaticResource ForegroundColor1}" />
 			</StackPanel>
 
 			<Button Grid.Column="4"
