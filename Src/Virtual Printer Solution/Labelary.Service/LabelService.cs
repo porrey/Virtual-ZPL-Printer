@@ -40,8 +40,9 @@ namespace Labelary.Service
 				{
 					double width = (new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
 					double height = (new Length(labelConfiguration.LabelHeight, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
-					
-					using (HttpResponseMessage response = await client.PostAsync($"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width}x{height}/0/", content))
+
+					string url = $"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width}x{height}/0/";
+					using (HttpResponseMessage response = await client.PostAsync(url, content))
 					{
 						if (response.IsSuccessStatusCode)
 						{

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net5.0-windows10.0.22000.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>virtual-printer.ico</ApplicationIcon>
     <AssemblyName>VirtualZplPrinter</AssemblyName>
@@ -11,6 +11,7 @@
     <Version>1.0.11</Version>
     <FileVersion>1.0.11</FileVersion>
     <AssemblyVersion>1.0.11</AssemblyVersion>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 	
   <ItemGroup>
@@ -108,9 +109,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Diamond.Core.Wpf" Version="5.0.9" />
+    <PackageReference Include="Diamond.Core.Wpf" Version="5.1.0" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
-	  <PackageReference Include="Diamond.Core.Extensions.Hosting" Version="5.0.12" />
+	  <PackageReference Include="Diamond.Core.Extensions.Hosting" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>
