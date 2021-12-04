@@ -20,13 +20,13 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Diamond.Core.Extensions.Hosting;
+using Labelary.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Prism.Events;
 using VirtualZplPrinter.Client;
 using VirtualZplPrinter.Events;
-using VirtualZplPrinter.Models;
 
 namespace VirtualZplPrinter.HostedServices
 {

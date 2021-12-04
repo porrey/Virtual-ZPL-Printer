@@ -17,7 +17,7 @@
 using Labelary.Abstractions;
 using UnitsNet.Units;
 
-namespace VirtualZplPrinter.Models
+namespace Labelary.Abstractions
 {
 	public class LabelConfiguration : ILabelConfiguration
 	{

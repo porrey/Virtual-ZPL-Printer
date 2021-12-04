@@ -15,8 +15,8 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System.Net;
+using Labelary.Abstractions;
 using Prism.Events;
-using VirtualZplPrinter.Models;
 
 namespace VirtualZplPrinter.Events
 {

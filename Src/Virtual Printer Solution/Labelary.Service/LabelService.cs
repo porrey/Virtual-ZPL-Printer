@@ -41,17 +41,40 @@ namespace Labelary.Service
 					double width = (new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
 					double height = (new Length(labelConfiguration.LabelHeight, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
 
-					string url = $"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width}x{height}/0/";
-					using (HttpResponseMessage response = await client.PostAsync(url, content))
+					if (width <= 15 && height <= 15)
 					{
-						if (response.IsSuccessStatusCode)
+						string url = $"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width:#.##}x{height:#.##}/0/";
+						using (HttpResponseMessage response = await client.PostAsync(url, content))
 						{
-							returnValue = await response.Content.ReadAsByteArrayAsync();
+							if (response.IsSuccessStatusCode)
+							{
+								returnValue = await response.Content.ReadAsByteArrayAsync();
+							}
+							else
+							{
+								ILabelConfiguration lc = new LabelConfiguration()
+								{
+									Dpmm = labelConfiguration.Dpmm,
+									Unit = UnitsNet.Units.LengthUnit.Inch,
+									LabelWidth = 8,
+									LabelHeight = 4
+								};
+
+								returnValue = this.CreateErrorImage(lc, response.ReasonPhrase);
+							}
 						}
-						else
+					}
+					else
+					{
+						ILabelConfiguration lc = new LabelConfiguration()
 						{
-							returnValue = this.CreateErrorImage(labelConfiguration, response.ReasonPhrase);
-						}
+							Dpmm = labelConfiguration.Dpmm,
+							Unit = UnitsNet.Units.LengthUnit.Inch,
+							LabelWidth = 8,
+							LabelHeight = 4
+						};
+
+						returnValue = this.CreateErrorImage(lc, "Height and Width must be less than or equal to 15 inches.");
 					}
 				}
 			}
