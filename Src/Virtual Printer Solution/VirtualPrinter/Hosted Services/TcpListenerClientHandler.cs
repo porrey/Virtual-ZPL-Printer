@@ -102,10 +102,6 @@ namespace VirtualZplPrinter.Client
 							}
 						}
 					}
-					catch
-					{
-
-					}
 					finally
 					{
 						client.Close();

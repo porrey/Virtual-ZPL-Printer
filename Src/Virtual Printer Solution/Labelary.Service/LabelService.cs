@@ -34,49 +34,66 @@ namespace Labelary.Service
 		{
 			byte[] returnValue = Array.Empty<byte>();
 
-			using (HttpClient client = new())
+			try
 			{
-				using (StringContent content = new(zpl, Encoding.UTF8, "application/x-www-form-urlencoded"))
+				using (HttpClient client = new())
 				{
-					double width = (new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
-					double height = (new Length(labelConfiguration.LabelHeight, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
-
-					if (width <= 15 && height <= 15)
+					using (StringContent content = new(zpl, Encoding.UTF8, "application/x-www-form-urlencoded"))
 					{
-						string url = $"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width:#.##}x{height:#.##}/0/";
-						using (HttpResponseMessage response = await client.PostAsync(url, content))
+						double width = (new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
+						double height = (new Length(labelConfiguration.LabelHeight, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
+						
+						if (width <= 15 && height <= 15)
 						{
-							if (response.IsSuccessStatusCode)
+							string url = $"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width:#.##}x{height:#.##}/0/";
+							using (HttpResponseMessage response = await client.PostAsync(url, content))
 							{
-								returnValue = await response.Content.ReadAsByteArrayAsync();
-							}
-							else
-							{
-								ILabelConfiguration lc = new LabelConfiguration()
+								if (response.IsSuccessStatusCode)
 								{
-									Dpmm = labelConfiguration.Dpmm,
-									Unit = UnitsNet.Units.LengthUnit.Inch,
-									LabelWidth = 8,
-									LabelHeight = 4
-								};
+									returnValue = await response.Content.ReadAsByteArrayAsync();
+								}
+								else
+								{
+									string error = await response.Content.ReadAsStringAsync();
 
-								returnValue = this.CreateErrorImage(lc, response.ReasonPhrase);
+									ILabelConfiguration lc = new LabelConfiguration()
+									{
+										Dpmm = labelConfiguration.Dpmm,
+										Unit = UnitsNet.Units.LengthUnit.Inch,
+										LabelWidth = 9,
+										LabelHeight = 4
+									};
+
+									returnValue = this.CreateErrorImage(lc, error ?? response.ReasonPhrase);
+								}
 							}
 						}
-					}
-					else
-					{
-						ILabelConfiguration lc = new LabelConfiguration()
+						else
 						{
-							Dpmm = labelConfiguration.Dpmm,
-							Unit = UnitsNet.Units.LengthUnit.Inch,
-							LabelWidth = 8,
-							LabelHeight = 4
-						};
+							ILabelConfiguration lc = new LabelConfiguration()
+							{
+								Dpmm = labelConfiguration.Dpmm,
+								Unit = UnitsNet.Units.LengthUnit.Inch,
+								LabelWidth = 9,
+								LabelHeight = 4
+							};
 
-						returnValue = this.CreateErrorImage(lc, "Height and Width must be less than or equal to 15 inches.");
+							returnValue = this.CreateErrorImage(lc, "Height and Width must be less than or equal to 15 inches.");
+						}
 					}
 				}
+			}
+			catch (Exception ex)
+			{
+				ILabelConfiguration lc = new LabelConfiguration()
+				{
+					Dpmm = labelConfiguration.Dpmm,
+					Unit = UnitsNet.Units.LengthUnit.Inch,
+					LabelWidth = 9,
+					LabelHeight = 4
+				};
+
+				returnValue = this.CreateErrorImage(lc, ex.Message);
 			}
 
 			return returnValue;
