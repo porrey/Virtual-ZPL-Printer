@@ -177,15 +177,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Virtual ZPL Printer"
-        "ProductCode" = "8:{1373652E-F6A3-4B80-8092-1AB1D05712CA}"
-        "PackageCode" = "8:{F2BBEF67-D542-4541-9BB7-39AB12000704}"
+        "ProductCode" = "8:{A96163E3-205F-48D5-BF2B-979847AC62B1}"
+        "PackageCode" = "8:{94E7071E-A589-49C7-BDF8-145D8E171B1D}"
         "UpgradeCode" = "8:{32EBCEBE-7298-4898-A855-DE97B7DDACEA}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.13"
+        "ProductVersion" = "8:1.0.14"
         "Manufacturer" = "8:Daniel Porrey"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/porrey/Virtual-ZPL-Printer"
@@ -713,7 +713,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_9F590A75A84E41D88F76D4967EEDAE96"
             {
-            "SourcePath" = "8:..\\VirtualPrinter\\obj\\Debug\\net5.0-windows10.0.22000.0\\apphost.exe"
+            "SourcePath" = "8:\\\\Mac\\Home\\Documents\\GitHub\\Virtual-ZPL-Printer\\Src\\Virtual Printer Solution\\VirtualPrinter\\obj\\Release\\net5.0-windows10.0.22000.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CE212C03354141C1A9AB5482FB65476A"
