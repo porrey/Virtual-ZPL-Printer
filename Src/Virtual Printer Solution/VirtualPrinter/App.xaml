@@ -11,5 +11,6 @@
 		<converters:NotBooleanToVisibilityConverter x:Key="NotBooleanToVisibilityConverter" />
 		<converters:StringToImageSourceConverter x:Key="StringToImageSourceConverter" />
 		<converters:IpAddressToStringConverter x:Key="IpAddressToStringConverter" />
+		<converters:BooleanResultToColorConverter x:Key="BooleanResultToColorConverter" />
 	</Application.Resources>
 </wpf:HostedApplication>

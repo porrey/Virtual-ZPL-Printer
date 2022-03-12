@@ -20,6 +20,6 @@ namespace Labelary.Abstractions
 {
 	public interface ILabelService
 	{
-		Task<byte[]> GetLabelAsync(ILabelConfiguration labelConfiguration, string zpl);
+		Task<IGetLabelResponse> GetLabelAsync(ILabelConfiguration labelConfiguration, string zpl);
 	}
 }

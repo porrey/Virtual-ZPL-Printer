@@ -89,18 +89,10 @@ namespace ImageCache.Repository
 
 			if (dir.Exists)
 			{
-#if DEBUG
-				//Random rnd = new();
-#endif
 				FileInfo[] files = this.GetFiles(dir);
 
 				foreach (FileInfo file in files.OrderBy(t => t.CreationTime))
 				{
-#if DEBUG
-					//int seconds = rnd.Next(0, (60 * 60 * 24) * 1100);
-					//file.CreationTime = DateTime.Now.Subtract(TimeSpan.FromSeconds(seconds));
-#endif
-
 					returnValue.Add(new StoredImage()
 					{
 						Id = this.GetFileIndex(file),

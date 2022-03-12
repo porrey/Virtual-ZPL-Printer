@@ -73,7 +73,6 @@
 			<Border Background="{StaticResource BackgroundColor1}"
 					CornerRadius="{StaticResource Radius}"
 					Margin="5"
-					ToolTip="{Binding ActualTime}"
 					Width="95">
 				<Grid>
 					<Grid.RowDefinitions>
@@ -86,7 +85,8 @@
 						   Source="{Binding FullPath, Converter={StaticResource StringToImageSourceConverter}}"
 						   HorizontalAlignment="Center"
 						   Width="64"
-						   Height="64" />
+						   Height="64"
+						   ToolTip="{Binding FullPath}" />
 
 					<TextBlock Grid.Row="1"
 							   Text="{Binding DisplayLabel}"

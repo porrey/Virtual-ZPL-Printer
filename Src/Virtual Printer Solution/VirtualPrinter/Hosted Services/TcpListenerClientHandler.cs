@@ -80,12 +80,12 @@ namespace VirtualZplPrinter.Client
 
 							if (zpl != "NOP")
 							{
-								byte[] image = await this.LabelService.GetLabelAsync(labelConfiguration, zpl);
+								IGetLabelResponse response = await this.LabelService.GetLabelAsync(labelConfiguration, zpl);
 
 								//
 								// Save the image.
 								//
-								IStoredImage storedImage = await this.ImageCacheRepository.StoreImageAsync(imagePathRoot, image);
+								IStoredImage storedImage = await this.ImageCacheRepository.StoreImageAsync(imagePathRoot, response.Label);
 
 								//
 								// Publish the new label.
@@ -97,7 +97,9 @@ namespace VirtualZplPrinter.Client
 										LabelConfiguration = labelConfiguration,
 										Zpl = zpl
 									},
-									Label = storedImage
+									Label = storedImage,
+									Result = response.Result,
+									Message = response.Result ? "Label successfully created." : response.Error
 								});
 							}
 						}

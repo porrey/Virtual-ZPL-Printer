@@ -2,16 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <Version>1.0.13</Version>
-    <FileVersion>1.0.13</FileVersion>
-    <AssemblyVersion>1.0.13</AssemblyVersion>
+    <Version>1.0.14</Version>
+    <FileVersion>1.0.14</FileVersion>
+    <AssemblyVersion>1.0.14</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\label.png" />
     <None Remove="Services\Labelary.Service.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\label.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Services\Labelary.Service.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

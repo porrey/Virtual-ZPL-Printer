@@ -27,5 +27,7 @@ namespace VirtualZplPrinter.Events
 	{
 		public PrintRequestEventArgs PrintRequest { get; set; }
 		public IStoredImage Label { get; set; }
+		public bool Result { get; set; }
+		public string Message { get; set; }
 	}
 }

@@ -85,6 +85,7 @@ namespace VirtualZplPrinter.ViewModels
 				  // Make the new label the currently selected label.
 				  //
 				  this.SelectedLabel = a.Label;
+
 			  }, ThreadOption.UIThread);
 		}
 
@@ -407,7 +408,7 @@ namespace VirtualZplPrinter.ViewModels
 				//
 				// Send a NOP command.
 				//
-				var ip = this.SelectedIpAddress == IPAddress.Any ? IPAddress.Loopback : this.SelectedIpAddress;
+				IPAddress ip = this.SelectedIpAddress == IPAddress.Any ? IPAddress.Loopback : this.SelectedIpAddress;
 				(bool result, string errorMessage) = await TestClient.SendStringAsync(ip, this.Port, "NOP");
 
 				//
