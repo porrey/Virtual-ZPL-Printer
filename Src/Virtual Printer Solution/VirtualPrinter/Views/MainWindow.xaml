@@ -6,7 +6,7 @@
 		xmlns:system="clr-namespace:System;assembly=System.Runtime"
 		mc:Ignorable="d"
 		Title="{Binding Title}"
-		MinHeight="700"
+		MinHeight="445"
 		MinWidth="600"
 		Icon="/virtual-printer.ico"
 		ResizeMode="CanResize"
@@ -597,7 +597,7 @@
 		</Grid>
 
 		<!-- Label Image -->
-		<Grid Grid.Row="2"
+		<Grid x:Name="LabelImage" Grid.Row="2"
 			  Background="{StaticResource BackgroundColor1}">
 
 			<Grid.ColumnDefinitions>

@@ -31,6 +31,7 @@ using Labelary.Abstractions;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using UnitsNet;
 using VirtualZplPrinter.Events;
 using VirtualZplPrinter.Models;
 
@@ -128,6 +129,12 @@ namespace VirtualZplPrinter.ViewModels
 			}
 			set
 			{
+				if (_selectedLabelUnit != null && value != null)
+				{
+					this.LabelWidth = Math.Round((new Length(this.LabelWidth, _selectedLabelUnit.Unit)).ToUnit(value.Unit).Value, 2);
+					this.LabelHeight = Math.Round((new Length(this.LabelHeight, _selectedLabelUnit.Unit)).ToUnit(value.Unit).Value, 2);
+				}
+
 				this.SetProperty(ref _selectedLabelUnit, value);
 			}
 		}

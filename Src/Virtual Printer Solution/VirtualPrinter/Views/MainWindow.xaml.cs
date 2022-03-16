@@ -59,11 +59,15 @@ namespace VirtualZplPrinter.Views
 				this.WindowState = (WindowState)Properties.Settings.Default.WindowState;
 				this.ViewModel.AutoStart = Properties.Settings.Default.AutoStart;
 				this.ViewModel.Port = Properties.Settings.Default.Port;
+				this.ViewModel.SelectedResolution = this.ViewModel.Resolutions.Where(t => t.Dpmm == Properties.Settings.Default.Dpmm).SingleOrDefault();
+				this.ViewModel.SelectedIpAddress = this.ViewModel.IpAddresses.Where(t => t.ToString() == Properties.Settings.Default.IpAddress).SingleOrDefault();
+				
+				//
+				// Set the units before the height and width.
+				//
+				this.ViewModel.SelectedLabelUnit = this.ViewModel.LabelUnits.Where(t => t.Unit == Properties.Settings.Default.LabelUnit).SingleOrDefault();
 				this.ViewModel.LabelHeight = Properties.Settings.Default.LabelHeight;
 				this.ViewModel.LabelWidth = Properties.Settings.Default.LabelWidth;
-				this.ViewModel.SelectedResolution = this.ViewModel.Resolutions.Where(t => t.Dpmm == Properties.Settings.Default.Dpmm).SingleOrDefault();
-				this.ViewModel.SelectedLabelUnit = this.ViewModel.LabelUnits.Where(t => t.Unit == Properties.Settings.Default.LabelUnit).SingleOrDefault();
-				this.ViewModel.SelectedIpAddress = this.ViewModel.IpAddresses.Where(t => t.ToString() == Properties.Settings.Default.IpAddress).SingleOrDefault();
 
 				if (Directory.Exists(Properties.Settings.Default.ImagePath))
 				{
