@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows10.0.22000.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>virtual-printer.ico</ApplicationIcon>
     <AssemblyName>VirtualZplPrinter</AssemblyName>
@@ -11,7 +11,6 @@
     <Version>1.0.15</Version>
     <FileVersion>1.0.15</FileVersion>
     <AssemblyVersion>1.0.15</AssemblyVersion>
-    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 	
   <ItemGroup>

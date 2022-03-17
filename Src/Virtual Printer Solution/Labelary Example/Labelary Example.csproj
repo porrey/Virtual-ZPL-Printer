@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net4.6</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Labelary.Example</RootNamespace>
     <AssemblyName>LabelaryExample</AssemblyName>
     <Version>1.0.15</Version>
