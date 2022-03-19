@@ -73,10 +73,10 @@ namespace ImageCache.Repository
 			//
 			DirectoryInfo dir = this.GetDirectory(imagePathRoot);
 
+			string fileName = this.FileName(dir, returnValue.Id);
+			await File.WriteAllBytesAsync(fileName, pngImage);
 			returnValue.Id = this.GetNextIndex(dir);
-			returnValue.FullPath = this.FileName(dir, returnValue.Id);
-
-			await File.WriteAllBytesAsync(returnValue.FullPath, pngImage);
+			returnValue.FullPath = fileName;
 
 			return returnValue;
 		}

@@ -21,24 +21,41 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Diamond.Core.Wpf;
 using ImageCache.Abstractions;
+using Prism.Events;
+using VirtualZplPrinter.Events;
 using VirtualZplPrinter.ViewModels;
 
 namespace VirtualZplPrinter.Views
 {
 	public partial class MainView : Window, IMainWindow
 	{
-		public MainView(MainViewModel viewModel)
+		public MainView(IEventAggregator eventAggregator, MainViewModel viewModel)
 		{
+			this.EventAggregator = eventAggregator;
 			this.DataContext = viewModel;
 			this.RestoreWindow();
 			this.InitializeComponent();
 
 			this.ListView.MouseDoubleClick += this.ListView_MouseDoubleClick;
+
+			this.Timer = new DispatcherTimer();
+			this.Timer.Tick += this.Timer_Tick;
+			this.Timer.Interval = TimeSpan.FromSeconds(15);
+			this.Timer.Start();
+		}
+
+		protected IEventAggregator EventAggregator { get; set; }
+
+		private void Timer_Tick(object sender, EventArgs e)
+		{
+			this.EventAggregator.GetEvent<TimerEvent>().Publish(new TimerEventArgs());
 		}
 
 		protected MainViewModel ViewModel => (MainViewModel)this.DataContext;
+		protected DispatcherTimer Timer { get; set; }
 
 		protected override async void OnInitialized(EventArgs e)
 		{

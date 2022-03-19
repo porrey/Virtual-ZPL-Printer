@@ -16,40 +16,86 @@
  */
 using System;
 using System.IO;
+using Humanizer;
 using ImageCache.Abstractions;
+using Prism.Mvvm;
 
 namespace ImageCache.Repository
 {
-	public class StoredImage : IStoredImage
+	public class StoredImage : BindableBase, IStoredImage
 	{
-		public int Id { get; set; }
-		public string FullPath { get; set; }
-		public DateTime Timestamp => File.GetCreationTime(this.FullPath);
+		private int _id = 0;
+		public int Id
+		{
+			get
+			{
+				return _id;
+			}
+			set
+			{
+				this.SetProperty(ref _id, value);
+			}
+		}
 
+		private string _fullPath = null;
+		public string FullPath
+		{
+			get
+			{
+				return _fullPath;
+			}
+			set
+			{
+				this.SetProperty(ref _fullPath, value);
+
+				this.Timestamp = File.GetCreationTime(this.FullPath);
+				this.ActualTime = this.Timestamp.ToString("h:mm:ss.fff tt");
+				this.DisplayLabel = this.Timestamp.Humanize();
+			}
+		}
+
+		private DateTime _timestamp = DateTime.MinValue;
+		public DateTime Timestamp
+		{
+			get
+			{
+				return _timestamp;
+			}
+			set
+			{
+				this.SetProperty(ref _timestamp, value);
+			}
+		}
+
+		private string _actualTime = null;
+		public string ActualTime
+		{
+			get
+			{
+				return _actualTime;
+			}
+			set
+			{
+				this.SetProperty(ref _actualTime, value);
+			}
+		}
+
+		private string _displayLabel = null;
 		public string DisplayLabel
 		{
 			get
 			{
-				string returnValue = string.Empty;
-
-				if (this.Timestamp.Date == DateTime.Now.Date)
-				{
-					returnValue = $"Today at {this.Timestamp.ToShortTimeString()}";
-				}
-				else if (this.Timestamp.Date == DateTime.Now.Date.AddDays(-1))
-				{
-					returnValue = $"Yesterday at {this.Timestamp.ToShortTimeString()}";
-				}
-				else
-				{
-					int days = (int)DateTime.Now.Date.Subtract(this.Timestamp).TotalDays;
-					returnValue = $"{days:#,###} Days Ago at {this.Timestamp.ToShortTimeString()}";
-				}
-
-				return returnValue;
+				return _displayLabel;
+			}
+			set
+			{
+				this.SetProperty(ref _displayLabel, value);
 			}
 		}
 
-		public string ActualTime => this.Timestamp.ToString("h:mm:ss.fff tt");
+		public void Refresh()
+		{
+			this.FullPath = _fullPath;
+		}
 	}
 }

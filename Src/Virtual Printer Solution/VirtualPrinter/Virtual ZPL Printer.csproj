@@ -1,138 +1,138 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <ApplicationIcon>virtual-printer.ico</ApplicationIcon>
-    <AssemblyName>VirtualZplPrinter</AssemblyName>
-    <StartupObject>VirtualZplPrinter.App</StartupObject>
-    <RootNamespace>VirtualZplPrinter</RootNamespace>
-    <Version>1.0.15</Version>
-    <FileVersion>1.0.15</FileVersion>
-    <AssemblyVersion>1.0.15</AssemblyVersion>
-  </PropertyGroup>
-	
-  <ItemGroup>
-    <None Remove="Assets\browse.png" />
-    <None Remove="Assets\clear-label.png" />
-    <None Remove="Assets\idle.png" />
-    <None Remove="Assets\ip.png" />
-    <None Remove="Assets\label-preview.png" />
-    <None Remove="Assets\label.png" />
-    <None Remove="Assets\listening.png" />
-    <None Remove="Assets\printer-running-base.png" />
-    <None Remove="Assets\printer-running.png" />
-    <None Remove="Assets\printer-stopped.png" />
-    <None Remove="Assets\resolution.png" />
-    <None Remove="Assets\ruler.png" />
-    <None Remove="Assets\save-label.png" />
-    <None Remove="Assets\small-label.png" />
-    <None Remove="Assets\start.png" />
-    <None Remove="Assets\stop.png" />
-    <None Remove="Assets\test-label.png" />
-    <None Remove="Assets\trash-bin.png" />
-    <None Remove="Assets\virtual-printer.png" />
-    <None Remove="Samples\6x4-203dpi.txt" />
-    <None Remove="Services\VirtualPrinter.json" />
-    <None Remove="virtual-printer.ico" />
-  </ItemGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<ApplicationIcon>virtual-printer.ico</ApplicationIcon>
+		<AssemblyName>VirtualZplPrinter</AssemblyName>
+		<StartupObject>VirtualZplPrinter.App</StartupObject>
+		<RootNamespace>VirtualZplPrinter</RootNamespace>
+		<Version>1.0.16</Version>
+		<FileVersion>1.0.16</FileVersion>
+		<AssemblyVersion>1.0.16</AssemblyVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="Assets\browse.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\clear-label.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\idle.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\ip.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\label-preview.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\label.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\listening.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\printer-running-base.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\small-label.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\test-label.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\printer-running.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\printer-stopped.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\resolution.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\save-label.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\start.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\stop.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\ruler.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\trash-bin.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\virtual-printer.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Samples\6x4-203dpi.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Services\VirtualPrinter.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="virtual-printer.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Assets\browse.png" />
+		<None Remove="Assets\clear-label.png" />
+		<None Remove="Assets\idle.png" />
+		<None Remove="Assets\ip.png" />
+		<None Remove="Assets\label-preview.png" />
+		<None Remove="Assets\label.png" />
+		<None Remove="Assets\listening.png" />
+		<None Remove="Assets\printer-running-base.png" />
+		<None Remove="Assets\printer-running.png" />
+		<None Remove="Assets\printer-stopped.png" />
+		<None Remove="Assets\resolution.png" />
+		<None Remove="Assets\ruler.png" />
+		<None Remove="Assets\save-label.png" />
+		<None Remove="Assets\small-label.png" />
+		<None Remove="Assets\start.png" />
+		<None Remove="Assets\stop.png" />
+		<None Remove="Assets\test-label.png" />
+		<None Remove="Assets\trash-bin.png" />
+		<None Remove="Assets\virtual-printer.png" />
+		<None Remove="Samples\6x4-203dpi.txt" />
+		<None Remove="Services\VirtualPrinter.json" />
+		<None Remove="virtual-printer.ico" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Diamond.Core.Wpf" Version="5.1.0" />
-    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
-	  <PackageReference Include="Diamond.Core.Extensions.Hosting" Version="5.1.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="Assets\browse.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\clear-label.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\idle.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\ip.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\label-preview.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\label.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\listening.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\printer-running-base.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\small-label.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\test-label.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\printer-running.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\printer-stopped.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\resolution.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\save-label.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\start.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\stop.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\ruler.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\trash-bin.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\virtual-printer.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Samples\6x4-203dpi.txt">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Services\VirtualPrinter.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="virtual-printer.ico">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ImageCache.Abstractions\ImageCache.Abstractions.csproj" />
-    <ProjectReference Include="..\ImageCache.Repository\ImageCache.Repository.csproj" />
-    <ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
-    <ProjectReference Include="..\Labelary.Service\Labelary.Service.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Diamond.Core.Wpf" Version="5.1.0" />
+		<PackageReference Include="Prism.Wpf" Version="8.1.97" />
+		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="5.1.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ImageCache.Abstractions\ImageCache.Abstractions.csproj" />
+		<ProjectReference Include="..\ImageCache.Repository\ImageCache.Repository.csproj" />
+		<ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
+		<ProjectReference Include="..\Labelary.Service\Labelary.Service.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
 </Project>

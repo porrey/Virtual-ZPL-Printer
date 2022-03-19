@@ -14,6 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using System;
 using ImageCache.Abstractions;
 using Prism.Events;
 
@@ -23,7 +24,7 @@ namespace VirtualZplPrinter.Events
 	{
 	}
 
-	public class LabelCreatedEventArgs
+	public class LabelCreatedEventArgs : EventArgs
 	{
 		public PrintRequestEventArgs PrintRequest { get; set; }
 		public IStoredImage Label { get; set; }

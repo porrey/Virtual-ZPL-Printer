@@ -15,15 +15,17 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System;
+using System.ComponentModel;
 
 namespace ImageCache.Abstractions
 {
-	public interface IStoredImage
+	public interface IStoredImage : INotifyPropertyChanged
 	{
 		int Id { get; set; }
 		string FullPath { get; set; }
 		public DateTime Timestamp { get;  }
 		public string DisplayLabel { get; }
 		string ActualTime { get; }
+		void Refresh();
 	}
 }

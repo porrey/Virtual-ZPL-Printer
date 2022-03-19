@@ -14,6 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using System;
 using System.Net;
 using Labelary.Abstractions;
 using Prism.Events;
@@ -24,7 +25,7 @@ namespace VirtualZplPrinter.Events
 	{
 	}
 
-	public class StartEventArgs
+	public class StartEventArgs : EventArgs
 	{
 		public LabelConfiguration LabelConfiguration { get; set; }
 		public IPAddress IpAddress { get; set; }

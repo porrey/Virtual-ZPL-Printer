@@ -88,6 +88,17 @@ namespace VirtualZplPrinter.ViewModels
 				  this.SelectedLabel = a.Label;
 
 			  }, ThreadOption.UIThread);
+
+			//
+			// Subscribe to the timer event.
+			//
+			_ = this.EventAggregator.GetEvent<TimerEvent>().Subscribe((a) =>
+			{
+				foreach (var label in this.Labels)
+				{
+					label.Refresh();
+				}
+			}, ThreadOption.UIThread);
 		}
 
 		protected IEventAggregator EventAggregator { get; set; }
