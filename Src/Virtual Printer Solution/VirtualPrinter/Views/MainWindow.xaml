@@ -6,7 +6,7 @@
 		xmlns:system="clr-namespace:System;assembly=System.Runtime"
 		mc:Ignorable="d"
 		Title="{Binding Title}"
-		MinHeight="445"
+		MinHeight="435"
 		MinWidth="600"
 		Icon="/virtual-printer.ico"
 		ResizeMode="CanResize"

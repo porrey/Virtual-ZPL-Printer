@@ -28,8 +28,10 @@ namespace ImageCache.Repository
 		public string DefaultFolder => $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Virtual ZPL Printer Images";
 		protected string FileName(DirectoryInfo imagePathRoot, int id) => $@"{imagePathRoot.FullName}\zpl-label-image-{id}.png";
 		protected FileInfo[] GetFiles(DirectoryInfo imagePathRoot) => imagePathRoot.GetFiles("zpl-label-image-*.png").OrderBy(t => t.CreationTime).ToArray();
-		protected int GetFileIndex(FileInfo file) => Convert.ToInt32(Path.GetFileNameWithoutExtension(file.Name).Split(new char[] { '-' })[3]);
+		protected int GetFileIndex(FileInfo file) => Convert.ToInt32(Path.GetFileNameWithoutExtension(file.Name).Split(new char[] { '-' })[3].Replace(" ", ""));
 		protected int[] GetFileIndices(DirectoryInfo imagePathRoot) => this.GetFiles(imagePathRoot).Select(t => this.GetFileIndex(t)).ToArray();
+
+		protected int AlternateIndex = 99999;
 
 		protected DirectoryInfo GetDirectory(string imagePathRoot)
 		{
@@ -72,10 +74,9 @@ namespace ImageCache.Repository
 			// Ensure the path exists.
 			//
 			DirectoryInfo dir = this.GetDirectory(imagePathRoot);
-
+			returnValue.Id = this.GetNextIndex(dir);
 			string fileName = this.FileName(dir, returnValue.Id);
 			await File.WriteAllBytesAsync(fileName, pngImage);
-			returnValue.Id = this.GetNextIndex(dir);
 			returnValue.FullPath = fileName;
 
 			return returnValue;
@@ -93,11 +94,20 @@ namespace ImageCache.Repository
 
 				foreach (FileInfo file in files.OrderBy(t => t.CreationTime))
 				{
-					returnValue.Add(new StoredImage()
+					StoredImage si = new();
+
+					try
 					{
-						Id = this.GetFileIndex(file),
-						FullPath = file.FullName,
-					});
+						si.Id = this.GetFileIndex(file);
+					}
+					catch
+					{
+						si.Id = AlternateIndex--;
+					}
+
+					si.FullPath = file.FullName;
+
+					returnValue.Add(si);
 				}
 			}
 
