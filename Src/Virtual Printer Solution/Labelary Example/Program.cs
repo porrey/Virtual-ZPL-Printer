@@ -26,28 +26,32 @@ namespace Labelary.Example
 	{
 		static async Task Main(string[] args)
 		{
+			//
+			// Set to false for PNG.
+			//
 			bool pdf = true;
+
+			//
+			// This ZPL string will produce a simple label.
+			//
 			string zpl = "^xa^cfa,50^fo100,100^fdHello World^fs^xz";
 
-			using (HttpClient client = new HttpClient())
+			using (HttpClient client = new())
 			{
-				if (pdf)
-				{
-					Console.WriteLine("Requesting PDF format.");
-					client.DefaultRequestHeaders.Add("Accept", "application/pdf");
-				}
+				Console.WriteLine($"Requesting {(pdf ? "PDF" : "PNG")} format.");
+				client.DefaultRequestHeaders.Add("Accept", pdf ? "application/pdf" : "image/png");
 
-				using (StringContent content = new StringContent(zpl, Encoding.UTF8, "application/x-www-form-urlencoded"))
+				using (StringContent content = new(zpl, Encoding.UTF8, "application/x-WWW-form-urlencoded"))
 				{
-					Console.WriteLine("Retrieving label...");
+					Console.WriteLine("Requesting 4x6 label...");
+					
 					using (HttpResponseMessage response = await client.PostAsync("http://api.labelary.com/v1/printers/8dpmm/labels/4x6/0/", content))
 					{
 						if (response.IsSuccessStatusCode)
 						{
-							byte[] image = await response.Content.ReadAsByteArrayAsync();
-							string extension = pdf ? "pdf" : "png";
-							File.WriteAllBytes($@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\zpl-label-image.{extension}", image);
-							Console.WriteLine("Label image saved to desktop.");
+							byte[] labelData = await response.Content.ReadAsByteArrayAsync();
+							File.WriteAllBytes($@"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\zpl-label-image.{(pdf ? "pdf" : "png")}", labelData);
+							Console.WriteLine("Label saved to desktop.");
 						}
 						else
 						{
