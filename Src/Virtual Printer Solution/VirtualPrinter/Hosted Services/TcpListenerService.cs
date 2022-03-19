@@ -44,7 +44,7 @@ namespace VirtualZplPrinter.HostedServices
 				  this.IpAddress = e.IpAddress;
 				  this.Port = e.Port;
 				  this.ImagePathRoot = e.ImagePath;
-				  _ = await this.StartListener();
+				  _ = await this.StartListenerAsync();
 			  }, ThreadOption.BackgroundThread);
 
 			_ = this.EventAggregator.GetEvent<StopEvent>().Subscribe(async (e) =>
@@ -52,7 +52,7 @@ namespace VirtualZplPrinter.HostedServices
 				  this.LabelConfiguration = null;
 				  this.Port = 0;
 				  this.ImagePathRoot = null;
-				  await this.StopListener();
+				  await this.StopListenerAsync();
 				  this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false });
 			  }, ThreadOption.BackgroundThread);
 		}
@@ -65,6 +65,7 @@ namespace VirtualZplPrinter.HostedServices
 		protected TcpListener Listener { get; set; }
 		protected ManualResetEvent ResetEvent { get; } = new(false);
 		protected string ImagePathRoot { get; set; }
+		protected CancellationTokenSource SocketCancellationTokenSource { get; set; }
 
 		protected override void OnStarted()
 		{
@@ -72,6 +73,9 @@ namespace VirtualZplPrinter.HostedServices
 			  {
 				  using (IServiceScope scope = this.ServiceScopeFactory.CreateScope())
 				  {
+					  //
+					  // Loop until the application is stopped.
+					  //
 					  while (!this.CancellationToken.IsCancellationRequested)
 					  {
 						  try
@@ -86,13 +90,22 @@ namespace VirtualZplPrinter.HostedServices
 									  //
 									  // Accept the connection.
 									  //
-									  TcpClient tcpClient = await this.Listener.AcceptTcpClientAsync();
-									  
-									  //
-									  // Start the client.
-									  //
-									  TcpListenerClientHandler clientService = scope.ServiceProvider.GetRequiredService<TcpListenerClientHandler>();
-									  _ = clientService.StartSessionAsync(tcpClient, this.LabelConfiguration, this.ImagePathRoot);
+									  TcpClient tcpClient = await this.Listener.AcceptTcpClientAsync(this.SocketCancellationTokenSource.Token);
+
+									  if (!this.SocketCancellationTokenSource.IsCancellationRequested)
+									  {
+										  //
+										  // Start the client.
+										  //
+										  TcpListenerClientHandler clientService = scope.ServiceProvider.GetRequiredService<TcpListenerClientHandler>();
+										  _ = clientService.StartSessionAsync(tcpClient, this.LabelConfiguration, this.ImagePathRoot);
+									  }
+								  }
+								  catch (TaskCanceledException)
+								  {
+								  }
+								  catch (OperationCanceledException)
+								  {
 								  }
 								  catch (SocketException)
 								  {
@@ -111,16 +124,26 @@ namespace VirtualZplPrinter.HostedServices
 			  });
 		}
 
-		protected Task<bool> StartListener()
+		protected override async Task OnBeginStopAsync()
+		{
+			if (this.IsRunning)
+			{
+				await this.StopListenerAsync();
+			}
+		}
+
+		protected Task<bool> StartListenerAsync()
 		{
 			bool returnValue = false;
 
 			try
 			{
+				this.SocketCancellationTokenSource = new();
 				this.Listener = new TcpListener(this.IpAddress, this.Port);
 				this.Listener.Start();
 				_ = this.ResetEvent.Set();
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = true });
+				this.IsRunning = true;
 				returnValue = true;
 			}
 			catch (SocketException socketEx)
@@ -146,14 +169,15 @@ namespace VirtualZplPrinter.HostedServices
 			return Task.FromResult(returnValue);
 		}
 
-		protected async Task<bool> StopListener()
+		protected async Task<bool> StopListenerAsync()
 		{
 			bool returnValue = false;
 
 			try
 			{
+				this.SocketCancellationTokenSource.Cancel();
+				await Task.Delay(0);
 				this.Listener.Stop();
-				await Task.Delay(1);
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false });
 			}
 			catch (Exception ex)
@@ -165,6 +189,8 @@ namespace VirtualZplPrinter.HostedServices
 			{
 				_ = this.ResetEvent.Reset();
 				this.Listener = null;
+				this.SocketCancellationTokenSource = null;
+				this.IsRunning = false;
 			}
 
 			return returnValue;
