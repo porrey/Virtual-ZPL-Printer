@@ -5,6 +5,10 @@ An ethernet based virtual Zebra Label Printer that can be used to test applicati
 
 Now requires **.NET 6.0**. Download Setup.exe and the MSI if you need to have the .NET 6.0 Framework installed automatically.
 
+### Version 1.1.17 Updates:
+1. Added rotation support.
+2. Added support for multiple labels within a single ZPL document.
+
 ![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter.png)
 
 *Screen shot taken in Windows 11*
