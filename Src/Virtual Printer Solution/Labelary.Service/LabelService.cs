@@ -15,11 +15,13 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Labelary.Abstractions;
 using UnitsNet;
@@ -28,11 +30,14 @@ namespace Labelary.Service
 {
 	public class LabelService : ILabelService
 	{
-		private static string BaseUrl = "http://api.labelary.com/v1/printers";
+		private static readonly string BaseUrl = "http://api.labelary.com/v1/printers";
 
-		public async Task<IGetLabelResponse> GetLabelAsync(ILabelConfiguration labelConfiguration, string zpl)
+		public async Task<IGetLabelResponse> GetLabelAsync(ILabelConfiguration labelConfiguration, string zpl, int labelIndex = 0)
 		{
-			GetLabelResponse returnValue = new();
+			GetLabelResponse returnValue = new()
+			{
+				LabelIndex = labelIndex
+			};
 
 			try
 			{
@@ -43,9 +48,11 @@ namespace Labelary.Service
 						double width = (new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
 						double height = (new Length(labelConfiguration.LabelHeight, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
 
+						content.Headers.TryAddWithoutValidation("X-Rotation", Convert.ToString(labelConfiguration.LabelRotation.Value));
+
 						if (width <= 15 && height <= 15)
 						{
-							string url = $"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width:#.##}x{height:#.##}/0/";
+							string url = $"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width:#.##}x{height:#.##}/{labelIndex}/";
 							using (HttpResponseMessage response = await client.PostAsync(url, content))
 							{
 								if (response.IsSuccessStatusCode)
@@ -79,6 +86,38 @@ namespace Labelary.Service
 				returnValue.Result = false;
 				returnValue.Label = this.CreateErrorImage(labelConfiguration, "Exception", ex.Message);
 				returnValue.Error = ex.Message;
+			}
+
+			return returnValue;
+		}
+
+		public async Task<IEnumerable<IGetLabelResponse>> GetLabelsAsync(ILabelConfiguration labelConfiguration, string zpl)
+		{
+			IList<IGetLabelResponse> returnValue = new List<IGetLabelResponse>();
+
+			int labelCount = Regex.Matches(zpl.ToUpper(), @"\^XA").Count;
+
+			if (labelCount > 0)
+			{
+				for (int labelIndex = 0; labelIndex < labelCount; labelIndex++)
+				{
+					IGetLabelResponse result = await this.GetLabelAsync(labelConfiguration, zpl, labelIndex);
+					result.HasMultipleLabels = labelCount > 1;
+					returnValue.Add(result);
+				}
+			}
+			else
+			{
+				GetLabelResponse errorLabel = new()
+				{
+					HasMultipleLabels = false,
+					LabelIndex = 0,
+					Result = false,
+					Label = this.CreateErrorImage(labelConfiguration, "ZPL Error", "Invalid ZPL."),
+					Error = "Invalid ZPL."
+				};
+
+				returnValue.Add(errorLabel);
 			}
 
 			return returnValue;

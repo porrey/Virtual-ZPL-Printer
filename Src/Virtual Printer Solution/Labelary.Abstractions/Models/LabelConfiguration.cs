@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
-using Labelary.Abstractions;
 using UnitsNet.Units;
 
 namespace Labelary.Abstractions
@@ -25,5 +24,6 @@ namespace Labelary.Abstractions
 		public double LabelWidth { get; set; }
 		public double LabelHeight { get; set; }
 		public LengthUnit Unit { get; set; }
+		public LabelRotation LabelRotation { get; set; }
 	}
 }

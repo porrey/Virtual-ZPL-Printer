@@ -24,5 +24,6 @@ namespace Labelary.Abstractions
 		double LabelHeight { get; set; }
 		double LabelWidth { get; set; }
 		LengthUnit Unit { get; set; }
+		LabelRotation LabelRotation { get; set; }
 	}
 }

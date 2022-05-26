@@ -48,6 +48,27 @@
 			</Grid>
 		</DataTemplate>
 
+		<DataTemplate x:Key="RotationTemplate">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<Image Grid.Column="0"
+					   Source="/Assets/rotate.png"
+					   Height="24"
+					   Width="24"
+					   Margin="0,0,10,0" />
+
+				<TextBlock Grid.Column="1"
+						   Text="{Binding Label}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Left"
+						   Foreground="{StaticResource ForegroundColor1}" />
+			</Grid>
+		</DataTemplate>
+
 		<DataTemplate x:Key="LabelUnitTemplate">
 			<Grid>
 				<Grid.ColumnDefinitions>
@@ -364,6 +385,7 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -422,20 +444,6 @@
 							 InputScope="Number"
 							 Foreground="{StaticResource ForegroundColor1}" />
 
-					<TextBlock Grid.Row="2"
-							   Grid.Column="0"
-							   Text="Resolution"
-							   Margin="{StaticResource ControlMargin}"
-							   VerticalAlignment="Center"
-							   HorizontalAlignment="Left"
-							   Foreground="{StaticResource ForegroundColor1}" />
-					<ComboBox Grid.Row="2"
-							  Grid.Column="1"
-							  Margin="5"
-							  ItemsSource="{Binding Resolutions}"
-							  SelectedItem="{Binding SelectedResolution, Mode=TwoWay}"
-							  ItemTemplate="{StaticResource ResolutionTemplate}" />
-
 					<TextBlock Grid.Row="1"
 							   Grid.Column="2"
 							   Text="Label Height"
@@ -452,6 +460,20 @@
 							 HorizontalContentAlignment="Left"
 							 InputScope="Number"
 							 Foreground="{StaticResource ForegroundColor1}" />
+
+					<TextBlock Grid.Row="2"
+							   Grid.Column="0"
+							   Text="Resolution"
+							   Margin="{StaticResource ControlMargin}"
+							   VerticalAlignment="Center"
+							   HorizontalAlignment="Left"
+							   Foreground="{StaticResource ForegroundColor1}" />
+					<ComboBox Grid.Row="2"
+							  Grid.Column="1"
+							  Margin="5"
+							  ItemsSource="{Binding Resolutions}"
+							  SelectedItem="{Binding SelectedResolution, Mode=TwoWay}"
+							  ItemTemplate="{StaticResource ResolutionTemplate}" />
 
 					<TextBlock Grid.Row="2"
 							   Grid.Column="2"
@@ -472,12 +494,26 @@
 
 					<TextBlock Grid.Row="3"
 							   Grid.Column="0"
+							   Text="Rotation"
+							   Margin="{StaticResource ControlMargin}"
+							   VerticalAlignment="Center"
+							   HorizontalAlignment="Left"
+							   Foreground="{StaticResource ForegroundColor1}" />
+					<ComboBox Grid.Row="3"
+							  Grid.Column="1"
+							  Margin="5"
+							  ItemsSource="{Binding Rotations}"
+							  SelectedItem="{Binding SelectedRotation, Mode=TwoWay}"
+							  ItemTemplate="{StaticResource RotationTemplate}" />
+
+					<TextBlock Grid.Row="4"
+							   Grid.Column="0"
 							   Text="Label Cache"
 							   Margin="{StaticResource ControlMargin}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
 							   Foreground="{StaticResource ForegroundColor1}" />
-					<Grid Grid.Row="3"
+					<Grid Grid.Row="4"
 						  Grid.Column="1"
 						  Grid.ColumnSpan="3">
 						<Grid.ColumnDefinitions>

@@ -26,6 +26,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
 using Prism.Commands;
@@ -45,6 +46,7 @@ namespace VirtualZplPrinter.ViewModels
 			this.ImageCacheRepository = imageCacheRepository;
 
 			_ = this.LoadResolutions();
+			_ = this.LoadRotations();
 			_ = this.LoadIpAddresses();
 			_ = this.LoadLabelUnits();
 
@@ -94,7 +96,7 @@ namespace VirtualZplPrinter.ViewModels
 			//
 			_ = this.EventAggregator.GetEvent<TimerEvent>().Subscribe((a) =>
 			{
-				foreach (var label in this.Labels)
+				foreach (IStoredImage label in this.Labels)
 				{
 					label.Refresh();
 				}
@@ -106,6 +108,7 @@ namespace VirtualZplPrinter.ViewModels
 		protected CancellationTokenSource TokenSource { get; set; }
 
 		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
+		public ObservableCollection<LabelRotation> Rotations { get; } = new ObservableCollection<LabelRotation>();
 		public ObservableCollection<LabelUnit> LabelUnits { get; } = new ObservableCollection<LabelUnit>();
 		public ObservableCollection<IStoredImage> Labels { get; } = new ObservableCollection<IStoredImage>();
 		public ObservableCollection<IPAddress> IpAddresses { get; } = new ObservableCollection<IPAddress>();
@@ -117,6 +120,19 @@ namespace VirtualZplPrinter.ViewModels
 		public DelegateCommand BrowseCommand { get; set; }
 		public DelegateCommand DeleteLabelCommand { get; set; }
 		public DelegateCommand LabelPreviewCommand { get; set; }
+
+		private LabelRotation _selectedRotation = null;
+		public LabelRotation SelectedRotation
+		{
+			get
+			{
+				return _selectedRotation;
+			}
+			set
+			{
+				this.SetProperty(ref _selectedRotation, value);
+			}
+		}
 
 		private Resolution _selectedResolution = null;
 		public Resolution SelectedResolution
@@ -349,6 +365,24 @@ namespace VirtualZplPrinter.ViewModels
 			return Task.CompletedTask;
 		}
 
+		protected Task LoadRotations()
+		{
+			try
+			{
+				this.Rotations.Add(new() { Label = "None", Value = 0 });
+				this.Rotations.Add(new() { Label = "90˚ Clockwise", Value = 90 });
+				this.Rotations.Add(new() { Label = "180˚ Clockwise", Value = 180 });
+				this.Rotations.Add(new() { Label = "270˚ Clockwise", Value = 270 });
+				this.SelectedRotation = this.Rotations.ElementAt(0);
+			}
+			catch (Exception ex)
+			{
+				this.StatusText = $"Error: {ex.Message}";
+			}
+
+			return Task.CompletedTask;
+		}
+
 		protected Task LoadIpAddresses()
 		{
 			try
@@ -395,12 +429,13 @@ namespace VirtualZplPrinter.ViewModels
 				//
 				this.EventAggregator.GetEvent<StartEvent>().Publish(new StartEventArgs()
 				{
-					LabelConfiguration = new LabelConfiguration()
+					LabelConfiguration = new()
 					{
 						Dpmm = this.SelectedResolution.Dpmm,
 						LabelHeight = this.LabelHeight,
 						LabelWidth = this.LabelWidth,
-						Unit = this.SelectedLabelUnit.Unit
+						Unit = this.SelectedLabelUnit.Unit,
+						LabelRotation = this.SelectedRotation
 					},
 					IpAddress = this.SelectedIpAddress,
 					Port = this.Port,
@@ -448,7 +483,7 @@ namespace VirtualZplPrinter.ViewModels
 		{
 			try
 			{
-				var ip = this.SelectedIpAddress == IPAddress.Any ? IPAddress.Loopback : this.SelectedIpAddress;
+				IPAddress ip = this.SelectedIpAddress == IPAddress.Any ? IPAddress.Loopback : this.SelectedIpAddress;
 				(bool result, string errorMessage) = await TestClient.SendStringAsync(ip, this.Port, await TestLabel.GetZplAsync());
 
 				if (!result)

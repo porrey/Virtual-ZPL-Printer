@@ -15,6 +15,8 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,27 +82,36 @@ namespace VirtualZplPrinter.Client
 
 							if (zpl != "NOP")
 							{
-								IGetLabelResponse response = await this.LabelService.GetLabelAsync(labelConfiguration, zpl);
+								//
+								// Get the label images from Labelary.
+								//
+								IEnumerable<IGetLabelResponse> responses = await this.LabelService.GetLabelsAsync(labelConfiguration, zpl);
 
 								//
-								// Save the image.
+								// Save the images.
 								//
-								IStoredImage storedImage = await this.ImageCacheRepository.StoreImageAsync(imagePathRoot, response.Label);
+								IEnumerable<IStoredImage> storedImages = await this.ImageCacheRepository.StoreLabelImagesAsync(imagePathRoot, responses);
 
 								//
-								// Publish the new label.
+								// Publish the images.
 								//
-								this.EventAggregator.GetEvent<LabelCreatedEvent>().Publish(new LabelCreatedEventArgs()
+								foreach (IGetLabelResponse response in responses)
 								{
-									PrintRequest = new PrintRequestEventArgs()
+									//
+									// Publish the new label.
+									//
+									this.EventAggregator.GetEvent<LabelCreatedEvent>().Publish(new LabelCreatedEventArgs()
 									{
-										LabelConfiguration = labelConfiguration,
-										Zpl = zpl
-									},
-									Label = storedImage,
-									Result = response.Result,
-									Message = response.Result ? "Label successfully created." : response.Error
-								});
+										PrintRequest = new PrintRequestEventArgs()
+										{
+											LabelConfiguration = labelConfiguration,
+											Zpl = zpl
+										},
+										Label = storedImages.ElementAt(response.LabelIndex),
+										Result = response.Result,
+										Message = response.Result ? "Label successfully created." : response.Error
+									});
+								}
 							}
 						}
 					}

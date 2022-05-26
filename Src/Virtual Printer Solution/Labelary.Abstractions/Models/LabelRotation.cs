@@ -14,18 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Labelary.Abstractions;
-
-namespace ImageCache.Abstractions
+namespace Labelary.Abstractions
 {
-	public interface IImageCacheRepository
+	public class LabelRotation
 	{
-		string DefaultFolder { get; }
-		Task<IEnumerable<IStoredImage>> StoreLabelImagesAsync(string imagePathRoot, IEnumerable<IGetLabelResponse> labels);
-		Task<bool> ClearAllAsync(string imagePathRoot);
-		Task<IEnumerable<IStoredImage>> GetAllAsync(string imagePathRoot);
-		Task<bool> DeleteImageAsync(string imagePathRoot, string imageName);
+		public string Label { get; set; }
+		public int Value { get; set; }
 	}
 }
