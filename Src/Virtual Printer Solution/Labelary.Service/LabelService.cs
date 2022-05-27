@@ -19,7 +19,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -57,6 +59,18 @@ namespace Labelary.Service
 							{
 								if (response.IsSuccessStatusCode)
 								{
+									//
+									// Get the label count.
+									//
+									if (response.Headers.Contains("X-Total-Count"))
+									{
+										returnValue.LabelCount = Convert.ToInt32(response.Headers.GetValues("X-Total-Count").FirstOrDefault());
+									}
+									else
+									{
+										returnValue.LabelCount = 1;
+									}
+
 									returnValue.Result = true;
 									returnValue.Label = await response.Content.ReadAsByteArrayAsync();
 									returnValue.Error = null;
@@ -95,29 +109,22 @@ namespace Labelary.Service
 		{
 			IList<IGetLabelResponse> returnValue = new List<IGetLabelResponse>();
 
-			int labelCount = Regex.Matches(zpl.ToUpper(), @"\^XA").Count;
+			//
+			// Get the first label.
+			//
+			IGetLabelResponse result = await this.GetLabelAsync(labelConfiguration, zpl, 0);
+			returnValue.Add(result);
 
-			if (labelCount > 0)
+			if (result.LabelCount > 1)
 			{
-				for (int labelIndex = 0; labelIndex < labelCount; labelIndex++)
+				//
+				// Get the remaining labels.
+				//
+				for (int labelIndex = 1; labelIndex < result.LabelCount; labelIndex++)
 				{
-					IGetLabelResponse result = await this.GetLabelAsync(labelConfiguration, zpl, labelIndex);
-					result.HasMultipleLabels = labelCount > 1;
+					result = await this.GetLabelAsync(labelConfiguration, zpl, labelIndex);
 					returnValue.Add(result);
 				}
-			}
-			else
-			{
-				GetLabelResponse errorLabel = new()
-				{
-					HasMultipleLabels = false,
-					LabelIndex = 0,
-					Result = false,
-					Label = this.CreateErrorImage(labelConfiguration, "ZPL Error", "Invalid ZPL."),
-					Error = "Invalid ZPL."
-				};
-
-				returnValue.Add(errorLabel);
 			}
 
 			return returnValue;

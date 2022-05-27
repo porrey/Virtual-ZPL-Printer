@@ -8,9 +8,9 @@
 		<AssemblyName>VirtualZplPrinter</AssemblyName>
 		<StartupObject>VirtualZplPrinter.App</StartupObject>
 		<RootNamespace>VirtualZplPrinter</RootNamespace>
-		<Version>1.0.17</Version>
-		<FileVersion>1.0.17</FileVersion>
-		<AssemblyVersion>1.0.17</AssemblyVersion>
+		<Version>1.0.18</Version>
+		<FileVersion>1.0.18</FileVersion>
+		<AssemblyVersion>1.0.18</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
