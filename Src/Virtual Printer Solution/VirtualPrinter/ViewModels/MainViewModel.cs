@@ -160,7 +160,7 @@ namespace VirtualZplPrinter.ViewModels
 					}
 					else
 					{
-						this.StatusText = "No selection";
+						this.StatusText = "Ready";
 					}
 				}
 
@@ -196,7 +196,7 @@ namespace VirtualZplPrinter.ViewModels
 			}
 		}
 
-		private string _statusText = "No selection";
+		private string _statusText = "Ready";
 		public string StatusText
 		{
 			get
