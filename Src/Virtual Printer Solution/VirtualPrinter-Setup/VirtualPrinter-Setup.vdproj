@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_2AB0CB3D8B6B464E8E078FF1AB497C6C"
+        "MsmKey" = "8:_658B8D91707A4A83B0A8E943E26E0F15"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -27,7 +27,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E32DD7C119B64BE3BEA1162EB47BFDEF"
+        "MsmKey" = "8:_E9AB5F590F67472495A39A061B16D02C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -133,10 +133,10 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2AB0CB3D8B6B464E8E078FF1AB497C6C"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_658B8D91707A4A83B0A8E943E26E0F15"
             {
-            "SourcePath" = "8:..\\VirtualPrinter\\Samples\\4x6 Shipping Label (8dpmm).zpl"
-            "TargetName" = "8:4x6 Shipping Label (8dpmm).zpl"
+            "SourcePath" = "8:..\\VirtualPrinter\\Samples\\4x6 Shipping Label (8 dpmm).zpl"
+            "TargetName" = "8:4x6 Shipping Label (8 dpmm).zpl"
             "Tag" = "8:"
             "Folder" = "8:_C905FF4E195C47A99DD04849F64F590C"
             "Condition" = "8:"
@@ -153,10 +153,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E32DD7C119B64BE3BEA1162EB47BFDEF"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E9AB5F590F67472495A39A061B16D02C"
             {
-            "SourcePath" = "8:..\\VirtualPrinter\\Samples\\2x2 Product Label (8dpmm).zpl"
-            "TargetName" = "8:2x2 Product Label (8dpmm).zpl"
+            "SourcePath" = "8:..\\VirtualPrinter\\Samples\\2x2 Product Label (8 dpmm).zpl"
+            "TargetName" = "8:2x2 Product Label (8 dpmm).zpl"
             "Tag" = "8:"
             "Folder" = "8:_C905FF4E195C47A99DD04849F64F590C"
             "Condition" = "8:"
@@ -285,7 +285,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Virtual ZPL Printer"
         "ProductCode" = "8:{EFF24537-A13F-4444-A950-9338143A8ABD}"
-        "PackageCode" = "8:{0761BFD0-7D89-4361-94C5-D2540E71A06E}"
+        "PackageCode" = "8:{A7FF4A20-8DAD-4B55-B146-1AF1B886EF6E}"
         "UpgradeCode" = "8:{32EBCEBE-7298-4898-A855-DE97B7DDACEA}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

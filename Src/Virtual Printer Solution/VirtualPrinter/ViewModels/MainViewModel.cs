@@ -121,7 +121,7 @@ namespace VirtualZplPrinter.ViewModels
 		protected IServiceProvider ServiceProvider { get; set; }
 		public IImageCacheRepository ImageCacheRepository { get; set; }
 		protected IRepositoryFactory RepositoryFactory { get; set; }
-		protected SendTestView SendTestView { get; set; }
+		public SendTestView SendTestView { get; set; }
 		protected CancellationTokenSource TokenSource { get; set; }
 
 		public ObservableCollection<IStoredImage> Labels { get; } = new ObservableCollection<IStoredImage>();
@@ -144,9 +144,15 @@ namespace VirtualZplPrinter.ViewModels
 			}
 			set
 			{
+				bool pathChanged = _printerConfiguration?.ImagePath != value?.ImagePath;
+
 				this.SetProperty(ref _printerConfiguration, value);
 				this.RefreshCommands();
-				_ = this.LoadLabelsAsync();
+
+				if (pathChanged)
+				{
+					_ = this.LoadLabelsAsync();
+				}
 			}
 		}
 

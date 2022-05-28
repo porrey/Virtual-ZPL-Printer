@@ -33,9 +33,15 @@ namespace VirtualZplPrinter
 			int id = LabelTemplateExtensions.Rnd.Next(1, 99999999);
 
 			//
-			// Read the sample ZPL.
+			// Create a random bar code value for the label.
 			//
-			returnValue = template.Zpl.Replace("{id}", id.ToString("00000000"));
+			int code = LabelTemplateExtensions.Rnd.Next(1, 99);
+
+			//
+			// Replace template variables.
+			//
+			returnValue = template.Zpl.Replace("{id}", id.ToString("00000000"))
+									  .Replace("{code}", code.ToString("00"));
 
 			return returnValue;
 		}

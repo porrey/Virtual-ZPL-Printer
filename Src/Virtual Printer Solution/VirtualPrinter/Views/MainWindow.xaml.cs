@@ -64,6 +64,11 @@ namespace VirtualZplPrinter.Views
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
+			if (this.ViewModel.SendTestView != null)
+			{
+				this.ViewModel.SendTestView.Close();
+			}
+
 			this.SaveWindow();
 			base.OnClosing(e);
 		}

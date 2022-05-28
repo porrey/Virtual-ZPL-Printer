@@ -45,8 +45,6 @@
 		<None Remove="Assets\trash-bin.png" />
 		<None Remove="Assets\undo.png" />
 		<None Remove="Assets\virtual-printer.png" />
-		<None Remove="Samples\2x2 Product Label (8dpmm).zpl" />
-		<None Remove="Samples\4x6 Shipping Label (8dpmm).zpl" />
 		<None Remove="Samples\6x4-203dpi.txt" />
 		<None Remove="Services\VirtualPrinter.json" />
 		<None Remove="virtual-printer.ico" />
@@ -143,8 +141,6 @@
 		<Content Include="Assets\virtual-printer.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Samples\4x6 Shipping Label %288dpmm%29.zpl" />
-		<Content Include="Samples\2x2 Product Label %288dpmm%29.zpl" />
 		<Content Include="Services\VirtualPrinter.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
