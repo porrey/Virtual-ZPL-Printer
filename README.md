@@ -5,7 +5,7 @@ An ethernet based virtual Zebra Label Printer that can be used to test applicati
 
 Now requires **.NET 6.0**. Download Setup.exe and the MSI if you need to have the .NET 6.0 Framework installed automatically.
 
-###### Version 1.1.18 Updates:
+###### Version 1.0.18 Updates:
 1. Use Labelary `X-Total-Count` HTTP header to determine the number of labels to create.
 
 ###### Screenshot
@@ -15,6 +15,6 @@ Now requires **.NET 6.0**. Download Setup.exe and the MSI if you need to have th
 *Screen shot taken in Windows 11*
 
 ##### History
-###### Version 1.1.17 Updates:
+###### Version 1.0.17 Updates:
 1. Added rotation support.
 2. Added support for multiple labels within a single ZPL document.
