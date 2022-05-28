@@ -337,9 +337,9 @@ namespace VirtualZplPrinter.ViewModels
 		{
 			try
 			{
-				this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Inch });
-				this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Millimeter });
-				this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Centimeter });
+				this.LabelUnits.Add(new LabelUnit() { Unit = LengthUnit.Inch });
+				this.LabelUnits.Add(new LabelUnit() { Unit = LengthUnit.Millimeter });
+				this.LabelUnits.Add(new LabelUnit() { Unit = LengthUnit.Centimeter });
 				this.SelectedLabelUnit = this.LabelUnits.ElementAt(0);
 			}
 			catch
