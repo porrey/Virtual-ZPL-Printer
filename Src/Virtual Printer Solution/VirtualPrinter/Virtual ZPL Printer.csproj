@@ -19,6 +19,7 @@
 		<None Remove="Assets\add-printer-configuration.png" />
 		<None Remove="Assets\browse.png" />
 		<None Remove="Assets\clear-label.png" />
+		<None Remove="Assets\clone-printer-configuration.png" />
 		<None Remove="Assets\close.png" />
 		<None Remove="Assets\delete-printer-configuration.png" />
 		<None Remove="Assets\edit-printer-configuration.png" />
@@ -36,6 +37,7 @@
 		<None Remove="Assets\ruler.png" />
 		<None Remove="Assets\save-label.png" />
 		<None Remove="Assets\save-printer-configuration.png" />
+		<None Remove="Assets\send.png" />
 		<None Remove="Assets\small-label.png" />
 		<None Remove="Assets\start.png" />
 		<None Remove="Assets\stop.png" />
@@ -43,6 +45,8 @@
 		<None Remove="Assets\trash-bin.png" />
 		<None Remove="Assets\undo.png" />
 		<None Remove="Assets\virtual-printer.png" />
+		<None Remove="Samples\2x2 Product Label (8dpmm).zpl" />
+		<None Remove="Samples\4x6 Shipping Label (8dpmm).zpl" />
 		<None Remove="Samples\6x4-203dpi.txt" />
 		<None Remove="Services\VirtualPrinter.json" />
 		<None Remove="virtual-printer.ico" />
@@ -57,6 +61,12 @@
 		</Content>
 		<Content Include="Assets\browse.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\clone-printer-configuration.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\send.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\undo.png">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -133,9 +143,8 @@
 		<Content Include="Assets\virtual-printer.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Samples\6x4-203dpi.txt">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
+		<Content Include="Samples\4x6 Shipping Label %288dpmm%29.zpl" />
+		<Content Include="Samples\2x2 Product Label %288dpmm%29.zpl" />
 		<Content Include="Services\VirtualPrinter.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>

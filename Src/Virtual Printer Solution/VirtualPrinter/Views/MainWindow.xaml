@@ -74,7 +74,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto"
-						   MinHeight="100" />
+						   MinHeight="140" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
@@ -171,7 +171,6 @@
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
 				<CheckBox Grid.Column="0"
@@ -182,33 +181,6 @@
 						  IsChecked="{Binding AutoStart}"
 						  IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}"
 						  Foreground="{StaticResource ForegroundColor1}" />
-
-				<Button Grid.Column="4"
-						Style="{DynamicResource ButtonStyle1}"
-						VerticalAlignment="Center"
-						HorizontalAlignment="Center"
-						Command="{Binding LabelPreviewCommand}"
-						Width="{StaticResource StatusButtonWidth}"
-						Height="{StaticResource StatusButtonHeight}"
-						Margin="8,5,5,5"
-						ToolTip="View the label image in an external viewer.">
-					<Button.Content>
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
-
-							<Image Source="/Assets/label-preview.png"
-								   Width="24"
-								   Height="24" />
-
-							<TextBlock Grid.Row="1"
-									   Text="View"
-									   FontSize="11" />
-						</Grid>
-					</Button.Content>
-				</Button>
 
 				<Button Grid.Column="3"
 						Style="{DynamicResource ButtonStyle1}"
@@ -338,11 +310,13 @@
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
 				<ProgressBar Style="{DynamicResource ProgressBarStyle1}"
 							 Grid.Column="1"
-							 Width="50"
+							 Width="75"
 							 IsIndeterminate="True"
 							 Margin="3,15,3,15"
 							 Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -396,11 +370,11 @@
 						Style="{DynamicResource ButtonStyle1}"
 						VerticalAlignment="Center"
 						HorizontalAlignment="Center"
-						Command="{Binding TestLabelCommand}"
+						Command="{Binding LabelPreviewCommand}"
 						Width="{StaticResource StatusButtonWidth}"
 						Height="{StaticResource StatusButtonHeight}"
-						Margin="8,3,0,3"
-						ToolTip="Send a test label.">
+						Margin="8,5,5,5"
+						ToolTip="View the label image in an external viewer.">
 					<Button.Content>
 						<Grid>
 							<Grid.RowDefinitions>
@@ -408,12 +382,12 @@
 								<RowDefinition Height="Auto" />
 							</Grid.RowDefinitions>
 
-							<Image Source="/Assets/test-label.png"
+							<Image Source="/Assets/label-preview.png"
 								   Width="24"
 								   Height="24" />
 
 							<TextBlock Grid.Row="1"
-									   Text="Test"
+									   Text="View"
 									   FontSize="11" />
 						</Grid>
 					</Button.Content>
@@ -423,10 +397,37 @@
 						Style="{DynamicResource ButtonStyle1}"
 						VerticalAlignment="Center"
 						HorizontalAlignment="Center"
+						Command="{Binding DeleteLabelCommand}"
+						Width="{StaticResource StatusButtonWidth}"
+						Height="{StaticResource StatusButtonHeight}"
+						Margin="8,5,5,5"
+						ToolTip="Delete the selected label.">
+					<Button.Content>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+
+							<Image Source="/Assets/trash-bin.png"
+								   Width="24"
+								   Height="24" />
+
+							<TextBlock Grid.Row="1"
+									   Text="Delete"
+									   FontSize="11" />
+						</Grid>
+					</Button.Content>
+				</Button>
+
+				<Button Grid.Column="6"
+						Style="{DynamicResource ButtonStyle1}"
+						VerticalAlignment="Center"
+						HorizontalAlignment="Center"
 						Command="{Binding ClearLabelsCommand}"
 						Width="{StaticResource StatusButtonWidth}"
 						Height="{StaticResource StatusButtonHeight}"
-						Margin="8,3,5,3"
+						Margin="8,3,0,3"
 						ToolTip="Clear all labels.">
 					<Button.Content>
 						<Grid>
@@ -441,6 +442,33 @@
 
 							<TextBlock Grid.Row="1"
 									   Text="Clear"
+									   FontSize="11" />
+						</Grid>
+					</Button.Content>
+				</Button>
+
+				<Button Grid.Column="7"
+						Style="{DynamicResource ButtonStyle1}"
+						VerticalAlignment="Center"
+						HorizontalAlignment="Center"
+						Command="{Binding SendTestLabelCommand}"
+						Width="{StaticResource StatusButtonWidth}"
+						Height="{StaticResource StatusButtonHeight}"
+						Margin="8,3,5,3"
+						ToolTip="Send a test label.">
+					<Button.Content>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+
+							<Image Source="/Assets/test-label.png"
+								   Width="24"
+								   Height="24" />
+
+							<TextBlock Grid.Row="1"
+									   Text="Test"
 									   FontSize="11" />
 						</Grid>
 					</Button.Content>

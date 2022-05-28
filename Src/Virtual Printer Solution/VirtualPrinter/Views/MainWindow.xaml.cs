@@ -58,7 +58,7 @@ namespace VirtualZplPrinter.Views
 
 		protected override async void OnInitialized(EventArgs e)
 		{
-			await ((MainViewModel)this.DataContext).InitializeAsync();
+			await this.ViewModel.InitializeAsync();
 			base.OnInitialized(e);
 		}
 
@@ -78,7 +78,7 @@ namespace VirtualZplPrinter.Views
 
 				if (this.ViewModel.SelectedPrinterConfiguration == null)
 				{
-					this.ViewModel.SelectedPrinterConfiguration = this.ViewModel.PrinterConfigurations.First();
+					this.ViewModel.SelectedPrinterConfiguration = this.ViewModel.PrinterConfigurations.FirstOrDefault();
 				}
 
 				if (Properties.Settings.Default.Initialized)

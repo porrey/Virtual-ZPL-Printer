@@ -118,5 +118,41 @@ namespace VirtualZplPrinter.Properties {
                 this["PrinterConfiguration"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LabelTemplate {
+            get {
+                return ((string)(this["LabelTemplate"]));
+            }
+            set {
+                this["LabelTemplate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SendTestLabelLeft {
+            get {
+                return ((double)(this["SendTestLabelLeft"]));
+            }
+            set {
+                this["SendTestLabelLeft"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SendTestLabelTop {
+            get {
+                return ((double)(this["SendTestLabelTop"]));
+            }
+            set {
+                this["SendTestLabelTop"] = value;
+            }
+        }
     }
 }

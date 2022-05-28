@@ -429,9 +429,10 @@
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 
-			<Button Grid.Column="5"
+			<Button Grid.Column="6"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
@@ -459,7 +460,7 @@
 				</Button.Content>
 			</Button>
 			
-			<Button Grid.Column="4"
+			<Button Grid.Column="5"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
@@ -486,7 +487,7 @@
 				</Button.Content>
 			</Button>
 			
-			<Button Grid.Column="3"
+			<Button Grid.Column="4"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
@@ -513,7 +514,7 @@
 				</Button.Content>
 			</Button>
 			
-			<Button Grid.Column="2"
+			<Button Grid.Column="3"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
@@ -540,7 +541,7 @@
 				</Button.Content>
 			</Button>
 
-			<Button Grid.Column="1"
+			<Button Grid.Column="2"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
@@ -562,6 +563,33 @@
 
 						<TextBlock Grid.Row="1"
 								   Text="Delete"
+								   FontSize="11" />
+					</Grid>
+				</Button.Content>
+			</Button>
+
+			<Button Grid.Column="1"
+					Style="{DynamicResource ButtonStyle1}"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Center"
+					Command="{Binding CloneCommand}"
+					Width="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
+					Margin="8,3,0,3"
+					ToolTip="Clone the selected printer configuration.">
+				<Button.Content>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<Image Source="/Assets/clone-printer-configuration.png"
+							   Width="24"
+							   Height="24" />
+
+						<TextBlock Grid.Row="1"
+								   Text="Clone"
 								   FontSize="11" />
 					</Grid>
 				</Button.Content>

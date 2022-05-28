@@ -15,7 +15,19 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_2AB0CB3D8B6B464E8E078FF1AB497C6C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9F590A75A84E41D88F76D4967EEDAE96"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E32DD7C119B64BE3BEA1162EB47BFDEF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -121,12 +133,107 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2AB0CB3D8B6B464E8E078FF1AB497C6C"
+            {
+            "SourcePath" = "8:..\\VirtualPrinter\\Samples\\4x6 Shipping Label (8dpmm).zpl"
+            "TargetName" = "8:4x6 Shipping Label (8dpmm).zpl"
+            "Tag" = "8:"
+            "Folder" = "8:_C905FF4E195C47A99DD04849F64F590C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E32DD7C119B64BE3BEA1162EB47BFDEF"
+            {
+            "SourcePath" = "8:..\\VirtualPrinter\\Samples\\2x2 Product Label (8dpmm).zpl"
+            "TargetName" = "8:2x2 Product Label (8dpmm).zpl"
+            "Tag" = "8:"
+            "Folder" = "8:_C905FF4E195C47A99DD04849F64F590C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
         }
         "Folder"
         {
+            "{1525181F-901A-416C-8A58-119130FE478E}:_5F3C729E2BC84C298CE7F01BA2977C20"
+            {
+            "Name" = "8:#1918"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:PersonalFolder"
+                "Folders"
+                {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_3BFC30C5817F403A90452C659F46EBBE"
+                    {
+                    "Name" = "8:Virtual ZPL Printer"
+                    "AlwaysCreate" = "11:TRUE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_DB56A59A6F624B458ADE2EB13860D826"
+                        "Folders"
+                        {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_614F8E2FAC6245A18C3A684F944C615D"
+                            {
+                            "Name" = "8:Database"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_BB4D7AF9CBF74435A333D3E3C4F355A2"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_C905FF4E195C47A99DD04849F64F590C"
+                            {
+                            "Name" = "8:Templates"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_8D1D757E69D344E089448EB5741093E3"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_DC2C0C519F644FEE893BFF2AB7A18D45"
+                            {
+                            "Name" = "8:Image Cache"
+                            "AlwaysCreate" = "11:TRUE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_92DEF4D319DA418AB1A7596719B865B8"
+                                "Folders"
+                                {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             "{1525181F-901A-416C-8A58-119130FE478E}:_7BAA302689ED4BF5A07DF2EEF368F3B6"
             {
             "Name" = "8:#1916"
@@ -178,7 +285,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Virtual ZPL Printer"
         "ProductCode" = "8:{EFF24537-A13F-4444-A950-9338143A8ABD}"
-        "PackageCode" = "8:{0CF8D96B-9B4F-41B6-85A8-40E86F3766E4}"
+        "PackageCode" = "8:{0761BFD0-7D89-4361-94C5-D2540E71A06E}"
         "UpgradeCode" = "8:{32EBCEBE-7298-4898-A855-DE97B7DDACEA}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

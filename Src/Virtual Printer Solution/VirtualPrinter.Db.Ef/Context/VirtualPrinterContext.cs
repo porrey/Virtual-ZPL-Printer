@@ -25,18 +25,73 @@ namespace VirtualPrinter.Db.Ef
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<PrinterConfiguration>().HasData(new PrinterConfiguration()
-			{
-				Id = 1,
-				Name = "4x6 w/0˚ Rotation",
-				HostAddress = "0.0.0.0",
-				Port = 9100,
-				LabelHeight = 6,
-				LabelWidth = 4,
-				ResolutionInDpmm = 8,
-				RotationAngle = 0,
-				LabelUnit = (int)LengthUnit.Inch,
-				ImagePath = FileLocations.ImageCache.FullName
+			modelBuilder.Entity<PrinterConfiguration>().HasData(new PrinterConfiguration[]
+			{ 
+				new PrinterConfiguration()
+				{
+					Id = 1,
+					Name = "4x6 w/0˚ Rotation",
+					HostAddress = "0.0.0.0",
+					Port = 9100,
+					LabelHeight = 6,
+					LabelWidth = 4,
+					ResolutionInDpmm = 8,
+					RotationAngle = 0,
+					LabelUnit = (int)LengthUnit.Inch,
+					ImagePath = FileLocations.ImageCache.FullName
+				},
+				new PrinterConfiguration()
+				{
+					Id = 2,
+					Name = "4x6 w/90˚ Rotation",
+					HostAddress = "0.0.0.0",
+					Port = 9100,
+					LabelHeight = 6,
+					LabelWidth = 4,
+					ResolutionInDpmm = 8,
+					RotationAngle = 90,
+					LabelUnit = (int)LengthUnit.Inch,
+					ImagePath = FileLocations.ImageCache.FullName
+				},
+				new PrinterConfiguration()
+				{
+					Id = 3,
+					Name = "4x6 w/180˚ Rotation",
+					HostAddress = "0.0.0.0",
+					Port = 9100,
+					LabelHeight = 6,
+					LabelWidth = 4,
+					ResolutionInDpmm = 8,
+					RotationAngle = 180,
+					LabelUnit = (int)LengthUnit.Inch,
+					ImagePath = FileLocations.ImageCache.FullName
+				},
+				new PrinterConfiguration()
+				{
+					Id = 4,
+					Name = "4x6 w/270˚ Rotation",
+					HostAddress = "0.0.0.0",
+					Port = 9100,
+					LabelHeight = 6,
+					LabelWidth = 4,
+					ResolutionInDpmm = 8,
+					RotationAngle = 270,
+					LabelUnit = (int)LengthUnit.Inch,
+					ImagePath = FileLocations.ImageCache.FullName
+				},
+				new PrinterConfiguration()
+				{
+					Id = 5,
+					Name = "2x2",
+					HostAddress = "0.0.0.0",
+					Port = 9100,
+					LabelHeight = 2,
+					LabelWidth = 2,
+					ResolutionInDpmm = 8,
+					RotationAngle = 0,
+					LabelUnit = (int)LengthUnit.Inch,
+					ImagePath = FileLocations.ImageCache.FullName
+				}
 			});
 		}
 	}

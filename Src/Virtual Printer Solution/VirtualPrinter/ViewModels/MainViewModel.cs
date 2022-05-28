@@ -51,25 +51,28 @@ namespace VirtualZplPrinter.ViewModels
 
 			this.StartCommand = new DelegateCommand(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning && this.SelectedPrinterConfiguration != null);
 			this.StopCommand = new DelegateCommand(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
-			this.TestLabelCommand = new DelegateCommand(() => _ = this.TestLabelAsync(), () => !this.IsBusy && this.IsRunning);
+			this.SendTestLabelCommand = new DelegateCommand(() => _ = this.SendTestLabelAsync(), () => !this.IsBusy && this.IsRunning && this.SendTestView == null);
 			this.ClearLabelsCommand = new DelegateCommand(() => _ = this.ClearLabelsAsync(), () => !this.IsBusy && this.Labels.Count > 0);
 			this.DeleteLabelCommand = new DelegateCommand(() => _ = this.DeleteLabelAsync(), () => !this.IsBusy && this.SelectedLabel != null);
 			this.LabelPreviewCommand = new DelegateCommand(() => _ = this.LabelPreviewAsync(), () => !this.IsBusy && this.SelectedLabel != null);
 			this.EditCommand = new DelegateCommand(() => _ = this.EditPrinterConfigurationAsync(), () => !this.IsBusy && !this.IsRunning);
 
+			//
+			// Load the printer configurations.
+			//
 			_ = this.LoadPrinterConfigurations();
 
 			//
 			// Subscribe to the running state changed event to update the running
 			// status of the UI.
 			//
-			_ = this.EventAggregator.GetEvent<RunningStateChangedEvent>().Subscribe((a) =>
+			_ = this.EventAggregator.GetEvent<RunningStateChangedEvent>().Subscribe((e) =>
 			{
-				this.IsRunning = a.IsRunning;
+				this.IsRunning = e.IsRunning;
 
-				if (a.IsError)
+				if (e.IsError)
 				{
-					this.StatusText = a.ErrorMessage;
+					this.StatusText = e.ErrorMessage;
 				}
 
 			}, ThreadOption.UIThread);
@@ -78,30 +81,39 @@ namespace VirtualZplPrinter.ViewModels
 			// Subscribe to the label created event to add all new labels
 			// to the UI.
 			//
-			_ = this.EventAggregator.GetEvent<LabelCreatedEvent>().Subscribe((a) =>
+			_ = this.EventAggregator.GetEvent<LabelCreatedEvent>().Subscribe((e) =>
 			  {
 				  //
 				  // Add the new label to the collection.
 				  //
-				  this.Labels.Add(a.Label);
+				  this.Labels.Add(e.Label);
 				  this.RaisePropertyChanged(nameof(this.Labels));
 
 				  //
 				  // Make the new label the currently selected label.
 				  //
-				  this.SelectedLabel = a.Label;
+				  this.SelectedLabel = e.Label;
 
 			  }, ThreadOption.UIThread);
 
 			//
 			// Subscribe to the timer event.
 			//
-			_ = this.EventAggregator.GetEvent<TimerEvent>().Subscribe((a) =>
+			_ = this.EventAggregator.GetEvent<TimerEvent>().Subscribe((e) =>
 			{
 				foreach (IStoredImage label in this.Labels)
 				{
 					label.Refresh();
 				}
+			}, ThreadOption.UIThread);
+
+			//
+			// Subscribe to the window hidden event.
+			//
+			_ = this.EventAggregator.GetEvent<WindowHiddenEvent>().Subscribe((e) =>
+			{
+				this.SendTestView = null;
+				this.RefreshCommands();
 			}, ThreadOption.UIThread);
 		}
 
@@ -109,6 +121,7 @@ namespace VirtualZplPrinter.ViewModels
 		protected IServiceProvider ServiceProvider { get; set; }
 		public IImageCacheRepository ImageCacheRepository { get; set; }
 		protected IRepositoryFactory RepositoryFactory { get; set; }
+		protected SendTestView SendTestView { get; set; }
 		protected CancellationTokenSource TokenSource { get; set; }
 
 		public ObservableCollection<IStoredImage> Labels { get; } = new ObservableCollection<IStoredImage>();
@@ -116,7 +129,7 @@ namespace VirtualZplPrinter.ViewModels
 
 		public DelegateCommand StartCommand { get; set; }
 		public DelegateCommand StopCommand { get; set; }
-		public DelegateCommand TestLabelCommand { get; set; }
+		public DelegateCommand SendTestLabelCommand { get; set; }
 		public DelegateCommand ClearLabelsCommand { get; set; }
 		public DelegateCommand DeleteLabelCommand { get; set; }
 		public DelegateCommand LabelPreviewCommand { get; set; }
@@ -272,11 +285,11 @@ namespace VirtualZplPrinter.ViewModels
 		public void RefreshCommands()
 		{
 			//
-			// refresh the state of all of the command buttons.
+			// Refresh the state of all of the command buttons.
 			//
 			this.StartCommand.RaiseCanExecuteChanged();
 			this.StopCommand.RaiseCanExecuteChanged();
-			this.TestLabelCommand.RaiseCanExecuteChanged();
+			this.SendTestLabelCommand.RaiseCanExecuteChanged();
 			this.ClearLabelsCommand.RaiseCanExecuteChanged();
 			this.DeleteLabelCommand.RaiseCanExecuteChanged();
 			this.LabelPreviewCommand.RaiseCanExecuteChanged();
@@ -344,22 +357,24 @@ namespace VirtualZplPrinter.ViewModels
 			}
 		}
 
-		protected async Task TestLabelAsync()
+		protected Task SendTestLabelAsync()
 		{
 			try
 			{
-				IPAddress ip = this.SelectedPrinterConfiguration.HostAddress == IPAddress.Any.ToString() ? IPAddress.Loopback : IPAddress.Parse(this.SelectedPrinterConfiguration.HostAddress);
-				(bool result, string errorMessage) = await TestClient.SendStringAsync(ip, this.SelectedPrinterConfiguration.Port, await TestLabel.GetZplAsync());
-
-				if (!result)
-				{
-					this.StatusText = errorMessage;
-				}
+				this.SendTestView = this.ServiceProvider.GetService<SendTestView>();
+				this.SendTestView.ViewModel.SelectedPrinterConfiguration = this.SelectedPrinterConfiguration;
+				this.SendTestView.Show();
 			}
 			catch (Exception ex)
 			{
 				this.StatusText = $"Error: {ex.Message}";
 			}
+			finally
+			{
+				this.RefreshCommands();
+			}
+
+			return Task.CompletedTask;
 		}
 
 		protected async Task ClearLabelsAsync()
@@ -533,7 +548,7 @@ namespace VirtualZplPrinter.ViewModels
 
 				if (this.SelectedPrinterConfiguration == null)
 				{
-					this.SelectedPrinterConfiguration = this.PrinterConfigurations.First();
+					this.SelectedPrinterConfiguration = this.PrinterConfigurations.FirstOrDefault();
 				}
 			}
 			catch (Exception ex)

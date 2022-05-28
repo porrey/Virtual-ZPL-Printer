@@ -28,7 +28,7 @@ namespace VirtualPrinter.Db.Ef
 		public string IdSummary => $"ID: {this.Id}";
 
 		[NotMapped]
-		public string HostSummary => $"Host: {this.HostAddress}, {this.Port}";
+		public string HostSummary => $"Host: {this.HostAddress}:{this.Port}";
 
 		[NotMapped]
 		public string SizeSummary => $"Size: {this.LabelWidth} {this.Unit} by {this.LabelHeight} {this.Unit}";
@@ -40,7 +40,7 @@ namespace VirtualPrinter.Db.Ef
 		public string RotationSummary => $"Rotation: {this.RotationAngle}˚";
 
 		[NotMapped]
-		public string Description => $"{this.Name} ({this.HostSummary}, {this.SizeSummary}, {this.ResolutionSummary}, {this.RotationSummary})";
+		public string Description => $"{this.Name} [{this.HostSummary}, {this.SizeSummary}, {this.ResolutionSummary}, {this.RotationSummary}]";
 
 		[NotMapped]
 		public string Unit => $"{(LengthUnit)this.LabelUnit}".ToLower();

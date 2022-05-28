@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\label.png" />
+    <None Remove="Assets\printer-label.png" />
     <None Remove="Services\Labelary.Service.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\label.png">
+    <Content Include="Assets\printer-label.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Services\Labelary.Service.json">

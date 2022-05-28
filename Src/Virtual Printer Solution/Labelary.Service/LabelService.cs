@@ -170,7 +170,7 @@ namespace Labelary.Service
 					// Draw the image
 					//
 					Rectangle imageRect = new(BORDER, BORDER, IMAGE, IMAGE);
-					graphics.DrawImage(Image.FromFile("./Assets/label.png"), imageRect);
+					graphics.DrawImage(Image.FromFile("./Assets/printer-label.png"), imageRect);
 
 					//
 					// Draw the title.

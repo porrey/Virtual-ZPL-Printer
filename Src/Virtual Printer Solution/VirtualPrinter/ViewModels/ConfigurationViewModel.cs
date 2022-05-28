@@ -50,6 +50,7 @@ namespace VirtualZplPrinter.ViewModels
 			this.AddCommand = new DelegateCommand(async () => await this.AddCommandAsync(), () => !this.Changes);
 			this.DeleteCommand = new DelegateCommand(async () => await this.DeleteCommandAsync(), () => !this.Changes && this.SelectedPrinterConfiguration != null && this.PrinterConfigurations.Count() > 1);
 			this.SaveCommand = new DelegateCommand(async () => await this.SaveCommandAsync(), () => this.Changes);
+			this.CloneCommand = new DelegateCommand(async () => await this.CloneCommandAsync(), () => !this.Changes && this.SelectedPrinterConfiguration != null);
 		}
 
 		protected IServiceProvider ServiceProvider { get; set; }
@@ -61,6 +62,7 @@ namespace VirtualZplPrinter.ViewModels
 		public DelegateCommand AddCommand { get; set; }
 		public DelegateCommand DeleteCommand { get; set; }
 		public DelegateCommand SaveCommand { get; set; }
+		public DelegateCommand CloneCommand { get; set; }
 
 		public ObservableCollection<IPAddress> IpAddresses { get; } = new ObservableCollection<IPAddress>();
 		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
@@ -267,7 +269,7 @@ namespace VirtualZplPrinter.ViewModels
 				//
 				if (id == 0)
 				{
-					this.SelectedPrinterConfiguration = this.PrinterConfigurations.First();
+					this.SelectedPrinterConfiguration = this.PrinterConfigurations.FirstOrDefault();
 				}
 				else
 				{
@@ -275,7 +277,7 @@ namespace VirtualZplPrinter.ViewModels
 
 					if (this.SelectedPrinterConfiguration == null)
 					{
-						this.SelectedPrinterConfiguration = this.PrinterConfigurations.First();
+						this.SelectedPrinterConfiguration = this.PrinterConfigurations.FirstOrDefault();
 					}
 				}
 			}
@@ -387,7 +389,7 @@ namespace VirtualZplPrinter.ViewModels
 		public void RefreshCommands()
 		{
 			//
-			// refresh the state of all of the command buttons.
+			// Refresh the state of all of the command buttons.
 			//
 			this.UndoCommand.RaiseCanExecuteChanged();
 			this.CloseCommand.RaiseCanExecuteChanged();
@@ -395,6 +397,7 @@ namespace VirtualZplPrinter.ViewModels
 			this.SaveCommand.RaiseCanExecuteChanged();
 			this.DeleteCommand.RaiseCanExecuteChanged();
 			this.BrowseCommand.RaiseCanExecuteChanged();
+			this.CloneCommand.RaiseCanExecuteChanged();
 		}
 
 		protected Task UndoCommandAsync()
@@ -427,7 +430,7 @@ namespace VirtualZplPrinter.ViewModels
 			using IWritableRepository<IPrinterConfiguration> repository = await this.RepositoryFactory.GetWritableAsync<IPrinterConfiguration>();
 
 			IPrinterConfiguration item = await repository.ModelFactory.CreateAsync();
-			item.Name = this.GetNewName();
+			item.Name = this.GetNewName("New Printer Configuration");
 			item.HostAddress = "127.0.0.1";
 			item.Port = 9100;
 			item.LabelHeight = 6;
@@ -543,9 +546,34 @@ namespace VirtualZplPrinter.ViewModels
 			return Task.CompletedTask;
 		}
 
-		protected string GetNewName()
+		protected async Task CloneCommandAsync()
 		{
-			string baseName = "New Printer Configuration";
+			if (this.SelectedPrinterConfiguration != null)
+			{
+				//
+				// Get a writable repository.
+				//
+				using IWritableRepository<IPrinterConfiguration> repository = await this.RepositoryFactory.GetWritableAsync<IPrinterConfiguration>();
+
+				IPrinterConfiguration item = await repository.ModelFactory.CreateAsync();
+				item.Name = this.GetNewName($"{this.SelectedPrinterConfiguration.Name}-Copy");
+				item.HostAddress = this.SelectedPrinterConfiguration.HostAddress;
+				item.Port = this.SelectedPrinterConfiguration.Port;
+				item.LabelHeight = this.SelectedPrinterConfiguration.LabelHeight;
+				item.LabelWidth = this.SelectedPrinterConfiguration.LabelWidth;
+				item.LabelUnit = this.SelectedPrinterConfiguration.LabelUnit;
+				item.ResolutionInDpmm = this.SelectedPrinterConfiguration.ResolutionInDpmm;
+				item.RotationAngle = this.SelectedPrinterConfiguration.RotationAngle;
+				item.ImagePath = this.SelectedPrinterConfiguration.ImagePath;
+
+				this.PrinterConfigurations.Add(item);
+				this.SelectedPrinterConfiguration = item;
+				this.Changes = true;
+			}
+		}
+
+		protected string GetNewName(string baseName)
+		{
 			string returnValue = baseName;
 			int i = 1;
 

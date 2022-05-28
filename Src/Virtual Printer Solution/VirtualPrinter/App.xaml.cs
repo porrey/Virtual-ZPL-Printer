@@ -14,10 +14,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using System.Windows;
 using Diamond.Core.Extensions.DependencyInjection;
 using Diamond.Core.Extensions.DependencyInjection.EntityFrameworkCore;
 using Diamond.Core.Wpf;
 using Microsoft.Extensions.Hosting;
+using VirtualZplPrinter.Views;
 
 namespace VirtualZplPrinter
 {
@@ -27,6 +29,20 @@ namespace VirtualZplPrinter
 		{
 			return hostBuilder.ConfigureServicesFolder("Services")
 							  .UseConfiguredDatabaseServices();
+		}
+
+		protected SplashView Splash { get; set; }
+
+		protected override void OnBeginStartup(StartupEventArgs e)
+		{
+			this.Splash = new SplashView();
+			this.Splash.Show();
+		}
+
+		protected override void OnCompletedStartup(StartupEventArgs e)
+		{
+			this.Splash.Close();
+			this.Splash = null;
 		}
 	}
 }
