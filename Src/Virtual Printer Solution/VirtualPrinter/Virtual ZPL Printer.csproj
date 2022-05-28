@@ -8,19 +8,26 @@
 		<AssemblyName>VirtualZplPrinter</AssemblyName>
 		<StartupObject>VirtualZplPrinter.App</StartupObject>
 		<RootNamespace>VirtualZplPrinter</RootNamespace>
-		<Version>1.0.18</Version>
-		<FileVersion>1.0.18</FileVersion>
-		<AssemblyVersion>1.0.18</AssemblyVersion>
+		<Version>2.0.0</Version>
+		<FileVersion>2.0.0</FileVersion>
+		<AssemblyVersion>2.0.0</AssemblyVersion>
+		<Nullable>disable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<None Remove="appsettings.json" />
+		<None Remove="Assets\add-printer-configuration.png" />
 		<None Remove="Assets\browse.png" />
 		<None Remove="Assets\clear-label.png" />
+		<None Remove="Assets\close.png" />
+		<None Remove="Assets\delete-printer-configuration.png" />
+		<None Remove="Assets\edit-printer-configuration.png" />
 		<None Remove="Assets\idle.png" />
 		<None Remove="Assets\ip.png" />
 		<None Remove="Assets\label-preview.png" />
 		<None Remove="Assets\label.png" />
 		<None Remove="Assets\listening.png" />
+		<None Remove="Assets\printer-configuration.png" />
 		<None Remove="Assets\printer-running-base.png" />
 		<None Remove="Assets\printer-running.png" />
 		<None Remove="Assets\printer-stopped.png" />
@@ -28,11 +35,13 @@
 		<None Remove="Assets\rotate.png" />
 		<None Remove="Assets\ruler.png" />
 		<None Remove="Assets\save-label.png" />
+		<None Remove="Assets\save-printer-configuration.png" />
 		<None Remove="Assets\small-label.png" />
 		<None Remove="Assets\start.png" />
 		<None Remove="Assets\stop.png" />
 		<None Remove="Assets\test-label.png" />
 		<None Remove="Assets\trash-bin.png" />
+		<None Remove="Assets\undo.png" />
 		<None Remove="Assets\virtual-printer.png" />
 		<None Remove="Samples\6x4-203dpi.txt" />
 		<None Remove="Services\VirtualPrinter.json" />
@@ -40,11 +49,29 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Content Include="appsettings.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\add-printer-configuration.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Assets\browse.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+		<Content Include="Assets\undo.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Assets\clear-label.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\close.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\delete-printer-configuration.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\edit-printer-configuration.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\idle.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -61,10 +88,16 @@
 		<Content Include="Assets\listening.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+		<Content Include="Assets\printer-configuration.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Assets\printer-running-base.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\rotate.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\save-printer-configuration.png">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\small-label.png">
@@ -112,9 +145,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Wpf" Version="5.1.0" />
+		<PackageReference Include="Diamond.Core.Repository" Version="6.0.12" />
+		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="6.0.12" />
+		<PackageReference Include="Diamond.Core.Wpf" Version="6.0.12" />
 		<PackageReference Include="Prism.Wpf" Version="8.1.97" />
-		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="5.1.0" />
+		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="6.0.12" />
+		<PackageReference Include="System.DisposableObject" Version="1.5.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -122,6 +158,7 @@
 		<ProjectReference Include="..\ImageCache.Repository\ImageCache.Repository.csproj" />
 		<ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
 		<ProjectReference Include="..\Labelary.Service\Labelary.Service.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Db.Ef\VirtualPrinter.Db.Ef.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -133,10 +170,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Update="C:\Users\porrey\.nuget\packages\diamond.core.repository.abstractions\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.Abstractions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\porrey\.nuget\packages\diamond.core.repository\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Update="Properties\Settings.settings">
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Update="Views\ConfigurationView.xaml">
+	    <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+	  </Page>
 	</ItemGroup>
 
 </Project>

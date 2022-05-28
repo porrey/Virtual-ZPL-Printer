@@ -14,11 +14,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using Diamond.Core.Repository;
 using UnitsNet.Units;
 
 namespace VirtualZplPrinter.Models
 {
-	public class LabelUnit
+	public class LabelUnit : Entity
 	{
 		public LengthUnit Unit { get; set; }
 		public string Display => this.Unit.ToString();

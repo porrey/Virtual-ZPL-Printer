@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Version>2.0.0</Version>
+    <FileVersion>2.0.0</FileVersion>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Services\VirtualPrinter.Db.Ef.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Services\VirtualPrinter.Db.Ef.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Diamond.Core.Extensions.DependencyInjection.Sqlite" Version="6.0.12" />
+		<PackageReference Include="Diamond.Core.Repository" Version="6.0.12" />
+		<PackageReference Include="Diamond.Core.System.Text" Version="6.0.12" />
+		<PackageReference Include="Diamond.Core.Repository.EntityFrameworkCore" Version="6.0.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="UnitsNet" Version="4.131.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
+	  <ProjectReference Include="..\VirtualPrinter.Db.Abstractions\VirtualPrinter.Db.Abstractions.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="C:\Users\porrd0bl\.nuget\packages\diamond.core.repository\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\porrd0bl\.nuget\packages\diamond.core.specification\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Specification.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\porrd0bl\.nuget\packages\diamond.core.unitofwork\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.UnitOfWork.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\porrey\.nuget\packages\diamond.core.repository\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+</Project>

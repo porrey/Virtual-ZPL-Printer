@@ -15,6 +15,7 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using Diamond.Core.Extensions.DependencyInjection;
+using Diamond.Core.Extensions.DependencyInjection.EntityFrameworkCore;
 using Diamond.Core.Wpf;
 using Microsoft.Extensions.Hosting;
 
@@ -24,7 +25,8 @@ namespace VirtualZplPrinter
 	{
 		protected override IHostBuilder OnConfigureHost(IHostBuilder hostBuilder)
 		{
-			return hostBuilder.ConfigureServicesFolder("Services");
+			return hostBuilder.ConfigureServicesFolder("Services")
+							  .UseConfiguredDatabaseServices();
 		}
 	}
 }

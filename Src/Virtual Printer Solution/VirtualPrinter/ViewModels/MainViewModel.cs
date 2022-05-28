@@ -21,42 +21,43 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media.Imaging;
+using Diamond.Core.Repository;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using UnitsNet;
+using UnitsNet.Units;
+using VirtualPrinter.Db.Abstractions;
+using VirtualPrinter.Db.Ef;
 using VirtualZplPrinter.Events;
-using VirtualZplPrinter.Models;
+using VirtualZplPrinter.Views;
 
 namespace VirtualZplPrinter.ViewModels
 {
 	public class MainViewModel : BindableBase
 	{
-		public MainViewModel(IEventAggregator eventAggregator, IImageCacheRepository imageCacheRepository)
+		public MainViewModel(IEventAggregator eventAggregator, IServiceProvider serviceProvider, IImageCacheRepository imageCacheRepository, IRepositoryFactory repositoryFactory)
 		{
 			this.EventAggregator = eventAggregator;
+			this.ServiceProvider = serviceProvider;
 			this.ImageCacheRepository = imageCacheRepository;
+			this.RepositoryFactory = repositoryFactory;
 
-			_ = this.LoadResolutions();
-			_ = this.LoadRotations();
-			_ = this.LoadIpAddresses();
-			_ = this.LoadLabelUnits();
-
-			this.StartCommand = new DelegateCommand(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning && this.Port > 0 && this.LabelWidth > 0 && this.LabelHeight > 0);
+			this.StartCommand = new DelegateCommand(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning && this.SelectedPrinterConfiguration != null);
 			this.StopCommand = new DelegateCommand(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
 			this.TestLabelCommand = new DelegateCommand(() => _ = this.TestLabelAsync(), () => !this.IsBusy && this.IsRunning);
 			this.ClearLabelsCommand = new DelegateCommand(() => _ = this.ClearLabelsAsync(), () => !this.IsBusy && this.Labels.Count > 0);
-			this.BrowseCommand = new DelegateCommand(() => _ = this.BrowseCommandAsync(), () => !this.IsBusy);
-			this.DeleteLabelCommand = new DelegateCommand(() => _ = this.DeleteLabelAsync(), () => !this.IsBusy & this.SelectedLabel != null);
-			this.LabelPreviewCommand = new DelegateCommand(() => _ = this.LabelPreviewAsync(), () => !this.IsBusy & this.SelectedLabel != null);
+			this.DeleteLabelCommand = new DelegateCommand(() => _ = this.DeleteLabelAsync(), () => !this.IsBusy && this.SelectedLabel != null);
+			this.LabelPreviewCommand = new DelegateCommand(() => _ = this.LabelPreviewAsync(), () => !this.IsBusy && this.SelectedLabel != null);
+			this.EditCommand = new DelegateCommand(() => _ = this.EditPrinterConfigurationAsync(), () => !this.IsBusy && !this.IsRunning);
+
+			_ = this.LoadPrinterConfigurations();
 
 			//
 			// Subscribe to the running state changed event to update the running
@@ -83,6 +84,7 @@ namespace VirtualZplPrinter.ViewModels
 				  // Add the new label to the collection.
 				  //
 				  this.Labels.Add(a.Label);
+				  this.RaisePropertyChanged(nameof(this.Labels));
 
 				  //
 				  // Make the new label the currently selected label.
@@ -104,65 +106,34 @@ namespace VirtualZplPrinter.ViewModels
 		}
 
 		protected IEventAggregator EventAggregator { get; set; }
+		protected IServiceProvider ServiceProvider { get; set; }
 		public IImageCacheRepository ImageCacheRepository { get; set; }
+		protected IRepositoryFactory RepositoryFactory { get; set; }
 		protected CancellationTokenSource TokenSource { get; set; }
 
-		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
-		public ObservableCollection<LabelRotation> Rotations { get; } = new ObservableCollection<LabelRotation>();
-		public ObservableCollection<LabelUnit> LabelUnits { get; } = new ObservableCollection<LabelUnit>();
 		public ObservableCollection<IStoredImage> Labels { get; } = new ObservableCollection<IStoredImage>();
-		public ObservableCollection<IPAddress> IpAddresses { get; } = new ObservableCollection<IPAddress>();
+		public ObservableCollection<IPrinterConfiguration> PrinterConfigurations { get; } = new ObservableCollection<IPrinterConfiguration>();
 
 		public DelegateCommand StartCommand { get; set; }
 		public DelegateCommand StopCommand { get; set; }
 		public DelegateCommand TestLabelCommand { get; set; }
 		public DelegateCommand ClearLabelsCommand { get; set; }
-		public DelegateCommand BrowseCommand { get; set; }
 		public DelegateCommand DeleteLabelCommand { get; set; }
 		public DelegateCommand LabelPreviewCommand { get; set; }
+		public DelegateCommand EditCommand { get; set; }
 
-		private LabelRotation _selectedRotation = null;
-		public LabelRotation SelectedRotation
+		private IPrinterConfiguration _printerConfiguration = null;
+		public IPrinterConfiguration SelectedPrinterConfiguration
 		{
 			get
 			{
-				return _selectedRotation;
+				return _printerConfiguration;
 			}
 			set
 			{
-				this.SetProperty(ref _selectedRotation, value);
-			}
-		}
-
-		private Resolution _selectedResolution = null;
-		public Resolution SelectedResolution
-		{
-			get
-			{
-				return _selectedResolution;
-			}
-			set
-			{
-				this.SetProperty(ref _selectedResolution, value);
-			}
-		}
-
-		private LabelUnit _selectedLabelUnit = null;
-		public LabelUnit SelectedLabelUnit
-		{
-			get
-			{
-				return _selectedLabelUnit;
-			}
-			set
-			{
-				if (_selectedLabelUnit != null && value != null)
-				{
-					this.LabelWidth = Math.Round((new Length(this.LabelWidth, _selectedLabelUnit.Unit)).ToUnit(value.Unit).Value, 2);
-					this.LabelHeight = Math.Round((new Length(this.LabelHeight, _selectedLabelUnit.Unit)).ToUnit(value.Unit).Value, 2);
-				}
-
-				this.SetProperty(ref _selectedLabelUnit, value);
+				this.SetProperty(ref _printerConfiguration, value);
+				this.RefreshCommands();
+				_ = this.LoadLabelsAsync();
 			}
 		}
 
@@ -225,48 +196,6 @@ namespace VirtualZplPrinter.ViewModels
 			}
 		}
 
-		private int _port = 0;
-		public int Port
-		{
-			get
-			{
-				return _port;
-			}
-			set
-			{
-				this.SetProperty(ref _port, value);
-				this.RefreshCommands();
-			}
-		}
-
-		private double _lableWidth = 0;
-		public double LabelWidth
-		{
-			get
-			{
-				return _lableWidth;
-			}
-			set
-			{
-				this.SetProperty(ref _lableWidth, value);
-				this.RefreshCommands();
-			}
-		}
-
-		private double _lableHeight = 0;
-		public double LabelHeight
-		{
-			get
-			{
-				return _lableHeight;
-			}
-			set
-			{
-				this.SetProperty(ref _lableHeight, value);
-				this.RefreshCommands();
-			}
-		}
-
 		private string _statusText = "No selection";
 		public string StatusText
 		{
@@ -290,34 +219,6 @@ namespace VirtualZplPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _autoStart, value);
-				this.RefreshCommands();
-			}
-		}
-
-		private string _imagePath = null;
-		public string ImagePath
-		{
-			get
-			{
-				return _imagePath;
-			}
-			set
-			{
-				this.SetProperty(ref _imagePath, value);
-				_ = this.LoadLabelsAsync();
-			}
-		}
-
-		private IPAddress _selectedIpAddress = null;
-		public IPAddress SelectedIpAddress
-		{
-			get
-			{
-				return _selectedIpAddress;
-			}
-			set
-			{
-				this.SetProperty(ref _selectedIpAddress, value);
 			}
 		}
 
@@ -326,10 +227,45 @@ namespace VirtualZplPrinter.ViewModels
 			//
 			// Auto start
 			//
-			if (this.AutoStart && this.Port > 0)
+			if (this.AutoStart && this.SelectedPrinterConfiguration != null)
 			{
 				await Task.Delay(250);
 				_ = this.StartAsync();
+			}
+		}
+
+		protected async Task LoadPrinterConfigurations()
+		{
+			//
+			// Clear the list.
+			//
+			this.PrinterConfigurations.Clear();
+
+			//
+			// Get the repository for the printer configurations.
+			//
+			using IReadOnlyRepository<IPrinterConfiguration> repository = await this.RepositoryFactory.GetReadOnlyAsync<IPrinterConfiguration>();
+
+			//
+			// Get the database context.
+			//
+			using (VirtualPrinterContext context = this.ServiceProvider.GetRequiredService<VirtualPrinterContext>())
+			{
+				context.File = FileLocations.Database.FullName;
+
+				//
+				// Ensure the database exists.
+				//
+				DirectoryInfo dir = new(FileLocations.Database.DirectoryName);
+				dir.Create();
+
+				await context.EnsureCreatedAsync();
+
+				//
+				// Load the printer configurations.
+				//
+				IEnumerable<IPrinterConfiguration> items = (await repository.AsQueryable().GetQueryableAsync(context)).OrderBy(t => t.Id).ToArray();
+				this.PrinterConfigurations.AddRange(items);
 			}
 		}
 
@@ -342,80 +278,9 @@ namespace VirtualZplPrinter.ViewModels
 			this.StopCommand.RaiseCanExecuteChanged();
 			this.TestLabelCommand.RaiseCanExecuteChanged();
 			this.ClearLabelsCommand.RaiseCanExecuteChanged();
-			this.BrowseCommand.RaiseCanExecuteChanged();
 			this.DeleteLabelCommand.RaiseCanExecuteChanged();
 			this.LabelPreviewCommand.RaiseCanExecuteChanged();
-		}
-
-		protected Task LoadResolutions()
-		{
-			try
-			{
-				this.Resolutions.Add(new Resolution() { Dpmm = 6 });
-				this.Resolutions.Add(new Resolution() { Dpmm = 8 });
-				this.Resolutions.Add(new Resolution() { Dpmm = 12 });
-				this.Resolutions.Add(new Resolution() { Dpmm = 24 });
-				this.SelectedResolution = this.Resolutions.ElementAt(1);
-			}
-			catch (Exception ex)
-			{
-				this.StatusText = $"Error: {ex.Message}";
-			}
-
-			return Task.CompletedTask;
-		}
-
-		protected Task LoadRotations()
-		{
-			try
-			{
-				this.Rotations.Add(new() { Label = "None", Value = 0 });
-				this.Rotations.Add(new() { Label = "90˚ Clockwise", Value = 90 });
-				this.Rotations.Add(new() { Label = "180˚ Clockwise", Value = 180 });
-				this.Rotations.Add(new() { Label = "270˚ Clockwise", Value = 270 });
-				this.SelectedRotation = this.Rotations.ElementAt(0);
-			}
-			catch (Exception ex)
-			{
-				this.StatusText = $"Error: {ex.Message}";
-			}
-
-			return Task.CompletedTask;
-		}
-
-		protected Task LoadIpAddresses()
-		{
-			try
-			{
-				IPHostEntry entry = Dns.GetHostEntry(Dns.GetHostName());
-				IPAddress a = entry.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
-				this.IpAddresses.Add(IPAddress.Any);
-				this.IpAddresses.Add(IPAddress.Loopback);
-				this.IpAddresses.Add(a);
-			}
-			catch (Exception ex)
-			{
-				this.StatusText = $"Error: {ex.Message}";
-			}
-
-			return Task.CompletedTask;
-		}
-
-		protected Task LoadLabelUnits()
-		{
-			try
-			{
-				this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Inch });
-				this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Millimeter });
-				this.LabelUnits.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Centimeter });
-				this.SelectedLabelUnit = this.LabelUnits.ElementAt(0);
-			}
-			catch (Exception ex)
-			{
-				this.StatusText = $"Error: {ex.Message}";
-			}
-
-			return Task.CompletedTask;
+			this.EditCommand.RaiseCanExecuteChanged();
 		}
 
 		protected Task StartAsync()
@@ -431,15 +296,15 @@ namespace VirtualZplPrinter.ViewModels
 				{
 					LabelConfiguration = new()
 					{
-						Dpmm = this.SelectedResolution.Dpmm,
-						LabelHeight = this.LabelHeight,
-						LabelWidth = this.LabelWidth,
-						Unit = this.SelectedLabelUnit.Unit,
-						LabelRotation = this.SelectedRotation
+						Dpmm = this.SelectedPrinterConfiguration.ResolutionInDpmm,
+						LabelHeight = this.SelectedPrinterConfiguration.LabelHeight,
+						LabelWidth = this.SelectedPrinterConfiguration.LabelWidth,
+						Unit = (LengthUnit)this.SelectedPrinterConfiguration.LabelUnit,
+						LabelRotation = this.SelectedPrinterConfiguration.RotationAngle
 					},
-					IpAddress = this.SelectedIpAddress,
-					Port = this.Port,
-					ImagePath = this.ImagePath
+					IpAddress = IPAddress.Parse(this.SelectedPrinterConfiguration.HostAddress),
+					Port = this.SelectedPrinterConfiguration.Port,
+					ImagePath = this.SelectedPrinterConfiguration.ImagePath
 				});
 			}
 			catch (Exception ex)
@@ -461,8 +326,8 @@ namespace VirtualZplPrinter.ViewModels
 				//
 				// Send a NOP command.
 				//
-				IPAddress ip = this.SelectedIpAddress == IPAddress.Any ? IPAddress.Loopback : this.SelectedIpAddress;
-				(bool result, string errorMessage) = await TestClient.SendStringAsync(ip, this.Port, "NOP");
+				IPAddress ip = this.SelectedPrinterConfiguration.HostAddress == IPAddress.Any.ToString() ? IPAddress.Loopback : IPAddress.Parse(this.SelectedPrinterConfiguration.HostAddress);
+				(bool result, string errorMessage) = await TestClient.SendStringAsync(ip, this.SelectedPrinterConfiguration.Port, "NOP");
 
 				//
 				// Publish an event to stop the listener.
@@ -483,8 +348,8 @@ namespace VirtualZplPrinter.ViewModels
 		{
 			try
 			{
-				IPAddress ip = this.SelectedIpAddress == IPAddress.Any ? IPAddress.Loopback : this.SelectedIpAddress;
-				(bool result, string errorMessage) = await TestClient.SendStringAsync(ip, this.Port, await TestLabel.GetZplAsync());
+				IPAddress ip = this.SelectedPrinterConfiguration.HostAddress == IPAddress.Any.ToString() ? IPAddress.Loopback : IPAddress.Parse(this.SelectedPrinterConfiguration.HostAddress);
+				(bool result, string errorMessage) = await TestClient.SendStringAsync(ip, this.SelectedPrinterConfiguration.Port, await TestLabel.GetZplAsync());
 
 				if (!result)
 				{
@@ -505,6 +370,7 @@ namespace VirtualZplPrinter.ViewModels
 				// Clear the collection.
 				//
 				this.Labels.Clear();
+				this.RaisePropertyChanged(nameof(this.Labels));
 
 				//
 				// Set the selected label to null.
@@ -514,7 +380,7 @@ namespace VirtualZplPrinter.ViewModels
 				//
 				// Remove the labels from storage.
 				//
-				_ = await this.ImageCacheRepository.ClearAllAsync(this.ImagePath);
+				_ = await this.ImageCacheRepository.ClearAllAsync(this.SelectedPrinterConfiguration.ImagePath);
 			}
 			catch (Exception ex)
 			{
@@ -531,36 +397,40 @@ namespace VirtualZplPrinter.ViewModels
 			try
 			{
 				//
-				// Clea the current list.
+				// Clear the current list.
 				//
 				this.IsBusy = true;
 				this.StatusText = "Loading cached labels...";
 				this.Labels.Clear();
 
-				//
-				// Load the previous labels
-				//
-				IEnumerable<IStoredImage> labels = await this.ImageCacheRepository.GetAllAsync(this.ImagePath);
+				if (this.SelectedPrinterConfiguration != null)
+				{
+					//
+					// Load the previous labels
+					//
+					IEnumerable<IStoredImage> labels = await this.ImageCacheRepository.GetAllAsync(this.SelectedPrinterConfiguration.ImagePath);
 
-				//
-				// Add the labels to the collection.
-				//
-				foreach (IStoredImage label in labels)
-				{
-					await Task.Delay(1);
-					this.Labels.Add(label);
-				}
+					//
+					// Add the labels to the collection.
+					//
+					foreach (IStoredImage label in labels)
+					{
+						await Task.Delay(1);
+						this.Labels.Add(label);
+						this.RaisePropertyChanged(nameof(this.Labels));
+					}
 
-				//
-				// Select the last label.
-				//
-				if (this.Labels.Any())
-				{
-					this.SelectedLabel = this.Labels.Last();
-				}
-				else
-				{
-					this.SelectedLabel = null;
+					//
+					// Select the last label.
+					//
+					if (this.Labels.Any())
+					{
+						this.SelectedLabel = this.Labels.Last();
+					}
+					else
+					{
+						this.SelectedLabel = null;
+					}
 				}
 			}
 			catch (Exception ex)
@@ -574,15 +444,6 @@ namespace VirtualZplPrinter.ViewModels
 			}
 		}
 
-		protected Task BrowseCommandAsync()
-		{
-			//
-			// Open the image with the default system viewer.
-			//
-			Process.Start(new ProcessStartInfo(this.ImagePath) { UseShellExecute = true });
-			return Task.CompletedTask;
-		}
-
 		protected async Task DeleteLabelAsync()
 		{
 			try
@@ -591,9 +452,10 @@ namespace VirtualZplPrinter.ViewModels
 				{
 					int currentIndex = this.Labels.IndexOf(this.SelectedLabel);
 
-					if (await this.ImageCacheRepository.DeleteImageAsync(this.ImagePath, Path.GetFileName(this.SelectedLabel.FullPath)))
+					if (await this.ImageCacheRepository.DeleteImageAsync(this.SelectedPrinterConfiguration.ImagePath, Path.GetFileName(this.SelectedLabel.FullPath)))
 					{
 						this.Labels.Remove(this.SelectedLabel);
+						this.RaisePropertyChanged(nameof(this.Labels));
 
 						if (this.Labels.Any())
 						{
@@ -633,6 +495,55 @@ namespace VirtualZplPrinter.ViewModels
 			}
 
 			return Task.CompletedTask;
+		}
+
+		public async Task EditPrinterConfigurationAsync()
+		{
+			try
+			{
+				this.StatusText = "Editing printer configurations...";
+
+				//
+				// Get the selected item.
+				//
+				int id = this.SelectedPrinterConfiguration.Id;
+
+				//
+				// Get the view.
+				//
+				ConfigurationView view = this.ServiceProvider.GetService<ConfigurationView>();
+				view.Width = 875;
+				view.Height = 575;
+				view.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+				//
+				// SHow the dialog.
+				//
+				view.ShowDialog();
+
+				//
+				// Reload the printer configurations.
+				//
+				await this.LoadPrinterConfigurations();
+
+				//
+				// Reselect the item.
+				//
+				this.SelectedPrinterConfiguration = this.PrinterConfigurations.Where(t => t.Id == id).SingleOrDefault();
+
+				if (this.SelectedPrinterConfiguration == null)
+				{
+					this.SelectedPrinterConfiguration = this.PrinterConfigurations.First();
+				}
+			}
+			catch (Exception ex)
+			{
+				this.StatusText = $"Error: {ex.Message}";
+			}
+			finally
+			{
+				this.IsBusy = false;
+			}
 		}
 
 		public string Version

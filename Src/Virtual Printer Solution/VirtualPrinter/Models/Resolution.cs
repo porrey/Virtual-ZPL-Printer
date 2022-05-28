@@ -14,9 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using Diamond.Core.Repository;
+
 namespace VirtualZplPrinter.Models
 {
-	public class Resolution
+	public class Resolution : Entity
 	{
 		public int Dpmm { get; set; }
 		public double Dpi => this.Dpmm * 25.4;

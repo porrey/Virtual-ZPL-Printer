@@ -21,9 +21,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Labelary.Abstractions;
 using UnitsNet;
@@ -50,7 +48,7 @@ namespace Labelary.Service
 						double width = (new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
 						double height = (new Length(labelConfiguration.LabelHeight, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
 
-						content.Headers.TryAddWithoutValidation("X-Rotation", Convert.ToString(labelConfiguration.LabelRotation.Value));
+						content.Headers.TryAddWithoutValidation("X-Rotation", Convert.ToString(labelConfiguration.LabelRotation));
 
 						if (width <= 15 && height <= 15)
 						{

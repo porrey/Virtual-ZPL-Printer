@@ -14,9 +14,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using Diamond.Core.Repository;
+
 namespace Labelary.Abstractions
 {
-	public class LabelRotation
+	public class LabelRotation : Entity
 	{
 		public string Label { get; set; }
 		public int Value { get; set; }

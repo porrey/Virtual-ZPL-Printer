@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31112.23
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Virtual ZPL Printer", "VirtualPrinter\Virtual ZPL Printer.csproj", "{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageCache.Repository", "ImageCache.Repository\ImageCache.Repository.csproj", "{184BBFDD-E5EB-477F-BC6A-6990E92BDC0C}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Virtual ZPL Printer Setup", "VirtualPrinter-Setup\VirtualPrinter-Setup.vdproj", "{6F2A4B7F-333D-4910-87F8-E9A255C50F65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.Db.Abstractions", "VirtualPrinter.Db.Abstractions\VirtualPrinter.Db.Abstractions.csproj", "{B83F85EB-BCF6-43DA-8A07-F6F2049D899D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.Db.Ef", "VirtualPrinter.Db.Ef\VirtualPrinter.Db.Ef.csproj", "{B1AF2E8D-3350-4B00-8A4F-4101B234325F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,14 @@ Global
 		{184BBFDD-E5EB-477F-BC6A-6990E92BDC0C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F2A4B7F-333D-4910-87F8-E9A255C50F65}.Debug|Any CPU.ActiveCfg = Debug
 		{6F2A4B7F-333D-4910-87F8-E9A255C50F65}.Release|Any CPU.ActiveCfg = Release
+		{B83F85EB-BCF6-43DA-8A07-F6F2049D899D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B83F85EB-BCF6-43DA-8A07-F6F2049D899D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B83F85EB-BCF6-43DA-8A07-F6F2049D899D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B83F85EB-BCF6-43DA-8A07-F6F2049D899D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1AF2E8D-3350-4B00-8A4F-4101B234325F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1AF2E8D-3350-4B00-8A4F-4101B234325F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1AF2E8D-3350-4B00-8A4F-4101B234325F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1AF2E8D-3350-4B00-8A4F-4101B234325F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

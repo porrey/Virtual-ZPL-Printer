@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>2.0.0</Version>
+    <FileVersion>2.0.0</FileVersion>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Services\VirtualPrinter.Db.Abstractions.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Services\VirtualPrinter.Db.Abstractions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Diamond.Core.Repository" Version="6.0.12" />
+		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="6.0.12" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="C:\Users\porrd0bl\.nuget\packages\diamond.core.repository.abstractions\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.Abstractions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\porrd0bl\.nuget\packages\diamond.core.repository\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\porrd0bl\.nuget\packages\diamond.core.specification.abstractions\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Specification.Abstractions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\porrd0bl\.nuget\packages\diamond.core.unitofwork.abstractions\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.UnitOfWork.Abstractions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\porrey\.nuget\packages\diamond.core.repository.abstractions\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.Abstractions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\porrey\.nuget\packages\diamond.core.repository\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\porrey\.nuget\packages\diamond.core.specification.abstractions\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Specification.Abstractions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\porrey\.nuget\packages\diamond.core.unitofwork.abstractions\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.UnitOfWork.Abstractions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+</Project>

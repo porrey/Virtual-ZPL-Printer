@@ -22,7 +22,6 @@ namespace ImageCache.Abstractions
 {
 	public interface IImageCacheRepository
 	{
-		string DefaultFolder { get; }
 		Task<IEnumerable<IStoredImage>> StoreLabelImagesAsync(string imagePathRoot, IEnumerable<IGetLabelResponse> labels);
 		Task<bool> ClearAllAsync(string imagePathRoot);
 		Task<IEnumerable<IStoredImage>> GetAllAsync(string imagePathRoot);

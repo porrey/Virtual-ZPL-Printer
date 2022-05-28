@@ -1,0 +1,44 @@
+{
+	//
+	// Database context
+	//
+	"databases": [
+		{
+			"Context": "<VirtualPrinterContext>",
+			"ConnectionString": "ConnectionStrings:VirtualPrinter",
+			"CommandTimeout": 15,
+			"Lifetime": "Transient",
+			"Factory": "Diamond.Core.Extensions.DependencyInjection.Sqlite.DbContextDependencyFactory`1[[<VirtualPrinterContext>]], Diamond.Core.Extensions.DependencyInjection.Sqlite",
+			"Properties": {
+				"EnableSensitiveDataLogging": true,
+				"EnableDetailedErrors": true,
+				"UseLoggerFactory": true
+			}
+		}
+	],
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "VirtualPrinterContext",
+			"TypeDefinition": "VirtualPrinter.Db.Ef.VirtualPrinterContext, VirtualPrinter.Db.Ef"
+		},
+		{
+			"Key": "PrinterConfiguration",
+			"TypeDefinition": "VirtualPrinter.Db.Ef.PrinterConfiguration, VirtualPrinter.Db.Ef"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "Diamond.Core.Repository.IEntityFactory`1[[<IPrinterConfiguration>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "Diamond.Core.Repository.EntityFactory`2[[<IPrinterConfiguration>], [<PrinterConfiguration>]], Diamond.Core.Repository",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "Diamond.Core.Repository.IRepository`1[[<IPrinterConfiguration>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "VirtualPrinter.Db.Ef.PrinterConfigurationRepository, VirtualPrinter.Db.Ef",
+			"Lifetime": "Transient"
+		}
+	]
+}

@@ -1,0 +1,11 @@
+{
+  //
+  // Aliases are global and can be used anywhere.
+  //
+  "aliases": [
+    {
+      "Key": "IPrinterConfiguration",
+      "TypeDefinition": "VirtualPrinter.Db.Abstractions.IPrinterConfiguration, VirtualPrinter.Db.Abstractions"
+    }
+  ]
+}

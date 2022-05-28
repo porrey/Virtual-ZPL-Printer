@@ -16,7 +16,6 @@
  */
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -75,25 +74,11 @@ namespace VirtualZplPrinter.Views
 			{
 				this.WindowState = (WindowState)Properties.Settings.Default.WindowState;
 				this.ViewModel.AutoStart = Properties.Settings.Default.AutoStart;
-				this.ViewModel.Port = Properties.Settings.Default.Port;
-				this.ViewModel.SelectedResolution = this.ViewModel.Resolutions.Where(t => t.Dpmm == Properties.Settings.Default.Dpmm).SingleOrDefault();
-				this.ViewModel.SelectedIpAddress = this.ViewModel.IpAddresses.Where(t => t.ToString() == Properties.Settings.Default.IpAddress).SingleOrDefault();
-				this.ViewModel.SelectedRotation = this.ViewModel.Rotations.Where(t => t.Value == Properties.Settings.Default.Rotation).SingleOrDefault();
+				this.ViewModel.SelectedPrinterConfiguration = this.ViewModel.PrinterConfigurations.Where(t => t.Id == Properties.Settings.Default.PrinterConfiguration).SingleOrDefault();
 
-				//
-				// Set the units before the height and width.
-				//
-				this.ViewModel.SelectedLabelUnit = this.ViewModel.LabelUnits.Where(t => t.Unit == Properties.Settings.Default.LabelUnit).SingleOrDefault();
-				this.ViewModel.LabelHeight = Properties.Settings.Default.LabelHeight;
-				this.ViewModel.LabelWidth = Properties.Settings.Default.LabelWidth;
-
-				if (Directory.Exists(Properties.Settings.Default.ImagePath))
+				if (this.ViewModel.SelectedPrinterConfiguration == null)
 				{
-					this.ViewModel.ImagePath = Properties.Settings.Default.ImagePath;
-				}
-				else
-				{
-					this.ViewModel.ImagePath = this.ViewModel.ImageCacheRepository.DefaultFolder;
+					this.ViewModel.SelectedPrinterConfiguration = this.ViewModel.PrinterConfigurations.First();
 				}
 
 				if (Properties.Settings.Default.Initialized)
@@ -116,8 +101,8 @@ namespace VirtualZplPrinter.Views
 
 		private void WindowDefaults()
 		{
-			this.Width = (double)SystemParameters.WorkArea.Width * .65;
-			this.Height = (double)SystemParameters.WorkArea.Height * .95;
+			this.Width = (double)SystemParameters.WorkArea.Width * .55;
+			this.Height = (double)SystemParameters.WorkArea.Height * .85;
 			this.Left = ((double)SystemParameters.WorkArea.Width - this.Width) / 2.0;
 			this.Top = .85 * ((double)SystemParameters.WorkArea.Height - this.Height) / 2.0;
 			this.SaveWindow();
@@ -143,15 +128,16 @@ namespace VirtualZplPrinter.Views
 				Properties.Settings.Default.WindowState = (int)WindowState.Maximized;
 			}
 
-			Properties.Settings.Default.ImagePath = this.ViewModel.ImagePath;
-			Properties.Settings.Default.Port = this.ViewModel.Port;
+			if (this.ViewModel.SelectedPrinterConfiguration != null)
+			{
+				Properties.Settings.Default.PrinterConfiguration = this.ViewModel.SelectedPrinterConfiguration.Id;
+			}
+			else
+			{
+				Properties.Settings.Default.PrinterConfiguration = 1;
+			}
+
 			Properties.Settings.Default.AutoStart = this.ViewModel.AutoStart;
-			Properties.Settings.Default.LabelHeight = this.ViewModel.LabelHeight;
-			Properties.Settings.Default.LabelWidth = this.ViewModel.LabelWidth;
-			Properties.Settings.Default.Dpmm = this.ViewModel.SelectedResolution.Dpmm;
-			Properties.Settings.Default.LabelUnit = this.ViewModel.SelectedLabelUnit.Unit;
-			Properties.Settings.Default.IpAddress = this.ViewModel.SelectedIpAddress?.ToString();
-			Properties.Settings.Default.Rotation = this.ViewModel.SelectedRotation.Value;
 			Properties.Settings.Default.Initialized = true;
 			Properties.Settings.Default.Save();
 		}
@@ -174,9 +160,7 @@ namespace VirtualZplPrinter.Views
 
 		private async void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
-			IStoredImage item = ((FrameworkElement)e.OriginalSource).DataContext as IStoredImage;
-
-			if (item != null)
+			if (((FrameworkElement)e.OriginalSource).DataContext is IStoredImage item)
 			{
 				await this.ViewModel.LabelPreviewAsync(item);
 			}

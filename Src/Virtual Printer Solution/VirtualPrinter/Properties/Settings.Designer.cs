@@ -109,97 +109,13 @@ namespace VirtualZplPrinter.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9100")]
-        public int Port {
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int PrinterConfiguration {
             get {
-                return ((int)(this["Port"]));
+                return ((int)(this["PrinterConfiguration"]));
             }
             set {
-                this["Port"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("6")]
-        public double LabelHeight {
-            get {
-                return ((double)(this["LabelHeight"]));
-            }
-            set {
-                this["LabelHeight"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public double LabelWidth {
-            get {
-                return ((double)(this["LabelWidth"]));
-            }
-            set {
-                this["LabelWidth"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
-        public int Dpmm {
-            get {
-                return ((int)(this["Dpmm"]));
-            }
-            set {
-                this["Dpmm"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ImagePath {
-            get {
-                return ((string)(this["ImagePath"]));
-            }
-            set {
-                this["ImagePath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Inch")]
-        public global::UnitsNet.Units.LengthUnit LabelUnit {
-            get {
-                return ((global::UnitsNet.Units.LengthUnit)(this["LabelUnit"]));
-            }
-            set {
-                this["LabelUnit"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.0.0.0")]
-        public string IpAddress {
-            get {
-                return ((string)(this["IpAddress"]));
-            }
-            set {
-                this["IpAddress"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Rotation {
-            get {
-                return ((int)(this["Rotation"]));
-            }
-            set {
-                this["Rotation"] = value;
+                this["PrinterConfiguration"] = value;
             }
         }
     }

@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
@@ -27,7 +26,6 @@ namespace ImageCache.Repository
 {
 	public class ImageCacheRepository : IImageCacheRepository
 	{
-		public string DefaultFolder => $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Virtual ZPL Printer Images";
 		protected string FileName(DirectoryInfo imagePathRoot, int id) => $@"{imagePathRoot.FullName}\zpl-label-image-{id}.png";
 		protected string FileName(DirectoryInfo imagePathRoot, int id, int index) => $@"{imagePathRoot.FullName}\zpl-label-image-{id}-Page{index}.png";
 		protected FileInfo[] GetFiles(DirectoryInfo imagePathRoot) => imagePathRoot.GetFiles("zpl-label-image-*.png").OrderBy(t => t.CreationTime).ToArray();
@@ -40,17 +38,8 @@ namespace ImageCache.Repository
 		{
 			DirectoryInfo returnValue = null;
 
-			if (string.IsNullOrWhiteSpace(imagePathRoot))
-			{
-				imagePathRoot = this.DefaultFolder;
-			}
-
 			returnValue = new(imagePathRoot);
-
-			if (!returnValue.Exists)
-			{
-				returnValue.Create();
-			}
+			returnValue.Create();
 
 			return returnValue;
 		}

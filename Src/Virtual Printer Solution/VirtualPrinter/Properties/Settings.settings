@@ -23,29 +23,8 @@
     <Setting Name="AutoStart" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Port" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">9100</Value>
-    </Setting>
-    <Setting Name="LabelHeight" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">6</Value>
-    </Setting>
-    <Setting Name="LabelWidth" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">4</Value>
-    </Setting>
-    <Setting Name="Dpmm" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">8</Value>
-    </Setting>
-    <Setting Name="ImagePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="LabelUnit" Type="UnitsNet.Units.LengthUnit" Scope="User">
-      <Value Profile="(Default)">Inch</Value>
-    </Setting>
-    <Setting Name="IpAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0.0.0.0</Value>
-    </Setting>
-    <Setting Name="Rotation" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="PrinterConfiguration" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>
