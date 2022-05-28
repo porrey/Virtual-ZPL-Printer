@@ -131,6 +131,9 @@
 								<Setter Property="TextElement.Foreground"
 										TargetName="contentPresenter"
 										Value="{StaticResource Button.Disabled.Foreground}" />
+								<Setter Property="Opacity"
+										TargetName="contentPresenter"
+										Value=".35" />
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
