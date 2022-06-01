@@ -314,14 +314,6 @@
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
-				<ProgressBar Style="{DynamicResource ProgressBarStyle1}"
-							 Grid.Column="1"
-							 Width="75"
-							 IsIndeterminate="True"
-							 Margin="3,15,3,15"
-							 Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
-							 Orientation="Horizontal" />
-
 				<TextBlock Grid.Column="0"
 						   Text="{Binding StatusText}"
 						   VerticalAlignment="Center"
@@ -329,6 +321,14 @@
 						   FontSize="18"
 						   Margin="10,0,0,0"
 						   Foreground="{StaticResource ForegroundColor1}" />
+
+				<ProgressBar Style="{DynamicResource ProgressBarStyle1}"
+							 Grid.Column="1"
+							 Width="75"
+							 IsIndeterminate="True"
+							 Margin="3,15,3,15"
+							 Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
+							 Orientation="Horizontal" />
 
 				<Rectangle Grid.Column="2"
 						   VerticalAlignment="Stretch"
