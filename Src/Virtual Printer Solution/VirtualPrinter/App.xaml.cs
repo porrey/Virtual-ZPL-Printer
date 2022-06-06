@@ -35,7 +35,7 @@ namespace VirtualZplPrinter
 
 		protected override void OnBeginStartup(StartupEventArgs e)
 		{
-			this.Splash = new SplashView();
+			this.Splash = new SplashView(new());
 			this.Splash.Show();
 		}
 

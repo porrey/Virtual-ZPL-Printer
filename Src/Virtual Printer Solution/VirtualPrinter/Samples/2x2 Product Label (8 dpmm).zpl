@@ -25,13 +25,13 @@
 
 ^FO 40,145
 ^A0,80,80
-^FD {code}
+^FD {id2}
 ^FS
 
 ^FO 65,245
 ^BY 2,2.0
 ^BC N,120,Y,N,N,N
-^FD {id}
+^FD {id8}
 ^FS
 
 ^XZ

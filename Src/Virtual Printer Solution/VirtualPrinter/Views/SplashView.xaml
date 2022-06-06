@@ -14,9 +14,27 @@
 		<Border BorderBrush="White"
 				BorderThickness="1"
 				Margin="4">
-			<Image Source="/Assets/printer-running.png"
-				   Margin="80"
-				   Opacity=".9" />
+
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<Image Grid.Row="0"
+					   Grid.RowSpan="2"
+					   Source="/Assets/printer-running.png"
+					   Margin="80"
+					   Opacity=".9" />
+
+				<TextBlock Grid.Row="1"
+						   Text="{Binding Version}"
+						   Foreground="{StaticResource ForegroundColor2}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   FontSize="18"
+						   Margin="0,0,0,5" />
+			</Grid>
 		</Border>
 	</Grid>
 </Window>

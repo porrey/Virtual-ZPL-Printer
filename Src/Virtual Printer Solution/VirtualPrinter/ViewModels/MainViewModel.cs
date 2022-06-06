@@ -288,7 +288,7 @@ namespace VirtualZplPrinter.ViewModels
 			}
 		}
 
-		public void RefreshCommands()
+		public async void RefreshCommands()
 		{
 			//
 			// Refresh the state of all of the command buttons.
@@ -300,6 +300,7 @@ namespace VirtualZplPrinter.ViewModels
 			this.DeleteLabelCommand.RaiseCanExecuteChanged();
 			this.LabelPreviewCommand.RaiseCanExecuteChanged();
 			this.EditCommand.RaiseCanExecuteChanged();
+			await Task.Delay(1);
 		}
 
 		protected Task StartAsync()
@@ -436,8 +437,8 @@ namespace VirtualZplPrinter.ViewModels
 					//
 					foreach (IStoredImage label in labels)
 					{
-						await Task.Delay(1);
 						this.Labels.Add(label);
+						await Task.Delay(1);
 						this.RaisePropertyChanged(nameof(this.Labels));
 					}
 
@@ -461,6 +462,7 @@ namespace VirtualZplPrinter.ViewModels
 			finally
 			{
 				this.IsBusy = false;
+				this.RaisePropertyChanged(nameof(this.Labels));
 				this.RefreshCommands();
 			}
 		}
@@ -564,23 +566,6 @@ namespace VirtualZplPrinter.ViewModels
 			finally
 			{
 				this.IsBusy = false;
-			}
-		}
-
-		public string Version
-		{
-			get
-			{
-				Version version = Assembly.GetEntryAssembly().GetName().Version;
-				return $"{version.Major}.{version.Minor}.{version.Build}";
-			}
-		}
-
-		public string Title
-		{
-			get
-			{
-				return $"Virtual ZPL Printer v{this.Version}";
 			}
 		}
 	}

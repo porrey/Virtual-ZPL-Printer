@@ -4,7 +4,7 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d"
-		Title="{Binding Title}"
+		Title="Virtual ZPL Printer"
 		MinHeight="435"
 		MinWidth="600"
 		Icon="/virtual-printer.ico"
@@ -258,6 +258,7 @@
 					  ItemTemplate="{StaticResource LabelTemplate}"
 					  SelectedItem="{Binding SelectedLabel}"
 					  SelectionMode="Single"
+					  ScrollViewer.CanContentScroll="False"
 					  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}"
 					  Margin="0,0,0,1">
 				<ListView.ItemsPanel>

@@ -31,7 +31,7 @@ namespace ImageCache.Repository
 		protected FileInfo[] GetFiles(DirectoryInfo imagePathRoot) => imagePathRoot.GetFiles("zpl-label-image-*.png").OrderBy(t => t.CreationTime).ToArray();
 		protected int GetFileIndex(FileInfo file) => Convert.ToInt32(Path.GetFileNameWithoutExtension(file.Name).Split(new char[] { '-' })[3].Replace(" ", ""));
 		protected int[] GetFileIndices(DirectoryInfo imagePathRoot) => this.GetFiles(imagePathRoot).Select(t => this.GetFileIndex(t)).ToArray();
-
+		protected object LockObject { get; } = new object();
 		protected int AlternateIndex = 99999;
 
 		protected DirectoryInfo GetDirectory(string imagePathRoot)
@@ -58,45 +58,48 @@ namespace ImageCache.Repository
 			return returnValue;
 		}
 
-		public async Task<IEnumerable<IStoredImage>> StoreLabelImagesAsync(string imagePathRoot, IEnumerable<IGetLabelResponse> labels)
+		public Task<IEnumerable<IStoredImage>> StoreLabelImagesAsync(string imagePathRoot, IEnumerable<IGetLabelResponse> labels)
 		{
 			IList<IStoredImage> returnValue = new List<IStoredImage>();
 
-			//
-			// Ensure the path exists.
-			//
-			DirectoryInfo dir = this.GetDirectory(imagePathRoot);
-
-			//
-			// Get the next ID.
-			//
-			int id = this.GetNextIndex(dir);
-
-			foreach (IGetLabelResponse label in labels)
+			lock (this.LockObject)
 			{
 				//
-				// Get the file name.
+				// Ensure the path exists.
 				//
-				string fileName = label.HasMultipleLabels ? this.FileName(dir, id, label.LabelIndex + 1) : this.FileName(dir, id);
+				DirectoryInfo dir = this.GetDirectory(imagePathRoot);
 
 				//
-				// Write the image.
+				// Get the next ID.
 				//
-				await File.WriteAllBytesAsync(fileName, label.Label);
+				int id = this.GetNextIndex(dir);
 
-				IStoredImage storedImage = new StoredImage()
+				foreach (IGetLabelResponse label in labels)
 				{
-					Id = id,
-					FullPath = fileName
-				};
+					//
+					// Get the file name.
+					//
+					string fileName = label.HasMultipleLabels ? this.FileName(dir, id, label.LabelIndex + 1) : this.FileName(dir, id);
 
-				//
-				// Add the item to the list.
-				//
-				returnValue.Add(storedImage);
+					//
+					// Write the image.
+					//
+					_ = File.WriteAllBytesAsync(fileName, label.Label);
+
+					IStoredImage storedImage = new StoredImage()
+					{
+						Id = id,
+						FullPath = fileName
+					};
+
+					//
+					// Add the item to the list.
+					//
+					returnValue.Add(storedImage);
+				}
 			}
 
-			return returnValue;
+			return Task.FromResult<IEnumerable<IStoredImage>>(returnValue);
 		}
 
 		public Task<IEnumerable<IStoredImage>> GetAllAsync(string imagePathRoot)

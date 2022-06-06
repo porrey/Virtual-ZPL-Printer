@@ -207,6 +207,7 @@
 				  SelectedItem="{Binding SelectedPrinterConfiguration}"
 				  SelectionChanged="ListView_SelectionChanged"
 				  Margin="5"
+				  ScrollViewer.CanContentScroll="False"
 				  IsEnabled="{Binding Changes, Converter={StaticResource NotBooleanConverter}}"
 				  SelectionMode="Single">
 

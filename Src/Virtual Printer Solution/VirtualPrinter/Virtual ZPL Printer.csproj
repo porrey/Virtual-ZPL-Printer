@@ -8,9 +8,9 @@
 		<AssemblyName>VirtualZplPrinter</AssemblyName>
 		<StartupObject>VirtualZplPrinter.App</StartupObject>
 		<RootNamespace>VirtualZplPrinter</RootNamespace>
-		<Version>2.0.0</Version>
-		<FileVersion>2.0.0</FileVersion>
-		<AssemblyVersion>2.0.0</AssemblyVersion>
+		<Version>2.0.1</Version>
+		<FileVersion>2.0.1</FileVersion>
+		<AssemblyVersion>2.0.1</AssemblyVersion>
 		<Nullable>disable</Nullable>
 	</PropertyGroup>
 
@@ -187,6 +187,15 @@
 		<None Update="Properties\Settings.settings">
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+		<None Update="Samples\2x2 Product Label %288 dpmm%29.zpl">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
+		<None Update="Samples\4x6 Shipping Label %288 dpmm%29.zpl">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
+		<None Update="Samples\4x6 USPS Shpping Label %288 dpmm%29.zpl">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 

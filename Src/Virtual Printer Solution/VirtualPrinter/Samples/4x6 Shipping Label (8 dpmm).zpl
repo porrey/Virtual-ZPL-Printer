@@ -26,7 +26,7 @@
 
 ^FX Third section with bar code.
 ^BY5,2,270
-^FO100,550^BC^FD{id}^FS
+^FO100,550^BC^FD{id8}^FS
 
 ^FX Fourth section (the two boxes on the bottom).
 ^FO50,900^GB700,250,3^FS
