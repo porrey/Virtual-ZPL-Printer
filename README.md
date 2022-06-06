@@ -8,7 +8,7 @@ Now requires **.NET 6.0**. Download Setup.exe and the MSI if you need to have th
 ###### Version 2.0.1 Updates:
 1. Re-factored code/cleanup.
 2. Added USPS sample label.
-3. Corrected and issue where too many labels at one time could cause a multi-thread related exception.
+3. Corrected an issue where too many labels at one time could cause a multi-thread related exception.
 
 ###### Screen Shots
 
