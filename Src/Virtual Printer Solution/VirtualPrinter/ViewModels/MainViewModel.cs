@@ -255,36 +255,47 @@ namespace VirtualZplPrinter.ViewModels
 
 		protected async Task LoadPrinterConfigurations()
 		{
-			//
-			// Clear the list.
-			//
-			this.PrinterConfigurations.Clear();
-
-			//
-			// Get the repository for the printer configurations.
-			//
-			using IReadOnlyRepository<IPrinterConfiguration> repository = await this.RepositoryFactory.GetReadOnlyAsync<IPrinterConfiguration>();
-
-			//
-			// Get the database context.
-			//
-			using (VirtualPrinterContext context = this.ServiceProvider.GetRequiredService<VirtualPrinterContext>())
+			try
 			{
-				context.File = FileLocations.Database.FullName;
+				//
+				// Clear the list.
+				//
+				this.PrinterConfigurations.Clear();
 
 				//
-				// Ensure the database exists.
+				// Get the repository for the printer configurations.
 				//
-				DirectoryInfo dir = new(FileLocations.Database.DirectoryName);
-				dir.Create();
-
-				await context.EnsureCreatedAsync();
+				using IReadOnlyRepository<IPrinterConfiguration> repository = await this.RepositoryFactory.GetReadOnlyAsync<IPrinterConfiguration>();
 
 				//
-				// Load the printer configurations.
+				// Get the database context.
 				//
-				IEnumerable<IPrinterConfiguration> items = (await repository.AsQueryable().GetQueryableAsync(context)).OrderBy(t => t.Id).ToArray();
-				this.PrinterConfigurations.AddRange(items);
+				using (VirtualPrinterContext context = this.ServiceProvider.GetRequiredService<VirtualPrinterContext>())
+				{
+					context.File = FileLocations.Database.FullName;
+
+					//
+					// Ensure the database exists.
+					//
+					DirectoryInfo dir = new(FileLocations.Database.DirectoryName);
+					dir.Create();
+
+					await context.EnsureCreatedAsync();
+
+					//
+					// Load the printer configurations.
+					//
+					IEnumerable<IPrinterConfiguration> items = (await repository.AsQueryable().GetQueryableAsync(context)).OrderBy(t => t.Id).ToArray();
+					this.PrinterConfigurations.AddRange(items);
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+			finally
+			{
+				this.RefreshCommands();
 			}
 		}
 

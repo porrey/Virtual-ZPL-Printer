@@ -80,7 +80,7 @@ namespace VirtualZplPrinter.Client
 							//
 							string zpl = Encoding.UTF8.GetString(buffer);
 
-							if (zpl != "NOP")
+							if (zpl.StartsWith("^") || zpl.StartsWith("~"))
 							{
 								//
 								// Get the label images from Labelary.

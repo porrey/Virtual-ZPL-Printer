@@ -12,6 +12,7 @@
 		<FileVersion>2.0.1</FileVersion>
 		<AssemblyVersion>2.0.1</AssemblyVersion>
 		<Nullable>disable</Nullable>
+		<SignAssembly>False</SignAssembly>
 	</PropertyGroup>
 
 	<ItemGroup>
