@@ -5,6 +5,20 @@
     <Version>2.0.1</Version>
     <FileVersion>2.0.1</FileVersion>
     <AssemblyVersion>2.0.1</AssemblyVersion>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Labelary Library Abstractions</Title>
+    <Description>Provides abstraction for the Labelary C# Library. This library is used by the Virtual ZPL Printer application.</Description>
+    <PackageProjectUrl>https://github.com/porrey/Virtual-ZPL-Printer</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/porrey/Virtual-ZPL-Printer.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageTags>labelary; zpl</PackageTags>
+    <Nullable>disable</Nullable>
+    <Copyright>Copyright(C) 2021-2022, Daniel M. Porrey. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +29,13 @@
     <Content Include="Services\Labelary.Abstractions.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

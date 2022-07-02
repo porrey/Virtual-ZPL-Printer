@@ -1,10 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Version>2.0.1</Version>
     <FileVersion>2.0.1</FileVersion>
     <AssemblyVersion>2.0.1</AssemblyVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Labelary Library Abstractions</Title>
+		<Description>Provides an easy way to call the Labelary API to get labels from ZPL. This library is used by the Virtual ZPL Printer application.</Description>
+		<PackageProjectUrl>https://github.com/porrey/Virtual-ZPL-Printer</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/porrey/Virtual-ZPL-Printer.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<NeutralLanguage>en</NeutralLanguage>
+		<PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<PackageTags>labelary; zpl</PackageTags>
+		<Copyright>Copyright(C) 2021-2022, Daniel M. Porrey. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +33,13 @@
     <Content Include="Services\Labelary.Service.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
