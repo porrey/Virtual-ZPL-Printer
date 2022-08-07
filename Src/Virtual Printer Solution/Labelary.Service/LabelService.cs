@@ -50,6 +50,7 @@ namespace Labelary.Service
 						if (width <= 15 && height <= 15)
 						{
 							string url = $"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width:#.##}x{height:#.##}/{labelIndex}/";
+							
 							using (HttpResponseMessage response = await client.PostAsync(url, content))
 							{
 								if (response.IsSuccessStatusCode)

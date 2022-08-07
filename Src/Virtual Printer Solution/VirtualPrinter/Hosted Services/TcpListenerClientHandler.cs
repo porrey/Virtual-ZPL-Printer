@@ -49,8 +49,8 @@ namespace VirtualZplPrinter.Client
 			client.SendTimeout = 1000;
 			client.LingerState = new LingerOption(false, 0);
 			client.NoDelay = true;
-			client.ReceiveBufferSize = 8192;
-			client.SendBufferSize = 8192;
+			client.ReceiveBufferSize = -1;
+			client.SendBufferSize = -1;
 
 			//
 			// Get the network stream.
@@ -80,7 +80,7 @@ namespace VirtualZplPrinter.Client
 							//
 							string zpl = Encoding.UTF8.GetString(buffer);
 
-							if (zpl.StartsWith("^") || zpl.StartsWith("~"))
+							if (!zpl.StartsWith("NOP"))
 							{
 								//
 								// Get the label images from Labelary.

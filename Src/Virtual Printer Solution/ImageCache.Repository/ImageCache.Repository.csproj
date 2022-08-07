@@ -2,9 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0-windows</TargetFramework>
-		<Version>2.0.1</Version>
-		<FileVersion>2.0.1</FileVersion>
-		<AssemblyVersion>2.0.1</AssemblyVersion>
+		<Version>2.0.2</Version>
+		<FileVersion>2.0.2</FileVersion>
+		<AssemblyVersion>2.0.2</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
