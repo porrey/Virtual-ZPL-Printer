@@ -1,32 +1,46 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Version>2.0.2</Version>
-    <FileVersion>2.0.2</FileVersion>
-    <AssemblyVersion>2.0.2</AssemblyVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Version>2.0.2</Version>
+		<FileVersion>2.0.2</FileVersion>
+		<AssemblyVersion>2.0.2</AssemblyVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Labelary Library Abstractions</Title>
+		<Description>Provides an easy way to call the Labelary API to get labels from ZPL. This library is used by the Virtual ZPL Printer application.</Description>
+		<PackageProjectUrl>https://github.com/porrey/Virtual-ZPL-Printer</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/porrey/Virtual-ZPL-Printer.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<NeutralLanguage>en</NeutralLanguage>
+		<PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<PackageTags>labelary; zpl</PackageTags>
+		<Copyright>Copyright(C) 2021-2022, Daniel M. Porrey. All rights reserved.</Copyright>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Assets\printer-label.png" />
-    <None Remove="Services\Labelary.Service.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Assets\printer-label.png" />
+		<None Remove="Services\Labelary.Service.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Assets\printer-label.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Services\Labelary.Service.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="Assets\printer-label.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Services\Labelary.Service.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
+	</ItemGroup>
 
 </Project>

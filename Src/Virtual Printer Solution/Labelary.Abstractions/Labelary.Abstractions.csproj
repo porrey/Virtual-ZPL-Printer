@@ -1,31 +1,45 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Version>2.0.2</Version>
-    <FileVersion>2.0.2</FileVersion>
-    <AssemblyVersion>2.0.2</AssemblyVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Version>2.0.2</Version>
+		<FileVersion>2.0.2</FileVersion>
+		<AssemblyVersion>2.0.2</AssemblyVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Labelary Library Abstractions</Title>
+		<Description>Provides abstraction for the Labelary C# Library. This library is used by the Virtual ZPL Printer application.</Description>
+		<PackageProjectUrl>https://github.com/porrey/Virtual-ZPL-Printer</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/porrey/Virtual-ZPL-Printer.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<NeutralLanguage>en</NeutralLanguage>
+		<PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageTags>labelary; zpl</PackageTags>
+		<Nullable>disable</Nullable>
+		<Copyright>Copyright(C) 2021-2022, Daniel M. Porrey. All rights reserved.</Copyright>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Services\Labelary.Abstractions.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Services\Labelary.Abstractions.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Services\Labelary.Abstractions.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="Services\Labelary.Abstractions.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Diamond.Core.Repository" Version="6.0.12" />
-    <PackageReference Include="UnitsNet" Version="4.131.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Diamond.Core.Repository" Version="6.0.12" />
+		<PackageReference Include="UnitsNet" Version="4.131.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Update="C:\Users\porrey\.nuget\packages\diamond.core.repository\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Update="C:\Users\porrey\.nuget\packages\diamond.core.repository\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>
