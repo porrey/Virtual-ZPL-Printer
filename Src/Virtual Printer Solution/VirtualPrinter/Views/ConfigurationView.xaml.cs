@@ -15,13 +15,12 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using Diamond.Core.Wpf;
-using VirtualZplPrinter.ViewModels;
+using VirtualPrinter.ViewModels;
 
-namespace VirtualZplPrinter.Views
+namespace VirtualPrinter.Views
 {
 	public partial class ConfigurationView : Window, IMainWindow
 	{
@@ -38,11 +37,6 @@ namespace VirtualZplPrinter.Views
 		{
 			base.OnInitialized(e);
 			await this.ViewModel.InitializeAsync();
-		}
-
-		protected override void OnClosing(CancelEventArgs e)
-		{
-			base.OnClosing(e);
 		}
 
 		private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

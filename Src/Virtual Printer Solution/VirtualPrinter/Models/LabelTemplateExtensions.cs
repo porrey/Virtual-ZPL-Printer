@@ -15,9 +15,9 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System;
-using VirtualZplPrinter.Models;
+using VirtualPrinter.Models;
 
-namespace VirtualZplPrinter
+namespace VirtualPrinter
 {
 	public static class LabelTemplateExtensions
 	{

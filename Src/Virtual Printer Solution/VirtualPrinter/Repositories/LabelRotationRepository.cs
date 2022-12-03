@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 using Diamond.Core.Repository;
 using Labelary.Abstractions;
 
-namespace VirtualZplPrinter.Repositories
+namespace VirtualPrinter.Repositories
 {
 	public class LabelRotationRepository : DisposableObject, IReadOnlyRepository<LabelRotation>
 	{

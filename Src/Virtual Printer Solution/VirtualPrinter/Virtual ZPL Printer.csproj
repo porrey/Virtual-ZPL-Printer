@@ -2,15 +2,15 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFramework>net7.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<ApplicationIcon>virtual-printer.ico</ApplicationIcon>
-		<AssemblyName>VirtualZplPrinter</AssemblyName>
-		<StartupObject>VirtualZplPrinter.App</StartupObject>
-		<RootNamespace>VirtualZplPrinter</RootNamespace>
-		<Version>2.0.2</Version>
-		<FileVersion>2.0.2</FileVersion>
-		<AssemblyVersion>2.0.2</AssemblyVersion>
+		<AssemblyName>VirtualPrinter</AssemblyName>
+		<StartupObject>VirtualPrinter.App</StartupObject>
+		<RootNamespace>VirtualPrinter</RootNamespace>
+		<Version>2.1.0</Version>
+		<FileVersion>2.1.0</FileVersion>
+		<AssemblyVersion>2.1.0</AssemblyVersion>
 		<Nullable>disable</Nullable>
 		<SignAssembly>False</SignAssembly>
 	</PropertyGroup>
@@ -24,6 +24,12 @@
 		<None Remove="Assets\close.png" />
 		<None Remove="Assets\delete-printer-configuration.png" />
 		<None Remove="Assets\edit-printer-configuration.png" />
+		<None Remove="Assets\filter-add.png" />
+		<None Remove="Assets\filter-delete.png" />
+		<None Remove="Assets\filter-down.png" />
+		<None Remove="Assets\filter-edit.png" />
+		<None Remove="Assets\filter-to.png" />
+		<None Remove="Assets\filter-up.png" />
 		<None Remove="Assets\idle.png" />
 		<None Remove="Assets\ip.png" />
 		<None Remove="Assets\label-preview.png" />
@@ -62,6 +68,24 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\clone-printer-configuration.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\filter-add.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\filter-delete.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\filter-down.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\filter-edit.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\filter-to.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\filter-up.png">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\send.png">
@@ -151,11 +175,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Repository" Version="6.0.12" />
-		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="6.0.12" />
-		<PackageReference Include="Diamond.Core.Wpf" Version="6.0.12" />
+		<PackageReference Include="Diamond.Core.Repository" Version="7.0.0" />
+		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Diamond.Core.Wpf" Version="7.0.0" />
 		<PackageReference Include="Prism.Wpf" Version="8.1.97" />
-		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="6.0.12" />
+		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="7.0.0" />
 		<PackageReference Include="System.DisposableObject" Version="1.5.1" />
 	</ItemGroup>
 
@@ -176,10 +200,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="C:\Users\porrey\.nuget\packages\diamond.core.repository.abstractions\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.Abstractions.json">
+	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\7.0.0\contentFiles\any\net7.0\Services\Diamond.Core.Repository.Abstractions.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
-	  <Content Update="C:\Users\porrey\.nuget\packages\diamond.core.repository\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.json">
+	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\7.0.0\contentFiles\any\net7.0\Services\Diamond.Core.Repository.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	</ItemGroup>

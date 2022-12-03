@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using VirtualZplPrinter.ViewModels;
+using VirtualPrinter.ViewModels;
 
-namespace VirtualZplPrinter.Views
+namespace VirtualPrinter.Views
 {
 	public partial class SplashView : Window
     {

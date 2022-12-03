@@ -1,0 +1,281 @@
+﻿<Window x:Class="VirtualPrinter.Views.EditFiltersView"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:VirtualPrinter.Views"
+		mc:Ignorable="d"
+		Title="Edit Filters"
+		Icon="/virtual-printer.ico"
+		ResizeMode="NoResize"
+		WindowStyle="ThreeDBorderWindow"
+		Height="600"
+		Width="550">
+
+	<Window.Resources>
+		<DataTemplate x:Key="FilterTemplate">
+			<Border Margin="3"
+					BorderBrush="{StaticResource BorderColor}"
+					BorderThickness="1"
+					CornerRadius="{StaticResource Radius}">
+				<Grid Margin="5">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="1*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="1*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="1*" />
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Row="0"
+							   Grid.RowSpan="2"
+							   Grid.Column="0"
+							   Text="{Binding Priority}"
+							   Margin="10,2,10,5"
+							   FontSize="24"
+							   Foreground="{StaticResource ForegroundColor3}"
+							   HorizontalAlignment="Center"
+							   VerticalAlignment="Center" />
+
+					<TextBlock Grid.Row="0"
+							   Grid.Column="1"
+							   Text="Find"
+							   Margin="5,2,5,2"
+							   FontSize="12"
+							   Foreground="{StaticResource ForegroundColor1}"
+							   HorizontalAlignment="Left"
+							   VerticalAlignment="Center" />
+					<TextBox Grid.Row="1"
+							 Grid.Column="1"
+							 Text="{Binding Find}"
+							 Margin="5,2,5,2"
+							 FontFamily="Courrier New"
+							 FontSize="14"
+							 Foreground="{StaticResource ForegroundColor1}"
+							 HorizontalAlignment="Stretch"
+							 VerticalContentAlignment="Center" />
+
+					<Image Grid.Row="1"
+						   Grid.Column="2"
+						   Margin="5,2,5,2"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   Width="32"
+						   Height="32"
+						   Source="/Assets/filter-to.png" />
+
+					<TextBlock Grid.Row="0"
+							   Grid.Column="3"
+							   Text="Replace"
+							   Margin="5,2,5,2"
+							   FontSize="12"
+							   Foreground="{StaticResource ForegroundColor1}"
+							   HorizontalAlignment="Left"
+							   VerticalAlignment="Center" />
+					<TextBox Grid.Row="1"
+							 Grid.Column="3"
+							 Text="{Binding Replace}"
+							 Margin="5,2,5,2"
+							 FontFamily="Courrier New"
+							 FontSize="14"
+							 Foreground="{StaticResource ForegroundColor1}"
+							 HorizontalAlignment="Stretch"
+							 VerticalContentAlignment="Center" />
+
+					<!-- Buttons -->
+					<Grid Grid.Row="0"
+						  Grid.RowSpan="2"
+						  Grid.Column="4">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+
+						<Button Grid.Column="0"
+								Style="{DynamicResource ButtonStyle1}"
+								VerticalAlignment="Center"
+								HorizontalAlignment="Center"
+								Command="{Binding UpCommand}"
+								Width="32"
+								Height="32"
+								Margin="2"
+								ToolTip="Move this filter up.">
+							<Button.Content>
+								<Image Source="/Assets/filter-up.png" />
+							</Button.Content>
+						</Button>
+
+						<Button Grid.Column="1"
+								Style="{DynamicResource ButtonStyle1}"
+								VerticalAlignment="Center"
+								HorizontalAlignment="Center"
+								Command="{Binding DownCommand}"
+								Width="32"
+								Height="32"
+								Margin="2"
+								ToolTip="Move this filter down.">
+							<Button.Content>
+								<Image Source="/Assets/filter-down.png" />
+							</Button.Content>
+						</Button>
+
+						<Button Grid.Column="2"
+								Style="{DynamicResource ButtonStyle1}"
+								VerticalAlignment="Center"
+								HorizontalAlignment="Center"
+								Command="{Binding DeleteCommand}"
+								Width="32"
+								Height="32"
+								Margin="2"
+								ToolTip="Delete the this filter.">
+							<Button.Content>
+								<Image Source="/Assets/filter-delete.png" />
+							</Button.Content>
+						</Button>
+
+						<Button Grid.Column="3"
+								Style="{DynamicResource ButtonStyle1}"
+								VerticalAlignment="Center"
+								HorizontalAlignment="Center"
+								Command="{Binding AddCommand}"
+								Width="32"
+								Height="32"
+								Margin="2"
+								ToolTip="Add a new filter before this one.">
+							<Button.Content>
+								<Image Source="/Assets/filter-add.png" />
+							</Button.Content>
+						</Button>
+					</Grid>
+
+					<CheckBox Grid.Row="2"
+							  Grid.Column="0"
+							  Grid.ColumnSpan="5"
+							  Content="Treat Find as Regular Expression"
+							  IsChecked="{Binding TreatAsRegularExpression}"
+							  Foreground="{StaticResource ForegroundColor1}"
+							  VerticalAlignment="Center"
+							  HorizontalAlignment="Left" />
+				</Grid>
+			</Border>
+		</DataTemplate>
+	</Window.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<Image Grid.Column="0"
+				   Source="/Assets/filter-edit.png"
+				   Width="38"
+				   Height="38"
+				   VerticalAlignment="Center"
+				   HorizontalAlignment="Center"
+				   Margin="10" />
+
+			<TextBlock	Grid.Column="1"
+						Text="The filters are processed on the order they appear, from top to bottom."
+						VerticalAlignment="Center"
+						TextWrapping="Wrap"
+						FontSize="12"
+						Foreground="{StaticResource ForegroundColor1}"
+						Margin="15,15,5,15" />
+		</Grid>
+
+		<ListView Grid.Row="1"
+				  BorderThickness="0"
+				  ItemsSource="{Binding Filters}"
+				  ItemTemplate="{StaticResource FilterTemplate}"
+				  SelectedItem="{Binding SelectedFilter}"
+				  SelectionMode="Single">
+			<ListView.ItemContainerStyle>
+				<Style TargetType="ListViewItem">
+					<Setter Property="HorizontalContentAlignment"
+							Value="Stretch" />
+				</Style>
+			</ListView.ItemContainerStyle>
+		</ListView>
+
+		<!-- Buttons -->
+		<Grid Grid.Row="2"
+			  Margin="0,25,5,5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<Button Grid.Column="2"
+					Style="{DynamicResource ButtonStyle1}"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Center"
+					Command="{Binding OkCommand}"
+					Click="Button_Click"
+					Width="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
+					Margin="8,3,0,3"
+					ToolTip="Save the changes and close the dialog.">
+				<Button.Content>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<Image Source="/Assets/delete-printer-configuration.png"
+							   Width="24"
+							   Height="24" />
+
+						<TextBlock Grid.Row="1"
+								   Text="OK"
+								   FontSize="11" />
+					</Grid>
+				</Button.Content>
+			</Button>
+
+			<Button Grid.Column="1"
+					Style="{DynamicResource ButtonStyle1}"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Center"
+					Command="{Binding CancelCommand}"
+					Click="Button_Click"
+					Width="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
+					Margin="8,3,0,3"
+					ToolTip="Cancel the changes and close the dialog.">
+				<Button.Content>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<Image Source="/Assets/clone-printer-configuration.png"
+							   Width="24"
+							   Height="24" />
+
+						<TextBlock Grid.Row="1"
+								   Text="Cancel"
+								   FontSize="11" />
+					</Grid>
+				</Button.Content>
+			</Button>
+		</Grid>
+	</Grid>
+</Window>

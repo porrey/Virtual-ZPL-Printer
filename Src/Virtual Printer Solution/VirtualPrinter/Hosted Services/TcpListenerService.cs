@@ -25,10 +25,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Prism.Events;
-using VirtualZplPrinter.Client;
-using VirtualZplPrinter.Events;
+using VirtualPrinter.Client;
+using VirtualPrinter.Events;
 
-namespace VirtualZplPrinter.HostedServices
+namespace VirtualPrinter.HostedServices
 {
 	public class TcpListenerService : HostedServiceTemplate
 	{

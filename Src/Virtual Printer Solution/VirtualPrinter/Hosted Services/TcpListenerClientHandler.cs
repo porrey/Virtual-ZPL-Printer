@@ -23,9 +23,9 @@ using System.Threading.Tasks;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
 using Prism.Events;
-using VirtualZplPrinter.Events;
+using VirtualPrinter.Events;
 
-namespace VirtualZplPrinter.Client
+namespace VirtualPrinter.Client
 {
 	public class TcpListenerClientHandler
 	{

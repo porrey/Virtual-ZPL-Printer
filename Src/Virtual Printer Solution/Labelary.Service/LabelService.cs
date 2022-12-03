@@ -40,7 +40,7 @@ namespace Labelary.Service
 			{
 				using (HttpClient client = new())
 				{
-					using (StringContent content = new(zpl, Encoding.UTF8, "application/x-www-form-urlencoded"))
+					using (StringContent content = new(zpl.Filter(labelConfiguration.LabelFilters), Encoding.UTF8, "application/x-www-form-urlencoded"))
 					{
 						double width = (new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
 						double height = (new Length(labelConfiguration.LabelHeight, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;

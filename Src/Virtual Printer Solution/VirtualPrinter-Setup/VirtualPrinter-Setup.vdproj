@@ -64,15 +64,15 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.CoreRuntime.5.0.x64"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.CoreRuntime.7.0.x64"
                     {
-                    "Name" = "8:.NET Runtime 5.0.8 (x64)"
-                    "ProductCode" = "8:Microsoft.NetCore.CoreRuntime.5.0.x64"
+                    "Name" = "8:.NET Runtime 7.0.0 (x64)"
+                    "ProductCode" = "8:Microsoft.NetCore.CoreRuntime.7.0.x64"
                     }
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.CoreRuntime.5.0.x86"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.CoreRuntime.7.0.x86"
                     {
-                    "Name" = "8:.NET Runtime 5.0.8 (x86)"
-                    "ProductCode" = "8:Microsoft.NetCore.CoreRuntime.5.0.x86"
+                    "Name" = "8:.NET Runtime 7.0.0 (x86)"
+                    "ProductCode" = "8:Microsoft.NetCore.CoreRuntime.7.0.x86"
                     }
                 }
             }
@@ -310,22 +310,22 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Virtual ZPL Printer"
-        "ProductCode" = "8:{1FEF5E0C-42FE-4FEF-BC7D-46D4FE2F14F2}"
-        "PackageCode" = "8:{D196501F-B731-4D94-A449-F228AF21B578}"
+        "ProductCode" = "8:{301903B0-1F82-4345-B3E7-FC3E37FD59EC}"
+        "PackageCode" = "8:{BA4CCF60-A177-4946-8910-73954DA4D5C0}"
         "UpgradeCode" = "8:{32EBCEBE-7298-4898-A855-DE97B7DDACEA}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.0.2"
+        "ProductVersion" = "8:2.1.0"
         "Manufacturer" = "8:Daniel Porrey"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/porrey/Virtual-ZPL-Printer"
         "Title" = "8:Virtual ZPL Printer Setup"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Daniel Porrey"
-        "Keywords" = "8:zpl"
+        "Keywords" = "8:zpl virtual printer ethernet"
         "ARPCOMMENTS" = "8:An ethernet based virtual Zebra Label Printer that can be used to test applications that produce bar code labels."
         "ARPURLINFOABOUT" = "8:https://github.com/porrey/Virtual-ZPL-Printer"
         "ARPPRODUCTICON" = "8:_9F590A75A84E41D88F76D4967EEDAE96"
@@ -846,7 +846,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_9F590A75A84E41D88F76D4967EEDAE96"
             {
-            "SourcePath" = "8:..\\VirtualPrinter\\obj\\Debug\\net6.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\VirtualPrinter\\obj\\Debug\\net7.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CE212C03354141C1A9AB5482FB65476A"

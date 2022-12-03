@@ -24,10 +24,10 @@ using System.Windows.Threading;
 using Diamond.Core.Wpf;
 using ImageCache.Abstractions;
 using Prism.Events;
-using VirtualZplPrinter.Events;
-using VirtualZplPrinter.ViewModels;
+using VirtualPrinter.Events;
+using VirtualPrinter.ViewModels;
 
-namespace VirtualZplPrinter.Views
+namespace VirtualPrinter.Views
 {
 	public partial class MainView : Window, IMainWindow
 	{

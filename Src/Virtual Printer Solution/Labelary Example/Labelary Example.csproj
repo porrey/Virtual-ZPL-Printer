@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>Labelary.Example</RootNamespace>
     <AssemblyName>LabelaryExample</AssemblyName>
-    <Version>2.0.2</Version>
-    <FileVersion>2.0.2</FileVersion>
-    <AssemblyVersion>2.0.2</AssemblyVersion>
+    <Version>2.1.0</Version>
+    <FileVersion>2.1.0</FileVersion>
+    <AssemblyVersion>2.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

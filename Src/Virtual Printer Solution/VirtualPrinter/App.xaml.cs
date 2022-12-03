@@ -19,9 +19,9 @@ using Diamond.Core.Extensions.DependencyInjection;
 using Diamond.Core.Extensions.DependencyInjection.EntityFrameworkCore;
 using Diamond.Core.Wpf;
 using Microsoft.Extensions.Hosting;
-using VirtualZplPrinter.Views;
+using VirtualPrinter.Views;
 
-namespace VirtualZplPrinter
+namespace VirtualPrinter
 {
 	public partial class App : HostedApplication
 	{
@@ -35,14 +35,18 @@ namespace VirtualZplPrinter
 
 		protected override void OnBeginStartup(StartupEventArgs e)
 		{
+#if !DEBUG
 			this.Splash = new SplashView(new());
 			this.Splash.Show();
+#endif
 		}
 
 		protected override void OnCompletedStartup(StartupEventArgs e)
 		{
+#if !DEBUG
 			this.Splash.Close();
 			this.Splash = null;
+#endif
 		}
 	}
 }

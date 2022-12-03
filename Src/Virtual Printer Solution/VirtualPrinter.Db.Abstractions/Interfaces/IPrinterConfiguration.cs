@@ -19,5 +19,6 @@ namespace VirtualPrinter.Db.Abstractions
 		string ResolutionSummary { get; }
 		string RotationSummary { get; }
 		string Description { get; }
+		string Filters { get; set; }
 	}
 }

@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<Version>2.0.2</Version>
-		<FileVersion>2.0.2</FileVersion>
-		<AssemblyVersion>2.0.2</AssemblyVersion>
+		<TargetFramework>net7.0</TargetFramework>
+		<Version>2.1.0</Version>
+		<FileVersion>2.1.0</FileVersion>
+		<AssemblyVersion>2.1.0</AssemblyVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Title>Labelary Library Abstractions</Title>
 		<Description>Provides abstraction for the Labelary C# Library. This library is used by the Virtual ZPL Printer application.</Description>
@@ -32,13 +32,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Repository" Version="6.0.12" />
-		<PackageReference Include="UnitsNet" Version="4.131.0" />
+	  <None Include="..\..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Update="C:\Users\porrey\.nuget\packages\diamond.core.repository\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<PackageReference Include="Diamond.Core.Repository" Version="7.0.0" />
+		<PackageReference Include="UnitsNet" Version="4.149.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\7.0.0\contentFiles\any\net7.0\Services\Diamond.Core.Repository.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
 

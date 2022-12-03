@@ -18,7 +18,7 @@ using System;
 using System.Windows;
 using Prism.Events;
 
-namespace VirtualZplPrinter.Events
+namespace VirtualPrinter.Events
 {
 	public class WindowHiddenEvent : PubSubEvent<WindowHiddenEventArgs>
 	{

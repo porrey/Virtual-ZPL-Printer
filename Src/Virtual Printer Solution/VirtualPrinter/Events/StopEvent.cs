@@ -17,7 +17,7 @@
 using System;
 using Prism.Events;
 
-namespace VirtualZplPrinter.Events
+namespace VirtualPrinter.Events
 {
 	public class StopEvent : PubSubEvent<StopEventArgs>
 	{

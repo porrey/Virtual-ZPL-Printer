@@ -9,15 +9,15 @@
 		},
 		{
 			"Key": "Host",
-			"TypeDefinition": "VirtualZplPrinter.Models.Host, VirtualZplPrinter"
+			"TypeDefinition": "VirtualPrinter.Models.Host, VirtualPrinter"
 		},
 		{
 			"Key": "LabelUnit",
-			"TypeDefinition": "VirtualZplPrinter.Models.LabelUnit, VirtualZplPrinter"
+			"TypeDefinition": "VirtualPrinter.Models.LabelUnit, VirtualPrinter"
 		},
 		{
 			"Key": "Resolution",
-			"TypeDefinition": "VirtualZplPrinter.Models.Resolution, VirtualZplPrinter"
+			"TypeDefinition": "VirtualPrinter.Models.Resolution, VirtualPrinter"
 		}
 	],
 	"services": [
@@ -31,65 +31,52 @@
 			// IMainWindow is used for the startup window.
 			//
 			"ServiceType": "Diamond.Core.Wpf.IMainWindow, Diamond.Core.Wpf.Abstractions",
-			"ImplementationType": "VirtualZplPrinter.Views.MainView, VirtualZplPrinter",
+			"ImplementationType": "VirtualPrinter.Views.MainView, VirtualPrinter",
 			"Lifetime": "Singleton"
 		},
 		{
-			"ServiceType": "VirtualZplPrinter.Views.ConfigurationView, VirtualZplPrinter",
-			"ImplementationType": "VirtualZplPrinter.Views.ConfigurationView, VirtualZplPrinter",
-			"Lifetime": "Transient"
-		},
-		{
-			"ServiceType": "VirtualZplPrinter.Views.SendTestView, VirtualZplPrinter",
-			"ImplementationType": "VirtualZplPrinter.Views.SendTestView, VirtualZplPrinter",
-			"Lifetime": "Transient"
-		},
-		{
-			"ServiceType": "VirtualZplPrinter.ViewModels.MainViewModel, VirtualZplPrinter",
-			"ImplementationType": "VirtualZplPrinter.ViewModels.MainViewModel, VirtualZplPrinter",
+			"ServiceType": "VirtualPrinter.Views.ConfigurationView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.ConfigurationView, VirtualPrinter",
 			"Lifetime": "Singleton"
 		},
 		{
-			"ServiceType": "VirtualZplPrinter.ViewModels.ConfigurationViewModel, VirtualZplPrinter",
-			"ImplementationType": "VirtualZplPrinter.ViewModels.ConfigurationViewModel, VirtualZplPrinter",
+			"ServiceType": "VirtualPrinter.Views.SendTestView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.SendTestView, VirtualPrinter",
+			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.EditFiltersView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.EditFiltersView, VirtualPrinter",
 			"Lifetime": "Transient"
 		},
 		{
-			"ServiceType": "VirtualZplPrinter.ViewModels.SendTestViewModel, VirtualZplPrinter",
-			"ImplementationType": "VirtualZplPrinter.ViewModels.SendTestViewModel, VirtualZplPrinter",
+			"ServiceType": "VirtualPrinter.ViewModels.MainViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.MainViewModel, VirtualPrinter",
+			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.ConfigurationViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.ConfigurationViewModel, VirtualPrinter",
+			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.SendTestViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.SendTestViewModel, VirtualPrinter",
 			"Lifetime": "Transient"
 		},
 		{
-			"ServiceType": "VirtualZplPrinter.Client.TcpListenerClientHandler, VirtualZplPrinter",
-			"ImplementationType": "VirtualZplPrinter.Client.TcpListenerClientHandler, VirtualZplPrinter",
+			"ServiceType": "VirtualPrinter.ViewModels.EditFiltersViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.EditFiltersViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Client.TcpListenerClientHandler, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Client.TcpListenerClientHandler, VirtualPrinter",
 			"Lifetime": "Transient"
 		},
 		{
 			"ServiceType": "<IHostedService>",
-			"ImplementationType": "VirtualZplPrinter.HostedServices.TcpListenerService, VirtualZplPrinter",
-			"Lifetime": "Singleton"
-		},
-		//
-		// Repositories
-		//
-		{
-			"ServiceType": "Diamond.Core.Repository.IRepository`1[[<Host>]], Diamond.Core.Repository.Abstractions",
-			"ImplementationType": "VirtualZplPrinter.Repositories.HostRepository, VirtualZplPrinter",
-			"Lifetime": "Singleton"
-		},
-		{
-			"ServiceType": "Diamond.Core.Repository.IRepository`1[[<LabelRotation>]], Diamond.Core.Repository.Abstractions",
-			"ImplementationType": "VirtualZplPrinter.Repositories.LabelRotationRepository, VirtualZplPrinter",
-			"Lifetime": "Singleton"
-		},
-		{
-			"ServiceType": "Diamond.Core.Repository.IRepository`1[[<LabelUnit>]], Diamond.Core.Repository.Abstractions",
-			"ImplementationType": "VirtualZplPrinter.Repositories.LabelUnitRepository, VirtualZplPrinter",
-			"Lifetime": "Singleton"
-		},
-		{
-			"ServiceType": "Diamond.Core.Repository.IRepository`1[[<Resolution>]], Diamond.Core.Repository.Abstractions",
-			"ImplementationType": "VirtualZplPrinter.Repositories.ResolutionRepository, VirtualZplPrinter",
+			"ImplementationType": "VirtualPrinter.HostedServices.TcpListenerService, VirtualPrinter",
 			"Lifetime": "Singleton"
 		}
 	]
