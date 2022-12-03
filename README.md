@@ -21,8 +21,6 @@ Now requires **.NET 7.0**. Download Setup.exe and the MSI if you need to have th
 
 ![](https://github.com/porrey/Virtual-ZPL-Printer/raw/ZPL-Filter/Images/VirtualZplPrinter-05.png)
 
-*Screen shots taken in Windows 11*
-
 ##### History
 ###### Version 2.0.2 Updates:
 1. Large labels (greater than 8192 bytes) were being truncated. Changed TCP/IP receive buffer size to be dynamic.
