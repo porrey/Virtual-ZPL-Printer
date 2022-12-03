@@ -1,7 +1,7 @@
 # Virtual ZPL Printer
 An Ethernet based virtual Zebra Label Printer that can be used to test applications that produce bar code labels. This application uses the Labelary service found at [http://labelary.com](http://labelary.com/service.html).
 
-[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/ZPL-Filter/Installer/ZPL%20Virtual%20Printer%20Setup.msi) (v 2.0.2)
+[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/ZPL-Filter/Installer/Virtual%20ZPL%20Printer%20Setup.msi) (v 2.2.0)
 
 Now requires **.NET 7.0**. Download Setup.exe and the MSI if you need to have the .NET 7.0 Framework installed automatically.
 
