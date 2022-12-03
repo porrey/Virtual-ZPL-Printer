@@ -19,6 +19,8 @@ Now requires **.NET 7.0**. Download Setup.exe and the MSI if you need to have th
 
 ![](https://github.com/porrey/Virtual-ZPL-Printer/raw/ZPL-Filter/Images/VirtualZplPrinter-04.png)
 
+![](https://github.com/porrey/Virtual-ZPL-Printer/raw/ZPL-Filter/Images/VirtualZplPrinter-05.png)
+
 *Screen shots taken in Windows 11*
 
 ##### History
