@@ -270,10 +270,11 @@
 						  Height="{StaticResource ControlHeight}"
 						  VerticalContentAlignment="Center"
 						  HorizontalContentAlignment="Left"
-						  IsReadOnly="true"
+						  IsReadOnly="false"
+						  IsEditable="true"
 						  Foreground="{StaticResource ForegroundColor1}"
 						  ItemsSource="{Binding IpAddresses}"
-						  SelectedItem="{Binding SelectedIpAddress}"
+						  Text="{Binding IpAddress}"
 						  ItemTemplate="{StaticResource IpAddressTemplate}" />
 
 				<TextBlock Grid.Row="2"

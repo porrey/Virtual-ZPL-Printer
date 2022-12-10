@@ -5,6 +5,10 @@ An Ethernet based virtual Zebra Label Printer that can be used to test applicati
 
 Now requires **.NET 7.0**. Download Setup.exe and the MSI if you need to have the .NET 7.0 Framework installed automatically.
 
+###### Version 2.2.0 Updates:
+1. Made IP address editable.
+2. Corrected an issue where the configuration dialog would only open once.
+
 ###### Version 2.1.0 Updates:
 1. Upgraded to .NET 7 framework.
 2. Added ZPL filters. One or more find replace filters (supporting regular expressions) can be added to each printer configuration.

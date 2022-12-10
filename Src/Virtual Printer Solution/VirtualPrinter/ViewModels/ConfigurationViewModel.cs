@@ -38,7 +38,7 @@ using VirtualPrinter.Views;
 
 namespace VirtualPrinter.ViewModels
 {
-    public class ConfigurationViewModel : BindableBase
+	public class ConfigurationViewModel : BindableBase
 	{
 		public ConfigurationViewModel(IServiceProvider serviceProvider, IRepositoryFactory repositoryFactory)
 		{
@@ -116,16 +116,16 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private IPAddress _selectedIpAddress = null;
-		public IPAddress SelectedIpAddress
+		private string _ipAddress = null;
+		public string IpAddress
 		{
 			get
 			{
-				return _selectedIpAddress;
+				return _ipAddress;
 			}
 			set
 			{
-				this.SetProperty(ref _selectedIpAddress, value);
+				this.SetProperty(ref _ipAddress, value);
 				this.Changes = true;
 			}
 		}
@@ -364,7 +364,7 @@ namespace VirtualPrinter.ViewModels
 				if (this.SelectedPrinterConfiguration != null)
 				{
 					this.Name = this.SelectedPrinterConfiguration.Name;
-					this.SelectedIpAddress = this.IpAddresses.Where(t => t.ToString() == this.SelectedPrinterConfiguration.HostAddress).SingleOrDefault();
+					this.IpAddress = this.SelectedPrinterConfiguration.HostAddress;
 					this.Port = this.SelectedPrinterConfiguration.Port;
 					this.LabelWidth = this.SelectedPrinterConfiguration.LabelWidth;
 					this.LabelHeight = this.SelectedPrinterConfiguration.LabelHeight;
@@ -376,7 +376,7 @@ namespace VirtualPrinter.ViewModels
 				else
 				{
 					this.Name = null;
-					this.SelectedIpAddress = null;
+					this.IpAddress = null;
 					this.Port = 0;
 					this.LabelWidth = 0;
 					this.LabelHeight = 0;
@@ -493,7 +493,7 @@ namespace VirtualPrinter.ViewModels
 					// Map the data.
 					//
 					this.SelectedPrinterConfiguration.Name = this.Name;
-					this.SelectedPrinterConfiguration.HostAddress = this.SelectedIpAddress.ToString();
+					this.SelectedPrinterConfiguration.HostAddress = this.IpAddress;
 					this.SelectedPrinterConfiguration.Port = this.Port;
 					this.SelectedPrinterConfiguration.LabelHeight = this.LabelHeight;
 					this.SelectedPrinterConfiguration.LabelWidth = this.LabelWidth;

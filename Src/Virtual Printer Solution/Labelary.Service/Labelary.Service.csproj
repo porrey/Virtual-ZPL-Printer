@@ -2,9 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFramework>net7.0-windows</TargetFramework>
-		<Version>2.1.0</Version>
-		<FileVersion>2.1.0</FileVersion>
-		<AssemblyVersion>2.1.0</AssemblyVersion>
+		<Version>2.2.0</Version>
+		<FileVersion>2.2.0</FileVersion>
+		<AssemblyVersion>2.2.0</AssemblyVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Title>Labelary Library Abstractions</Title>
 		<Description>Provides an easy way to call the Labelary API to get labels from ZPL. This library is used by the Virtual ZPL Printer application.</Description>

@@ -37,7 +37,7 @@
 		{
 			"ServiceType": "VirtualPrinter.Views.ConfigurationView, VirtualPrinter",
 			"ImplementationType": "VirtualPrinter.Views.ConfigurationView, VirtualPrinter",
-			"Lifetime": "Singleton"
+			"Lifetime": "Transient"
 		},
 		{
 			"ServiceType": "VirtualPrinter.Views.SendTestView, VirtualPrinter",
@@ -57,7 +57,7 @@
 		{
 			"ServiceType": "VirtualPrinter.ViewModels.ConfigurationViewModel, VirtualPrinter",
 			"ImplementationType": "VirtualPrinter.ViewModels.ConfigurationViewModel, VirtualPrinter",
-			"Lifetime": "Singleton"
+			"Lifetime": "Transient"
 		},
 		{
 			"ServiceType": "VirtualPrinter.ViewModels.SendTestViewModel, VirtualPrinter",
