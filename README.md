@@ -11,15 +11,15 @@ Now requires **.NET 7.0**. Download Setup.exe and the MSI if you need to have th
 
 ###### Screen Shots
 
-![](https://github.com/porrey/Virtual-ZPL-Printer/raw/ZPL-Filter/Images/VirtualZplPrinter-01.png)
+![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-01.png)
 
-![](https://github.com/porrey/Virtual-ZPL-Printer/raw/ZPL-Filter/Images/VirtualZplPrinter-02.png)
+![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-02.png)
 
-![](https://github.com/porrey/Virtual-ZPL-Printer/raw/ZPL-Filter/Images/VirtualZplPrinter-03.png)
+![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-03.png)
 
-![](https://github.com/porrey/Virtual-ZPL-Printer/raw/ZPL-Filter/Images/VirtualZplPrinter-04.png)
+![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-04.png)
 
-![](https://github.com/porrey/Virtual-ZPL-Printer/raw/ZPL-Filter/Images/VirtualZplPrinter-05.png)
+![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-05.png)
 
 ##### History
 ###### Version 2.0.2 Updates:
