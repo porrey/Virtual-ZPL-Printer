@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Diamond.Core.Repository;
 using UnitsNet.Units;
@@ -23,6 +24,7 @@ namespace VirtualPrinter.Db.Ef
 		public int ResolutionInDpmm { get; set; }
 		public int RotationAngle { get; set; }
 		public string ImagePath { get; set; }
+		public string Filters { get; set; }
 
 		[NotMapped]
 		public string IdSummary => $"ID: {this.Id}";

@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <Version>2.0.2</Version>
-    <FileVersion>2.0.2</FileVersion>
-    <AssemblyVersion>2.0.2</AssemblyVersion>
+    <Version>2.1.0</Version>
+    <FileVersion>2.1.0</FileVersion>
+    <AssemblyVersion>2.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,17 +21,17 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Extensions.DependencyInjection.Sqlite" Version="6.0.12" />
-		<PackageReference Include="Diamond.Core.Repository" Version="6.0.12" />
-		<PackageReference Include="Diamond.Core.System.Text" Version="6.0.12" />
-		<PackageReference Include="Diamond.Core.Repository.EntityFrameworkCore" Version="6.0.12" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.5" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
+		<PackageReference Include="Diamond.Core.Extensions.DependencyInjection.Sqlite" Version="7.0.0" />
+		<PackageReference Include="Diamond.Core.Repository" Version="7.0.0" />
+		<PackageReference Include="Diamond.Core.System.Text" Version="7.0.0" />
+		<PackageReference Include="Diamond.Core.Repository.EntityFrameworkCore" Version="7.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="UnitsNet" Version="4.131.0" />
+		<PackageReference Include="UnitsNet" Version="4.149.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -40,16 +40,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="C:\Users\porrd0bl\.nuget\packages\diamond.core.repository\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="C:\Users\porrd0bl\.nuget\packages\diamond.core.specification\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Specification.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="C:\Users\porrd0bl\.nuget\packages\diamond.core.unitofwork\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.UnitOfWork.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="C:\Users\porrey\.nuget\packages\diamond.core.repository\6.0.12\contentFiles\any\net6.0\Services\Diamond.Core.Repository.json">
+	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\7.0.0\contentFiles\any\net7.0\Services\Diamond.Core.Repository.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	</ItemGroup>

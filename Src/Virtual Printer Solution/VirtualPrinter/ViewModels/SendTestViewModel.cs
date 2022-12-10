@@ -7,9 +7,9 @@ using Labelary.Abstractions;
 using Prism.Commands;
 using Prism.Mvvm;
 using VirtualPrinter.Db.Abstractions;
-using VirtualZplPrinter.Models;
+using VirtualPrinter.Models;
 
-namespace VirtualZplPrinter.ViewModels
+namespace VirtualPrinter.ViewModels
 {
 	public class SendTestViewModel : BindableBase
 	{
@@ -104,7 +104,7 @@ namespace VirtualZplPrinter.ViewModels
 		protected async Task SendCommandAsync()
 		{
 			IPAddress ip = this.SelectedPrinterConfiguration.HostAddress == IPAddress.Any.ToString() ? IPAddress.Loopback : IPAddress.Parse(this.SelectedPrinterConfiguration.HostAddress);
-			(bool result, string errorMessage) = await TestClient.SendStringAsync(ip, this.SelectedPrinterConfiguration.Port, this.SelectedLabelTemplate.ApplyFieldValues());
+			_ = await TestClient.SendStringAsync(ip, this.SelectedPrinterConfiguration.Port, this.SelectedLabelTemplate.ApplyFieldValues());
 		}
 	}
 }

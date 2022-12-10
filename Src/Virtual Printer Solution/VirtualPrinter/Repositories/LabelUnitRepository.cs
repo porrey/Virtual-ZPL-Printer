@@ -20,9 +20,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Diamond.Core.Repository;
-using VirtualZplPrinter.Models;
+using VirtualPrinter.Models;
 
-namespace VirtualZplPrinter.Repositories
+namespace VirtualPrinter.Repositories
 {
 	public class LabelUnitRepository : DisposableObject, IReadOnlyRepository<LabelUnit>
 	{

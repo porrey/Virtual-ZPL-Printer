@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace VirtualZplPrinter.ViewModels
+namespace VirtualPrinter.ViewModels
 {
 	public class SplashViewModel
 	{

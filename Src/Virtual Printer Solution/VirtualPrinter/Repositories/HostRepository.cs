@@ -22,9 +22,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Diamond.Core.Repository;
-using VirtualZplPrinter.Models;
+using VirtualPrinter.Models;
 
-namespace VirtualZplPrinter.Repositories
+namespace VirtualPrinter.Repositories
 {
 	public class HostRepository : DisposableObject, IReadOnlyRepository<Host>
 	{

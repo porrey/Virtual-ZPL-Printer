@@ -28,6 +28,8 @@ using System.Windows;
 using Diamond.Core.Repository;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
@@ -35,10 +37,10 @@ using Prism.Mvvm;
 using UnitsNet.Units;
 using VirtualPrinter.Db.Abstractions;
 using VirtualPrinter.Db.Ef;
-using VirtualZplPrinter.Events;
-using VirtualZplPrinter.Views;
+using VirtualPrinter.Events;
+using VirtualPrinter.Views;
 
-namespace VirtualZplPrinter.ViewModels
+namespace VirtualPrinter.ViewModels
 {
 	public class MainViewModel : BindableBase
 	{
@@ -280,7 +282,11 @@ namespace VirtualZplPrinter.ViewModels
 					DirectoryInfo dir = new(FileLocations.Database.DirectoryName);
 					dir.Create();
 
-					await context.EnsureCreatedAsync();
+					//
+					// Create the database if it does not exist.
+					//
+					await context.Database.EnsureCreatedAsync();
+					await context.CheckUpgradeAsync();
 
 					//
 					// Load the printer configurations.
@@ -319,6 +325,11 @@ namespace VirtualZplPrinter.ViewModels
 			try
 			{
 				//
+				// Get the filters.
+				//
+				IEnumerable<FilterViewModel> filters = FilterViewModel.ToList(this.SelectedPrinterConfiguration.Filters);
+
+				//
 				// Publish an event to start the listener. The arguments of the message
 				// specify the label size, DPMM of the label, TCP port and the folder
 				// location to use for label storage.
@@ -331,7 +342,15 @@ namespace VirtualZplPrinter.ViewModels
 						LabelHeight = this.SelectedPrinterConfiguration.LabelHeight,
 						LabelWidth = this.SelectedPrinterConfiguration.LabelWidth,
 						Unit = (LengthUnit)this.SelectedPrinterConfiguration.LabelUnit,
-						LabelRotation = this.SelectedPrinterConfiguration.RotationAngle
+						LabelRotation = this.SelectedPrinterConfiguration.RotationAngle,
+						LabelFilters = (from tbl in filters
+									   select new LabelFilter()
+									   {
+										   Priority = tbl.Priority,
+										   Find = tbl.Find,
+										   Replace = tbl.Replace,
+										   TreatAsRegularExpression = tbl.TreatAsRegularExpression
+									   }).ToArray()
 					},
 					IpAddress = IPAddress.Parse(this.SelectedPrinterConfiguration.HostAddress),
 					Port = this.SelectedPrinterConfiguration.Port,
@@ -546,12 +565,10 @@ namespace VirtualZplPrinter.ViewModels
 				// Get the view.
 				//
 				ConfigurationView view = this.ServiceProvider.GetService<ConfigurationView>();
-				view.Width = 875;
-				view.Height = 575;
 				view.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
 				//
-				// SHow the dialog.
+				// Show the dialog.
 				//
 				view.ShowDialog();
 

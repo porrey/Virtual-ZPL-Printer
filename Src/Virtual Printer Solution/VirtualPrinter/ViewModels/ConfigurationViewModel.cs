@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -27,17 +26,19 @@ using System.Windows;
 using Diamond.Core.Repository;
 using Labelary.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
 using UnitsNet;
 using UnitsNet.Units;
 using VirtualPrinter.Db.Abstractions;
 using VirtualPrinter.Db.Ef;
-using VirtualZplPrinter.Models;
+using VirtualPrinter.Models;
+using VirtualPrinter.Views;
 
-namespace VirtualZplPrinter.ViewModels
+namespace VirtualPrinter.ViewModels
 {
-	public class ConfigurationViewModel : BindableBase
+    public class ConfigurationViewModel : BindableBase
 	{
 		public ConfigurationViewModel(IServiceProvider serviceProvider, IRepositoryFactory repositoryFactory)
 		{
@@ -51,6 +52,7 @@ namespace VirtualZplPrinter.ViewModels
 			this.DeleteCommand = new DelegateCommand(async () => await this.DeleteCommandAsync(), () => !this.Changes && this.SelectedPrinterConfiguration != null && this.PrinterConfigurations.Count() > 1);
 			this.SaveCommand = new DelegateCommand(async () => await this.SaveCommandAsync(), () => this.Changes);
 			this.CloneCommand = new DelegateCommand(async () => await this.CloneCommandAsync(), () => !this.Changes && this.SelectedPrinterConfiguration != null);
+			this.FilterEditCommand = new DelegateCommand(async () => await this.FilterEditCommandAsync(), () => this.SelectedPrinterConfiguration != null);
 		}
 
 		protected IServiceProvider ServiceProvider { get; set; }
@@ -63,12 +65,14 @@ namespace VirtualZplPrinter.ViewModels
 		public DelegateCommand DeleteCommand { get; set; }
 		public DelegateCommand SaveCommand { get; set; }
 		public DelegateCommand CloneCommand { get; set; }
+		public DelegateCommand FilterEditCommand { get; set; }
 
 		public ObservableCollection<IPAddress> IpAddresses { get; } = new ObservableCollection<IPAddress>();
 		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
 		public ObservableCollection<LabelRotation> Rotations { get; } = new ObservableCollection<LabelRotation>();
 		public ObservableCollection<LabelUnit> LabelUnits { get; } = new ObservableCollection<LabelUnit>();
 		public ObservableCollection<IPrinterConfiguration> PrinterConfigurations { get; } = new ObservableCollection<IPrinterConfiguration>();
+		public ObservableCollection<FilterViewModel> Filters { get; } = new ObservableCollection<FilterViewModel>();
 
 		private IPrinterConfiguration _selectPrinterConfiguration = null;
 		public IPrinterConfiguration SelectedPrinterConfiguration
@@ -230,16 +234,18 @@ namespace VirtualZplPrinter.ViewModels
 			}
 		}
 
+		public string FilterDescription => this.Filters.Any() ? string.Join(" | ", this.Filters.OrderBy(t => t.Priority).Select(t => $"[{(t.TreatAsRegularExpression ? "(rgx)=>'" : "'")}{t.Find}' to '{t.Replace}']")).Limit(100) : "No Filters";
+
 		public async Task InitializeAsync()
 		{
-			await this.LoadResolutions();
-			await this.LoadRotations();
-			await this.LoadIpAddresses();
-			await this.LoadLabelUnits();
-			await this.LoadPrinterConfigurations();
+			await this.LoadResolutionsAsync();
+			await this.LoadRotationsAsync();
+			await this.LoadIpAddressesAsync();
+			await this.LoadLabelUnitsAsync();
+			await this.LoadPrinterConfigurationsAsync();
 		}
 
-		protected async Task LoadPrinterConfigurations(int id = 0)
+		protected async Task LoadPrinterConfigurationsAsync(int id = 0)
 		{
 			//
 			// Clear the list.
@@ -283,7 +289,7 @@ namespace VirtualZplPrinter.ViewModels
 			}
 		}
 
-		protected Task LoadResolutions()
+		protected Task LoadResolutionsAsync()
 		{
 			try
 			{
@@ -301,7 +307,7 @@ namespace VirtualZplPrinter.ViewModels
 			return Task.CompletedTask;
 		}
 
-		protected Task LoadRotations()
+		protected Task LoadRotationsAsync()
 		{
 			try
 			{
@@ -318,7 +324,7 @@ namespace VirtualZplPrinter.ViewModels
 			return Task.CompletedTask;
 		}
 
-		protected Task LoadIpAddresses()
+		protected Task LoadIpAddressesAsync()
 		{
 			try
 			{
@@ -335,7 +341,7 @@ namespace VirtualZplPrinter.ViewModels
 			return Task.CompletedTask;
 		}
 
-		protected Task LoadLabelUnits()
+		protected Task LoadLabelUnitsAsync()
 		{
 			try
 			{
@@ -382,7 +388,29 @@ namespace VirtualZplPrinter.ViewModels
 			}
 			finally
 			{
+				this.LoadFilters();
 				this.Changes = false;
+			}
+		}
+
+		protected void LoadFilters()
+		{
+			try
+			{
+				//
+				// Load the ZPL filters.
+				//
+				this.Filters.Clear();
+
+				if (this.SelectedPrinterConfiguration != null)
+				{
+					IList<FilterViewModel> filters = FilterViewModel.ToList(this.SelectedPrinterConfiguration.Filters);
+					this.Filters.AddRange(filters);
+				}
+			}
+			finally
+			{
+				this.RaisePropertyChanged(nameof(this.FilterDescription));
 			}
 		}
 
@@ -398,9 +426,10 @@ namespace VirtualZplPrinter.ViewModels
 			this.DeleteCommand.RaiseCanExecuteChanged();
 			this.BrowseCommand.RaiseCanExecuteChanged();
 			this.CloneCommand.RaiseCanExecuteChanged();
+			this.FilterEditCommand.RaiseCanExecuteChanged();
 		}
 
-		protected Task UndoCommandAsync()
+		protected async Task UndoCommandAsync()
 		{
 			if (this.SelectedPrinterConfiguration != null)
 			{
@@ -411,6 +440,7 @@ namespace VirtualZplPrinter.ViewModels
 				}
 				else
 				{
+					await this.LoadPrinterConfigurationsAsync(this.SelectedPrinterConfiguration.Id);
 					this.OnSelectedPrinterConfigurationChanged();
 				}
 			}
@@ -418,8 +448,6 @@ namespace VirtualZplPrinter.ViewModels
 			{
 				this.OnSelectedPrinterConfigurationChanged();
 			}
-
-			return Task.CompletedTask;
 		}
 
 		protected async Task AddCommandAsync()
@@ -473,6 +501,7 @@ namespace VirtualZplPrinter.ViewModels
 					this.SelectedPrinterConfiguration.ResolutionInDpmm = this.SelectedResolution.Dpmm;
 					this.SelectedPrinterConfiguration.RotationAngle = this.SelectedRotation.Value;
 					this.SelectedPrinterConfiguration.ImagePath = this.ImagePath;
+					this.SelectedPrinterConfiguration.Filters = JsonConvert.SerializeObject(this.Filters.ToArray());
 
 					//
 					// Track the current item.
@@ -501,7 +530,7 @@ namespace VirtualZplPrinter.ViewModels
 					//
 					// Reload the list and select this object.
 					//
-					await this.LoadPrinterConfigurations(id);
+					await this.LoadPrinterConfigurationsAsync(id);
 				}
 			}
 		}
@@ -526,7 +555,7 @@ namespace VirtualZplPrinter.ViewModels
 
 						if (await repository.DeleteAsync(context, this.SelectedPrinterConfiguration))
 						{
-							await this.LoadPrinterConfigurations();
+							await this.LoadPrinterConfigurationsAsync();
 						}
 						else
 						{
@@ -570,6 +599,44 @@ namespace VirtualZplPrinter.ViewModels
 				this.SelectedPrinterConfiguration = item;
 				this.Changes = true;
 			}
+		}
+
+		protected Task FilterEditCommandAsync()
+		{
+			try
+			{
+				//
+				// Get the view.
+				//
+				EditFiltersView view = this.ServiceProvider.GetService<EditFiltersView>();
+				view.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+				view.ViewModel.PrinterConfiguration = this.SelectedPrinterConfiguration;
+
+				//
+				// Show the dialog.
+				//
+				_ = view.ShowDialog();
+
+				if (view.ViewModel.Updated)
+				{
+					//
+					// Load the changed filters.
+					//
+					this.LoadFilters();
+
+					this.Changes = true;
+				}
+			}
+			//catch (Exception ex)
+			//{
+				
+			//}
+			finally
+			{
+				
+			}
+
+			return Task.CompletedTask;
 		}
 
 		protected string GetNewName(string baseName)

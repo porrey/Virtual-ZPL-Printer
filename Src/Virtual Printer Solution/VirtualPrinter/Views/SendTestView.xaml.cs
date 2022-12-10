@@ -2,10 +2,10 @@
 using System.ComponentModel;
 using System.Windows;
 using Prism.Events;
-using VirtualZplPrinter.Events;
-using VirtualZplPrinter.ViewModels;
+using VirtualPrinter.Events;
+using VirtualPrinter.ViewModels;
 
-namespace VirtualZplPrinter.Views
+namespace VirtualPrinter.Views
 {
 	public partial class SendTestView : Window
 	{

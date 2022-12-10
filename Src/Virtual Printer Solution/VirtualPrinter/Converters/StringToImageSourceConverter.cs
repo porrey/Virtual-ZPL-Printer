@@ -20,7 +20,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace VirtualZplPrinter.Converters
+namespace VirtualPrinter.Converters
 {
 	[ValueConversion(typeof(String), typeof(ImageSource))]
 	public class StringToImageSourceConverter : IValueConverter

@@ -19,7 +19,7 @@ using System.Globalization;
 using System.Net;
 using System.Windows.Data;
 
-namespace VirtualZplPrinter.Converters
+namespace VirtualPrinter.Converters
 {
 	public class IpAddressToStringConverter : IValueConverter
 	{

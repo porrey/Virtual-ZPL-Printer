@@ -19,7 +19,7 @@ using System.Net;
 using Labelary.Abstractions;
 using Prism.Events;
 
-namespace VirtualZplPrinter.Events
+namespace VirtualPrinter.Events
 {
 	public class StartEvent : PubSubEvent<StartEventArgs>
 	{

@@ -16,7 +16,7 @@
  */
 using Diamond.Core.Repository;
 
-namespace VirtualZplPrinter.Models
+namespace VirtualPrinter.Models
 {
 	public class Resolution : Entity
 	{

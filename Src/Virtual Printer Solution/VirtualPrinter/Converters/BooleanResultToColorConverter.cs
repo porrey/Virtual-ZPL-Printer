@@ -19,7 +19,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace VirtualZplPrinter.Converters
+namespace VirtualPrinter.Converters
 {
 	public class BooleanResultToColorConverter : IValueConverter
 	{

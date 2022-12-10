@@ -17,7 +17,7 @@
 using Diamond.Core.Repository;
 using UnitsNet.Units;
 
-namespace VirtualZplPrinter.Models
+namespace VirtualPrinter.Models
 {
 	public class LabelUnit : Entity
 	{
