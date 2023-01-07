@@ -68,413 +68,498 @@
 		</DataTemplate>
 	</Window.Resources>
 
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="Auto"
-						   MinHeight="140" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
+	<Window.InputBindings>
+		<KeyBinding Modifiers="Control"
+					Key="E"
+					Command="{Binding EditCommand}" />
+		<KeyBinding Modifiers="Control"
+					Key="P"
+					Command="{Binding StartCommand}" />
+		<KeyBinding Modifiers="Control"
+					Key="S"
+					Command="{Binding StopCommand}" />
+		<KeyBinding Modifiers="Control"
+					Key="T"
+					Command="{Binding SendTestLabelCommand}" />
+	</Window.InputBindings>
+	
+	<DockPanel>
+		<Menu Padding="2,5,2,5"
+			  DockPanel.Dock="Top"
+			  BorderThickness="0,0,0,1"
+			  BorderBrush="{StaticResource BorderColor}">
+			<MenuItem Header="_Printer">
+				<MenuItem Header="_Edit"
+						  Command="{Binding EditCommand}"
+						  InputGestureText="Ctrl+E">
+					<MenuItem.Icon>
+						<Image Source="/Assets/edit-printer-configuration.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<Separator />
+				<MenuItem Header="_Start"
+						  Command="{Binding StartCommand}"
+						  InputGestureText="Ctrl+P">
+					<MenuItem.Icon>
+						<Image Source="/Assets/start.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Header="S_top"
+						  Command="{Binding StopCommand}"
+						  InputGestureText="Ctrl+S">
+					<MenuItem.Icon>
+						<Image Source="/Assets/stop.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<Separator />
+				<MenuItem Header="_View"
+						  Command="{Binding LabelPreviewCommand}">
+					<MenuItem.Icon>
+						<Image Source="/Assets/label-preview.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Header="_Delete"
+						  Command="{Binding DeleteLabelCommand}">
+					<MenuItem.Icon>
+						<Image Source="/Assets/trash-bin.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<MenuItem Header="_Clear"
+						  Command="{Binding ClearLabelsCommand}">
+					<MenuItem.Icon>
+						<Image Source="/Assets/clear-label.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<Separator />
+				<MenuItem Header="Te_st"
+						  Command="{Binding SendTestLabelCommand}"
+						  InputGestureText="Ctrl+T">
+					<MenuItem.Icon>
+						<Image Source="/Assets/test-label.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+			</MenuItem>
+			<MenuItem Header="_Options">
+				<MenuItem Header="_Global Settings"
+						  Command="{Binding GlobalSettingsCommand}">
+				</MenuItem>
+				<Separator />
+				<MenuItem Header="_About"
+						  Command="{Binding AboutCommand}">
+					<MenuItem.Icon>
+						<Image Source="/Assets/virtual-printer.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+			</MenuItem>
+		</Menu>
 
-		<!-- Properties -->
-		<Grid Grid.Row="0"
-			  IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto"
+							   MinHeight="140" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
 
-			<Image Source="/Assets/printer-running.png"
-				   Width="42"
-				   Height="42"
-				   Margin="15"
-				   Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" />
-
-			<Image Source="/Assets/printer-stopped.png"
-				   Width="42"
-				   Height="42"
-				   Margin="15"
-				   Visibility="{Binding IsRunning, Converter={StaticResource NotBooleanToVisibilityConverter}, FallbackValue=Visible}" />
-
-			<Grid Grid.Column="1"
-				  
-				  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}">
+			<!-- Properties -->
+			<Grid Grid.Row="0"
+				  IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}">
 				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="1*" />
-					<RowDefinition Height="1*" />
-				</Grid.RowDefinitions>
-
-				<TextBlock Grid.Column="0"
-						   Grid.Row="0"
-						   Text="Active Printer Configuration"
-						   Margin="5,5,5,0"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<ComboBox Grid.Column="0"
-						  Grid.Row="1"
-						  Margin="5,0,5,10"
-						  Height="{StaticResource ControlHeight}"
-						  VerticalContentAlignment="Center"
-						  HorizontalContentAlignment="Left"
-						  IsReadOnly="true"
-						  Foreground="{StaticResource ForegroundColor1}"
-						  ItemsSource="{Binding PrinterConfigurations}"
-						  SelectedItem="{Binding SelectedPrinterConfiguration}"
-						  ItemTemplate="{StaticResource PrinterConfigurationTemplate}" />
-				<Button Grid.Column="1"
-						Grid.Row="0"
-						Grid.RowSpan="2"
-						Style="{DynamicResource ButtonStyle1}"
-						VerticalAlignment="Bottom"
-						HorizontalAlignment="Center"
-						Command="{Binding EditCommand}"
-						Width="{StaticResource StatusButtonWidth}"
-						Height="{StaticResource StatusButtonHeight}"
-						Margin="5,3,5,10"
-						ToolTip="Send a test label.">
-					<Button.Content>
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
-
-							<Image Source="/Assets/edit-printer-configuration.png"
-								   Width="24"
-								   Height="24" />
-
-							<TextBlock Grid.Row="1"
-									   Text="Edit"
-									   FontSize="11" />
-						</Grid>
-					</Button.Content>
-				</Button>
-			</Grid>
-		</Grid>
-
-		<!-- Buttons -->
-		<Border Grid.Row="1"
-				BorderThickness="0,1,0,0"
-				BorderBrush="{StaticResource BorderColor}"
-				IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}"
-				Background="#f5f5f5">
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
-				<CheckBox Grid.Column="0"
-						  Content="Auto-start"
-						  VerticalAlignment="Center"
-						  HorizontalAlignment="Left"
-						  Margin="10,3,10,3"
-						  IsChecked="{Binding AutoStart}"
-						  IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}"
-						  Foreground="{StaticResource ForegroundColor1}" />
+				<Image Source="/Assets/printer-running.png"
+					   Width="42"
+					   Height="42"
+					   Margin="15"
+					   Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" />
 
-				<Button Grid.Column="3"
-						Style="{DynamicResource ButtonStyle1}"
-						VerticalAlignment="Center"
-						HorizontalAlignment="Center"
-						Command="{Binding StopCommand}"
-						Width="{StaticResource StatusButtonWidth}"
-						Height="{StaticResource StatusButtonHeight}"
-						Margin="8,5,5,5"
-						ToolTip="Stop the virtual printer from accepting label request.">
-					<Button.Content>
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
+				<Image Source="/Assets/printer-stopped.png"
+					   Width="42"
+					   Height="42"
+					   Margin="15"
+					   Visibility="{Binding IsRunning, Converter={StaticResource NotBooleanToVisibilityConverter}, FallbackValue=Visible}" />
 
-							<Image Source="/Assets/stop.png"
-								   Width="24"
-								   Height="24" />
+				<Grid Grid.Column="1"
+					  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="1*" />
+					</Grid.RowDefinitions>
 
-							<TextBlock Grid.Row="1"
-									   Text="Stop"
-									   FontSize="11" />
-						</Grid>
-					</Button.Content>
-				</Button>
-
-				<Button Grid.Column="2"
-						Style="{DynamicResource ButtonStyle1}"
-						VerticalAlignment="Center"
-						HorizontalAlignment="Center"
-						Command="{Binding StartCommand}"
-						Width="{StaticResource StatusButtonWidth}"
-						Height="{StaticResource StatusButtonHeight}"
-						Margin="8,5,5,5"
-						ToolTip="Start the virtual printer.">
-					<Button.Content>
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
-
-							<Image Source="/Assets/start.png"
-								   Width="24"
-								   Height="24" />
-
-							<TextBlock Grid.Row="1"
-									   Text="Start"
-									   FontSize="11" />
-						</Grid>
-					</Button.Content>
-				</Button>
-			</Grid>
-		</Border>
-
-		<!-- Label Image -->
-		<Grid x:Name="LabelImage"
-			  Grid.Row="2"
-			  Background="{StaticResource BackgroundColor1}">
-			<Image Source="{Binding SelectedLabel.FullPath, Converter={StaticResource StringToImageSourceConverter}}"
-				   Stretch="Uniform"
-				   Visibility="{Binding SelectedLabel, Converter={StaticResource ObjectToVisibilityConverter}}"
-				   Margin="10,20,10,20">
-			</Image>
-		</Grid>
-
-		<!-- Label History -->
-		<Grid Grid.Row="3">
-			<ListView x:Name="ListView"
-					  BorderThickness="0"
-					  SelectionChanged="ListView_SelectionChanged"
-					  ItemsSource="{Binding Labels}"
-					  ItemTemplate="{StaticResource LabelTemplate}"
-					  SelectedItem="{Binding SelectedLabel}"
-					  SelectionMode="Single"
-					  ScrollViewer.CanContentScroll="False"
-					  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}"
-					  Margin="0,0,0,1">
-				<ListView.ItemsPanel>
-					<ItemsPanelTemplate>
-						<StackPanel Orientation="Horizontal" />
-					</ItemsPanelTemplate>
-				</ListView.ItemsPanel>
-				<ListView.ContextMenu>
-					<ContextMenu Opened="ContextMenu_Opened">
-						<MenuItem Header="View"
-								  Command="{Binding LabelPreviewCommand}">
-							<MenuItem.Icon>
-								<Image Source="/Assets/label-preview.png" />
-							</MenuItem.Icon>
-						</MenuItem>
-						<Separator />
-						<MenuItem Header="Delete"
-								  Command="{Binding DeleteLabelCommand}">
-							<MenuItem.Icon>
-								<Image Source="/Assets/trash-bin.png" />
-							</MenuItem.Icon>
-						</MenuItem>
-					</ContextMenu>
-				</ListView.ContextMenu>
-				<ListView.InputBindings>
-					<KeyBinding Key="Del"
-								Command="{Binding DeleteLabelCommand}" />
-				</ListView.InputBindings>
-			</ListView>
-
-			<TextBlock Text="no cached labels"
-					   Margin="0,0,0,10"
-					   FontSize="55"
-					   VerticalAlignment="Center"
-					   HorizontalAlignment="Center"
-					   Foreground="#f1f1f1"
-					   Visibility="{Binding Labels, Converter={StaticResource ListZeroCountToVisibilityConverter}, Mode=OneWay}" />
-		</Grid>
-
-		<!-- Status Bar -->
-		<Border Grid.Row="4"
-				BorderThickness="0,1,0,0"
-				BorderBrush="{StaticResource BorderColor}"
-				Padding="0,3,0,3">
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-
-				<TextBlock Grid.Column="0"
-						   Text="{Binding StatusText}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   FontSize="18"
-						   Margin="10,0,0,0"
-						   Foreground="{StaticResource ForegroundColor1}" />
-
-				<ProgressBar Style="{DynamicResource ProgressBarStyle1}"
-							 Grid.Column="1"
-							 Width="75"
-							 IsIndeterminate="True"
-							 Margin="3,15,3,15"
-							 Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
-							 Orientation="Horizontal" />
-
-				<Rectangle Grid.Column="2"
-						   VerticalAlignment="Stretch"
-						   Margin="10,10,0,10"
-						   Width="1"
-						   Fill="{StaticResource BorderColor}" />
-
-				<!-- Idle -->
-				<StackPanel Grid.Column="3"
-							Orientation="Horizontal"
-							Margin="20,0,20,0"
-							Visibility="{Binding IsRunning, Converter={StaticResource NotBooleanToVisibilityConverter}}">
-					<Image Source="/Assets/idle.png"
-						   Width="24" />
-					<TextBlock Text="Idle"
+					<TextBlock Grid.Column="0"
+							   Grid.Row="0"
+							   Text="Active Printer Configuration"
+							   Margin="5,5,5,0"
 							   VerticalAlignment="Center"
-							   HorizontalAlignment="Center"
-							   FontSize="18"
-							   Margin="5,0,0,0"
+							   HorizontalAlignment="Left"
 							   Foreground="{StaticResource ForegroundColor1}" />
-				</StackPanel>
+					<ComboBox Grid.Column="0"
+							  Grid.Row="1"
+							  Margin="5,0,5,10"
+							  Height="{StaticResource ControlHeight}"
+							  VerticalContentAlignment="Center"
+							  HorizontalContentAlignment="Left"
+							  IsReadOnly="true"
+							  Foreground="{StaticResource ForegroundColor1}"
+							  ItemsSource="{Binding PrinterConfigurations}"
+							  SelectedItem="{Binding SelectedPrinterConfiguration}"
+							  ItemTemplate="{StaticResource PrinterConfigurationTemplate}" />
+					<Button Grid.Column="1"
+							Grid.Row="0"
+							Grid.RowSpan="2"
+							Style="{DynamicResource ButtonStyle1}"
+							VerticalAlignment="Bottom"
+							HorizontalAlignment="Center"
+							Command="{Binding EditCommand}"
+							Width="{StaticResource StatusButtonWidth}"
+							Height="{StaticResource StatusButtonHeight}"
+							Margin="5,3,5,10"
+							ToolTip="Send a test label.">
+						<Button.Content>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
 
-				<!-- Listening -->
-				<StackPanel Grid.Column="3"
-							Orientation="Horizontal"
-							Margin="20,0,20,0"
-							Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}">
-					<Image Source="/Assets/listening.png"
-						   Width="24" />
-					<TextBlock Text="Listening"
-							   VerticalAlignment="Center"
-							   HorizontalAlignment="Center"
-							   FontSize="18"
-							   Margin="5,0,0,0"
-							   Foreground="{StaticResource ForegroundColor1}" />
-				</StackPanel>
+								<Image Source="/Assets/edit-printer-configuration.png"
+									   Width="24"
+									   Height="24" />
 
-				<Button Grid.Column="4"
-						Style="{DynamicResource ButtonStyle1}"
-						VerticalAlignment="Center"
-						HorizontalAlignment="Center"
-						Command="{Binding LabelPreviewCommand}"
-						Width="{StaticResource StatusButtonWidth}"
-						Height="{StaticResource StatusButtonHeight}"
-						Margin="8,5,5,5"
-						ToolTip="View the label image in an external viewer.">
-					<Button.Content>
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
-
-							<Image Source="/Assets/label-preview.png"
-								   Width="24"
-								   Height="24" />
-
-							<TextBlock Grid.Row="1"
-									   Text="View"
-									   FontSize="11" />
-						</Grid>
-					</Button.Content>
-				</Button>
-
-				<Button Grid.Column="5"
-						Style="{DynamicResource ButtonStyle1}"
-						VerticalAlignment="Center"
-						HorizontalAlignment="Center"
-						Command="{Binding DeleteLabelCommand}"
-						Width="{StaticResource StatusButtonWidth}"
-						Height="{StaticResource StatusButtonHeight}"
-						Margin="8,5,5,5"
-						ToolTip="Delete the selected label.">
-					<Button.Content>
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
-
-							<Image Source="/Assets/trash-bin.png"
-								   Width="24"
-								   Height="24" />
-
-							<TextBlock Grid.Row="1"
-									   Text="Delete"
-									   FontSize="11" />
-						</Grid>
-					</Button.Content>
-				</Button>
-
-				<Button Grid.Column="6"
-						Style="{DynamicResource ButtonStyle1}"
-						VerticalAlignment="Center"
-						HorizontalAlignment="Center"
-						Command="{Binding ClearLabelsCommand}"
-						Width="{StaticResource StatusButtonWidth}"
-						Height="{StaticResource StatusButtonHeight}"
-						Margin="8,3,0,3"
-						ToolTip="Clear all labels.">
-					<Button.Content>
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
-
-							<Image Source="/Assets/clear-label.png"
-								   Width="24"
-								   Height="24" />
-
-							<TextBlock Grid.Row="1"
-									   Text="Clear"
-									   FontSize="11" />
-						</Grid>
-					</Button.Content>
-				</Button>
-
-				<Button Grid.Column="7"
-						Style="{DynamicResource ButtonStyle1}"
-						VerticalAlignment="Center"
-						HorizontalAlignment="Center"
-						Command="{Binding SendTestLabelCommand}"
-						Width="{StaticResource StatusButtonWidth}"
-						Height="{StaticResource StatusButtonHeight}"
-						Margin="8,3,5,3"
-						ToolTip="Send a test label.">
-					<Button.Content>
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto" />
-								<RowDefinition Height="Auto" />
-							</Grid.RowDefinitions>
-
-							<Image Source="/Assets/test-label.png"
-								   Width="24"
-								   Height="24" />
-
-							<TextBlock Grid.Row="1"
-									   Text="Test"
-									   FontSize="11" />
-						</Grid>
-					</Button.Content>
-				</Button>
+								<TextBlock Grid.Row="1"
+										   Text="Edit"
+										   FontSize="11" />
+							</Grid>
+						</Button.Content>
+					</Button>
+				</Grid>
 			</Grid>
-		</Border>
-	</Grid>
+
+			<!-- Buttons -->
+			<Border Grid.Row="1"
+					BorderThickness="0,1,0,0"
+					BorderBrush="{StaticResource BorderColor}"
+					IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}"
+					Background="#f5f5f5">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+
+					<CheckBox Grid.Column="0"
+							  Content="Auto-start"
+							  VerticalAlignment="Center"
+							  HorizontalAlignment="Left"
+							  Margin="10,3,10,3"
+							  IsChecked="{Binding AutoStart}"
+							  IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}"
+							  Foreground="{StaticResource ForegroundColor1}" />
+
+					<Button Grid.Column="3"
+							Style="{DynamicResource ButtonStyle1}"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Center"
+							Command="{Binding StopCommand}"
+							Width="{StaticResource StatusButtonWidth}"
+							Height="{StaticResource StatusButtonHeight}"
+							Margin="8,5,5,5"
+							ToolTip="Stop the virtual printer from accepting label request.">
+						<Button.Content>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+
+								<Image Source="/Assets/stop.png"
+									   Width="24"
+									   Height="24" />
+
+								<TextBlock Grid.Row="1"
+										   Text="Stop"
+										   FontSize="11" />
+							</Grid>
+						</Button.Content>
+					</Button>
+
+					<Button Grid.Column="2"
+							Style="{DynamicResource ButtonStyle1}"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Center"
+							Command="{Binding StartCommand}"
+							Width="{StaticResource StatusButtonWidth}"
+							Height="{StaticResource StatusButtonHeight}"
+							Margin="8,5,5,5"
+							ToolTip="Start the virtual printer.">
+						<Button.Content>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+
+								<Image Source="/Assets/start.png"
+									   Width="24"
+									   Height="24" />
+
+								<TextBlock Grid.Row="1"
+										   Text="Start"
+										   FontSize="11" />
+							</Grid>
+						</Button.Content>
+					</Button>
+				</Grid>
+			</Border>
+
+			<!-- Label Image -->
+			<Grid x:Name="LabelImage"
+				  Grid.Row="2"
+				  Background="{StaticResource BackgroundColor1}">
+				<Image Source="{Binding SelectedLabel.FullPath, Converter={StaticResource StringToImageSourceConverter}}"
+					   Stretch="Uniform"
+					   Visibility="{Binding SelectedLabel, Converter={StaticResource ObjectToVisibilityConverter}}"
+					   Margin="10,20,10,20">
+				</Image>
+			</Grid>
+
+			<!-- Label History -->
+			<Grid Grid.Row="3">
+				<ListView x:Name="ListView"
+						  BorderThickness="0"
+						  SelectionChanged="ListView_SelectionChanged"
+						  ItemsSource="{Binding Labels}"
+						  ItemTemplate="{StaticResource LabelTemplate}"
+						  SelectedItem="{Binding SelectedLabel}"
+						  SelectionMode="Single"
+						  ScrollViewer.CanContentScroll="False"
+						  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}"
+						  Margin="0,0,0,1">
+					<ListView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="Horizontal" />
+						</ItemsPanelTemplate>
+					</ListView.ItemsPanel>
+					<ListView.ContextMenu>
+						<ContextMenu Opened="ContextMenu_Opened">
+							<MenuItem Header="View"
+									  Command="{Binding LabelPreviewCommand}">
+								<MenuItem.Icon>
+									<Image Source="/Assets/label-preview.png" />
+								</MenuItem.Icon>
+							</MenuItem>
+							<Separator />
+							<MenuItem Header="Delete"
+									  Command="{Binding DeleteLabelCommand}">
+								<MenuItem.Icon>
+									<Image Source="/Assets/trash-bin.png" />
+								</MenuItem.Icon>
+							</MenuItem>
+						</ContextMenu>
+					</ListView.ContextMenu>
+					<ListView.InputBindings>
+						<KeyBinding Key="Del"
+									Command="{Binding DeleteLabelCommand}" />
+					</ListView.InputBindings>
+				</ListView>
+
+				<TextBlock Text="no cached labels"
+						   Margin="0,0,0,10"
+						   FontSize="55"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   Foreground="#f1f1f1"
+						   Visibility="{Binding Labels, Converter={StaticResource ListZeroCountToVisibilityConverter}, Mode=OneWay}" />
+			</Grid>
+
+			<!-- Status Bar -->
+			<Border Grid.Row="4"
+					BorderThickness="0,1,0,0"
+					BorderBrush="{StaticResource BorderColor}"
+					Padding="0,3,0,3">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Grid.Column="0"
+							   Text="{Binding StatusText}"
+							   VerticalAlignment="Center"
+							   HorizontalAlignment="Left"
+							   FontSize="18"
+							   Margin="10,0,0,0"
+							   Foreground="{StaticResource ForegroundColor1}" />
+
+					<ProgressBar Style="{DynamicResource ProgressBarStyle1}"
+								 Grid.Column="1"
+								 Width="75"
+								 IsIndeterminate="True"
+								 Margin="3,15,3,15"
+								 Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
+								 Orientation="Horizontal" />
+
+					<Rectangle Grid.Column="2"
+							   VerticalAlignment="Stretch"
+							   Margin="10,10,0,10"
+							   Width="1"
+							   Fill="{StaticResource BorderColor}" />
+
+					<!-- Idle -->
+					<StackPanel Grid.Column="3"
+								Orientation="Horizontal"
+								Margin="20,0,20,0"
+								Visibility="{Binding IsRunning, Converter={StaticResource NotBooleanToVisibilityConverter}}">
+						<Image Source="/Assets/idle.png"
+							   Width="24" />
+						<TextBlock Text="Idle"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Center"
+								   FontSize="18"
+								   Margin="5,0,0,0"
+								   Foreground="{StaticResource ForegroundColor1}" />
+					</StackPanel>
+
+					<!-- Listening -->
+					<StackPanel Grid.Column="3"
+								Orientation="Horizontal"
+								Margin="20,0,20,0"
+								Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}">
+						<Image Source="/Assets/listening.png"
+							   Width="24" />
+						<TextBlock Text="Listening"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Center"
+								   FontSize="18"
+								   Margin="5,0,0,0"
+								   Foreground="{StaticResource ForegroundColor1}" />
+					</StackPanel>
+
+					<Button Grid.Column="4"
+							Style="{DynamicResource ButtonStyle1}"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Center"
+							Command="{Binding LabelPreviewCommand}"
+							Width="{StaticResource StatusButtonWidth}"
+							Height="{StaticResource StatusButtonHeight}"
+							Margin="8,5,5,5"
+							ToolTip="View the label image in an external viewer.">
+						<Button.Content>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+
+								<Image Source="/Assets/label-preview.png"
+									   Width="24"
+									   Height="24" />
+
+								<TextBlock Grid.Row="1"
+										   Text="View"
+										   FontSize="11" />
+							</Grid>
+						</Button.Content>
+					</Button>
+
+					<Button Grid.Column="5"
+							Style="{DynamicResource ButtonStyle1}"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Center"
+							Command="{Binding DeleteLabelCommand}"
+							Width="{StaticResource StatusButtonWidth}"
+							Height="{StaticResource StatusButtonHeight}"
+							Margin="8,5,5,5"
+							ToolTip="Delete the selected label.">
+						<Button.Content>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+
+								<Image Source="/Assets/trash-bin.png"
+									   Width="24"
+									   Height="24" />
+
+								<TextBlock Grid.Row="1"
+										   Text="Delete"
+										   FontSize="11" />
+							</Grid>
+						</Button.Content>
+					</Button>
+
+					<Button Grid.Column="6"
+							Style="{DynamicResource ButtonStyle1}"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Center"
+							Command="{Binding ClearLabelsCommand}"
+							Width="{StaticResource StatusButtonWidth}"
+							Height="{StaticResource StatusButtonHeight}"
+							Margin="8,3,0,3"
+							ToolTip="Clear all labels.">
+						<Button.Content>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+
+								<Image Source="/Assets/clear-label.png"
+									   Width="24"
+									   Height="24" />
+
+								<TextBlock Grid.Row="1"
+										   Text="Clear"
+										   FontSize="11" />
+							</Grid>
+						</Button.Content>
+					</Button>
+
+					<Button Grid.Column="7"
+							Style="{DynamicResource ButtonStyle1}"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Center"
+							Command="{Binding SendTestLabelCommand}"
+							Width="{StaticResource StatusButtonWidth}"
+							Height="{StaticResource StatusButtonHeight}"
+							Margin="8,3,5,3"
+							ToolTip="Send a test label.">
+						<Button.Content>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+
+								<Image Source="/Assets/test-label.png"
+									   Width="24"
+									   Height="24" />
+
+								<TextBlock Grid.Row="1"
+										   Text="Test"
+										   FontSize="11" />
+							</Grid>
+						</Button.Content>
+					</Button>
+				</Grid>
+			</Border>
+		</Grid>
+	</DockPanel>
 </Window>

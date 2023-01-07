@@ -513,12 +513,12 @@ namespace VirtualPrinter.ViewModels
 					//
 					if (this.SelectedPrinterConfiguration.Id == 0)
 					{
-						(bool result, IPrinterConfiguration newItem) = await repository.AddAsync(context, this.SelectedPrinterConfiguration);
+						(int result, IPrinterConfiguration newItem) = await repository.AddAsync(context, this.SelectedPrinterConfiguration);
 						id = newItem.Id;
 					}
 					else
 					{
-						bool result = await repository.UpdateAsync(context, this.SelectedPrinterConfiguration);
+						int result = await repository.UpdateAsync(context, this.SelectedPrinterConfiguration);
 					}
 
 					////
@@ -552,8 +552,9 @@ namespace VirtualPrinter.ViewModels
 						// Get a writable repository.
 						//
 						using IWritableRepository<IPrinterConfiguration> repository = await this.RepositoryFactory.GetWritableAsync<IPrinterConfiguration>();
+						int affected = await repository.DeleteAsync(context, this.SelectedPrinterConfiguration);
 
-						if (await repository.DeleteAsync(context, this.SelectedPrinterConfiguration))
+						if (affected > 0)
 						{
 							await this.LoadPrinterConfigurationsAsync();
 						}

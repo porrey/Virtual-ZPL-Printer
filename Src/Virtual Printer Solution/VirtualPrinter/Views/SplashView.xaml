@@ -17,23 +17,33 @@
 
 			<Grid>
 				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
 					<RowDefinition Height="*" />
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 
-				<Image Grid.Row="0"
-					   Grid.RowSpan="2"
+				<TextBlock Grid.Row="0"
+						   Text="{Binding Title,FallbackValue=Application}"
+						   Foreground="{StaticResource ForegroundColor2}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   FontSize="22"
+						   Margin="0,15,0,5" />
+
+				<Image Grid.Row="1"
 					   Source="/Assets/printer-running.png"
-					   Margin="80"
+					   Margin="25"
+					   VerticalAlignment="Center"
+					   HorizontalAlignment="Center"
 					   Opacity=".9" />
 
-				<TextBlock Grid.Row="1"
-						   Text="{Binding Version}"
+				<TextBlock Grid.Row="2"
+						   Text="{Binding Version,FallbackValue=Version}"
 						   Foreground="{StaticResource ForegroundColor2}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Center"
 						   FontSize="18"
-						   Margin="0,0,0,5" />
+						   Margin="0,5,0,5" />
 			</Grid>
 		</Border>
 	</Grid>

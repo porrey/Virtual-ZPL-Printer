@@ -1,0 +1,50 @@
+﻿<Window x:Class="VirtualPrinter.Views.AboutView"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d"
+		Title="About..."
+		Height="300"
+		Width="600"
+		WindowStyle="ThreeDBorderWindow"
+		ResizeMode="NoResize"
+		WindowStartupLocation="CenterOwner">
+	<Grid >
+		<Border BorderBrush="White"
+				BorderThickness="1"
+				Margin="4">
+
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<TextBlock Grid.Row="0"
+						   Text="{Binding Title,FallbackValue=Application}"
+						   Foreground="{StaticResource ForegroundColor1}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   FontSize="22"
+						   Margin="0,15,0,5" />
+				
+				<Image Grid.Row="1"
+					   Source="/Assets/printer-running.png"
+					   Margin="5"
+					   VerticalAlignment="Center"
+					   HorizontalAlignment="Center"
+					   Opacity=".9" />
+
+				<TextBlock Grid.Row="2"
+						   Text="{Binding Version,FallbackValue=Version}"
+						   Foreground="{StaticResource ForegroundColor1}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   FontSize="18"
+						   Margin="0,5,0,5" />
+			</Grid>
+		</Border>
+	</Grid>
+</Window>

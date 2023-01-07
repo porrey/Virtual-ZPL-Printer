@@ -154,5 +154,113 @@ namespace VirtualPrinter.Properties {
                 this["SendTestLabelTop"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SendTestLabelWidth {
+            get {
+                return ((double)(this["SendTestLabelWidth"]));
+            }
+            set {
+                this["SendTestLabelWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SendTestLabelHeight {
+            get {
+                return ((double)(this["SendTestLabelHeight"]));
+            }
+            set {
+                this["SendTestLabelHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int ReceiveTimeout {
+            get {
+                return ((int)(this["ReceiveTimeout"]));
+            }
+            set {
+                this["ReceiveTimeout"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int SendTimeout {
+            get {
+                return ((int)(this["SendTimeout"]));
+            }
+            set {
+                this["SendTimeout"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool NoDelay {
+            get {
+                return ((bool)(this["NoDelay"]));
+            }
+            set {
+                this["NoDelay"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Linger {
+            get {
+                return ((bool)(this["Linger"]));
+            }
+            set {
+                this["Linger"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LingerTime {
+            get {
+                return ((int)(this["LingerTime"]));
+            }
+            set {
+                this["LingerTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int ReceiveBufferSize {
+            get {
+                return ((int)(this["ReceiveBufferSize"]));
+            }
+            set {
+                this["ReceiveBufferSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int SendBufferSize {
+            get {
+                return ((int)(this["SendBufferSize"]));
+            }
+            set {
+                this["SendBufferSize"] = value;
+            }
+        }
     }
 }

@@ -45,12 +45,12 @@ namespace VirtualPrinter.Client
 			//
 			// Set parameters.
 			//
-			client.ReceiveTimeout = 1000;
-			client.SendTimeout = 1000;
-			client.LingerState = new LingerOption(false, 0);
-			client.NoDelay = true;
-			client.ReceiveBufferSize = -1;
-			client.SendBufferSize = -1;
+			client.ReceiveTimeout = Properties.Settings.Default.ReceiveTimeout;
+			client.SendTimeout = Properties.Settings.Default.SendTimeout;
+			client.NoDelay = Properties.Settings.Default.NoDelay;
+			client.ReceiveBufferSize = Properties.Settings.Default.ReceiveBufferSize;
+			client.SendBufferSize = Properties.Settings.Default.SendBufferSize;
+			client.LingerState = new LingerOption(Properties.Settings.Default.Linger, Properties.Settings.Default.LingerTime);
 
 			//
 			// Get the network stream.

@@ -30,6 +30,7 @@ using ImageCache.Abstractions;
 using Labelary.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
@@ -58,6 +59,8 @@ namespace VirtualPrinter.ViewModels
 			this.DeleteLabelCommand = new DelegateCommand(() => _ = this.DeleteLabelAsync(), () => !this.IsBusy && this.SelectedLabel != null);
 			this.LabelPreviewCommand = new DelegateCommand(() => _ = this.LabelPreviewAsync(), () => !this.IsBusy && this.SelectedLabel != null);
 			this.EditCommand = new DelegateCommand(() => _ = this.EditPrinterConfigurationAsync(), () => !this.IsBusy && !this.IsRunning);
+			this.GlobalSettingsCommand = new DelegateCommand(() => _ = this.GlobalSettingsAsync(), () => true);
+			this.AboutCommand = new DelegateCommand(() => _ = this.AboutAsync(), () => true);
 
 			//
 			// Load the printer configurations.
@@ -136,6 +139,8 @@ namespace VirtualPrinter.ViewModels
 		public DelegateCommand DeleteLabelCommand { get; set; }
 		public DelegateCommand LabelPreviewCommand { get; set; }
 		public DelegateCommand EditCommand { get; set; }
+		public DelegateCommand AboutCommand { get; set; }
+		public DelegateCommand GlobalSettingsCommand { get; set; }
 
 		private IPrinterConfiguration _printerConfiguration = null;
 		public IPrinterConfiguration SelectedPrinterConfiguration
@@ -344,13 +349,13 @@ namespace VirtualPrinter.ViewModels
 						Unit = (LengthUnit)this.SelectedPrinterConfiguration.LabelUnit,
 						LabelRotation = this.SelectedPrinterConfiguration.RotationAngle,
 						LabelFilters = (from tbl in filters
-									   select new LabelFilter()
-									   {
-										   Priority = tbl.Priority,
-										   Find = tbl.Find,
-										   Replace = tbl.Replace,
-										   TreatAsRegularExpression = tbl.TreatAsRegularExpression
-									   }).ToArray()
+										select new LabelFilter()
+										{
+											Priority = tbl.Priority,
+											Find = tbl.Find,
+											Replace = tbl.Replace,
+											TreatAsRegularExpression = tbl.TreatAsRegularExpression
+										}).ToArray()
 					},
 					IpAddress = IPAddress.Parse(this.SelectedPrinterConfiguration.HostAddress),
 					Port = this.SelectedPrinterConfiguration.Port,
@@ -595,6 +600,22 @@ namespace VirtualPrinter.ViewModels
 			{
 				this.IsBusy = false;
 			}
+		}
+
+		public Task AboutAsync()
+		{
+			AboutView view = this.ServiceProvider.GetService<AboutView>();
+			view.ShowDialog();
+
+			return Task.CompletedTask;
+		}
+
+		public Task GlobalSettingsAsync()
+		{
+			GlobalSettingsView view = this.ServiceProvider.GetService<GlobalSettingsView>();
+			view.ShowDialog();
+
+			return Task.CompletedTask;
 		}
 	}
 }

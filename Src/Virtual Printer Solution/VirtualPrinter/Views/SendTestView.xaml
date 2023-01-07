@@ -5,11 +5,11 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d"
 		Title="Send Test Label"
-		Height="200"
-		Width="400"
-		ResizeMode="NoResize"
+		MinHeight="350"
+		MinWidth="350"
+		ResizeMode="CanResizeWithGrip"
 		WindowStartupLocation="Manual"
-		WindowStyle="ToolWindow"
+		WindowStyle="SingleBorderWindow"
 		ShowInTaskbar="True"
 		Topmost="True">
 
@@ -45,6 +45,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="1*" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
 		<Image Grid.Column="0"
@@ -74,15 +75,20 @@
 				  SelectedItem="{Binding SelectedLabelTemplate}"
 				  ItemTemplate="{StaticResource LabelTemplate}" />
 
+		<TextBox Grid.Column="1"
+				 Grid.Row="2"
+				 Margin="5"
+				 Text="{Binding Zpl, Mode=TwoWay}"/>
+
 		<Button Grid.Column="1"
-				Grid.Row="2"
+				Grid.Row="3"
 				Style="{DynamicResource ButtonStyle1}"
 				VerticalAlignment="Center"
 				HorizontalAlignment="Right"
 				Command="{Binding SendCommand}"
 				Width="{StaticResource StatusButtonWidth}"
 				Height="{StaticResource StatusButtonHeight}"
-				Margin="8,3,5,3"
+				Margin="8,3,5,8"
 				ToolTip="Send the test label.">
 			<Button.Content>
 				<Grid>

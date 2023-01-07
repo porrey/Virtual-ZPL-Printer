@@ -8,9 +8,9 @@
 		<AssemblyName>VirtualPrinter</AssemblyName>
 		<StartupObject>VirtualPrinter.App</StartupObject>
 		<RootNamespace>VirtualPrinter</RootNamespace>
-		<Version>2.2.0</Version>
-		<FileVersion>2.2.0</FileVersion>
-		<AssemblyVersion>2.2.0</AssemblyVersion>
+		<Version>2.3.0</Version>
+		<FileVersion>2.3.0</FileVersion>
+		<AssemblyVersion>2.3.0</AssemblyVersion>
 		<Nullable>disable</Nullable>
 		<SignAssembly>False</SignAssembly>
 	</PropertyGroup>
@@ -176,7 +176,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Diamond.Core.Repository" Version="7.0.0" />
-		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="7.0.1" />
 		<PackageReference Include="Diamond.Core.Wpf" Version="7.0.0" />
 		<PackageReference Include="Prism.Wpf" Version="8.1.97" />
 		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="7.0.0" />
@@ -200,7 +200,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\7.0.0\contentFiles\any\net7.0\Services\Diamond.Core.Repository.Abstractions.json">
+	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\7.0.1\contentFiles\any\net7.0\Services\Diamond.Core.Repository.Abstractions.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\7.0.0\contentFiles\any\net7.0\Services\Diamond.Core.Repository.json">

@@ -16,17 +16,18 @@
  */
 using System;
 using System.Windows;
+using Diamond.Core.Wpf;
 using VirtualPrinter.ViewModels;
 
 namespace VirtualPrinter.Views
 {
 	public partial class EditFiltersView : Window
 	{
-		public EditFiltersView(EditFiltersViewModel viewModel, ConfigurationView owner)
+		public EditFiltersView(EditFiltersViewModel viewModel, IMainWindow mainWindow)
 		{
-			this.Owner = owner;
 			this.DataContext = viewModel;
 			InitializeComponent();
+			this.Owner = (Window)mainWindow;
 		}
 
 		public EditFiltersViewModel ViewModel => (EditFiltersViewModel)this.DataContext;
@@ -40,6 +41,6 @@ namespace VirtualPrinter.Views
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			this.Close();
-        }
-    }
+		}
+	}
 }

@@ -42,11 +42,21 @@
 		{
 			"ServiceType": "VirtualPrinter.Views.SendTestView, VirtualPrinter",
 			"ImplementationType": "VirtualPrinter.Views.SendTestView, VirtualPrinter",
-			"Lifetime": "Singleton"
+			"Lifetime": "Transient"
 		},
 		{
 			"ServiceType": "VirtualPrinter.Views.EditFiltersView, VirtualPrinter",
 			"ImplementationType": "VirtualPrinter.Views.EditFiltersView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.GlobalSettingsView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.GlobalSettingsView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.AboutView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.AboutView, VirtualPrinter",
 			"Lifetime": "Transient"
 		},
 		{
@@ -67,6 +77,16 @@
 		{
 			"ServiceType": "VirtualPrinter.ViewModels.EditFiltersViewModel, VirtualPrinter",
 			"ImplementationType": "VirtualPrinter.ViewModels.EditFiltersViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.GlobalSettingsViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.GlobalSettingsViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.AboutViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.AboutViewModel, VirtualPrinter",
 			"Lifetime": "Transient"
 		},
 		{

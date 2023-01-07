@@ -4,9 +4,9 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>2.2.0</Version>
-		<FileVersion>2.2.0</FileVersion>
-		<AssemblyVersion>2.2.0</AssemblyVersion>
+		<Version>2.3.0</Version>
+		<FileVersion>2.3.0</FileVersion>
+		<AssemblyVersion>2.3.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -21,15 +21,15 @@
 
 	<ItemGroup>
 		<PackageReference Include="Diamond.Core.Repository" Version="7.0.0" />
-		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="7.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\7.0.0\contentFiles\any\net7.0\Services\Diamond.Core.Repository.Abstractions.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\7.0.0\contentFiles\any\net7.0\Services\Diamond.Core.Repository.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
+	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\7.0.1\contentFiles\any\net7.0\Services\Diamond.Core.Repository.Abstractions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\7.0.0\contentFiles\any\net7.0\Services\Diamond.Core.Repository.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 </Project>
