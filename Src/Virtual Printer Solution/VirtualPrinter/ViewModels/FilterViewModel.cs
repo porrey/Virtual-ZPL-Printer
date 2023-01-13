@@ -261,7 +261,14 @@ namespace VirtualPrinter.ViewModels
 
 		public static IList<FilterViewModel> ToList(string json)
 		{
-			return JsonConvert.DeserializeObject<IList<FilterViewModel>>(json);
+			IList<FilterViewModel> returnValue = Array.Empty<FilterViewModel>();
+
+			if (!string.IsNullOrWhiteSpace(json))
+			{
+				returnValue = JsonConvert.DeserializeObject<IList<FilterViewModel>>(json);
+			}
+
+			return returnValue;
 		}
 
 		public static string ToJson(IList<FilterViewModel> items)
