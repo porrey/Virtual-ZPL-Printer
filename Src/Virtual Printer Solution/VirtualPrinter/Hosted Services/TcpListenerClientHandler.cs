@@ -112,7 +112,7 @@ namespace VirtualPrinter.Client
 		{
 			Debug.WriteLine("Reading ZPL...");
 			var cts = new CancellationTokenSource(Properties.Settings.Default.ReceiveTimeout);
-			var buffer = new byte[Properties.Settings.Default.ReceiveBufferSize];
+			var buffer = new byte[4096];
 			var resultString = "";
 
 			// Read all bytes until ReadAsync returns 0 (connection closed) or a timeout occured
