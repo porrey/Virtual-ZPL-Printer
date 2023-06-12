@@ -16,9 +16,11 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
@@ -42,14 +44,11 @@ namespace VirtualPrinter.Client
 
 		public async Task StartSessionAsync(TcpClient client, ILabelConfiguration labelConfiguration, string imagePathRoot)
 		{
-			//
-			// Set parameters.
-			//
-			client.ReceiveTimeout = Properties.Settings.Default.ReceiveTimeout;
-			client.SendTimeout = Properties.Settings.Default.SendTimeout;
+			// ReceiveTimeout and SendTimeout only apply when using *synchronous* read/write
+			// https://learn.microsoft.com/en-us/dotnet/api/system.net.sockets.socket.receivetimeout
+
 			client.NoDelay = Properties.Settings.Default.NoDelay;
 			client.ReceiveBufferSize = Properties.Settings.Default.ReceiveBufferSize;
-			client.SendBufferSize = Properties.Settings.Default.SendBufferSize;
 			client.LingerState = new LingerOption(Properties.Settings.Default.Linger, Properties.Settings.Default.LingerTime);
 
 			//
@@ -63,23 +62,9 @@ namespace VirtualPrinter.Client
 				{
 					try
 					{
-						//
-						// Create a buffer for the data that is available.
-						//
-						byte[] buffer = new byte[client.Available];
-
-						//
-						// Read the data into the buffer.
-						//
-						int bytesRead = await stream.ReadAsync(buffer.AsMemory(0, buffer.Length));
-
-						if (bytesRead > 0)
+						string zpl = await ReadZpl(stream);
+						if (zpl.Trim().Length > 0)
 						{
-							//
-							// Get the label image
-							//
-							string zpl = Encoding.UTF8.GetString(buffer);
-
 							if (!zpl.StartsWith("NOP"))
 							{
 								//
@@ -121,6 +106,44 @@ namespace VirtualPrinter.Client
 					}
 				}
 			}
+		}
+
+		public async Task<string> ReadZpl(NetworkStream stream)
+		{
+			Debug.WriteLine("Reading ZPL...");
+			var cts = new CancellationTokenSource(Properties.Settings.Default.ReceiveTimeout);
+			var buffer = new byte[Properties.Settings.Default.ReceiveBufferSize];
+			var resultString = "";
+
+			// Read all bytes until ReadAsync returns 0 (connection closed) or a timeout occured
+			// Do not check stream.DataAvailable, as this might result in incomplete reads if the server is reading faster than the client is sending
+			try
+			{
+				while (true)
+				{
+					int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cts.Token);
+
+					if (bytesRead == 0)
+					{
+						// Return immediately when connection was closed
+						return resultString;
+					}
+
+					resultString += Encoding.UTF8.GetString(buffer, 0, bytesRead);
+
+					if (resultString.TrimEnd().EndsWith("^XZ"))
+					{
+						// Return early if end of label is detected (even if the connection was not closed)
+						cts.CancelAfter(100);
+					}
+				}
+			}
+			catch (OperationCanceledException)
+			{
+				// Ignore OperationCanceledException and return data received so far
+			}
+
+			return resultString;
 		}
 	}
 }
