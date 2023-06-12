@@ -45,19 +45,6 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private int _sendTimeout = 1000;
-		public int SendTimeout
-		{
-			get
-			{
-				return _sendTimeout;
-			}
-			set
-			{
-				this.SetProperty(ref _sendTimeout, value);
-			}
-		}
-
 		private int _receiveBufferSize = -1;
 		public int ReceiveBufferSize
 		{
@@ -68,19 +55,6 @@ namespace VirtualPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref _receiveBufferSize, value);
-			}
-		}
-
-		private int _sendBufferSize = -1;
-		public int SendBufferSize
-		{
-			get
-			{
-				return _sendBufferSize;
-			}
-			set
-			{
-				this.SetProperty(ref _sendBufferSize, value);
 			}
 		}
 
@@ -126,9 +100,7 @@ namespace VirtualPrinter.ViewModels
 		public Task InitializeAsync()
 		{
 			this.ReceiveTimeout = Properties.Settings.Default.ReceiveTimeout;
-			this.SendTimeout = Properties.Settings.Default.SendTimeout;
 			this.ReceiveBufferSize = Properties.Settings.Default.ReceiveBufferSize;
-			this.SendBufferSize = Properties.Settings.Default.SendBufferSize;
 			this.NoDelay = Properties.Settings.Default.NoDelay;
 			this.Linger = Properties.Settings.Default.Linger;
 			this.LingerTime = Properties.Settings.Default.LingerTime;
@@ -140,9 +112,7 @@ namespace VirtualPrinter.ViewModels
 		protected Task OkCommandAsync()
 		{
 			Properties.Settings.Default.ReceiveTimeout = this.ReceiveTimeout;
-			Properties.Settings.Default.SendTimeout = this.SendTimeout;
 			Properties.Settings.Default.ReceiveBufferSize = this.ReceiveBufferSize;
-			Properties.Settings.Default.SendBufferSize = this.SendBufferSize;
 			Properties.Settings.Default.NoDelay = this.NoDelay;
 			Properties.Settings.Default.Linger = this.Linger;
 			Properties.Settings.Default.LingerTime = this.LingerTime;

@@ -44,9 +44,6 @@
     <Setting Name="ReceiveTimeout" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
-    <Setting Name="SendTimeout" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1000</Value>
-    </Setting>
     <Setting Name="NoDelay" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -57,9 +54,6 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="ReceiveBufferSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">-1</Value>
-    </Setting>
-    <Setting Name="SendBufferSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">-1</Value>
     </Setting>
   </Settings>
