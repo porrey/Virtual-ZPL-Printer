@@ -123,7 +123,20 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		public Task InitializeAsync()
+		private string _receivedDataEncoding = "utf-8";
+		public string ReceivedDataEncoding
+		{
+		get
+		{
+			return _receivedDataEncoding;
+		}
+		set
+		{
+			this.SetProperty(ref _receivedDataEncoding, value);
+		}
+		}
+
+    public Task InitializeAsync()
 		{
 			this.ReceiveTimeout = Properties.Settings.Default.ReceiveTimeout;
 			this.SendTimeout = Properties.Settings.Default.SendTimeout;
@@ -132,6 +145,7 @@ namespace VirtualPrinter.ViewModels
 			this.NoDelay = Properties.Settings.Default.NoDelay;
 			this.Linger = Properties.Settings.Default.Linger;
 			this.LingerTime = Properties.Settings.Default.LingerTime;
+			this.ReceivedDataEncoding = Properties.Settings.Default.ReceivedDataEncoding;
 
 			this.RefreshCommands();
 			return Task.CompletedTask;
@@ -146,6 +160,7 @@ namespace VirtualPrinter.ViewModels
 			Properties.Settings.Default.NoDelay = this.NoDelay;
 			Properties.Settings.Default.Linger = this.Linger;
 			Properties.Settings.Default.LingerTime = this.LingerTime;
+			Properties.Settings.Default.ReceivedDataEncoding = this.ReceivedDataEncoding;
 
 			return Task.CompletedTask;
 		}

@@ -103,11 +103,25 @@ namespace VirtualPrinter.Client
 			//
 			if (ms.Length > 0)
 			{
+				//
+				// Use user-specified encoding in order to display special characters correctly.
+				//
+				Encoding encoding = Encoding.UTF8;
+				try
+				{
+					encoding = Encoding.GetEncoding(Properties.Settings.Default.ReceivedDataEncoding);
+				}
+				catch (ArgumentException ex)
+				{
+					//
+					// Simply fallback to default encoding and ignore exception.
+					//
+				}
 
 				//
 				// Get the label image.
 				//
-				string zpl = Encoding.UTF8.GetString(ms.ToArray(), 0, (int) ms.Length);
+				string zpl = encoding.GetString(ms.ToArray(), 0, (int) ms.Length);
 
 				if (!zpl.StartsWith("NOP"))
 				{
