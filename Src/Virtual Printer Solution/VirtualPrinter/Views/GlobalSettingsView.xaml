@@ -39,6 +39,7 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 
 					<TextBlock Grid.Column="0"
@@ -104,6 +105,20 @@
 							 Text="{Binding LingerTime, Mode=TwoWay}"
 							 Margin="0,5,0,5"
 							 InputScope="NumberFullWidth" />
+
+					<TextBlock Grid.Column="0"
+							   Grid.Row="4"
+							   Text="Received Data Encoding"
+							   Margin="0,5,0,5" />
+					<ComboBox Grid.Column="1"
+							  Grid.Row="4"
+							  Text="{Binding ReceivedDataEncoding, Mode=TwoWay}"
+							  Margin="0,5,5,5"
+							  InputScope="NumberFullWidth"
+							  SelectedIndex="0" >
+						<ComboBoxItem>utf-8</ComboBoxItem>
+						<ComboBoxItem>iso-8859-1</ComboBoxItem>
+					</ComboBox>
 				</Grid>
 			</StackPanel>
 		</GroupBox>
