@@ -14,7 +14,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using System.Globalization;
+using System.Threading;
 using System.Windows;
+using System.Windows.Markup;
 using Diamond.Core.Extensions.DependencyInjection;
 using Diamond.Core.Extensions.DependencyInjection.EntityFrameworkCore;
 using Diamond.Core.Wpf;
@@ -35,6 +38,29 @@ namespace VirtualPrinter
 
 		protected override void OnBeginStartup(StartupEventArgs e)
 		{
+			//
+			// Attempt to set culture for the current thread.
+			//
+			try
+			{
+				Thread.CurrentThread.CurrentUICulture = new CultureInfo(CultureInfo.CurrentCulture.LCID, true);
+			}
+			catch
+			{
+			}
+
+			//
+			// Attempt to set culture for all controls.
+			//
+			try
+			{
+				FrameworkPropertyMetadata metaData = new(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag));
+				FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), metaData);
+			}
+			catch
+			{
+			}
+
 #if !DEBUG
 			this.Splash = new SplashView(new());
 			this.Splash.Show();

@@ -61,7 +61,7 @@ namespace VirtualPrinter.Client
 			//
 			// Prepare a memory stream to read data into.
 			//
-			MemoryStream ms = new MemoryStream();
+			MemoryStream ms = new();
 
 			try
 			{
@@ -87,9 +87,10 @@ namespace VirtualPrinter.Client
 					// the read timeout, we can further easily increase the time available to the client.
 					//
 					int numBytesRead;
+
 					while ((numBytesRead = stream.Read(data, 0, data.Length)) > 0)
 					{
-					    ms.Write(data, 0, numBytesRead);
+						ms.Write(data, 0, numBytesRead);
 					}
 				}
 			}
@@ -107,21 +108,22 @@ namespace VirtualPrinter.Client
 				// Use user-specified encoding in order to display special characters correctly.
 				//
 				Encoding encoding = Encoding.UTF8;
+
 				try
 				{
 					encoding = Encoding.GetEncoding(Properties.Settings.Default.ReceivedDataEncoding);
 				}
-				catch (ArgumentException ex)
+				catch (ArgumentException)
 				{
 					//
-					// Simply fallback to default encoding and ignore exception.
+					// Simply fall back to default encoding and ignore exception.
 					//
 				}
 
 				//
 				// Get the label image.
 				//
-				string zpl = encoding.GetString(ms.ToArray(), 0, (int) ms.Length);
+				string zpl = encoding.GetString(ms.ToArray(), 0, (int)ms.Length);
 
 				if (!zpl.StartsWith("NOP"))
 				{
@@ -150,9 +152,9 @@ namespace VirtualPrinter.Client
 								LabelConfiguration = labelConfiguration,
 								Zpl = zpl
 							},
-						Label = storedImages.ElementAt(response.LabelIndex),
-						Result = response.Result,
-						Message = response.Result ? "Label successfully created." : response.Error
+							Label = storedImages.ElementAt(response.LabelIndex),
+							Result = response.Result,
+							Message = response.Result ? "Label successfully created." : response.Error
 						});
 					}
 				}

@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Version>2.3.0</Version>
-    <FileVersion>2.3.0</FileVersion>
-    <AssemblyVersion>2.3.0</AssemblyVersion>
+    <TargetFramework>net8.0</TargetFramework>
+    <Version>3.0.0</Version>
+    <FileVersion>3.0.0</FileVersion>
+    <AssemblyVersion>3.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

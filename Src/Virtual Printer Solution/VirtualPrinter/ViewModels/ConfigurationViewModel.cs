@@ -79,11 +79,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _selectPrinterConfiguration;
+				return this._selectPrinterConfiguration;
 			}
 			set
 			{
-				this.SetProperty(ref _selectPrinterConfiguration, value);
+				this.SetProperty(ref this._selectPrinterConfiguration, value);
 				this.OnSelectedPrinterConfigurationChanged();
 			}
 		}
@@ -93,11 +93,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _changes;
+				return this._changes;
 			}
 			set
 			{
-				this.SetProperty(ref _changes, value);
+				this.SetProperty(ref this._changes, value);
 				this.RefreshCommands();
 			}
 		}
@@ -107,11 +107,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _name;
+				return this._name;
 			}
 			set
 			{
-				this.SetProperty(ref _name, value);
+				this.SetProperty(ref this._name, value);
 				this.Changes = true;
 			}
 		}
@@ -121,11 +121,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _ipAddress;
+				return this._ipAddress;
 			}
 			set
 			{
-				this.SetProperty(ref _ipAddress, value);
+				this.SetProperty(ref this._ipAddress, value);
 				this.Changes = true;
 			}
 		}
@@ -135,11 +135,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _port;
+				return this._port;
 			}
 			set
 			{
-				this.SetProperty(ref _port, value);
+				this.SetProperty(ref this._port, value);
 				this.Changes = true;
 			}
 		}
@@ -149,17 +149,17 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _selectedLabelUnit;
+				return this._selectedLabelUnit;
 			}
 			set
 			{
-				if (_selectedLabelUnit != null && value != null)
+				if (this._selectedLabelUnit != null && value != null)
 				{
-					this.LabelWidth = Math.Round((new Length(this.LabelWidth, _selectedLabelUnit.Unit)).ToUnit(value.Unit).Value, 2);
-					this.LabelHeight = Math.Round((new Length(this.LabelHeight, _selectedLabelUnit.Unit)).ToUnit(value.Unit).Value, 2);
+					this.LabelWidth = Math.Round(new Length(this.LabelWidth, this._selectedLabelUnit.Unit).ToUnit(value.Unit).Value, 2);
+					this.LabelHeight = Math.Round(new Length(this.LabelHeight, this._selectedLabelUnit.Unit).ToUnit(value.Unit).Value, 2);
 				}
 
-				this.SetProperty(ref _selectedLabelUnit, value);
+				this.SetProperty(ref this._selectedLabelUnit, value);
 				this.Changes = true;
 			}
 		}
@@ -169,11 +169,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _lableWidth;
+				return this._lableWidth;
 			}
 			set
 			{
-				this.SetProperty(ref _lableWidth, value);
+				this.SetProperty(ref this._lableWidth, value);
 				this.Changes = true;
 			}
 		}
@@ -183,11 +183,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _lableHeight;
+				return this._lableHeight;
 			}
 			set
 			{
-				this.SetProperty(ref _lableHeight, value);
+				this.SetProperty(ref this._lableHeight, value);
 				this.Changes = true;
 			}
 		}
@@ -197,11 +197,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _selectResolution;
+				return this._selectResolution;
 			}
 			set
 			{
-				this.SetProperty(ref _selectResolution, value);
+				this.SetProperty(ref this._selectResolution, value);
 				this.Changes = true;
 			}
 		}
@@ -211,11 +211,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _selectedRotation;
+				return this._selectedRotation;
 			}
 			set
 			{
-				this.SetProperty(ref _selectedRotation, value);
+				this.SetProperty(ref this._selectedRotation, value);
 				this.Changes = true;
 			}
 		}
@@ -225,11 +225,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _imagePath;
+				return this._imagePath;
 			}
 			set
 			{
-				this.SetProperty(ref _imagePath, value);
+				this.SetProperty(ref this._imagePath, value);
 				this.Changes = true;
 			}
 		}
@@ -366,9 +366,9 @@ namespace VirtualPrinter.ViewModels
 					this.Name = this.SelectedPrinterConfiguration.Name;
 					this.IpAddress = this.SelectedPrinterConfiguration.HostAddress;
 					this.Port = this.SelectedPrinterConfiguration.Port;
+					this.SelectedLabelUnit = this.LabelUnits.Where(t => t.Unit == (LengthUnit)this.SelectedPrinterConfiguration.LabelUnit).SingleOrDefault();
 					this.LabelWidth = this.SelectedPrinterConfiguration.LabelWidth;
 					this.LabelHeight = this.SelectedPrinterConfiguration.LabelHeight;
-					this.SelectedLabelUnit = this.LabelUnits.Where(t => t.Unit == (LengthUnit)this.SelectedPrinterConfiguration.LabelUnit).SingleOrDefault();
 					this.SelectedResolution = this.Resolutions.Where(t => t.Dpmm == this.SelectedPrinterConfiguration.ResolutionInDpmm).SingleOrDefault();
 					this.SelectedRotation = this.Rotations.Where(t => t.Value == this.SelectedPrinterConfiguration.RotationAngle).SingleOrDefault();
 					this.ImagePath = this.SelectedPrinterConfiguration.ImagePath;
@@ -495,9 +495,9 @@ namespace VirtualPrinter.ViewModels
 					this.SelectedPrinterConfiguration.Name = this.Name;
 					this.SelectedPrinterConfiguration.HostAddress = this.IpAddress;
 					this.SelectedPrinterConfiguration.Port = this.Port;
+					this.SelectedPrinterConfiguration.LabelUnit = (int)this.SelectedLabelUnit.Unit;
 					this.SelectedPrinterConfiguration.LabelHeight = this.LabelHeight;
 					this.SelectedPrinterConfiguration.LabelWidth = this.LabelWidth;
-					this.SelectedPrinterConfiguration.LabelUnit = (int)this.SelectedLabelUnit.Unit;
 					this.SelectedPrinterConfiguration.ResolutionInDpmm = this.SelectedResolution.Dpmm;
 					this.SelectedPrinterConfiguration.RotationAngle = this.SelectedRotation.Value;
 					this.SelectedPrinterConfiguration.ImagePath = this.ImagePath;
@@ -630,11 +630,11 @@ namespace VirtualPrinter.ViewModels
 			}
 			//catch (Exception ex)
 			//{
-				
+
 			//}
 			finally
 			{
-				
+
 			}
 
 			return Task.CompletedTask;
