@@ -8,7 +8,7 @@ Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have th
 
 ###### Version 3.0.0 Updates:
 1. Updated to .NET 8.0
-2. Merged Pull-Request 
+2. Merged Pull-Request: Avoid splitting large messages | Make encoding configurable #37
 2. Fixed Bug: Sizes in millimeters or centimeters not saving correctly #29
 3. Fixed Bug: Test windows not working properly (can't paste or add enters) #30
 4. Fixed Bug: Print settings takes into account regional formatting #33
