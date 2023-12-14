@@ -29,7 +29,7 @@ namespace Labelary.Service
 
 			foreach (ILabelFilter filter in filters.OrderBy(t => t.Priority))
 			{
-				string replace = filter.Replace == null ? string.Empty : filter.Replace;
+				string replace = filter.Replace ?? string.Empty;
 
 				if (filter.TreatAsRegularExpression)
 				{
