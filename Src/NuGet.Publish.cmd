@@ -3,7 +3,7 @@
 REM ***
 REM *** Set up the enviroment.
 REM ***
-CALL "%ProgramFiles% (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsx86_amd64.bat"
+CALL "%ProgramFiles%\Microsoft Visual Studio\2022\Preview\VC\Auxiliary\Build\vcvarsx86_amd64.bat"
 
 REM ***
 REM *** Get the NuGet publish key.
