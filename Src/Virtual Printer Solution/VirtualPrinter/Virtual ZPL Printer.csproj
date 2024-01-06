@@ -8,9 +8,9 @@
 		<AssemblyName>VirtualPrinter</AssemblyName>
 		<StartupObject>VirtualPrinter.App</StartupObject>
 		<RootNamespace>VirtualPrinter</RootNamespace>
-		<Version>3.0.0</Version>
-		<FileVersion>3.0.0</FileVersion>
-		<AssemblyVersion>3.0.0</AssemblyVersion>
+		<Version>3.0.1</Version>
+		<FileVersion>3.0.1</FileVersion>
+		<AssemblyVersion>3.0.1</AssemblyVersion>
 		<Nullable>disable</Nullable>
 		<SignAssembly>False</SignAssembly>
 	</PropertyGroup>
@@ -219,7 +219,7 @@
 		<None Update="Samples\4x6 Shipping Label %288 dpmm%29.zpl">
 		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</None>
-		<None Update="Samples\4x6 USPS Shpping Label %288 dpmm%29.zpl">
+		<None Update="Samples\4x6 USPS Shipping Label (8 dpmm).zpl">
 		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

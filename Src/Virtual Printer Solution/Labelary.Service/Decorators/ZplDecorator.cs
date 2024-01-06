@@ -14,6 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -46,6 +47,31 @@ namespace Labelary.Service
 						returnValue = returnValue.Replace(filter.Find, replace);
 					}
 					catch { }
+				}
+			}
+
+			return returnValue;
+		}
+
+		public static string GetParameterValue(this string zpl, string parameterName, string defaultValue)
+		{
+			string returnValue = defaultValue;
+
+			//
+			// Get the comment lines from the ZPL.
+			//
+			string line = (from tbl in zpl.Split(new char[] { '\r', '\n' }, StringSplitOptions.TrimEntries & StringSplitOptions.RemoveEmptyEntries)
+						   where tbl.StartsWith("^FX") &&
+						   tbl.ToLower().Contains(parameterName.ToLower())
+						   select tbl).FirstOrDefault();
+
+			if (line != null)
+			{
+				string[] parts = line.Split(new char[] { ':' }, StringSplitOptions.TrimEntries & StringSplitOptions.RemoveEmptyEntries);
+
+				if (parts.Length == 2)
+				{
+					returnValue = parts[1];
 				}
 			}
 

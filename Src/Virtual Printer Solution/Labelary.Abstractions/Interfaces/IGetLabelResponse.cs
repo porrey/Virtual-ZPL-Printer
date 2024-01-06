@@ -24,5 +24,6 @@ namespace Labelary.Abstractions
 		byte[] Label { get; }
 		string Error { get; }
 		bool HasMultipleLabels { get; }
+		string ImageFileName { get; set; }
 	}
 }

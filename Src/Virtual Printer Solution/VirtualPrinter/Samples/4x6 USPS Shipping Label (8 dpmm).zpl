@@ -1,5 +1,6 @@
 ﻿^XA
 
+^FX ImageFileName: USPS-Shipping
 ^FX Set label size to 4" x 6" (assumes 8 dpmm)
 ^LL 1218
 ^PW 812
@@ -156,14 +157,14 @@
 ^FO 25,888.2
 ^BY 3
 ^BC N,152,N,N,N,D
-^FD 4202208<89205591234567803239401
+^FD 4202208<89205591234{id2}0{id3}{id4}01
 ^FS
 
 ^FX IM Readable Text
 ^FO 0,1066
 ^FB 812,1,0,C,0
 ^A0 N,32,32
-^FD 9205 5912 3456 7803 2394 01
+^FD 9205 5912 34{id2} 0{id3} {id4} 01
 ^FS
 
 ^FX IM Barcode Bottom Line

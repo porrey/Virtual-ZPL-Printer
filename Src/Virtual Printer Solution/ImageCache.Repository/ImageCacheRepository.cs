@@ -26,13 +26,53 @@ namespace ImageCache.Repository
 {
 	public class ImageCacheRepository : IImageCacheRepository
 	{
-		protected string FileName(DirectoryInfo imagePathRoot, int id) => $@"{imagePathRoot.FullName}\zpl-label-image-{id}.png";
-		protected string FileName(DirectoryInfo imagePathRoot, int id, int index) => $@"{imagePathRoot.FullName}\zpl-label-image-{id}-Page{index}.png";
-		protected FileInfo[] GetFiles(DirectoryInfo imagePathRoot) => imagePathRoot.GetFiles("zpl-label-image-*.png").OrderBy(t => t.CreationTime).ToArray();
-		protected int GetFileIndex(FileInfo file) => Convert.ToInt32(Path.GetFileNameWithoutExtension(file.Name).Split(new char[] { '-' })[3].Replace(" ", ""));
-		protected int[] GetFileIndices(DirectoryInfo imagePathRoot) => this.GetFiles(imagePathRoot).Select(t => this.GetFileIndex(t)).ToArray();
+		protected string FileName(DirectoryInfo imagePathRoot, string baseName, int id) => $@"{imagePathRoot.FullName}\{Path.GetFileNameWithoutExtension(baseName)}-{id}.png";
+		protected string FileName(DirectoryInfo imagePathRoot, string baseName, int id, int page) => $@"{imagePathRoot.FullName}\{Path.GetFileNameWithoutExtension(baseName)}-{id}-Page{page}.png";
 		protected object LockObject { get; } = new object();
 		protected int AlternateIndex = 99999;
+
+		protected FileInfo[] GetFiles(DirectoryInfo imagePathRoot)
+		{
+			FileInfo[] returnValue = Array.Empty<FileInfo>();
+
+			returnValue = (from tbl in imagePathRoot.EnumerateFiles("*.png")
+						   orderby tbl.CreationTime
+						   select tbl).ToArray();
+
+			return returnValue;
+		}
+
+		protected int[] GetFileIndices(DirectoryInfo imagePathRoot)
+		{
+			int[] returnValue = Array.Empty<int>();
+
+			returnValue = (from tbl in imagePathRoot.EnumerateFiles("*.png")
+						   orderby tbl.CreationTime
+						   select this.GetFileIndex(tbl)).ToArray();
+
+			return returnValue;
+		}
+
+		protected int GetFileIndex(FileInfo file)
+		{
+			int returnValue = 1;
+
+			//
+			// Split th file name.
+			//
+			string[] parts = Path.GetFileNameWithoutExtension(file.Name).Split(new char[] { '-' }, StringSplitOptions.TrimEntries & StringSplitOptions.RemoveEmptyEntries);
+
+			if (parts.Last().Contains("Page"))
+			{
+				returnValue = Convert.ToInt32(parts[parts.Length - 2]);
+			}
+			else
+			{
+				returnValue = Convert.ToInt32(parts.Last());
+			}
+
+			return returnValue;
+		}
 
 		protected DirectoryInfo GetDirectory(string imagePathRoot)
 		{
@@ -79,7 +119,7 @@ namespace ImageCache.Repository
 					//
 					// Get the file name.
 					//
-					string fileName = label.HasMultipleLabels ? this.FileName(dir, id, label.LabelIndex + 1) : this.FileName(dir, id);
+					string fileName = label.HasMultipleLabels ? this.FileName(dir, label.ImageFileName, id, label.LabelIndex + 1) : this.FileName(dir, label.ImageFileName, id);
 
 					//
 					// Write the image.
@@ -122,7 +162,7 @@ namespace ImageCache.Repository
 					}
 					catch
 					{
-						si.Id = AlternateIndex--;
+						si.Id = this.AlternateIndex--;
 					}
 
 					si.FullPath = file.FullName;
@@ -157,7 +197,7 @@ namespace ImageCache.Repository
 					}
 				}
 
-				returnValue = (errorCount == 0);
+				returnValue = errorCount == 0;
 			}
 
 			return Task.FromResult(returnValue);

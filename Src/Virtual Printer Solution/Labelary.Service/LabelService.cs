@@ -33,7 +33,8 @@ namespace Labelary.Service
 		{
 			GetLabelResponse returnValue = new()
 			{
-				LabelIndex = labelIndex
+				LabelIndex = labelIndex,
+				ImageFileName = zpl.GetParameterValue("ImageFileName", "zpl-label-image")
 			};
 
 			try
@@ -42,15 +43,15 @@ namespace Labelary.Service
 				{
 					using (StringContent content = new(zpl.Filter(labelConfiguration.LabelFilters), Encoding.UTF8, "application/x-www-form-urlencoded"))
 					{
-						double width = (new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
-						double height = (new Length(labelConfiguration.LabelHeight, labelConfiguration.Unit)).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
+						double width = new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
+						double height = new Length(labelConfiguration.LabelHeight, labelConfiguration.Unit).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
 
 						content.Headers.TryAddWithoutValidation("X-Rotation", Convert.ToString(labelConfiguration.LabelRotation));
 
 						if (width <= 15 && height <= 15)
 						{
 							string url = $"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width:#.##}x{height:#.##}/{labelIndex}/";
-							
+
 							using (HttpResponseMessage response = await client.PostAsync(url, content))
 							{
 								if (response.IsSuccessStatusCode)

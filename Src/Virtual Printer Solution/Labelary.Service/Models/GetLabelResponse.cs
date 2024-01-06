@@ -26,5 +26,6 @@ namespace Labelary.Service
 		public byte[] Label { get; set; }
 		public string Error { get; set; }
 		public bool HasMultipleLabels => this.LabelCount > 1;
+		public string ImageFileName { get; set; }
 	}
 }
