@@ -8,8 +8,11 @@ Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have th
 
 ###### Version 3.0.2 Updates:
 1. Added menu option to test Labelary connectivity.
+2. Added the ability to configure a physical printer to print a label retrieved from the Labelary API. This is currently limited in functionality and may be expanded in future versions.
 
 ## Screen Shots
+
+![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-04.png)
 
 ![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-01.png)
 
