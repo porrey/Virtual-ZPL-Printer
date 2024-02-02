@@ -2,9 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows</TargetFramework>
-		<Version>3.0.1</Version>
-		<FileVersion>3.0.1</FileVersion>
-		<AssemblyVersion>3.0.1</AssemblyVersion>
+		<Version>3.0.2</Version>
+		<FileVersion>3.0.2</FileVersion>
+		<AssemblyVersion>3.0.2</AssemblyVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Title>Labelary Library Abstractions</Title>
 		<Description>Provides an easy way to call the Labelary API to get labels from ZPL. This library is used by the Virtual ZPL Printer application.</Description>
@@ -43,7 +43,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+		<PackageReference Include="System.Drawing.Common" Version="8.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>

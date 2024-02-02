@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
 using Prism.Events;
+using VirtualPrinter.Db.Abstractions;
 using VirtualPrinter.Events;
 
 namespace VirtualPrinter.Client
@@ -40,8 +41,9 @@ namespace VirtualPrinter.Client
 		protected IEventAggregator EventAggregator { get; set; }
 		protected ILabelService LabelService { get; set; }
 		protected IImageCacheRepository ImageCacheRepository { get; set; }
+		protected IPrinterConfiguration PrinterConfiguration { get; set; }
 
-		public async Task StartSessionAsync(TcpClient client, ILabelConfiguration labelConfiguration, string imagePathRoot)
+		public async Task StartSessionAsync(TcpClient client, IPrinterConfiguration printerConfiguration, ILabelConfiguration labelConfiguration, string imagePathRoot)
 		{
 			//
 			// Set parameters.
@@ -147,6 +149,7 @@ namespace VirtualPrinter.Client
 						//
 						this.EventAggregator.GetEvent<LabelCreatedEvent>().Publish(new LabelCreatedEventArgs()
 						{
+							PrinterConfiguration = printerConfiguration,
 							PrintRequest = new PrintRequestEventArgs()
 							{
 								LabelConfiguration = labelConfiguration,

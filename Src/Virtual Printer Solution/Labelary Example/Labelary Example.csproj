@@ -5,9 +5,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>Labelary.Example</RootNamespace>
     <AssemblyName>LabelaryExample</AssemblyName>
-    <Version>3.0.1</Version>
-    <FileVersion>3.0.1</FileVersion>
-    <AssemblyVersion>3.0.1</AssemblyVersion>
+    <Version>3.0.2</Version>
+    <FileVersion>3.0.2</FileVersion>
+    <AssemblyVersion>3.0.2</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

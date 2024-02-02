@@ -17,6 +17,7 @@
 using System;
 using ImageCache.Abstractions;
 using Prism.Events;
+using VirtualPrinter.Db.Abstractions;
 
 namespace VirtualPrinter.Events
 {
@@ -26,6 +27,7 @@ namespace VirtualPrinter.Events
 
 	public class LabelCreatedEventArgs : EventArgs
 	{
+		public IPrinterConfiguration PrinterConfiguration { get; set; }
 		public PrintRequestEventArgs PrintRequest { get; set; }
 		public IStoredImage Label { get; set; }
 		public bool Result { get; set; }

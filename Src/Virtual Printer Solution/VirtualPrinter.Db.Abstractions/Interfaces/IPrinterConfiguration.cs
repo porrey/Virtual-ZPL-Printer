@@ -12,13 +12,8 @@ namespace VirtualPrinter.Db.Abstractions
 		double LabelHeight { get; set; }
 		int ResolutionInDpmm { get; set; }
 		int RotationAngle { get; set; }
-		string ImagePath { get; set; }
-		string IdSummary { get; }
-		string HostSummary { get; }
-		string SizeSummary { get; }
-		string ResolutionSummary { get; }
-		string RotationSummary { get; }
-		string Description { get; }
 		string Filters { get; set; }
+		string PhysicalPrinter { get; set; }
+		string ImagePath { get; set; }
 	}
 }

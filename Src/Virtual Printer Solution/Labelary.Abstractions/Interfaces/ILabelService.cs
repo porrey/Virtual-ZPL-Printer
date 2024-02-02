@@ -21,6 +21,7 @@ namespace Labelary.Abstractions
 {
 	public interface ILabelService
 	{
+		string BaseUrl { get; }
 		Task<IEnumerable<IGetLabelResponse>> GetLabelsAsync(ILabelConfiguration labelConfiguration, string zpl);
 		Task<IGetLabelResponse> GetLabelAsync(ILabelConfiguration labelConfiguration, string zpl, int labelIndex = 0);
 	}

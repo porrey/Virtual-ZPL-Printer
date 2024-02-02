@@ -10,7 +10,7 @@
 		WindowStyle="ThreeDBorderWindow"
 		Background="White"
 		Width="875"
-		Height="650"
+		Height="690"
 		MinHeight="525">
 
 	<Window.Resources>
@@ -19,6 +19,7 @@
 					Margin="5">
 				<Grid>
 					<Grid.RowDefinitions>
+						<RowDefinition Height="1*" />
 						<RowDefinition Height="1*" />
 						<RowDefinition Height="1*" />
 						<RowDefinition Height="1*" />
@@ -61,7 +62,7 @@
 							   TextWrapping="NoWrap"
 							   TextTrimming="CharacterEllipsis"
 							   TextAlignment="Center" />
-					
+
 					<TextBlock Grid.Row="2"
 							   Grid.Column="1"
 							   Text="{Binding HostSummary}"
@@ -95,6 +96,16 @@
 					<TextBlock Grid.Row="5"
 							   Grid.Column="1"
 							   Text="{Binding RotationSummary}"
+							   VerticalAlignment="Top"
+							   HorizontalAlignment="Left"
+							   Margin="5,2,0,2"
+							   TextWrapping="NoWrap"
+							   TextTrimming="CharacterEllipsis"
+							   TextAlignment="Center" />
+
+					<TextBlock Grid.Row="6"
+							   Grid.Column="1"
+							   Text="{Binding PhysicalPrinterDescription}"
 							   VerticalAlignment="Top"
 							   HorizontalAlignment="Left"
 							   Margin="5,2,0,2"
@@ -223,6 +234,7 @@
 				IsEnabled="{Binding SelectedPrinterConfiguration, Converter={StaticResource NotObjectToBooleanConverter}}">
 			<Grid>
 				<Grid.RowDefinitions>
+					<RowDefinition Height="1*" />
 					<RowDefinition Height="1*" />
 					<RowDefinition Height="1*" />
 					<RowDefinition Height="1*" />
@@ -462,6 +474,43 @@
 						</Button.Content>
 					</Button>
 				</Grid>
+
+				<TextBlock Grid.Row="10"
+						   Grid.Column="0"
+						   Text="Physical Printer"
+						   Margin="{StaticResource ControlMargin}"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Left"
+						   Foreground="{StaticResource ForegroundColor1}" />
+				<Button Grid.Row="10"
+						Grid.Column="1"
+						Style="{DynamicResource ButtonStyle1}"
+						VerticalAlignment="Center"
+						HorizontalAlignment="Stretch"
+						Command="{Binding PrinterEditCommand}"
+						Margin="5,5,195,5"
+						ToolTip="Click to edit the physical printer.">
+					<Button.Content>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+							</Grid.ColumnDefinitions>
+
+							<Image Grid.Column="0"
+								   Source="/Assets/filter-edit.png"
+								   Width="24"
+								   Height="24"
+								   Margin="3" />
+
+							<TextBlock Grid.Column="1"
+									   Text="Configure"
+									   VerticalAlignment="Center"
+									   HorizontalAlignment="Left"
+									   Margin="3" />
+						</Grid>
+					</Button.Content>
+				</Button>
 			</Grid>
 		</Border>
 
@@ -507,7 +556,7 @@
 					</Grid>
 				</Button.Content>
 			</Button>
-			
+
 			<Button Grid.Column="5"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
@@ -534,7 +583,7 @@
 					</Grid>
 				</Button.Content>
 			</Button>
-			
+
 			<Button Grid.Column="4"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
@@ -561,7 +610,7 @@
 					</Grid>
 				</Button.Content>
 			</Button>
-			
+
 			<Button Grid.Column="3"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"

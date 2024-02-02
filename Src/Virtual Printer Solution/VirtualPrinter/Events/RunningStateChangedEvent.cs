@@ -16,6 +16,7 @@
  */
 using System;
 using Prism.Events;
+using VirtualPrinter.Db.Abstractions;
 
 namespace VirtualPrinter.Events
 {
@@ -25,6 +26,7 @@ namespace VirtualPrinter.Events
 
 	public class RunningStateChangedEventArgs : EventArgs
 	{
+		public IPrinterConfiguration PrinterConfiguration { get; set; }
 		public bool IsRunning { get; set; }
 		public bool IsError { get; set; }
 		public string ErrorMessage { get; set; }

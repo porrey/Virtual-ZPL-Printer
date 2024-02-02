@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.Db.Abstracti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.Db.Ef", "VirtualPrinter.Db.Ef\VirtualPrinter.Db.Ef.csproj", "{B1AF2E8D-3350-4B00-8A4F-4101B234325F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualPrinter.Abstractions", "VirtualPrinter.Abstractions\VirtualPrinter.Abstractions.csproj", "{51CF360B-487B-4776-BD2B-55066F916B33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -213,6 +215,26 @@ Global
 		{B1AF2E8D-3350-4B00-8A4F-4101B234325F}.Release|x64.Build.0 = Release|Any CPU
 		{B1AF2E8D-3350-4B00-8A4F-4101B234325F}.Release|x86.ActiveCfg = Release|Any CPU
 		{B1AF2E8D-3350-4B00-8A4F-4101B234325F}.Release|x86.Build.0 = Release|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Debug|ARM.Build.0 = Debug|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Debug|x64.Build.0 = Debug|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Debug|x86.Build.0 = Debug|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Release|ARM.ActiveCfg = Release|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Release|ARM.Build.0 = Release|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Release|ARM64.Build.0 = Release|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Release|x64.ActiveCfg = Release|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Release|x64.Build.0 = Release|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Release|x86.ActiveCfg = Release|Any CPU
+		{51CF360B-487B-4776-BD2B-55066F916B33}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

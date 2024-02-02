@@ -26,7 +26,7 @@ namespace VirtualPrinter.Views
 		public EditFiltersView(EditFiltersViewModel viewModel, IMainWindow mainWindow)
 		{
 			this.DataContext = viewModel;
-			InitializeComponent();
+			this.InitializeComponent();
 			this.Owner = (Window)mainWindow;
 		}
 

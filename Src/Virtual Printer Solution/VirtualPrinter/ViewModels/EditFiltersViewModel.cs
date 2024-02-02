@@ -21,7 +21,6 @@ using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using VirtualPrinter.Db.Abstractions;
 using VirtualPrinter.Events;
 
 namespace VirtualPrinter.ViewModels
@@ -45,16 +44,16 @@ namespace VirtualPrinter.ViewModels
 
 		public ObservableCollection<FilterViewModel> Filters { get; } = new ObservableCollection<FilterViewModel>();
 
-		private IPrinterConfiguration _printerConfiguration = null;
-		public IPrinterConfiguration PrinterConfiguration
+		private PrinterConfigurationViewModel _printerConfiguration = null;
+		public PrinterConfigurationViewModel PrinterConfiguration
 		{
 			get
 			{
-				return _printerConfiguration;
+				return this._printerConfiguration;
 			}
 			set
 			{
-				this.SetProperty(ref _printerConfiguration, value);
+				this.SetProperty(ref this._printerConfiguration, value);
 				this.OnSelectedPrinterConfigurationChanged();
 				this.RefreshCommands();
 			}
@@ -65,11 +64,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _selectedFilter;
+				return this._selectedFilter;
 			}
 			set
 			{
-				this.SetProperty(ref _selectedFilter, value);
+				this.SetProperty(ref this._selectedFilter, value);
 				this.RefreshCommands();
 			}
 		}
@@ -79,11 +78,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _updated;
+				return this._updated;
 			}
 			set
 			{
-				this.SetProperty(ref _updated, value);
+				this.SetProperty(ref this._updated, value);
 				this.RefreshCommands();
 			}
 		}

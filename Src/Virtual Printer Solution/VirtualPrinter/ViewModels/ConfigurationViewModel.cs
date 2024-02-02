@@ -31,6 +31,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using UnitsNet;
 using UnitsNet.Units;
+using VirtualPrinter.Abstractions;
 using VirtualPrinter.Db.Abstractions;
 using VirtualPrinter.Db.Ef;
 using VirtualPrinter.Models;
@@ -53,6 +54,7 @@ namespace VirtualPrinter.ViewModels
 			this.SaveCommand = new DelegateCommand(async () => await this.SaveCommandAsync(), () => this.Changes);
 			this.CloneCommand = new DelegateCommand(async () => await this.CloneCommandAsync(), () => !this.Changes && this.SelectedPrinterConfiguration != null);
 			this.FilterEditCommand = new DelegateCommand(async () => await this.FilterEditCommandAsync(), () => this.SelectedPrinterConfiguration != null);
+			this.PrinterEditCommand = new DelegateCommand(async () => await this.PrinterEditCommandAsync(), () => this.SelectedPrinterConfiguration != null);
 		}
 
 		protected IServiceProvider ServiceProvider { get; set; }
@@ -66,16 +68,17 @@ namespace VirtualPrinter.ViewModels
 		public DelegateCommand SaveCommand { get; set; }
 		public DelegateCommand CloneCommand { get; set; }
 		public DelegateCommand FilterEditCommand { get; set; }
+		public DelegateCommand PrinterEditCommand { get; set; }
 
-		public ObservableCollection<IPAddress> IpAddresses { get; } = new ObservableCollection<IPAddress>();
-		public ObservableCollection<Resolution> Resolutions { get; } = new ObservableCollection<Resolution>();
-		public ObservableCollection<LabelRotation> Rotations { get; } = new ObservableCollection<LabelRotation>();
-		public ObservableCollection<LabelUnit> LabelUnits { get; } = new ObservableCollection<LabelUnit>();
-		public ObservableCollection<IPrinterConfiguration> PrinterConfigurations { get; } = new ObservableCollection<IPrinterConfiguration>();
-		public ObservableCollection<FilterViewModel> Filters { get; } = new ObservableCollection<FilterViewModel>();
+		public ObservableCollection<PrinterConfigurationViewModel> PrinterConfigurations { get; } = [];
+		public ObservableCollection<IPAddress> IpAddresses { get; } = [];
+		public ObservableCollection<Resolution> Resolutions { get; } = [];
+		public ObservableCollection<LabelRotation> Rotations { get; } = [];
+		public ObservableCollection<LabelUnit> LabelUnits { get; } = [];
+		public ObservableCollection<FilterViewModel> Filters { get; } = [];
 
-		private IPrinterConfiguration _selectPrinterConfiguration = null;
-		public IPrinterConfiguration SelectedPrinterConfiguration
+		private PrinterConfigurationViewModel _selectPrinterConfiguration = null;
+		public PrinterConfigurationViewModel SelectedPrinterConfiguration
 		{
 			get
 			{
@@ -234,6 +237,20 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
+		private PhysicalPrinter _physicalPrinter = null;
+		public PhysicalPrinter PhysicalPrinter
+		{
+			get
+			{
+				return this._physicalPrinter;
+			}
+			set
+			{
+				this.SetProperty(ref this._physicalPrinter, value);
+				this.Changes = true;
+			}
+		}
+
 		public string FilterDescription => this.Filters.Any() ? string.Join(" | ", this.Filters.OrderBy(t => t.Priority).Select(t => $"[{(t.TreatAsRegularExpression ? "(rgx)=>'" : "'")}{t.Find}' to '{t.Replace}']")).Limit(100) : "No Filters";
 
 		public async Task InitializeAsync()
@@ -267,7 +284,10 @@ namespace VirtualPrinter.ViewModels
 				//
 				// Load the printer configurations.
 				//
-				IEnumerable<IPrinterConfiguration> items = (await repository.GetQueryableAsync(context)).OrderBy(t => t.Id).ToArray();
+				IEnumerable<PrinterConfigurationViewModel> items = (from tbl in repository.GetQueryable(context)
+																	orderby tbl.Id
+																	select new PrinterConfigurationViewModel(tbl)).ToArray();
+
 				this.PrinterConfigurations.AddRange(items);
 
 				//
@@ -280,11 +300,7 @@ namespace VirtualPrinter.ViewModels
 				else
 				{
 					this.SelectedPrinterConfiguration = this.PrinterConfigurations.Where(t => t.Id == id).SingleOrDefault();
-
-					if (this.SelectedPrinterConfiguration == null)
-					{
-						this.SelectedPrinterConfiguration = this.PrinterConfigurations.FirstOrDefault();
-					}
+					this.SelectedPrinterConfiguration ??= this.PrinterConfigurations.FirstOrDefault();
 				}
 			}
 		}
@@ -372,6 +388,7 @@ namespace VirtualPrinter.ViewModels
 					this.SelectedResolution = this.Resolutions.Where(t => t.Dpmm == this.SelectedPrinterConfiguration.ResolutionInDpmm).SingleOrDefault();
 					this.SelectedRotation = this.Rotations.Where(t => t.Value == this.SelectedPrinterConfiguration.RotationAngle).SingleOrDefault();
 					this.ImagePath = this.SelectedPrinterConfiguration.ImagePath;
+					this.PhysicalPrinter = JsonConvert.DeserializeObject<PhysicalPrinter>(this.SelectedPrinterConfiguration.PhysicalPrinter);
 				}
 				else
 				{
@@ -384,6 +401,7 @@ namespace VirtualPrinter.ViewModels
 					this.SelectedResolution = null;
 					this.SelectedRotation = null;
 					this.ImagePath = null;
+					this.PhysicalPrinter = null;
 				}
 			}
 			finally
@@ -427,6 +445,7 @@ namespace VirtualPrinter.ViewModels
 			this.BrowseCommand.RaiseCanExecuteChanged();
 			this.CloneCommand.RaiseCanExecuteChanged();
 			this.FilterEditCommand.RaiseCanExecuteChanged();
+			this.PrinterEditCommand.RaiseCanExecuteChanged();
 		}
 
 		protected async Task UndoCommandAsync()
@@ -468,8 +487,9 @@ namespace VirtualPrinter.ViewModels
 			item.RotationAngle = 0;
 			item.ImagePath = FileLocations.ImageCache.FullName;
 
-			this.PrinterConfigurations.Add(item);
-			this.SelectedPrinterConfiguration = item;
+			PrinterConfigurationViewModel viewModelItem = new(item);
+			this.PrinterConfigurations.Add(viewModelItem);
+			this.SelectedPrinterConfiguration = viewModelItem;
 			this.Changes = true;
 		}
 
@@ -502,6 +522,7 @@ namespace VirtualPrinter.ViewModels
 					this.SelectedPrinterConfiguration.RotationAngle = this.SelectedRotation.Value;
 					this.SelectedPrinterConfiguration.ImagePath = this.ImagePath;
 					this.SelectedPrinterConfiguration.Filters = JsonConvert.SerializeObject(this.Filters.ToArray());
+					this.SelectedPrinterConfiguration.PhysicalPrinter = JsonConvert.SerializeObject(this.PhysicalPrinter);
 
 					//
 					// Track the current item.
@@ -513,19 +534,13 @@ namespace VirtualPrinter.ViewModels
 					//
 					if (this.SelectedPrinterConfiguration.Id == 0)
 					{
-						(int result, IPrinterConfiguration newItem) = await repository.AddAsync(context, this.SelectedPrinterConfiguration);
+						(int result, IPrinterConfiguration newItem) = await repository.AddAsync(context, this.SelectedPrinterConfiguration.Item);
 						id = newItem.Id;
 					}
 					else
 					{
-						int result = await repository.UpdateAsync(context, this.SelectedPrinterConfiguration);
+						int result = await repository.UpdateAsync(context, this.SelectedPrinterConfiguration.Item);
 					}
-
-					////
-					//// Make sure the image path exists.
-					////
-					//DirectoryInfo dir = new(this.ImagePath);
-					//dir.Create();
 
 					//
 					// Reload the list and select this object.
@@ -552,7 +567,7 @@ namespace VirtualPrinter.ViewModels
 						// Get a writable repository.
 						//
 						using IWritableRepository<IPrinterConfiguration> repository = await this.RepositoryFactory.GetWritableAsync<IPrinterConfiguration>();
-						int affected = await repository.DeleteAsync(context, this.SelectedPrinterConfiguration);
+						int affected = await repository.DeleteAsync(context, this.SelectedPrinterConfiguration.Item);
 
 						if (affected > 0)
 						{
@@ -595,9 +610,12 @@ namespace VirtualPrinter.ViewModels
 				item.ResolutionInDpmm = this.SelectedPrinterConfiguration.ResolutionInDpmm;
 				item.RotationAngle = this.SelectedPrinterConfiguration.RotationAngle;
 				item.ImagePath = this.SelectedPrinterConfiguration.ImagePath;
+				item.Filters = this.SelectedPrinterConfiguration?.Filters;
+				item.PhysicalPrinter = this.SelectedPrinterConfiguration?.PhysicalPrinter;
 
-				this.PrinterConfigurations.Add(item);
-				this.SelectedPrinterConfiguration = item;
+				PrinterConfigurationViewModel viewModelItem = new(item);
+				this.PrinterConfigurations.Add(viewModelItem);
+				this.SelectedPrinterConfiguration = viewModelItem;
 				this.Changes = true;
 			}
 		}
@@ -632,6 +650,35 @@ namespace VirtualPrinter.ViewModels
 			//{
 
 			//}
+			finally
+			{
+
+			}
+
+			return Task.CompletedTask;
+		}
+
+		protected Task PrinterEditCommandAsync()
+		{
+			try
+			{
+				//
+				// Get the view.
+				//
+				EditPrinterView view = this.ServiceProvider.GetService<EditPrinterView>();
+				view.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+				view.ViewModel.PhysicalPrinter = this.PhysicalPrinter;
+
+				//
+				// Show the dialog.
+				//
+				_ = view.ShowDialog();
+
+				if (view.ViewModel.Updated)
+				{
+					this.PhysicalPrinter = view.ViewModel.PhysicalPrinter;
+				}
+			}
 			finally
 			{
 

@@ -34,7 +34,7 @@ namespace VirtualPrinter.Db.Ef
 
 			modelBuilder.Entity<PrinterConfiguration>().HasData(new PrinterConfiguration[]
 			{
-				new PrinterConfiguration()
+				new()
 				{
 					Id = 1,
 					Name = "4x6 w/0˚ Rotation",
@@ -48,7 +48,7 @@ namespace VirtualPrinter.Db.Ef
 					ImagePath = FileLocations.ImageCache.FullName,
 					Filters = defaultFilters
 				},
-				new PrinterConfiguration()
+				new()
 				{
 					Id = 2,
 					Name = "4x6 w/90˚ Rotation",
@@ -62,7 +62,7 @@ namespace VirtualPrinter.Db.Ef
 					ImagePath = FileLocations.ImageCache.FullName,
 					Filters = defaultFilters
 				},
-				new PrinterConfiguration()
+				new()
 				{
 					Id = 3,
 					Name = "4x6 w/180˚ Rotation",
@@ -76,7 +76,7 @@ namespace VirtualPrinter.Db.Ef
 					ImagePath = FileLocations.ImageCache.FullName,
 					Filters = defaultFilters
 				},
-				new PrinterConfiguration()
+				new()
 				{
 					Id = 4,
 					Name = "4x6 w/270˚ Rotation",
@@ -90,7 +90,7 @@ namespace VirtualPrinter.Db.Ef
 					ImagePath = FileLocations.ImageCache.FullName,
 					Filters = defaultFilters
 				},
-				new PrinterConfiguration()
+				new()
 				{
 					Id = 5,
 					Name = "2x2",
@@ -108,7 +108,7 @@ namespace VirtualPrinter.Db.Ef
 
 			modelBuilder.Entity<ApplicationVersion>().HasData(new ApplicationVersion[]
 			{
-				new ApplicationVersion()
+				new()
 				{
 					Id = 1,
 					Name = "2.2.0"
@@ -121,27 +121,31 @@ namespace VirtualPrinter.Db.Ef
 			try
 			{
 				//
-				// This will throw an exception if the table does not exist. The table\
-
+				// This will throw an exception if the field does not exist.
 				//
-				_ = this.ApplicationVersions.Any();
+				_ = this.PrinterConfigurations.First();
 			}
 			catch (SqliteException ex)
 			{
-				if (ex.Message == "SQLite Error 1: 'no such table: ApplicationVersion'.")
+				if (ex.Message == "SQLite Error 1: 'no such column: p.PhysicalPrinter'.")
 				{
-					this.Database.ExecuteSqlRaw("ALTER TABLE PrinterConfiguration ADD Filters TEXT;");
-					this.Database.ExecuteSqlRaw("CREATE TABLE \"ApplicationVersion\" (\r\n\t\"ApplicationVersionnId\"\tINTEGER NOT NULL,\r\n\t\"Name\"\tTEXT,\r\n\tCONSTRAINT \"PK_ApplicationVersion\" PRIMARY KEY(\"ApplicationVersionnId\" AUTOINCREMENT)\r\n);");
+					//
+					// Update the table.
+					//
+					this.Database.ExecuteSqlRaw("ALTER TABLE PrinterConfiguration ADD PhysicalPrinter TEXT;");
 
+					//
+					// Set the default field value.
+					//
 					foreach (PrinterConfiguration item in this.PrinterConfigurations)
 					{
-						item.Filters = "[]";
+						item.PhysicalPrinter = "{}";
 					}
 
-					this.ApplicationVersions.Add(new ApplicationVersion()
-					{
-						Name = "2.2.0"
-					});
+					//
+					// Update the version.
+					//
+					this.ApplicationVersions.First().Name = "3.0.0";
 
 					await this.SaveChangesAsync();
 				}

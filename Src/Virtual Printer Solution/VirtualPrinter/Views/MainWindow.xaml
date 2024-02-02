@@ -139,6 +139,11 @@
 					</MenuItem.Icon>
 				</MenuItem>
 			</MenuItem>
+			<MenuItem Header="_Connection">
+				<MenuItem Header="_Test Labelary"
+						  Command="{Binding TestLabelaryCommand}">
+				</MenuItem>
+			</MenuItem>
 			<MenuItem Header="_Options">
 				<MenuItem Header="_Global Settings"
 						  Command="{Binding GlobalSettingsCommand}">

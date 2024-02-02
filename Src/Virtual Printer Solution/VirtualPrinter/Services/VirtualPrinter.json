@@ -50,8 +50,18 @@
 			"Lifetime": "Transient"
 		},
 		{
+			"ServiceType": "VirtualPrinter.Views.EditPrinterView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.EditPrinterView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
 			"ServiceType": "VirtualPrinter.Views.GlobalSettingsView, VirtualPrinter",
 			"ImplementationType": "VirtualPrinter.Views.GlobalSettingsView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.TestLabelaryView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.TestLabelaryView, VirtualPrinter",
 			"Lifetime": "Transient"
 		},
 		{
@@ -80,6 +90,11 @@
 			"Lifetime": "Transient"
 		},
 		{
+			"ServiceType": "VirtualPrinter.ViewModels.EditPrinterViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.EditPrinterViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
 			"ServiceType": "VirtualPrinter.ViewModels.GlobalSettingsViewModel, VirtualPrinter",
 			"ImplementationType": "VirtualPrinter.ViewModels.GlobalSettingsViewModel, VirtualPrinter",
 			"Lifetime": "Transient"
@@ -90,6 +105,14 @@
 			"Lifetime": "Transient"
 		},
 		{
+			"ServiceType": "VirtualPrinter.ViewModels.TestLabelaryViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.TestLabelaryViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		//
+		// Hosted Services
+		//
+		{
 			"ServiceType": "VirtualPrinter.Client.TcpListenerClientHandler, VirtualPrinter",
 			"ImplementationType": "VirtualPrinter.Client.TcpListenerClientHandler, VirtualPrinter",
 			"Lifetime": "Transient"
@@ -97,6 +120,11 @@
 		{
 			"ServiceType": "<IHostedService>",
 			"ImplementationType": "VirtualPrinter.HostedServices.TcpListenerService, VirtualPrinter",
+			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "<IHostedService>",
+			"ImplementationType": "VirtualPrinter.HostedServices.PrintServer, VirtualPrinter",
 			"Lifetime": "Singleton"
 		}
 	]

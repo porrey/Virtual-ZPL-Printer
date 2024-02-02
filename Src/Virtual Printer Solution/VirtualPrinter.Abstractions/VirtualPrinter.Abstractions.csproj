@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Version>3.0.2</Version>
+    <FileVersion>3.0.2</FileVersion>
+    <AssemblyVersion>3.0.2</AssemblyVersion>
+  </PropertyGroup>
+
+</Project>

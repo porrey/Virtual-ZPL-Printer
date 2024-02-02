@@ -2,12 +2,12 @@
 An Ethernet based virtual Zebra Label Printer that can be used to test applications that produce bar code labels. This application uses the Labelary service found at [http://labelary.com](http://labelary.com/service.html).
 
 ## Latest Release
-[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Installer/Virtual%20ZPL%20Printer%20Setup.msi) (v 3.0.1)
+[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Installer/Virtual%20ZPL%20Printer%20Setup.msi) (v 3.0.2)
 
 Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have the .NET 8.0 Framework installed automatically.
 
-###### Version 3.0.1 Updates:
-1. Added support to specify the cached image file name in ZPL using a comment such as `^FX ImageFileName: USPS-Shipping`. The file numbering is still controlled by the application (as well as page numbering when a ZPL file contains more than one label).
+###### Version 3.0.2 Updates:
+1. Added menu option to test Labelary connectivity.
 
 ## Screen Shots
 
@@ -18,6 +18,9 @@ Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have th
 ![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-03.png)
 
 ## History
+###### Version 3.0.1 Updates:
+1. Added support to specify the cached image file name in ZPL using a comment such as `^FX ImageFileName: USPS-Shipping`. The file numbering is still controlled by the application (as well as page numbering when a ZPL file contains more than one label).
+
 ###### Version 3.0.0 Updates:
 1. Updated to .NET 8.0
 2. Merged Pull-Request: Avoid splitting large messages | Make encoding configurable #37

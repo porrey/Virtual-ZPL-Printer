@@ -21,16 +21,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Diamond.Core.Repository;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
@@ -61,6 +57,7 @@ namespace VirtualPrinter.ViewModels
 			this.EditCommand = new DelegateCommand(() => _ = this.EditPrinterConfigurationAsync(), () => !this.IsBusy && !this.IsRunning);
 			this.GlobalSettingsCommand = new DelegateCommand(() => _ = this.GlobalSettingsAsync(), () => true);
 			this.AboutCommand = new DelegateCommand(() => _ = this.AboutAsync(), () => true);
+			this.TestLabelaryCommand = new DelegateCommand(() => _ = this.TestLabelaryAsync(), () => true);
 
 			//
 			// Load the printer configurations.
@@ -130,7 +127,7 @@ namespace VirtualPrinter.ViewModels
 		protected CancellationTokenSource TokenSource { get; set; }
 
 		public ObservableCollection<IStoredImage> Labels { get; } = new ObservableCollection<IStoredImage>();
-		public ObservableCollection<IPrinterConfiguration> PrinterConfigurations { get; } = new ObservableCollection<IPrinterConfiguration>();
+		public ObservableCollection<PrinterConfigurationViewModel> PrinterConfigurations { get; } = [];
 
 		public DelegateCommand StartCommand { get; set; }
 		public DelegateCommand StopCommand { get; set; }
@@ -141,19 +138,20 @@ namespace VirtualPrinter.ViewModels
 		public DelegateCommand EditCommand { get; set; }
 		public DelegateCommand AboutCommand { get; set; }
 		public DelegateCommand GlobalSettingsCommand { get; set; }
+		public DelegateCommand TestLabelaryCommand { get; set; }
 
-		private IPrinterConfiguration _printerConfiguration = null;
-		public IPrinterConfiguration SelectedPrinterConfiguration
+		private PrinterConfigurationViewModel _printerConfiguration = null;
+		public PrinterConfigurationViewModel SelectedPrinterConfiguration
 		{
 			get
 			{
-				return _printerConfiguration;
+				return this._printerConfiguration;
 			}
 			set
 			{
-				bool pathChanged = _printerConfiguration?.ImagePath != value?.ImagePath;
+				bool pathChanged = this._printerConfiguration?.ImagePath != value?.ImagePath;
 
-				this.SetProperty(ref _printerConfiguration, value);
+				this.SetProperty(ref this._printerConfiguration, value);
 				this.RefreshCommands();
 
 				if (pathChanged)
@@ -168,11 +166,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _selectedLabel;
+				return this._selectedLabel;
 			}
 			set
 			{
-				this.SetProperty(ref _selectedLabel, value);
+				this.SetProperty(ref this._selectedLabel, value);
 
 				if (this.SelectedLabel != null)
 				{
@@ -199,11 +197,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _isBusy;
+				return this._isBusy;
 			}
 			set
 			{
-				this.SetProperty(ref _isBusy, value);
+				this.SetProperty(ref this._isBusy, value);
 				this.RefreshCommands();
 			}
 		}
@@ -213,11 +211,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _isRunning;
+				return this._isRunning;
 			}
 			set
 			{
-				this.SetProperty(ref _isRunning, value);
+				this.SetProperty(ref this._isRunning, value);
 				this.RefreshCommands();
 			}
 		}
@@ -227,11 +225,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _statusText;
+				return this._statusText;
 			}
 			set
 			{
-				this.SetProperty(ref _statusText, value);
+				this.SetProperty(ref this._statusText, value);
 			}
 		}
 
@@ -240,11 +238,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _autoStart;
+				return this._autoStart;
 			}
 			set
 			{
-				this.SetProperty(ref _autoStart, value);
+				this.SetProperty(ref this._autoStart, value);
 			}
 		}
 
@@ -296,7 +294,10 @@ namespace VirtualPrinter.ViewModels
 					//
 					// Load the printer configurations.
 					//
-					IEnumerable<IPrinterConfiguration> items = (await repository.AsQueryable().GetQueryableAsync(context)).OrderBy(t => t.Id).ToArray();
+					IQueryable<PrinterConfigurationViewModel> items = from tbl in repository.AsQueryable().GetQueryable(context)
+																	  orderby tbl.Id
+																	  select new PrinterConfigurationViewModel(tbl);
+
 					this.PrinterConfigurations.AddRange(items);
 				}
 			}
@@ -341,6 +342,7 @@ namespace VirtualPrinter.ViewModels
 				//
 				this.EventAggregator.GetEvent<StartEvent>().Publish(new StartEventArgs()
 				{
+					PrinterConfiguration = this.SelectedPrinterConfiguration.Item,
 					LabelConfiguration = new()
 					{
 						Dpmm = this.SelectedPrinterConfiguration.ResolutionInDpmm,
@@ -613,6 +615,14 @@ namespace VirtualPrinter.ViewModels
 		public Task GlobalSettingsAsync()
 		{
 			GlobalSettingsView view = this.ServiceProvider.GetService<GlobalSettingsView>();
+			view.ShowDialog();
+
+			return Task.CompletedTask;
+		}
+
+		public Task TestLabelaryAsync()
+		{
+			TestLabelaryView view = this.ServiceProvider.GetService<TestLabelaryView>();
 			view.ShowDialog();
 
 			return Task.CompletedTask;

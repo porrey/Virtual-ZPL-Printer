@@ -8,9 +8,9 @@
 		<AssemblyName>VirtualPrinter</AssemblyName>
 		<StartupObject>VirtualPrinter.App</StartupObject>
 		<RootNamespace>VirtualPrinter</RootNamespace>
-		<Version>3.0.1</Version>
-		<FileVersion>3.0.1</FileVersion>
-		<AssemblyVersion>3.0.1</AssemblyVersion>
+		<Version>3.0.2</Version>
+		<FileVersion>3.0.2</FileVersion>
+		<AssemblyVersion>3.0.2</AssemblyVersion>
 		<Nullable>disable</Nullable>
 		<SignAssembly>False</SignAssembly>
 	</PropertyGroup>
@@ -58,53 +58,112 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Diamond.Core.Repository" Version="8.0.0" />
+		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Diamond.Core.Wpf" Version="8.0.0" />
+		<PackageReference Include="Prism.Wpf" Version="8.1.97" />
+		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.0" />
+		<PackageReference Include="System.DisposableObject" Version="8.0.0" />
+		<PackageReference Include="System.Drawing.Common" Version="8.0.1" />
+		<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ImageCache.Abstractions\ImageCache.Abstractions.csproj" />
+		<ProjectReference Include="..\ImageCache.Repository\ImageCache.Repository.csproj" />
+		<ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
+		<ProjectReference Include="..\Labelary.Service\Labelary.Service.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Abstractions\VirtualPrinter.Abstractions.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Db.Ef\VirtualPrinter.Db.Ef.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\8.0.0\contentFiles\any\net8.0\Services\Diamond.Core.Repository.Abstractions.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.0\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+		<None Update="Samples\2x2 Product Label %288 dpmm%29.zpl">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
+		<None Update="Samples\4x6 Shipping Label %288 dpmm%29.zpl">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
+		<None Update="Samples\4x6 USPS Shipping Label (8 dpmm).zpl">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Page Update="Views\ConfigurationView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Include="appsettings.json">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\add-printer-configuration.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\browse.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\clone-printer-configuration.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\filter-add.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\filter-delete.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\filter-down.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\filter-edit.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\filter-to.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\filter-up.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\send.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\undo.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\clear-label.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\close.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\delete-printer-configuration.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\edit-printer-configuration.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\idle.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -122,16 +181,16 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\printer-configuration.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\printer-running-base.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\rotate.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\save-printer-configuration.png">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\small-label.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -173,61 +232,4 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Repository" Version="8.0.0" />
-		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="8.0.0" />
-		<PackageReference Include="Diamond.Core.Wpf" Version="8.0.0" />
-		<PackageReference Include="Prism.Wpf" Version="8.1.97" />
-		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.0" />
-		<PackageReference Include="System.DisposableObject" Version="8.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\ImageCache.Abstractions\ImageCache.Abstractions.csproj" />
-		<ProjectReference Include="..\ImageCache.Repository\ImageCache.Repository.csproj" />
-		<ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
-		<ProjectReference Include="..\Labelary.Service\Labelary.Service.csproj" />
-		<ProjectReference Include="..\VirtualPrinter.Db.Ef\VirtualPrinter.Db.Ef.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Update="Properties\Settings.Designer.cs">
-			<DesignTimeSharedInput>True</DesignTimeSharedInput>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Settings.settings</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\8.0.0\contentFiles\any\net8.0\Services\Diamond.Core.Repository.Abstractions.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.0\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="Properties\Settings.settings">
-			<Generator>SettingsSingleFileGenerator</Generator>
-			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
-		</None>
-		<None Update="Samples\2x2 Product Label %288 dpmm%29.zpl">
-		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
-		<None Update="Samples\4x6 Shipping Label %288 dpmm%29.zpl">
-		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
-		<None Update="Samples\4x6 USPS Shipping Label (8 dpmm).zpl">
-		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Page Update="Views\ConfigurationView.xaml">
-	    <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-	  </Page>
-	</ItemGroup>
-
 </Project>

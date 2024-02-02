@@ -26,6 +26,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Prism.Events;
 using VirtualPrinter.Client;
+using VirtualPrinter.Db.Abstractions;
 using VirtualPrinter.Events;
 
 namespace VirtualPrinter.HostedServices
@@ -40,6 +41,7 @@ namespace VirtualPrinter.HostedServices
 
 			_ = this.EventAggregator.GetEvent<StartEvent>().Subscribe(async (e) =>
 			  {
+				  this.PrinterConfiguration = e.PrinterConfiguration;
 				  this.LabelConfiguration = e.LabelConfiguration;
 				  this.IpAddress = e.IpAddress;
 				  this.Port = e.Port;
@@ -49,6 +51,7 @@ namespace VirtualPrinter.HostedServices
 
 			_ = this.EventAggregator.GetEvent<StopEvent>().Subscribe(async (e) =>
 			  {
+				  this.PrinterConfiguration = null;
 				  this.LabelConfiguration = null;
 				  this.Port = 0;
 				  this.ImagePathRoot = null;
@@ -59,6 +62,7 @@ namespace VirtualPrinter.HostedServices
 
 		protected IEventAggregator EventAggregator { get; set; }
 		protected bool IsRunning { get; set; }
+		protected IPrinterConfiguration PrinterConfiguration { get; set; }
 		protected LabelConfiguration LabelConfiguration { get; set; }
 		protected IPAddress IpAddress { get; set; }
 		protected int Port { get; set; }
@@ -98,7 +102,7 @@ namespace VirtualPrinter.HostedServices
 										  // Start the client.
 										  //
 										  TcpListenerClientHandler clientService = scope.ServiceProvider.GetRequiredService<TcpListenerClientHandler>();
-										  _ = clientService.StartSessionAsync(tcpClient, this.LabelConfiguration, this.ImagePathRoot);
+										  _ = clientService.StartSessionAsync(tcpClient, this.PrinterConfiguration, this.LabelConfiguration, this.ImagePathRoot);
 									  }
 								  }
 								  catch (TaskCanceledException)
@@ -142,7 +146,7 @@ namespace VirtualPrinter.HostedServices
 				this.Listener = new TcpListener(this.IpAddress, this.Port);
 				this.Listener.Start();
 				_ = this.ResetEvent.Set();
-				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = true });
+				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { PrinterConfiguration = this.PrinterConfiguration, IsRunning = true });
 				this.IsRunning = true;
 				returnValue = true;
 			}
@@ -155,13 +159,13 @@ namespace VirtualPrinter.HostedServices
 					message = "Address/port already in use.";
 				}
 
-				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = message });
+				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { PrinterConfiguration = this.PrinterConfiguration, IsRunning = false, IsError = true, ErrorMessage = message });
 				_ = this.ResetEvent.Reset();
 				returnValue = false;
 			}
 			catch (Exception ex)
 			{
-				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });
+				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { PrinterConfiguration = this.PrinterConfiguration, IsRunning = false, IsError = true, ErrorMessage = ex.Message });
 				_ = this.ResetEvent.Reset();
 				returnValue = false;
 			}
@@ -178,11 +182,11 @@ namespace VirtualPrinter.HostedServices
 				this.SocketCancellationTokenSource.Cancel();
 				await Task.Delay(0);
 				this.Listener.Stop();
-				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false });
+				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { PrinterConfiguration = this.PrinterConfiguration, IsRunning = false });
 			}
 			catch (Exception ex)
 			{
-				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });
+				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { PrinterConfiguration = this.PrinterConfiguration, IsRunning = false, IsError = true, ErrorMessage = ex.Message });
 				returnValue = false;
 			}
 			finally

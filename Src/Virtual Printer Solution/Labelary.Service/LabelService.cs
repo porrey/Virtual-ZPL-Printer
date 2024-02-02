@@ -27,7 +27,7 @@ namespace Labelary.Service
 {
 	public class LabelService : ILabelService
 	{
-		private static readonly string BaseUrl = "http://api.labelary.com/v1/printers";
+		public string BaseUrl => "http://api.labelary.com/v1/printers";
 
 		public async Task<IGetLabelResponse> GetLabelAsync(ILabelConfiguration labelConfiguration, string zpl, int labelIndex = 0)
 		{
@@ -50,7 +50,7 @@ namespace Labelary.Service
 
 						if (width <= 15 && height <= 15)
 						{
-							string url = $"{BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width:#.##}x{height:#.##}/{labelIndex}/";
+							string url = $"{this.BaseUrl}/{labelConfiguration.Dpmm}dpmm/labels/{width:#.##}x{height:#.##}/{labelIndex}/";
 
 							using (HttpResponseMessage response = await client.PostAsync(url, content))
 							{

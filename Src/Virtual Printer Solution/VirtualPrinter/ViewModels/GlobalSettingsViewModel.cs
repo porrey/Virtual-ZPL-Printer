@@ -37,11 +37,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _receiveTimeout;
+				return this._receiveTimeout;
 			}
 			set
 			{
-				this.SetProperty(ref _receiveTimeout, value);
+				this.SetProperty(ref this._receiveTimeout, value);
 			}
 		}
 
@@ -50,11 +50,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _sendTimeout;
+				return this._sendTimeout;
 			}
 			set
 			{
-				this.SetProperty(ref _sendTimeout, value);
+				this.SetProperty(ref this._sendTimeout, value);
 			}
 		}
 
@@ -63,11 +63,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _receiveBufferSize;
+				return this._receiveBufferSize;
 			}
 			set
 			{
-				this.SetProperty(ref _receiveBufferSize, value);
+				this.SetProperty(ref this._receiveBufferSize, value);
 			}
 		}
 
@@ -76,11 +76,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _sendBufferSize;
+				return this._sendBufferSize;
 			}
 			set
 			{
-				this.SetProperty(ref _sendBufferSize, value);
+				this.SetProperty(ref this._sendBufferSize, value);
 			}
 		}
 
@@ -89,11 +89,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _noDelay;
+				return this._noDelay;
 			}
 			set
 			{
-				this.SetProperty(ref _noDelay, value);
+				this.SetProperty(ref this._noDelay, value);
 			}
 		}
 
@@ -102,11 +102,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _linger;
+				return this._linger;
 			}
 			set
 			{
-				this.SetProperty(ref _linger, value);
+				this.SetProperty(ref this._linger, value);
 			}
 		}
 
@@ -115,28 +115,28 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _lingerTime;
+				return this._lingerTime;
 			}
 			set
 			{
-				this.SetProperty(ref _lingerTime, value);
+				this.SetProperty(ref this._lingerTime, value);
 			}
 		}
 
 		private string _receivedDataEncoding = "utf-8";
 		public string ReceivedDataEncoding
 		{
-		get
-		{
-			return _receivedDataEncoding;
-		}
-		set
-		{
-			this.SetProperty(ref _receivedDataEncoding, value);
-		}
+			get
+			{
+				return this._receivedDataEncoding;
+			}
+			set
+			{
+				this.SetProperty(ref this._receivedDataEncoding, value);
+			}
 		}
 
-    public Task InitializeAsync()
+		public Task InitializeAsync()
 		{
 			this.ReceiveTimeout = Properties.Settings.Default.ReceiveTimeout;
 			this.SendTimeout = Properties.Settings.Default.SendTimeout;
