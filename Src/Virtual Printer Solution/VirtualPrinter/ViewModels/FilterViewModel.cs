@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Prism.Commands;
@@ -31,10 +30,10 @@ namespace VirtualPrinter.ViewModels
 	{
 		public FilterViewModel()
 		{
-			this.AddCommand = new DelegateCommand(async () => await this.AddCommandAsync(), () => true);
-			this.DeleteCommand = new DelegateCommand(async () => await this.DeleteCommandAsync(), () => this.Priority > 0);
-			this.UpCommand = new DelegateCommand(async () => await this.UpCommandAsync(), () => this.Priority > 1);
-			this.DownCommand = new DelegateCommand(async () => await this.DownCommandAsync(), () => this.Priority != this.FilterCount);
+			this.AddCommand = new(async () => await this.AddCommandAsync(), () => true);
+			this.DeleteCommand = new(async () => await this.DeleteCommandAsync(), () => this.Priority > 0);
+			this.UpCommand = new(async () => await this.UpCommandAsync(), () => this.Priority > 1);
+			this.DownCommand = new(async () => await this.DownCommandAsync(), () => this.Priority != this.FilterCount);
 		}
 
 		public FilterViewModel(IEventAggregator eventAggregator, int prioirty = 0)
@@ -55,11 +54,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _eventAggregator;
+				return this._eventAggregator;
 			}
 			set
 			{
-				this.SetProperty(ref _eventAggregator, value);
+				this.SetProperty(ref this._eventAggregator, value);
 				this.EventAggregator.GetEvent<FilterCountEvent>().Subscribe((e) => this.OnFilterCountChanged(e), ThreadOption.UIThread);
 			}
 		}
@@ -81,11 +80,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _priority;
+				return this._priority;
 			}
 			set
 			{
-				this.SetProperty(ref _priority, value);
+				this.SetProperty(ref this._priority, value);
 
 				if (this.EventAggregator != null)
 				{
@@ -101,11 +100,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _find;
+				return this._find;
 			}
 			set
 			{
-				this.SetProperty(ref _find, value);
+				this.SetProperty(ref this._find, value);
 
 				if (this.Priority == 0 && !string.IsNullOrWhiteSpace(this.Find))
 				{
@@ -126,11 +125,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _replace;
+				return this._replace;
 			}
 			set
 			{
-				this.SetProperty(ref _replace, value);
+				this.SetProperty(ref this._replace, value);
 
 				if (this.Priority == 0 && !string.IsNullOrWhiteSpace(this.Replace))
 				{
@@ -151,11 +150,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _treatAsRegularExpression;
+				return this._treatAsRegularExpression;
 			}
 			set
 			{
-				this.SetProperty(ref _treatAsRegularExpression, value);
+				this.SetProperty(ref this._treatAsRegularExpression, value);
 
 				if (this.EventAggregator != null)
 				{

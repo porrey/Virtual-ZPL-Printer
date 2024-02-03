@@ -15,7 +15,9 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using ImageCache.Abstractions;
+using Labelary.Abstractions;
 using Prism.Events;
 using VirtualPrinter.Db.Abstractions;
 
@@ -32,5 +34,6 @@ namespace VirtualPrinter.Events
 		public IStoredImage Label { get; set; }
 		public bool Result { get; set; }
 		public string Message { get; set; }
+		public IEnumerable<Warning> Warnings { get; set; }
 	}
 }

@@ -16,7 +16,6 @@
  */
 using System;
 using System.Net;
-using System.Net.Http;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Labelary.Abstractions;
@@ -31,8 +30,8 @@ namespace VirtualPrinter.ViewModels
 			: base()
 		{
 			this.LabelService = labelService;
-			this.StartCommand = new DelegateCommand(async () => await this.StartCommandAsync(), () => !this.Running);
-			this.CloseCommand = new DelegateCommand(async () => await this.CloseCommandAsync(), () => !this.Running);
+			this.StartCommand = new(async () => await this.StartCommandAsync(), () => !this.Running);
+			this.CloseCommand = new(async () => await this.CloseCommandAsync(), () => !this.Running);
 		}
 
 		protected ILabelService LabelService { get; set; }
@@ -79,13 +78,13 @@ namespace VirtualPrinter.ViewModels
 			{
 				this.Running = true;
 				this.Text = string.Empty;
-				this.Text += $"Testing connectivity to '{this.LabelService.BaseUrl}'";
+				this.Text += $"Testing connectivity to '{this.LabelService.LabelServiceConfiguration.BaseUrl}'";
 				await Task.Delay(250);
 
 				//
 				// Parse the URL.
 				//
-				Uri uri = new(this.LabelService.BaseUrl);
+				Uri uri = new(this.LabelService.LabelServiceConfiguration.BaseUrl);
 
 				//
 				// Check DNS.
@@ -129,20 +128,33 @@ namespace VirtualPrinter.ViewModels
 					//
 					// Check web method connection
 					//
-					this.Text += $"{Environment.NewLine}Checking '{uri.Scheme}' connection";
+					this.Text += $"{Environment.NewLine}Checking {uri.Scheme.ToUpper()}/{this.LabelService.LabelServiceConfiguration.Method} API method connection";
 
-					using (HttpClient client = new())
+					//
+					// Create a basic configuration.
+					//
+					ILabelConfiguration labelConfiguration = new LabelConfiguration()
 					{
-						HttpResponseMessage response = await client.GetAsync(uri.OriginalString);
+						Dpmm = 8,
+						LabelFilters = [],
+						LabelHeight = 6,
+						LabelWidth = 4,
+						Unit = UnitsNet.Units.LengthUnit.Inch,
+						LabelRotation = 0
+					};
 
-						if (response.StatusCode == HttpStatusCode.MethodNotAllowed)
-						{
-							this.Text += $"{Environment.NewLine}'{uri.Scheme}' connection was successful [OK]";
-						}
-						else
-						{
-							this.Text += $"{Environment.NewLine}'{uri.Scheme}' connection was unsuccessful [FAILED]";
-						}
+					//
+					// Call to get a very basic label.
+					//
+					IGetLabelResponse response = await this.LabelService.GetLabelAsync(labelConfiguration, "^XA\r\n^FO10,10^FDTEST^FS\r\n^XZ", 0);
+
+					if (response != null && response.Result)
+					{
+						this.Text += $"{Environment.NewLine}{uri.Scheme.ToUpper()}/{this.LabelService.LabelServiceConfiguration.Method} API method connection was successful [OK]";
+					}
+					else
+					{
+						this.Text += $"{Environment.NewLine}{uri.Scheme.ToUpper()}/{this.LabelService.LabelServiceConfiguration.Method} API method connection was unsuccessful [FAILED]";
 					}
 				}
 				else

@@ -3,23 +3,77 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:VirtualPrinter.Views"
 		mc:Ignorable="d"
 		Title="Global Settings"
 		Icon="/virtual-printer.ico"
 		ResizeMode="NoResize"
 		WindowStyle="ThreeDBorderWindow"
 		WindowStartupLocation="CenterOwner"
-		Height="300"
+		Height="450"
 		Width="550">
 
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="40" />
 		</Grid.RowDefinitions>
 
-		<GroupBox Margin="10"
+		<GroupBox Grid.Row="0"
+				  Margin="10"
+				  Header="Labelary">
+			<Grid Margin="10">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="7*" />
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<TextBlock Grid.Column="0"
+						   Grid.Row="0"
+						   Text="API URL"
+						   Margin="0,5,0,5"
+						   VerticalAlignment="Center" />
+				<TextBox Grid.Column="1"
+						 Grid.Row="0"
+						 Text="{Binding ApiUrl, Mode=TwoWay}"
+						 Margin="0,5,5,5"
+						 VerticalAlignment="Center" />
+
+				<TextBlock Grid.Column="0"
+						   Grid.Row="1"
+						   Text="Method"
+						   Margin="0,5,0,5"
+						   VerticalAlignment="Center" />
+				<ComboBox Grid.Column="1"
+						  Grid.Row="1"
+						  Text="{Binding ApiMethod, Mode=TwoWay}"
+						  Margin="0,5,5,5"
+						  Width="100"
+						  HorizontalAlignment="Left"
+						  VerticalAlignment="Center">
+					<ComboBoxItem>POST</ComboBoxItem>
+					<ComboBoxItem>GET</ComboBoxItem>
+				</ComboBox>
+
+				<CheckBox  Grid.Column="0"
+						   Grid.ColumnSpan="2"
+						   Grid.Row="2"
+						   IsChecked="{Binding ApiLinting, Mode=TwoWay}"
+						   Content="Enable Linting"
+						   Margin="0,5,0,5"
+						   VerticalAlignment="Center">
+				</CheckBox>
+			</Grid>
+		</GroupBox>
+
+		<GroupBox Grid.Row="1"
+				  Margin="10"
 				  Header="TCP Settings">
 
 			<StackPanel Orientation="Vertical">
@@ -45,77 +99,91 @@
 					<TextBlock Grid.Column="0"
 							   Grid.Row="0"
 							   Text="Receive Timeout (ms)"
-							   Margin="0,5,0,5" />
+							   Margin="0"
+							   VerticalAlignment="Center" />
 					<TextBox Grid.Column="1"
 							 Grid.Row="0"
 							 Text="{Binding ReceiveTimeout, Mode=TwoWay}"
-							 Margin="0,5,5,5"
-							 InputScope="NumberFullWidth" />
+							 Margin="0,0,5,0"
+							 InputScope="NumberFullWidth"
+							 VerticalAlignment="Center" />
 
 					<TextBlock Grid.Column="2"
 							   Grid.Row="0"
 							   Text="Send Timeout (ms)"
-							   Margin="5,5,0,5" />
+							   Margin="0,5,0,5"
+							   VerticalAlignment="Center" />
 					<TextBox Grid.Column="3"
 							 Grid.Row="0"
 							 Text="{Binding SendTimeout, Mode=TwoWay}"
-							 Margin="0,5,0,5"
-							 InputScope="NumberFullWidth" />
+							 Margin="0,0,5,0"
+							 InputScope="NumberFullWidth"
+							 VerticalAlignment="Center" />
 
 					<TextBlock Grid.Column="0"
 							   Grid.Row="1"
 							   Text="Receive Buffer Size (bytes)"
-							   Margin="0,5,0,5" />
+							   Margin="0,5,0,5"
+							   VerticalAlignment="Center" />
 					<TextBox Grid.Column="1"
 							 Grid.Row="1"
 							 Text="{Binding ReceiveBufferSize, Mode=TwoWay}"
-							 Margin="0,5,5,5"
-							 InputScope="NumberFullWidth" />
+							 Margin="0,0,5,0"
+							 InputScope="NumberFullWidth"
+							 VerticalAlignment="Center" />
 
 					<TextBlock Grid.Column="2"
 							   Grid.Row="1"
 							   Text="Send Buffer Size (bytes)"
-							   Margin="5,5,0,5" />
+							   Margin="0,5,0,5"
+							   VerticalAlignment="Center" />
 					<TextBox Grid.Column="3"
 							 Grid.Row="1"
 							 Text="{Binding SendBufferSize, Mode=TwoWay}"
-							 Margin="0,5,0,5"
-							 InputScope="NumberFullWidth" />
+							 Margin="0,0,5,0"
+							 InputScope="NumberFullWidth"
+							 VerticalAlignment="Center" />
 
 					<CheckBox  Grid.Column="0"
 							   Grid.Row="2"
 							   IsChecked="{Binding NoDelay, Mode=TwoWay}"
 							   Content="No Delay"
-							   Margin="0,5,0,5">
+							   Margin="0,5,0,5"
+							   VerticalAlignment="Center">
 					</CheckBox>
 
 					<CheckBox  Grid.Column="0"
 							   Grid.Row="3"
 							   IsChecked="{Binding Linger, Mode=TwoWay}"
 							   Content="Linger"
-							   Margin="0,5,0,5">
+							   Margin="0,5,0,5"
+							   VerticalAlignment="Center">
 					</CheckBox>
 
 					<TextBlock Grid.Column="2"
 							   Grid.Row="3"
 							   Text="Linger Time (seconds)"
-							   Margin="5,5,0,5" />
+							   Margin="0,5,0,5"
+							   VerticalAlignment="Center" />
 					<TextBox Grid.Column="3"
 							 Grid.Row="3"
 							 Text="{Binding LingerTime, Mode=TwoWay}"
 							 Margin="0,5,0,5"
-							 InputScope="NumberFullWidth" />
+							 InputScope="NumberFullWidth"
+							 VerticalAlignment="Center" />
 
 					<TextBlock Grid.Column="0"
 							   Grid.Row="4"
 							   Text="Received Data Encoding"
-							   Margin="0,5,0,5" />
+							   Margin="0,5,0,5"
+							   VerticalAlignment="Center" />
 					<ComboBox Grid.Column="1"
 							  Grid.Row="4"
 							  Text="{Binding ReceivedDataEncoding, Mode=TwoWay}"
-							  Margin="0,5,5,5"
+							  Margin="0,0,5,0"
 							  InputScope="NumberFullWidth"
-							  SelectedIndex="0" >
+							  SelectedIndex="0"
+							  VerticalAlignment="Center">
 						<ComboBoxItem>utf-8</ComboBoxItem>
 						<ComboBoxItem>iso-8859-1</ComboBoxItem>
 					</ComboBox>
@@ -124,7 +192,7 @@
 		</GroupBox>
 
 		<!-- Buttons -->
-		<StackPanel Grid.Row="1"
+		<StackPanel Grid.Row="2"
 					Orientation="Horizontal"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Right"

@@ -15,6 +15,7 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System.Threading.Tasks;
+using Labelary.Abstractions;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -22,12 +23,15 @@ namespace VirtualPrinter.ViewModels
 {
 	public class GlobalSettingsViewModel : BindableBase
 	{
-		public GlobalSettingsViewModel()
+		public GlobalSettingsViewModel(ILabelServiceConfiguration labelServiceConfiguration)
 			: base()
 		{
-			this.OkCommand = new DelegateCommand(async () => await this.OkCommandAsync(), () => true);
-			this.CancelCommand = new DelegateCommand(async () => await this.CancelCommandAsync(), () => true);
+			this.LabelServiceConfiguration = labelServiceConfiguration;
+			this.OkCommand = new(async () => await this.OkCommandAsync(), () => true);
+			this.CancelCommand = new(async () => await this.CancelCommandAsync(), () => true);
 		}
+
+		protected ILabelServiceConfiguration LabelServiceConfiguration { get; set; }
 
 		public DelegateCommand OkCommand { get; set; }
 		public DelegateCommand CancelCommand { get; set; }
@@ -136,6 +140,45 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
+		private string _apiUrl = null;
+		public string ApiUrl
+		{
+			get
+			{
+				return this._apiUrl;
+			}
+			set
+			{
+				this.SetProperty(ref this._apiUrl, value);
+			}
+		}
+
+		private string _apiMethod = null;
+		public string ApiMethod
+		{
+			get
+			{
+				return this._apiMethod;
+			}
+			set
+			{
+				this.SetProperty(ref this._apiMethod, value);
+			}
+		}
+
+		private bool _apiLinting = false;
+		public bool ApiLinting
+		{
+			get
+			{
+				return this._apiLinting;
+			}
+			set
+			{
+				this.SetProperty(ref this._apiLinting, value);
+			}
+		}
+
 		public Task InitializeAsync()
 		{
 			this.ReceiveTimeout = Properties.Settings.Default.ReceiveTimeout;
@@ -146,6 +189,9 @@ namespace VirtualPrinter.ViewModels
 			this.Linger = Properties.Settings.Default.Linger;
 			this.LingerTime = Properties.Settings.Default.LingerTime;
 			this.ReceivedDataEncoding = Properties.Settings.Default.ReceivedDataEncoding;
+			this.ApiUrl = Properties.Settings.Default.ApiUrl;
+			this.ApiMethod = Properties.Settings.Default.ApiMethod;
+			this.ApiLinting = Properties.Settings.Default.ApiLinting;
 
 			this.RefreshCommands();
 			return Task.CompletedTask;
@@ -161,6 +207,15 @@ namespace VirtualPrinter.ViewModels
 			Properties.Settings.Default.Linger = this.Linger;
 			Properties.Settings.Default.LingerTime = this.LingerTime;
 			Properties.Settings.Default.ReceivedDataEncoding = this.ReceivedDataEncoding;
+
+			Properties.Settings.Default.ApiUrl = this.ApiUrl;
+			this.LabelServiceConfiguration.BaseUrl = this.ApiUrl;
+
+			Properties.Settings.Default.ApiMethod = this.ApiMethod;
+			this.LabelServiceConfiguration.Method = this.ApiMethod;
+
+			Properties.Settings.Default.ApiLinting = this.ApiLinting;
+			this.LabelServiceConfiguration.Linting = this.ApiLinting;
 
 			return Task.CompletedTask;
 		}

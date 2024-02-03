@@ -16,7 +16,7 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
-			<RowDefinition Height="50" />
+			<RowDefinition Height="40" />
 		</Grid.RowDefinitions>
 
 		<TextBox
@@ -27,12 +27,13 @@
 			FontFamily="Courrier"
 			FontSize="14"
 			Foreground="LightGreen"
-			Text="{Binding Text}" />
+			Text="{Binding Text}"
+			IsReadOnly="True" />
 
 		<!--  Buttons  -->
 		<StackPanel
 			Grid.Row="1"
-			Margin="0,0,0,8"
+			Margin="0,0,0,0"
 			HorizontalAlignment="Right"
 			VerticalAlignment="Center"
 			Orientation="Horizontal">

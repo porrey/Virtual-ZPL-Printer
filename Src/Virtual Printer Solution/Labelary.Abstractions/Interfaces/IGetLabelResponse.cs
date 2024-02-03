@@ -14,6 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using System.Collections.Generic;
+
 namespace Labelary.Abstractions
 {
 	public interface IGetLabelResponse
@@ -25,5 +27,7 @@ namespace Labelary.Abstractions
 		string Error { get; }
 		bool HasMultipleLabels { get; }
 		string ImageFileName { get; set; }
+		IEnumerable<Warning> Warnings { get; set; }
+		string Zpl { get; set; }
 	}
 }

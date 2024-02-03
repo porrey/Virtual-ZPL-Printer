@@ -70,6 +70,14 @@
 			"Lifetime": "Transient"
 		},
 		{
+			"ServiceType": "VirtualPrinter.Views.ZplView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.ZplView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		//
+		// View Models
+		//
+		{
 			"ServiceType": "VirtualPrinter.ViewModels.MainViewModel, VirtualPrinter",
 			"ImplementationType": "VirtualPrinter.ViewModels.MainViewModel, VirtualPrinter",
 			"Lifetime": "Singleton"
@@ -107,6 +115,11 @@
 		{
 			"ServiceType": "VirtualPrinter.ViewModels.TestLabelaryViewModel, VirtualPrinter",
 			"ImplementationType": "VirtualPrinter.ViewModels.TestLabelaryViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.ZplViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.ZplViewModel, VirtualPrinter",
 			"Lifetime": "Transient"
 		},
 		//

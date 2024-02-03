@@ -22,7 +22,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Diamond.Core.Wpf;
-using ImageCache.Abstractions;
 using Prism.Events;
 using VirtualPrinter.Events;
 using VirtualPrinter.ViewModels;
@@ -165,7 +164,7 @@ namespace VirtualPrinter.Views
 
 		private async void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
-			if (((FrameworkElement)e.OriginalSource).DataContext is IStoredImage item)
+			if (((FrameworkElement)e.OriginalSource).DataContext is StoredImageViewModel item)
 			{
 				await this.ViewModel.LabelPreviewAsync(item);
 			}

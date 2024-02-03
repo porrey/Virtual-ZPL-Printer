@@ -31,7 +31,7 @@ namespace VirtualPrinter.ViewModels
 	{
 		public SendTestViewModel()
 		{
-			this.SendCommand = new DelegateCommand(() => _ = this.SendCommandAsync(), () => this.SelectedLabelTemplate != null);
+			this.SendCommand = new(() => _ = this.SendCommandAsync(), () => this.SelectedLabelTemplate != null);
 		}
 
 		public DelegateCommand SendCommand { get; set; }
@@ -42,11 +42,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _selectedLabelTemplate;
+				return this._selectedLabelTemplate;
 			}
 			set
 			{
-				this.SetProperty(ref _selectedLabelTemplate, value);
+				this.SetProperty(ref this._selectedLabelTemplate, value);
 				this.RefreshCommands();
 
 				if (value != null)
@@ -62,11 +62,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _printerConfiguration;
+				return this._printerConfiguration;
 			}
 			set
 			{
-				this.SetProperty(ref _printerConfiguration, value);
+				this.SetProperty(ref this._printerConfiguration, value);
 				this.RefreshCommands();
 			}
 		}
@@ -76,11 +76,11 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return _zpl;
+				return this._zpl;
 			}
 			set
 			{
-				this.SetProperty(ref _zpl, value);
+				this.SetProperty(ref this._zpl, value);
 				this.RefreshCommands();
 			}
 		}

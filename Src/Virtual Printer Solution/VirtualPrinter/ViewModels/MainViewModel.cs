@@ -28,6 +28,7 @@ using Diamond.Core.Repository;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -48,16 +49,17 @@ namespace VirtualPrinter.ViewModels
 			this.ImageCacheRepository = imageCacheRepository;
 			this.RepositoryFactory = repositoryFactory;
 
-			this.StartCommand = new DelegateCommand(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning && this.SelectedPrinterConfiguration != null);
-			this.StopCommand = new DelegateCommand(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
-			this.SendTestLabelCommand = new DelegateCommand(() => _ = this.SendTestLabelAsync(), () => !this.IsBusy && this.IsRunning && this.SendTestView == null);
-			this.ClearLabelsCommand = new DelegateCommand(() => _ = this.ClearLabelsAsync(), () => !this.IsBusy && this.Labels.Count > 0);
-			this.DeleteLabelCommand = new DelegateCommand(() => _ = this.DeleteLabelAsync(), () => !this.IsBusy && this.SelectedLabel != null);
-			this.LabelPreviewCommand = new DelegateCommand(() => _ = this.LabelPreviewAsync(), () => !this.IsBusy && this.SelectedLabel != null);
-			this.EditCommand = new DelegateCommand(() => _ = this.EditPrinterConfigurationAsync(), () => !this.IsBusy && !this.IsRunning);
-			this.GlobalSettingsCommand = new DelegateCommand(() => _ = this.GlobalSettingsAsync(), () => true);
-			this.AboutCommand = new DelegateCommand(() => _ = this.AboutAsync(), () => true);
-			this.TestLabelaryCommand = new DelegateCommand(() => _ = this.TestLabelaryAsync(), () => true);
+			this.StartCommand = new(() => _ = this.StartAsync(), () => !this.IsBusy && !this.IsRunning && this.SelectedPrinterConfiguration != null);
+			this.StopCommand = new(() => _ = this.StopAsync(), () => !this.IsBusy && this.IsRunning);
+			this.SendTestLabelCommand = new(() => _ = this.SendTestLabelAsync(), () => !this.IsBusy && this.IsRunning && this.SendTestView == null);
+			this.ClearLabelsCommand = new(() => _ = this.ClearLabelsAsync(), () => !this.IsBusy && this.Labels.Count > 0);
+			this.DeleteLabelCommand = new(() => _ = this.DeleteLabelAsync(), () => !this.IsBusy && this.SelectedLabel != null);
+			this.LabelPreviewCommand = new(() => _ = this.LabelPreviewAsync(), () => !this.IsBusy && this.SelectedLabel != null);
+			this.LabelWarningsCommand = new(() => _ = this.LabelWarningAsync(), () => this.OnLabelWarningAsync());
+			this.EditCommand = new(() => _ = this.EditPrinterConfigurationAsync(), () => !this.IsBusy && !this.IsRunning);
+			this.GlobalSettingsCommand = new(() => _ = this.GlobalSettingsAsync(), () => true);
+			this.AboutCommand = new(() => _ = this.AboutAsync(), () => true);
+			this.TestLabelaryCommand = new(() => _ = this.TestLabelaryAsync(), () => true);
 
 			//
 			// Load the printer configurations.
@@ -88,14 +90,14 @@ namespace VirtualPrinter.ViewModels
 				  //
 				  // Add the new label to the collection.
 				  //
-				  this.Labels.Add(e.Label);
+				  StoredImageViewModel viewModel = new(this.EventAggregator, e.Label);
+				  this.Labels.Add(viewModel);
 				  this.RaisePropertyChanged(nameof(this.Labels));
 
 				  //
 				  // Make the new label the currently selected label.
 				  //
-				  this.SelectedLabel = e.Label;
-
+				  this.SelectedLabel = viewModel;
 			  }, ThreadOption.UIThread);
 
 			//
@@ -103,9 +105,9 @@ namespace VirtualPrinter.ViewModels
 			//
 			_ = this.EventAggregator.GetEvent<TimerEvent>().Subscribe((e) =>
 			{
-				foreach (IStoredImage label in this.Labels)
+				foreach (StoredImageViewModel label in this.Labels)
 				{
-					label.Refresh();
+					label.StoredImage.Refresh();
 				}
 			}, ThreadOption.UIThread);
 
@@ -117,6 +119,24 @@ namespace VirtualPrinter.ViewModels
 				this.SendTestView = null;
 				this.RefreshCommands();
 			}, ThreadOption.UIThread);
+
+			//
+			// Subscribe to the view meta data event event.
+			//
+			_ = this.EventAggregator.GetEvent<ViewMetaDataEvent>().Subscribe((e) =>
+			{
+				this.SelectedLabel = e.Item;
+
+				if (e.Action == ViewMetaDataArgs.ActionType.Warnings)
+				{
+					this.LabelWarningAsync();
+				}
+				else if (e.Action == ViewMetaDataArgs.ActionType.Image)
+				{
+					this.LabelPreviewAsync();
+				}
+
+			}, ThreadOption.UIThread);
 		}
 
 		protected IEventAggregator EventAggregator { get; set; }
@@ -126,7 +146,7 @@ namespace VirtualPrinter.ViewModels
 		public SendTestView SendTestView { get; set; }
 		protected CancellationTokenSource TokenSource { get; set; }
 
-		public ObservableCollection<IStoredImage> Labels { get; } = new ObservableCollection<IStoredImage>();
+		public ObservableCollection<StoredImageViewModel> Labels { get; } = [];
 		public ObservableCollection<PrinterConfigurationViewModel> PrinterConfigurations { get; } = [];
 
 		public DelegateCommand StartCommand { get; set; }
@@ -135,6 +155,7 @@ namespace VirtualPrinter.ViewModels
 		public DelegateCommand ClearLabelsCommand { get; set; }
 		public DelegateCommand DeleteLabelCommand { get; set; }
 		public DelegateCommand LabelPreviewCommand { get; set; }
+		public DelegateCommand LabelWarningsCommand { get; set; }
 		public DelegateCommand EditCommand { get; set; }
 		public DelegateCommand AboutCommand { get; set; }
 		public DelegateCommand GlobalSettingsCommand { get; set; }
@@ -161,8 +182,8 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private IStoredImage _selectedLabel = null;
-		public IStoredImage SelectedLabel
+		private StoredImageViewModel _selectedLabel = null;
+		public StoredImageViewModel SelectedLabel
 		{
 			get
 			{
@@ -474,7 +495,7 @@ namespace VirtualPrinter.ViewModels
 					//
 					foreach (IStoredImage label in labels)
 					{
-						this.Labels.Add(label);
+						this.Labels.Add(new StoredImageViewModel(this.EventAggregator, label));
 						await Task.Delay(1);
 						this.RaisePropertyChanged(nameof(this.Labels));
 					}
@@ -512,14 +533,14 @@ namespace VirtualPrinter.ViewModels
 				{
 					int currentIndex = this.Labels.IndexOf(this.SelectedLabel);
 
-					if (await this.ImageCacheRepository.DeleteImageAsync(this.SelectedPrinterConfiguration.ImagePath, Path.GetFileName(this.SelectedLabel.FullPath)))
+					if (await this.ImageCacheRepository.DeleteImageAsync(this.SelectedPrinterConfiguration.ImagePath, Path.GetFileName(this.SelectedLabel.StoredImage.FullPath)))
 					{
 						this.Labels.Remove(this.SelectedLabel);
 						this.RaisePropertyChanged(nameof(this.Labels));
 
 						if (this.Labels.Any())
 						{
-							IStoredImage label = this.Labels.ElementAt(currentIndex >= this.Labels.Count() ? currentIndex - 1 : currentIndex);
+							StoredImageViewModel label = this.Labels.ElementAt(currentIndex >= this.Labels.Count() ? currentIndex - 1 : currentIndex);
 
 							if (label != null)
 							{
@@ -547,11 +568,43 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		public Task LabelPreviewAsync(IStoredImage item = null)
+		public Task LabelPreviewAsync(StoredImageViewModel item = null)
+		{
+			if (item == null)
+			{
+				item = this.SelectedLabel;
+			}
+
+			if (item != null)
+			{
+				Process.Start(new ProcessStartInfo(item.StoredImage.FullPath) { UseShellExecute = true });
+			}
+
+			return Task.CompletedTask;
+		}
+
+		public bool OnLabelWarningAsync()
+		{
+			bool returnValue = false;
+
+			if (!this.IsBusy && this.SelectedLabel != null)
+			{
+				returnValue = File.Exists(this.SelectedLabel.StoredImage.MetaDataFile);
+			}
+
+			return returnValue;
+		}
+
+		public Task LabelWarningAsync()
 		{
 			if (this.SelectedLabel != null)
 			{
-				Process.Start(new ProcessStartInfo(item == null ? this.SelectedLabel.FullPath : item.FullPath) { UseShellExecute = true });
+				ZplView view = this.ServiceProvider.GetService<ZplView>();
+
+				string json = File.ReadAllText(this.SelectedLabel.StoredImage.MetaDataFile);
+				view.ViewModel.LabelResponse = JsonConvert.DeserializeObject<GetLabelResponse>(json);
+
+				view.ShowDialog();
 			}
 
 			return Task.CompletedTask;

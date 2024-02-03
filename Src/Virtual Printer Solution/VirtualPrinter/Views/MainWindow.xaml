@@ -18,23 +18,73 @@
 			<Border Background="{StaticResource BackgroundColor1}"
 					CornerRadius="{StaticResource Radius}"
 					Margin="5"
-					Width="95">
+					Width="105"
+					ToolTip="{Binding Information}">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="30" />
+					</Grid.ColumnDefinitions>
 
 					<Image Grid.Row="0"
+						   Grid.Column="0"
 						   Margin="3,8,3,2"
-						   Source="{Binding FullPath, Converter={StaticResource StringToImageSourceConverter}}"
+						   Source="{Binding StoredImage.FullPath, Converter={StaticResource StringToImageSourceConverter}}"
 						   HorizontalAlignment="Center"
 						   Width="64"
-						   Height="64"
-						   ToolTip="{Binding FullPath}" />
+						   Height="64" />
+
+					<Grid Grid.Row="0"
+						  Grid.RowSpan="2"
+						  Grid.Column="1">
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						
+						<Button Grid.Row="0"
+								Style="{DynamicResource ButtonStyle1}"
+								Command="{Binding ViewImageCommand}"
+								VerticalAlignment="Top"
+								HorizontalAlignment="Right"
+								Width="24"
+								Height="24"
+								Margin="0,2,2,0">
+							<Button.Content>
+								<Image Grid.Row="0"
+									   Margin="3,3,3,3"
+									   Source="/Assets/label-preview.png"
+									   HorizontalAlignment="Center" />
+							</Button.Content>
+						</Button>
+
+						<Button Grid.Row="1"
+								Style="{DynamicResource ButtonStyle1}"
+								Command="{Binding ViewMetaDataCommand}"
+								VerticalAlignment="Top"
+								HorizontalAlignment="Right"
+								Width="24"
+								Height="24"
+								Margin="0,2,2,0"
+								Visibility="{Binding StoredImage.HasMetaData, Converter={StaticResource BooleanToVisibilityConverter}}">
+							<Button.Content>
+								<Image Grid.Row="0"
+									   Margin="3,3,3,3"
+									   Source="/Assets/warning.png"
+									   HorizontalAlignment="Center" />
+							</Button.Content>
+						</Button>
+					</Grid>
 
 					<TextBlock Grid.Row="1"
-							   Text="{Binding DisplayLabel}"
+							   Grid.ColumnSpan="2"
+							   Grid.Column="0"
+							   Text="{Binding StoredImage.DisplayLabel}"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Center"
 							   Foreground="White"
@@ -82,7 +132,7 @@
 					Key="T"
 					Command="{Binding SendTestLabelCommand}" />
 	</Window.InputBindings>
-	
+
 	<DockPanel>
 		<Menu Padding="2,5,2,5"
 			  DockPanel.Dock="Top"
@@ -142,11 +192,17 @@
 			<MenuItem Header="_Connection">
 				<MenuItem Header="_Test Labelary"
 						  Command="{Binding TestLabelaryCommand}">
+					<MenuItem.Icon>
+						<Image Source="/Assets/test-labelary.png" />
+					</MenuItem.Icon>
 				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="_Options">
 				<MenuItem Header="_Global Settings"
 						  Command="{Binding GlobalSettingsCommand}">
+					<MenuItem.Icon>
+						<Image Source="/Assets/global-settings.png" />
+					</MenuItem.Icon>
 				</MenuItem>
 				<Separator />
 				<MenuItem Header="_About"
@@ -331,9 +387,9 @@
 			<Grid x:Name="LabelImage"
 				  Grid.Row="2"
 				  Background="{StaticResource BackgroundColor1}">
-				<Image Source="{Binding SelectedLabel.FullPath, Converter={StaticResource StringToImageSourceConverter}}"
+				<Image Source="{Binding SelectedLabel.StoredImage.FullPath, Converter={StaticResource StringToImageSourceConverter}}"
 					   Stretch="Uniform"
-					   Visibility="{Binding SelectedLabel, Converter={StaticResource ObjectToVisibilityConverter}}"
+					   Visibility="{Binding SelectedLabel.StoredImage, Converter={StaticResource ObjectToVisibilityConverter}}"
 					   Margin="10,20,10,20">
 				</Image>
 			</Grid>
@@ -357,10 +413,16 @@
 					</ListView.ItemsPanel>
 					<ListView.ContextMenu>
 						<ContextMenu Opened="ContextMenu_Opened">
-							<MenuItem Header="View"
+							<MenuItem Header="View Label Image"
 									  Command="{Binding LabelPreviewCommand}">
 								<MenuItem.Icon>
 									<Image Source="/Assets/label-preview.png" />
+								</MenuItem.Icon>
+							</MenuItem>
+							<MenuItem Header="View Warnings"
+									  Command="{Binding LabelWarningsCommand}">
+								<MenuItem.Icon>
+									<Image Source="/Assets/warning.png" />
 								</MenuItem.Icon>
 							</MenuItem>
 							<Separator />

@@ -33,8 +33,8 @@ namespace VirtualPrinter.ViewModels
 			: base()
 		{
 			this.EventAggregator = eventAggregator;
-			this.OkCommand = new DelegateCommand(async () => await this.OkCommandAsync(), () => true);
-			this.CancelCommand = new DelegateCommand(async () => await this.CancelCommandAsync(), () => true);
+			this.OkCommand = new(async () => await this.OkCommandAsync(), () => true);
+			this.CancelCommand = new(async () => await this.CancelCommandAsync(), () => true);
 		}
 
 		protected IEventAggregator EventAggregator { get; set; }

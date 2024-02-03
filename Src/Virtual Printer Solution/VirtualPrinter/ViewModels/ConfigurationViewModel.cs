@@ -46,15 +46,15 @@ namespace VirtualPrinter.ViewModels
 			this.ServiceProvider = serviceProvider;
 			this.RepositoryFactory = repositoryFactory;
 
-			this.BrowseCommand = new DelegateCommand(async () => await this.BrowseCommandAsync(), () => this.SelectedPrinterConfiguration != null);
-			this.UndoCommand = new DelegateCommand(async () => await this.UndoCommandAsync(), () => this.Changes);
-			this.CloseCommand = new DelegateCommand(() => { }, () => !this.Changes);
-			this.AddCommand = new DelegateCommand(async () => await this.AddCommandAsync(), () => !this.Changes);
-			this.DeleteCommand = new DelegateCommand(async () => await this.DeleteCommandAsync(), () => !this.Changes && this.SelectedPrinterConfiguration != null && this.PrinterConfigurations.Count() > 1);
-			this.SaveCommand = new DelegateCommand(async () => await this.SaveCommandAsync(), () => this.Changes);
-			this.CloneCommand = new DelegateCommand(async () => await this.CloneCommandAsync(), () => !this.Changes && this.SelectedPrinterConfiguration != null);
-			this.FilterEditCommand = new DelegateCommand(async () => await this.FilterEditCommandAsync(), () => this.SelectedPrinterConfiguration != null);
-			this.PrinterEditCommand = new DelegateCommand(async () => await this.PrinterEditCommandAsync(), () => this.SelectedPrinterConfiguration != null);
+			this.BrowseCommand = new(async () => await this.BrowseCommandAsync(), () => this.SelectedPrinterConfiguration != null);
+			this.UndoCommand = new(async () => await this.UndoCommandAsync(), () => this.Changes);
+			this.CloseCommand = new(() => { }, () => !this.Changes);
+			this.AddCommand = new(async () => await this.AddCommandAsync(), () => !this.Changes);
+			this.DeleteCommand = new(async () => await this.DeleteCommandAsync(), () => !this.Changes && this.SelectedPrinterConfiguration != null && this.PrinterConfigurations.Count() > 1);
+			this.SaveCommand = new(async () => await this.SaveCommandAsync(), () => this.Changes);
+			this.CloneCommand = new(async () => await this.CloneCommandAsync(), () => !this.Changes && this.SelectedPrinterConfiguration != null);
+			this.FilterEditCommand = new(async () => await this.FilterEditCommandAsync(), () => this.SelectedPrinterConfiguration != null);
+			this.PrinterEditCommand = new(async () => await this.PrinterEditCommandAsync(), () => this.SelectedPrinterConfiguration != null);
 		}
 
 		protected IServiceProvider ServiceProvider { get; set; }

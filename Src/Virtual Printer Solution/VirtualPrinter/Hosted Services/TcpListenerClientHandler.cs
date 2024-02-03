@@ -157,7 +157,8 @@ namespace VirtualPrinter.Client
 							},
 							Label = storedImages.ElementAt(response.LabelIndex),
 							Result = response.Result,
-							Message = response.Result ? "Label successfully created." : response.Error
+							Message = response.Result ? "Label successfully created." : response.Error,
+							Warnings = response.Warnings
 						});
 					}
 				}

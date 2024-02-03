@@ -21,6 +21,9 @@ using System.Windows.Markup;
 using Diamond.Core.Extensions.DependencyInjection;
 using Diamond.Core.Extensions.DependencyInjection.EntityFrameworkCore;
 using Diamond.Core.Wpf;
+using Labelary.Abstractions;
+using Labelary.Service;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VirtualPrinter.Views;
 
@@ -73,6 +76,24 @@ namespace VirtualPrinter
 			this.Splash.Close();
 			this.Splash = null;
 #endif
+		}
+
+		protected override void OnConfigureServices(HostBuilderContext hostContext, IServiceCollection services)
+		{
+			//
+			// Create an object for LabelServiceConfiguration
+			//
+			ILabelServiceConfiguration labelServiceConfiguration = new LabelServiceConfiguration()
+			{
+				BaseUrl = VirtualPrinter.Properties.Settings.Default.ApiUrl,
+				Method = VirtualPrinter.Properties.Settings.Default.ApiMethod,
+				Linting = VirtualPrinter.Properties.Settings.Default.ApiLinting
+			};
+
+			//
+			// Add a singleton object to services.
+			//
+			services.AddSingleton(labelServiceConfiguration);
 		}
 	}
 }

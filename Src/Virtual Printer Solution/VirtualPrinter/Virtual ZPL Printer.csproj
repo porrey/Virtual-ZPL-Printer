@@ -8,9 +8,9 @@
 		<AssemblyName>VirtualPrinter</AssemblyName>
 		<StartupObject>VirtualPrinter.App</StartupObject>
 		<RootNamespace>VirtualPrinter</RootNamespace>
-		<Version>3.0.2</Version>
-		<FileVersion>3.0.2</FileVersion>
-		<AssemblyVersion>3.0.2</AssemblyVersion>
+		<Version>3.1.0</Version>
+		<FileVersion>3.1.0</FileVersion>
+		<AssemblyVersion>3.1.0</AssemblyVersion>
 		<Nullable>disable</Nullable>
 		<SignAssembly>False</SignAssembly>
 	</PropertyGroup>
@@ -30,6 +30,7 @@
 		<None Remove="Assets\filter-edit.png" />
 		<None Remove="Assets\filter-to.png" />
 		<None Remove="Assets\filter-up.png" />
+		<None Remove="Assets\global-settings.png" />
 		<None Remove="Assets\idle.png" />
 		<None Remove="Assets\ip.png" />
 		<None Remove="Assets\label-preview.png" />
@@ -49,9 +50,12 @@
 		<None Remove="Assets\start.png" />
 		<None Remove="Assets\stop.png" />
 		<None Remove="Assets\test-label.png" />
+		<None Remove="Assets\test-labelary.png" />
 		<None Remove="Assets\trash-bin.png" />
 		<None Remove="Assets\undo.png" />
 		<None Remove="Assets\virtual-printer.png" />
+		<None Remove="Assets\warning-overlay.png" />
+		<None Remove="Assets\warning.png" />
 		<None Remove="Samples\6x4-203dpi.txt" />
 		<None Remove="Services\VirtualPrinter.json" />
 		<None Remove="virtual-printer.ico" />
@@ -147,8 +151,14 @@
 		<Content Include="Assets\filter-up.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+		<Content Include="Assets\global-settings.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Assets\send.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\test-labelary.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\undo.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -224,6 +234,12 @@
 		</Content>
 		<Content Include="Assets\virtual-printer.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\warning-overlay.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\warning.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Services\VirtualPrinter.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>

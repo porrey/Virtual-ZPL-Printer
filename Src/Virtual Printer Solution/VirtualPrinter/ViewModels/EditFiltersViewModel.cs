@@ -31,8 +31,8 @@ namespace VirtualPrinter.ViewModels
 			: base()
 		{
 			this.EventAggregator = eventAggregator;
-			this.OkCommand = new DelegateCommand(async () => await this.OkCommandAsync(), () => !this.Filters.Where(t => string.IsNullOrEmpty(t.Find)).Any());
-			this.CancelCommand = new DelegateCommand(async () => await this.CancelCommandAsync(), () => true);
+			this.OkCommand = new(async () => await this.OkCommandAsync(), () => !this.Filters.Where(t => string.IsNullOrEmpty(t.Find)).Any());
+			this.CancelCommand = new(async () => await this.CancelCommandAsync(), () => true);
 
 			this.EventAggregator.GetEvent<FilterChangeEvent>().Subscribe((e) => this.OnFilterChangedEvent(e), ThreadOption.UIThread);
 		}

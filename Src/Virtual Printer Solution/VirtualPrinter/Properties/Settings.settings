@@ -65,5 +65,14 @@
     <Setting Name="ReceivedDataEncoding" Type="System.String" Scope="User">
       <Value Profile="(Default)">utf-8</Value>
     </Setting>
+    <Setting Name="ApiUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://api.labelary.com/v1/printers</Value>
+    </Setting>
+    <Setting Name="ApiMethod" Type="System.String" Scope="User">
+      <Value Profile="(Default)">POST</Value>
+    </Setting>
+    <Setting Name="ApiLinting" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
