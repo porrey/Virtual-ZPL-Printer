@@ -31,7 +31,7 @@ namespace VirtualPrinter.ViewModels
 			: base()
 		{
 			this.EventAggregator = eventAggregator;
-			this.OkCommand = new(async () => await this.OkCommandAsync(), () => !this.Filters.Where(t => string.IsNullOrEmpty(t.Find)).Any());
+			this.OkCommand = new(async () => await this.OkCommandAsync(), () => true);
 			this.CancelCommand = new(async () => await this.CancelCommandAsync(), () => true);
 
 			this.EventAggregator.GetEvent<FilterChangeEvent>().Subscribe((e) => this.OnFilterChangedEvent(e), ThreadOption.UIThread);
@@ -178,6 +178,7 @@ namespace VirtualPrinter.ViewModels
 				{
 					case FilterChangeEventArgs.ActionType.Add:
 						{
+							this.RenumberList();
 							this.Filters.Insert(e.FilterItem.Priority, new(this.EventAggregator, this.Filters.Count + 1));
 							this.RenumberList();
 						}

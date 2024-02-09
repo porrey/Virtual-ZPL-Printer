@@ -31,16 +31,16 @@ namespace VirtualPrinter.ViewModels
 		public FilterViewModel()
 		{
 			this.AddCommand = new(async () => await this.AddCommandAsync(), () => true);
-			this.DeleteCommand = new(async () => await this.DeleteCommandAsync(), () => this.Priority > 0);
-			this.UpCommand = new(async () => await this.UpCommandAsync(), () => this.Priority > 1);
-			this.DownCommand = new(async () => await this.DownCommandAsync(), () => this.Priority != this.FilterCount);
+			this.DeleteCommand = new(async () => await this.DeleteCommandAsync(), () => this.Priority != 0 && this.Priority > 0);
+			this.UpCommand = new(async () => await this.UpCommandAsync(), () => this.Priority != 0 && this.Priority > 1);
+			this.DownCommand = new(async () => await this.DownCommandAsync(), () => this.Priority != 0 && this.Priority != this.FilterCount);
 		}
 
-		public FilterViewModel(IEventAggregator eventAggregator, int prioirty = 0)
+		public FilterViewModel(IEventAggregator eventAggregator, int priority = 0)
 			: this()
 		{
 			this.EventAggregator = eventAggregator;
-			this.Priority = prioirty;
+			this.Priority = priority;
 		}
 
 		[JsonIgnore]

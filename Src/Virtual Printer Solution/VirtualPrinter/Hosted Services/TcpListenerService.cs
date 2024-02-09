@@ -94,33 +94,42 @@ namespace VirtualPrinter.HostedServices
 									  //
 									  // Accept the connection.
 									  //
+									  this.Logger.LogInformation("Waiting for incoming requests...");
 									  TcpClient tcpClient = await this.Listener.AcceptTcpClientAsync(this.SocketCancellationTokenSource.Token);
 
 									  if (!this.SocketCancellationTokenSource.IsCancellationRequested)
 									  {
+										  this.Logger.LogInformation("Incoming requests received.");
+
 										  //
 										  // Start the client.
 										  //
 										  TcpListenerClientHandler clientService = scope.ServiceProvider.GetRequiredService<TcpListenerClientHandler>();
+										  this.Logger.LogInformation("Handing request to client service.");
 										  _ = clientService.StartSessionAsync(tcpClient, this.PrinterConfiguration, this.LabelConfiguration, this.ImagePathRoot);
 									  }
 								  }
-								  catch (TaskCanceledException)
+								  catch (TaskCanceledException ex1)
 								  {
+									  this.Logger.LogError(ex1, nameof(TaskCanceledException));
 								  }
-								  catch (OperationCanceledException)
+								  catch (OperationCanceledException ex2)
 								  {
+									  this.Logger.LogError(ex2, nameof(OperationCanceledException));
 								  }
-								  catch (SocketException)
+								  catch (SocketException ex3)
 								  {
+									  this.Logger.LogError(ex3, nameof(SocketException));
 								  }
-								  catch (InvalidOperationException)
+								  catch (InvalidOperationException ex4)
 								  {
+									  this.Logger.LogError(ex4, nameof(InvalidOperationException));
 								  }
 							  }
 						  }
 						  catch (Exception ex)
 						  {
+							  this.Logger.LogError(ex, "Exception in TCP listener.");
 							  this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { IsRunning = false, IsError = true, ErrorMessage = ex.Message });
 						  }
 					  }
@@ -132,6 +141,7 @@ namespace VirtualPrinter.HostedServices
 		{
 			if (this.IsRunning)
 			{
+				this.Logger.LogInformation("Shutting down the TCP listener.");
 				await this.StopListenerAsync();
 			}
 		}
@@ -142,16 +152,20 @@ namespace VirtualPrinter.HostedServices
 
 			try
 			{
+				this.Logger.LogInformation("Starting TCP listener.");
 				this.SocketCancellationTokenSource = new();
 				this.Listener = new TcpListener(this.IpAddress, this.Port);
 				this.Listener.Start();
 				_ = this.ResetEvent.Set();
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { PrinterConfiguration = this.PrinterConfiguration, IsRunning = true });
 				this.IsRunning = true;
+				this.Logger.LogInformation("TCP listener was started successfully.");
+
 				returnValue = true;
 			}
 			catch (SocketException socketEx)
 			{
+				this.Logger.LogError(socketEx, "Socket Exception");
 				string message = socketEx.Message;
 
 				if (socketEx.SocketErrorCode == SocketError.AddressAlreadyInUse)
@@ -165,6 +179,7 @@ namespace VirtualPrinter.HostedServices
 			}
 			catch (Exception ex)
 			{
+				this.Logger.LogError(ex, "Exception while starting TCP listener.");
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { PrinterConfiguration = this.PrinterConfiguration, IsRunning = false, IsError = true, ErrorMessage = ex.Message });
 				_ = this.ResetEvent.Reset();
 				returnValue = false;
@@ -179,13 +194,18 @@ namespace VirtualPrinter.HostedServices
 
 			try
 			{
+				this.Logger.LogDebug("Calling Cancel() on the cancellation token to stop the listener.");
 				this.SocketCancellationTokenSource.Cancel();
 				await Task.Delay(0);
+				this.Logger.LogDebug("Calling Stop() on the listener.");
 				this.Listener.Stop();
+				this.Logger.LogDebug("Raising the Running State Changed Event.");
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { PrinterConfiguration = this.PrinterConfiguration, IsRunning = false });
 			}
 			catch (Exception ex)
 			{
+				this.Logger.LogError(ex, "Exception in {name}().", nameof(StopListenerAsync));
+				this.Logger.LogDebug("Raising the Running State Changed Event.");
 				this.EventAggregator.GetEvent<RunningStateChangedEvent>().Publish(new RunningStateChangedEventArgs() { PrinterConfiguration = this.PrinterConfiguration, IsRunning = false, IsError = true, ErrorMessage = ex.Message });
 				returnValue = false;
 			}

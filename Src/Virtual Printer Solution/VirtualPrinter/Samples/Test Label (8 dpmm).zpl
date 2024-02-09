@@ -1,0 +1,6 @@
+﻿^XA
+^FO100,100
+^A0N56,66
+^FDTest Label
+^FS
+^XZ

@@ -197,7 +197,7 @@ namespace VirtualPrinter.ViewModels
 		{
 			get
 			{
-				return this._physicalPrinter;
+				return this._physicalPrinter != null ? this._physicalPrinter : "{}";
 			}
 			set
 			{

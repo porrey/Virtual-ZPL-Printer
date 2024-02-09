@@ -45,11 +45,12 @@ namespace VirtualPrinter.HostedServices
 		{
 			try
 			{
+				this.Logger.LogInformation("Starting the printer service.");
 				this.SubscriptionToken = this.EventAggregator.GetEvent<LabelCreatedEvent>().Subscribe((e) => this.OnPhysicalPrintRequestEvent(e), ThreadOption.BackgroundThread);
 			}
 			catch (Exception ex)
 			{
-				this.Logger.LogError(ex.Message);
+				this.Logger.LogError(ex, "Exception in {class}.{name}().", nameof(PrintServer), nameof(OnStarted));
 			}
 		}
 
@@ -61,6 +62,8 @@ namespace VirtualPrinter.HostedServices
 
 				if (physicalPrinter.Enabled && this.PrinterExists(physicalPrinter.PrinterName) && e.Result)
 				{
+					this.Logger.LogDebug("Sending label to printer '{name}'.", physicalPrinter.PrinterName);
+
 					//
 					// Start the print on another thread.
 					//
@@ -72,7 +75,7 @@ namespace VirtualPrinter.HostedServices
 			}
 			catch (Exception ex)
 			{
-				this.Logger.LogError(ex.Message);
+				this.Logger.LogError(ex, "Exception in {class}.{name}().", nameof(PrintServer), nameof(OnPhysicalPrintRequestEvent));
 			}
 		}
 
@@ -80,6 +83,8 @@ namespace VirtualPrinter.HostedServices
 		{
 			try
 			{
+				this.Logger.LogDebug("Shutting down the printer service.");
+
 				if (this.SubscriptionToken != null)
 				{
 					this.SubscriptionToken.Dispose();
@@ -87,7 +92,7 @@ namespace VirtualPrinter.HostedServices
 			}
 			catch (Exception ex)
 			{
-				this.Logger.LogError(ex.Message);
+				this.Logger.LogError(ex, "Exception in {class}.{name}().", nameof(PrintServer), nameof(OnBeginStopAsync));
 			}
 
 			return Task.CompletedTask;

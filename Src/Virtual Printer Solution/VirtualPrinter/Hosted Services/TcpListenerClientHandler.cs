@@ -15,36 +15,40 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
+using Microsoft.Extensions.Logging;
 using Prism.Events;
+using VirtualPrinter.Abstractions;
 using VirtualPrinter.Db.Abstractions;
-using VirtualPrinter.Events;
 
 namespace VirtualPrinter.Client
 {
 	public class TcpListenerClientHandler
 	{
-		public TcpListenerClientHandler(IEventAggregator eventAggregator, ILabelService labelService, IImageCacheRepository imageCacheRepository)
+		public TcpListenerClientHandler(ILogger<TcpListenerClientHandler> logger, IEventAggregator eventAggregator, IRequestHandlerFactory requestHandlerFactory, ILabelService labelService, IImageCacheRepository imageCacheRepository)
 		{
+			this.Logger = logger;
 			this.EventAggregator = eventAggregator;
+			this.RequestHandlerFactory = requestHandlerFactory;
 			this.LabelService = labelService;
 			this.ImageCacheRepository = imageCacheRepository;
 		}
 
+		protected ILogger<TcpListenerClientHandler> Logger { get; set; }
 		protected IEventAggregator EventAggregator { get; set; }
+		protected IRequestHandlerFactory RequestHandlerFactory { get; set; }
 		protected ILabelService LabelService { get; set; }
 		protected IImageCacheRepository ImageCacheRepository { get; set; }
-		protected IPrinterConfiguration PrinterConfiguration { get; set; }
 
 		public async Task StartSessionAsync(TcpClient client, IPrinterConfiguration printerConfiguration, ILabelConfiguration labelConfiguration, string imagePathRoot)
 		{
+			this.Logger.LogInformation("Handling incoming request from {endpoint}.", client.Client.LocalEndPoint);
+
 			//
 			// Set parameters.
 			//
@@ -56,22 +60,39 @@ namespace VirtualPrinter.Client
 			client.LingerState = new LingerOption(Properties.Settings.Default.Linger, Properties.Settings.Default.LingerTime);
 
 			//
+			// Use user-specified encoding in order to display special characters correctly.
+			//
+			Encoding encoding = Encoding.UTF8;
+
+			try
+			{
+				encoding = Encoding.GetEncoding(Properties.Settings.Default.ReceivedDataEncoding);
+				this.Logger.LogInformation("Using text encoding {encoding}.", encoding);
+			}
+			catch (Exception ex)
+			{
+				this.Logger.LogError(ex, "Exception while attempting to use encoding '{encoding}'.", Properties.Settings.Default.ReceivedDataEncoding);
+			}
+
+			//
 			// Get the network stream.
 			//
+			this.Logger.LogDebug("Getting the network stream for communications.");
 			NetworkStream stream = client.GetStream();
 
 			//
 			// Prepare a memory stream to read data into.
 			//
-			MemoryStream ms = new();
-
-			try
+			using (MemoryStream ms = new())
 			{
 				if (client.Connected && stream.CanRead)
 				{
+					this.Logger.LogInformation("The incoming connection is connected and can be read.");
+
 					//
 					// Set up a temporary buffer.
 					//
+					this.Logger.LogDebug("Creating buffer of 1024 bytes to read incoming data.");
 					byte[] data = new byte[1024];
 
 					//
@@ -88,79 +109,101 @@ namespace VirtualPrinter.Client
 					// data - the larger the data to be received, the more time available. Finally, by increasing
 					// the read timeout, we can further easily increase the time available to the client.
 					//
-					int numBytesRead;
+					int numBytesRead = await stream.ReadAsync(data);
+					ms.Write(data, 0, numBytesRead);
+					this.Logger.LogInformation("{count} byte(s) were read from the incoming connection.", numBytesRead);
 
-					while ((numBytesRead = stream.Read(data, 0, data.Length)) > 0)
+					while (stream.DataAvailable && numBytesRead > 0)
 					{
+						numBytesRead = await stream.ReadAsync(data);
 						ms.Write(data, 0, numBytesRead);
+						this.Logger.LogInformation("{count} additional byte(s) were read from the incoming connection.", numBytesRead);
 					}
 				}
-			}
-			finally
-			{
-				client.Close();
-			}
-
-			//
-			// Only try to create a label image if any data has been received in the first place.
-			//
-			if (ms.Length > 0)
-			{
-				//
-				// Use user-specified encoding in order to display special characters correctly.
-				//
-				Encoding encoding = Encoding.UTF8;
-
-				try
+				else
 				{
-					encoding = Encoding.GetEncoding(Properties.Settings.Default.ReceivedDataEncoding);
-				}
-				catch (ArgumentException)
-				{
-					//
-					// Simply fall back to default encoding and ignore exception.
-					//
+					this.Logger.LogWarning("The incoming connection is not connected or cannot be read.");
 				}
 
 				//
-				// Get the label image.
+				// Only process the request if data was received.
 				//
-				string zpl = encoding.GetString(ms.ToArray(), 0, (int)ms.Length);
-
-				if (!zpl.StartsWith("NOP"))
+				if (ms.Length > 0)
 				{
 					//
-					// Get the label images from Labelary.
+					// Get the request data.
 					//
-					IEnumerable<IGetLabelResponse> responses = await this.LabelService.GetLabelsAsync(labelConfiguration, zpl);
+					this.Logger.LogInformation("{count} byte(s) total were received.", ms.Length);
+					string requestData = encoding.GetString(ms.ToArray(), 0, (int)ms.Length);
+					this.Logger.LogDebug("Incoming data: '{data}'.", requestData);
 
 					//
-					// Save the images.
+					// Get the request handler.
 					//
-					IEnumerable<IStoredImage> storedImages = await this.ImageCacheRepository.StoreLabelImagesAsync(imagePathRoot, responses);
+					IRequestHandler requestHandler = await this.RequestHandlerFactory.GetHandlerAsync(requestData);
+					this.Logger.LogDebug("Using request handler '{handler}' to handle the incoming request.", requestHandler.GetType().Name);
 
 					//
-					// Publish the images.
+					//  Call the handler.
 					//
-					foreach (IGetLabelResponse response in responses)
+					(bool closeConnection, string responseData) = (true, string.Empty);
+
+					try
 					{
 						//
-						// Publish the new label.
+						// Get the handler for this request.
 						//
-						this.EventAggregator.GetEvent<LabelCreatedEvent>().Publish(new LabelCreatedEventArgs()
+						this.Logger.LogDebug("Calling {handler}.handleRequest().", requestHandler.GetType().Name);
+						(closeConnection, responseData) = await requestHandler.HandleRequest(printerConfiguration, labelConfiguration, requestData);
+
+						//
+						// If the handler provided a response, send it back.
+						//
+						if (responseData != null)
 						{
-							PrinterConfiguration = printerConfiguration,
-							PrintRequest = new PrintRequestEventArgs()
-							{
-								LabelConfiguration = labelConfiguration,
-								Zpl = zpl
-							},
-							Label = storedImages.ElementAt(response.LabelIndex),
-							Result = response.Result,
-							Message = response.Result ? "Label successfully created." : response.Error,
-							Warnings = response.Warnings
-						});
+							this.Logger.LogDebug("Sending response data: '{data}'.", responseData);
+							byte[] buffer = encoding.GetBytes(responseData);
+							await stream.WriteAsync(buffer);
+						}
+						else
+						{
+							this.Logger.LogDebug("The handler did not return any response data.");
+						}
 					}
+					catch (Exception ex)
+					{
+						this.Logger.LogError(ex, $"Exception occurred in {nameof(TcpListenerClientHandler)} while calling the request handler.");
+					}
+					finally
+					{
+						//
+						// Close the connection if the handler indicated to do so.
+						//
+						if (closeConnection)
+						{
+							this.Logger.LogInformation("Closing the client connection.");
+
+							if (stream != null)
+							{
+								stream.Close();
+								stream.Dispose();
+							}
+
+							if (client != null)
+							{
+								client.Close();
+								client.Dispose();
+							}
+						}
+						else
+						{
+							this.Logger.LogInformation("Leaving the client connection open.");
+						}
+					}
+				}
+				else
+				{
+					this.Logger.LogWarning("There was no dat available on the incoming connection.");
 				}
 			}
 		}

@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.Db.Abstracti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.Db.Ef", "VirtualPrinter.Db.Ef\VirtualPrinter.Db.Ef.csproj", "{B1AF2E8D-3350-4B00-8A4F-4101B234325F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualPrinter.Abstractions", "VirtualPrinter.Abstractions\VirtualPrinter.Abstractions.csproj", "{51CF360B-487B-4776-BD2B-55066F916B33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.Abstractions", "VirtualPrinter.Abstractions\VirtualPrinter.Abstractions.csproj", "{51CF360B-487B-4776-BD2B-55066F916B33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

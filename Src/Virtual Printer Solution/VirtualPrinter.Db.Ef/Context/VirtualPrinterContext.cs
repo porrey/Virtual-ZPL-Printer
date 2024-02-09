@@ -120,10 +120,21 @@ namespace VirtualPrinter.Db.Ef
 		{
 			try
 			{
-				//
-				// This will throw an exception if the field does not exist.
-				//
-				_ = this.PrinterConfigurations.First();
+				if (!this.PrinterConfigurations.Any())
+				{
+					//
+					// Rebuild the database.
+					//
+					await this.Database.EnsureDeletedAsync();
+					await this.Database.EnsureCreatedAsync();
+				}
+				else
+				{
+					//
+					// This will throw an exception if the field does not exist.
+					//
+					_ = this.PrinterConfigurations.First();
+				}
 			}
 			catch (SqliteException ex)
 			{

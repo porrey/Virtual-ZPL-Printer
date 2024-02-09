@@ -23,21 +23,43 @@ using Diamond.Core.Extensions.DependencyInjection.EntityFrameworkCore;
 using Diamond.Core.Wpf;
 using Labelary.Abstractions;
 using Labelary.Service;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+#if !DEBUG
 using VirtualPrinter.Views;
+#endif
 
 namespace VirtualPrinter
 {
 	public partial class App : HostedApplication
 	{
+#if !DEBUG
+		protected SplashView Splash { get; set; }
+#endif
+
 		protected override IHostBuilder OnConfigureHost(IHostBuilder hostBuilder)
 		{
 			return hostBuilder.ConfigureServicesFolder("Services")
+							  .UseSerilog()
 							  .UseConfiguredDatabaseServices();
 		}
 
-		protected SplashView Splash { get; set; }
+		protected override void OnConfigureAppConfiguration(HostBuilderContext hostContext, IConfigurationBuilder configurationBuilder)
+		{
+			//
+			// Build the configuration so Serilog can read from it.
+			//
+			IConfiguration configuration = configurationBuilder.Build();
+
+			//
+			// Create a logger from the configuration.
+			//
+			Log.Logger = new LoggerConfiguration()
+					  .ReadFrom.Configuration(configuration)
+					  .CreateLogger();
+		}
 
 		protected override void OnBeginStartup(StartupEventArgs e)
 		{

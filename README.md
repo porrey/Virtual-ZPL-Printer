@@ -2,18 +2,19 @@
 An Ethernet based virtual Zebra Label Printer that can be used to test applications that produce bar code labels. This application uses the Labelary service found at [http://labelary.com](http://labelary.com/service.html).
 
 ## Latest Release
-[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Installer/Virtual%20ZPL%20Printer%20Setup.msi) (v 3.1.0)
+[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Installer/Virtual%20ZPL%20Printer%20Setup.msi) (v 3.1.1)
 
 Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have the .NET 8.0 Framework installed automatically.
 
-###### Version 3.1.0 Updates:
-1. Exposed the Labelary API URL in global settings to allow HTTPS or HTTP.
-2. Added the option to use POST or GET in global settings.
-3. Added an option to enable Linting in global settings. Linting is an option provided by Labelary to provide warnings for the ZPL text sent to the API.
-4. Added a viewer for the ZPL warnings. The viewer can be accesses via the context menu on an image or by clicking the button on the label image (which is only visible when warnings exist).
-5. Added a preview button on the label image to open the image viewer.
-6. Made the connection test viewer output read-only.
- 
+###### Version 3.1.1 Updates:
+1. Fixed issue #48.
+2. Fixed issue #49.
+3. Refactored TCP listener to allow for extended capabilities in future releases. The listener uses request handlers to process incoming requests.
+4. Corrected issue preventing last filter from being deleted.
+5. Corrected issue where the the application tries to read from the network when there is no more data available. Added a check to `stream.DataAvailable`.
+6. Changed `stream.ReadAsync()` to use memory based overloads.
+7. Added detailed logging using Serilog. The path defaults to ***%USERPROFILE%*** but can be edited in the `appsettings.json` file. Logging will be expanded in each new release.
+
 ## Screen Shots
 
 ![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-01.png)
@@ -29,6 +30,14 @@ Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have th
 ![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-06.png)
 
 ## History
+###### Version 3.1.0 Updates:
+1. Exposed the Labelary API URL in global settings to allow HTTPS or HTTP.
+2. Added the option to use POST or GET in global settings.
+3. Added an option to enable Linting in global settings. Linting is an option provided by Labelary to provide warnings for the ZPL text sent to the API.
+4. Added a viewer for the ZPL warnings. The viewer can be accesses via the context menu on an image or by clicking the button on the label image (which is only visible when warnings exist).
+5. Added a preview button on the label image to open the image viewer.
+6. Made the connection test viewer output read-only.
+
 ###### Version 3.0.2 Updates:
 1. Added menu option to test Labelary connectivity.
 2. Added the ability to configure a physical printer to print a label retrieved from the Labelary API. This is currently limited in functionality and may be expanded in future versions.

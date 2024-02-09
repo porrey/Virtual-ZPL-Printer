@@ -139,6 +139,41 @@
 			"ServiceType": "<IHostedService>",
 			"ImplementationType": "VirtualPrinter.HostedServices.PrintServer, VirtualPrinter",
 			"Lifetime": "Singleton"
+		},
+		//
+		// Request handler factory
+		//
+		{
+			"ServiceType": "<IRequestHandlerFactory>",
+			"ImplementationType": "VirtualPrinter.RequestHandlerFactory, VirtualPrinter",
+			"Lifetime": "Singleton"
+		},
+		//
+		// Request handlers
+		//
+		{
+			"ServiceType": "<IRequestHandler>",
+			"ImplementationType": "VirtualPrinter.NopRequestHandler, VirtualPrinter",
+			"Lifetime": "Singleton",
+			"Properties": {
+				"Priority": 1
+			}
+		},
+		{
+			"ServiceType": "<IRequestHandler>",
+			"ImplementationType": "VirtualPrinter.HsRequestHandler, VirtualPrinter",
+			"Lifetime": "Singleton",
+			"Properties": {
+				"Priority": 2
+			}
+		},
+		{
+			"ServiceType": "<IRequestHandler>",
+			"ImplementationType": "VirtualPrinter.ZplRequestHandler, VirtualPrinter",
+			"Lifetime": "Singleton",
+			"Properties": {
+				"Priority": 99
+			}
 		}
 	]
 }

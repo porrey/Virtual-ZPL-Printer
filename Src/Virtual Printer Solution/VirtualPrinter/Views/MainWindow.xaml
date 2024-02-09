@@ -283,7 +283,7 @@
 							Width="{StaticResource StatusButtonWidth}"
 							Height="{StaticResource StatusButtonHeight}"
 							Margin="5,3,5,10"
-							ToolTip="Send a test label.">
+							ToolTip="Edit printer configurations.">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
