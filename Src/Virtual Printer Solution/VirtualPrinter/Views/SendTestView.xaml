@@ -101,11 +101,13 @@
 
 					<Image Source="/Assets/send.png"
 						   Width="24"
-						   Height="24" />
+						   Height="24"
+						   HorizontalAlignment="Center" />
 
 					<TextBlock Grid.Row="1"
 							   Text="Send"
-							   FontSize="11" />
+							   FontSize="11"
+							   HorizontalAlignment="Center" />
 				</Grid>
 			</Button.Content>
 		</Button>

@@ -1,0 +1,54 @@
+{
+	"services": [
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.MainViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.MainViewModel, VirtualPrinter",
+			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.ConfigurationViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.ConfigurationViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.SendTestViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.SendTestViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.EditFiltersViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.EditFiltersViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.EditPrinterViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.EditPrinterViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.GlobalSettingsViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.GlobalSettingsViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.AboutViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.AboutViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.TestLabelaryViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.TestLabelaryViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.ZplViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.ZplViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.ViewModels.FontManagerViewModel, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.ViewModels.FontManagerViewModel, VirtualPrinter",
+			"Lifetime": "Transient"
+		}
+	]
+}

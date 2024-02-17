@@ -18,32 +18,36 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using Prism.Events;
-using VirtualPrinter.Events;
+using VirtualPrinter.ApplicationSettings;
+using VirtualPrinter.PublishSubscribe;
 using VirtualPrinter.ViewModels;
 
 namespace VirtualPrinter.Views
 {
 	public partial class SendTestView : Window
 	{
-		public SendTestView(IEventAggregator eventAggregator, SendTestViewModel viewModel)
+		public SendTestView(IEventAggregator eventAggregator, ISettings settings, SendTestViewModel viewModel)
 		{
-			this.DataContext = viewModel;
 			this.EventAggregator = eventAggregator;
+			this.Settings = settings;
+
+			this.DataContext = viewModel;
 			this.RestoreWindow();
 			this.InitializeComponent();
 		}
 
 		protected IEventAggregator EventAggregator { get; set; }
+		protected ISettings Settings { get; set; }
 		public SendTestViewModel ViewModel => (SendTestViewModel)this.DataContext;
 
 		private void RestoreWindow()
 		{
-			if (Properties.Settings.Default.SendTestLabelLeft != 0)
+			if (this.Settings.SendTestLabelLeft != 0)
 			{
-				this.Width = Properties.Settings.Default.SendTestLabelWidth;
-				this.Height = Properties.Settings.Default.SendTestLabelHeight;
-				this.Left = Properties.Settings.Default.SendTestLabelLeft;
-				this.Top = Properties.Settings.Default.SendTestLabelTop;
+				this.Width = this.Settings.SendTestLabelWidth;
+				this.Height = this.Settings.SendTestLabelHeight;
+				this.Left = this.Settings.SendTestLabelLeft;
+				this.Top = this.Settings.SendTestLabelTop;
 			}
 			else
 			{
@@ -54,11 +58,11 @@ namespace VirtualPrinter.Views
 
 		private void SaveWindow()
 		{
-			Properties.Settings.Default.SendTestLabelWidth = this.Width;
-			Properties.Settings.Default.SendTestLabelHeight = this.Height;
-			Properties.Settings.Default.SendTestLabelLeft = this.Left;
-			Properties.Settings.Default.SendTestLabelTop = this.Top;
-			Properties.Settings.Default.Save();
+			this.Settings.SendTestLabelWidth = this.Width;
+			this.Settings.SendTestLabelHeight = this.Height;
+			this.Settings.SendTestLabelLeft = this.Left;
+			this.Settings.SendTestLabelTop = this.Top;
+			this.Settings.Save();
 		}
 
 		protected override async void OnInitialized(EventArgs e)

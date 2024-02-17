@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <Version>3.2.0</Version>
+    <FileVersion>3.2.0</FileVersion>
+    <AssemblyVersion>3.2.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Templates\2x2 Product Label %288 dpmm%29.zpl" />
+    <None Remove="Templates\4x6 Shipping Label %288 dpmm%29.zpl" />
+    <None Remove="Templates\4x6 USPS Shipping Label %288 dpmm%29.zpl" />
+    <None Remove="Templates\Font Example %288 dpmm%29.zpl" />
+    <None Remove="Templates\Test Label %288 dpmm%29.zpl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Services\VirtualPrinter.TemplateManager.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\2x2 Product Label (8 dpmm).zpl" />
+    <Content Include="Templates\4x6 Shipping Label (8 dpmm).zpl" />
+    <Content Include="Templates\4x6 USPS Shipping Label (8 dpmm).zpl" />
+    <Content Include="Templates\Test Label (8 dpmm).zpl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Diamond.Core.Repository" Version="8.0.1" />
+    <PackageReference Include="Diamond.Core.Repository.Abstractions" Version="8.0.1" />
+    <PackageReference Include="System.DisposableObject" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VirtualPrinter.ApplicationSettings\VirtualPrinter.ApplicationSettings.csproj" />
+  </ItemGroup>
+
+</Project>

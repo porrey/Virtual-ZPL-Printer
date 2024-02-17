@@ -26,7 +26,7 @@ namespace VirtualPrinter.Views
 		public GlobalSettingsView(GlobalSettingsViewModel viewModel, IMainWindow mainWindow)
 		{
 			this.DataContext = viewModel;
-			InitializeComponent();
+			this.InitializeComponent();
 			this.Owner = (Window)mainWindow;
 		}
 

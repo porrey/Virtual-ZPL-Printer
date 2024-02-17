@@ -1,0 +1,22 @@
+{
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "IFontService",
+			"TypeDefinition": "VirtualPrinter.FontService.IFontService, VirtualPrinter.FontService"
+		},
+		{
+			"Key": "IPrinterFont",
+			"TypeDefinition": "VirtualPrinter.FontService.IPrinterFont, VirtualPrinter.FontService"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "<IFontService>",
+			"ImplementationType": "VirtualPrinter.FontService.FontService, VirtualPrinter.FontService",
+			"Lifetime": "Singleton"
+		}
+	]
+}

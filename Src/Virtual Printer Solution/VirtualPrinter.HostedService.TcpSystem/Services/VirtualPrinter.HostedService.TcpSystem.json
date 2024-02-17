@@ -1,0 +1,14 @@
+{
+	"services": [
+		{
+			"ServiceType": "<IHostedService>",
+			"ImplementationType": "VirtualPrinter.HostedService.TcpSystem.TcpListenerService, VirtualPrinter.HostedService.TcpSystem",
+			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "VirtualPrinter.HostedService.TcpSystem.TcpListenerClientHandler, VirtualPrinter.HostedService.TcpSystem",
+			"ImplementationType": "VirtualPrinter.HostedService.TcpSystem.TcpListenerClientHandler, VirtualPrinter.HostedService.TcpSystem",
+			"Lifetime": "Transient"
+		}
+	]
+}

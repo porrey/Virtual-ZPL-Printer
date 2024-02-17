@@ -1,0 +1,36 @@
+{
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "ILabelTemplate",
+			"TypeDefinition": "VirtualPrinter.TemplateManager.ILabelTemplate, VirtualPrinter.TemplateManager"
+		},
+		{
+			"Key": "LabelTemplate",
+			"TypeDefinition": "VirtualPrinter.TemplateManager.LabelTemplate, VirtualPrinter.TemplateManager"
+		},
+		{
+			"Key": "ITemplateFactory",
+			"TypeDefinition": "VirtualPrinter.TemplateManager.ITemplateFactory, VirtualPrinter.TemplateManager"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "Diamond.Core.Repository.IEntityFactory`1[[<ILabelTemplate>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "Diamond.Core.Repository.EntityFactory`2[[<ILabelTemplate>], [<LabelTemplate>]], Diamond.Core.Repository",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "Diamond.Core.Repository.IRepository`1[[<ILabelTemplate>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "VirtualPrinter.TemplateManager.LabelTemplateRepository, VirtualPrinter.TemplateManager",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "<ITemplateFactory>",
+			"ImplementationType": "VirtualPrinter.TemplateManager.TemplateFactory, VirtualPrinter.TemplateManager",
+			"Lifetime": "Transient"
+		}
+	]
+}

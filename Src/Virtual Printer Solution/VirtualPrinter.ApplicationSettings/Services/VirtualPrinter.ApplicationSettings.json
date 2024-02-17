@@ -1,0 +1,18 @@
+{
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "ISettings",
+			"TypeDefinition": "VirtualPrinter.ApplicationSettings.ISettings, VirtualPrinter.ApplicationSettings"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "<ISettings>",
+			"ImplementationType": "VirtualPrinter.ApplicationSettings.Settings, VirtualPrinter.ApplicationSettings",
+			"Lifetime": "Singleton"
+		}
+	]
+}

@@ -4,14 +4,15 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
+		<Nullable>disable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
 		<ApplicationIcon>virtual-printer.ico</ApplicationIcon>
 		<AssemblyName>VirtualPrinter</AssemblyName>
 		<StartupObject>VirtualPrinter.App</StartupObject>
 		<RootNamespace>VirtualPrinter</RootNamespace>
-		<Version>3.1.1</Version>
-		<FileVersion>3.1.1</FileVersion>
-		<AssemblyVersion>3.1.1</AssemblyVersion>
-		<Nullable>disable</Nullable>
+		<Version>3.2.0</Version>
+		<FileVersion>3.2.0</FileVersion>
+		<AssemblyVersion>3.2.0</AssemblyVersion>
 		<SignAssembly>False</SignAssembly>
 	</PropertyGroup>
 
@@ -30,6 +31,19 @@
 		<None Remove="Assets\filter-edit.png" />
 		<None Remove="Assets\filter-to.png" />
 		<None Remove="Assets\filter-up.png" />
+		<None Remove="Assets\font-add.png" />
+		<None Remove="Assets\font-browse.png" />
+		<None Remove="Assets\font-cancel.png" />
+		<None Remove="Assets\font-delete.png" />
+		<None Remove="Assets\font-file.png" />
+		<None Remove="Assets\font-manager.png" />
+		<None Remove="Assets\font-ok.png" />
+		<None Remove="Assets\font-path.png" />
+		<None Remove="Assets\font-save.png" />
+		<None Remove="Assets\font-source.png" />
+		<None Remove="Assets\font-update.png" />
+		<None Remove="Assets\font-warning.png" />
+		<None Remove="Assets\font.png" />
 		<None Remove="Assets\global-settings.png" />
 		<None Remove="Assets\idle.png" />
 		<None Remove="Assets\ip.png" />
@@ -56,19 +70,22 @@
 		<None Remove="Assets\virtual-printer.png" />
 		<None Remove="Assets\warning-overlay.png" />
 		<None Remove="Assets\warning.png" />
-		<None Remove="Samples\6x4-203dpi.txt" />
 		<None Remove="Services\VirtualPrinter.json" />
+		<None Remove="Services\VirtualPrinter.ViewModels.json" />
+		<None Remove="Services\VirtualPrinter.Views.json" />
 		<None Remove="virtual-printer.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Diamond.Core.Clonable" Version="8.0.1" />
+		<PackageReference Include="Diamond.Core.Clonable.Newtonsoft" Version="8.0.1" />
 		<PackageReference Include="Diamond.Core.Repository" Version="8.0.1" />
 		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="8.0.1" />
 		<PackageReference Include="Diamond.Core.Wpf" Version="8.0.1" />
 		<PackageReference Include="Prism.Wpf" Version="8.1.97" />
 		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.1" />
 		<PackageReference Include="System.DisposableObject" Version="8.0.0" />
-		<PackageReference Include="System.Drawing.Common" Version="8.0.1" />
+		<PackageReference Include="System.Drawing.Common" Version="8.0.2" />
 		<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
 		<PackageReference Include="Serilog" Version="3.1.1" />
 		<PackageReference Include="Serilog.Enrichers.Environment" Version="2.3.0" />
@@ -90,16 +107,20 @@
 		<ProjectReference Include="..\ImageCache.Repository\ImageCache.Repository.csproj" />
 		<ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
 		<ProjectReference Include="..\Labelary.Service\Labelary.Service.csproj" />
-		<ProjectReference Include="..\VirtualPrinter.Abstractions\VirtualPrinter.Abstractions.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.ApplicationSettings\VirtualPrinter.ApplicationSettings.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Db.Abstractions\VirtualPrinter.Db.Abstractions.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.Db.Ef\VirtualPrinter.Db.Ef.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Update="Properties\Settings.Designer.cs">
-			<DesignTimeSharedInput>True</DesignTimeSharedInput>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Settings.settings</DependentUpon>
-		</Compile>
+		<ProjectReference Include="..\VirtualPrinter.FontService\VirtualPrinter.FontService.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Handler.HostStatus\VirtualPrinter.Handler.HostStatus.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Handler.Nop\VirtualPrinter.Handler.Nop.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Handler.Zpl\VirtualPrinter.Handler.Zpl.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.HostedService.PrintSystem\VirtualPrinter.HostedService.PrintSystem.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.HostedService.TcpSystem\VirtualPrinter.HostedService.TcpSystem.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.PublishSubscribe\VirtualPrinter.PublishSubscribe.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Repository.HostAddresses\VirtualPrinter.Repository.HostAddresses.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Repository.LabelParameters\VirtualPrinter.Repository.LabelParameters.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.TcpClient\VirtualPrinter.TestClient.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.TemplateManager\VirtualPrinter.TemplateManager.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -109,22 +130,6 @@
 		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.1\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="Properties\Settings.settings">
-			<Generator>SettingsSingleFileGenerator</Generator>
-			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
-		</None>
-		<None Update="Samples\2x2 Product Label %288 dpmm%29.zpl">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
-		<None Update="Samples\4x6 Shipping Label %288 dpmm%29.zpl">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
-		<None Update="Samples\4x6 USPS Shipping Label (8 dpmm).zpl">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -163,6 +168,45 @@
 		</Content>
 		<Content Include="Assets\filter-up.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-add.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-browse.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-cancel.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-delete.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-file.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-manager.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-ok.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-path.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-save.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-source.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-update.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font-warning.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\font.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\global-settings.png">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -252,6 +296,12 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\warning.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Services\VirtualPrinter.ViewModels.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Services\VirtualPrinter.Views.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Services\VirtualPrinter.json">

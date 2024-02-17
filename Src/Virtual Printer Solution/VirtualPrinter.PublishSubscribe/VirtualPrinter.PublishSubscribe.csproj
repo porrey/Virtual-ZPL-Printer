@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<Version>3.2.0</Version>
+		<FileVersion>3.2.0</FileVersion>
+		<AssemblyVersion>3.2.0</AssemblyVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Prism.Core" Version="8.1.97" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ImageCache.Abstractions\ImageCache.Abstractions.csproj" />
+		<ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Db.Abstractions\VirtualPrinter.Db.Abstractions.csproj" />
+	</ItemGroup>
+
+</Project>

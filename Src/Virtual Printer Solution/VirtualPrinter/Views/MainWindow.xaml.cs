@@ -23,16 +23,19 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Diamond.Core.Wpf;
 using Prism.Events;
-using VirtualPrinter.Events;
+using VirtualPrinter.ApplicationSettings;
+using VirtualPrinter.PublishSubscribe;
 using VirtualPrinter.ViewModels;
 
 namespace VirtualPrinter.Views
 {
 	public partial class MainView : Window, IMainWindow
 	{
-		public MainView(IEventAggregator eventAggregator, MainViewModel viewModel)
+		public MainView(IEventAggregator eventAggregator, ISettings settings, MainViewModel viewModel)
 		{
 			this.EventAggregator = eventAggregator;
+			this.Settings = settings;
+
 			this.DataContext = viewModel;
 			this.RestoreWindow();
 			this.InitializeComponent();
@@ -46,6 +49,7 @@ namespace VirtualPrinter.Views
 		}
 
 		protected IEventAggregator EventAggregator { get; set; }
+		protected ISettings Settings { get; set; }
 
 		private void Timer_Tick(object sender, EventArgs e)
 		{
@@ -63,11 +67,7 @@ namespace VirtualPrinter.Views
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
-			if (this.ViewModel.SendTestView != null)
-			{
-				this.ViewModel.SendTestView.Close();
-			}
-
+			this.ViewModel.SendTestView?.Close();
 			this.SaveWindow();
 			base.OnClosing(e);
 		}
@@ -76,21 +76,21 @@ namespace VirtualPrinter.Views
 		{
 			try
 			{
-				this.WindowState = (WindowState)Properties.Settings.Default.WindowState;
-				this.ViewModel.AutoStart = Properties.Settings.Default.AutoStart;
-				this.ViewModel.SelectedPrinterConfiguration = this.ViewModel.PrinterConfigurations.Where(t => t.Id == Properties.Settings.Default.PrinterConfiguration).SingleOrDefault();
+				this.WindowState = (WindowState)this.Settings.WindowState;
+				this.ViewModel.AutoStart = this.Settings.AutoStart;
+				this.ViewModel.SelectedPrinterConfiguration = this.ViewModel.PrinterConfigurations.Where(t => t.Id == this.Settings.PrinterConfiguration).SingleOrDefault();
 
 				if (this.ViewModel.SelectedPrinterConfiguration == null)
 				{
 					this.ViewModel.SelectedPrinterConfiguration = this.ViewModel.PrinterConfigurations.FirstOrDefault();
 				}
 
-				if (Properties.Settings.Default.Initialized)
+				if (this.Settings.Initialized)
 				{
-					this.Width = Properties.Settings.Default.Width;
-					this.Height = Properties.Settings.Default.Height;
-					this.Left = Properties.Settings.Default.Left;
-					this.Top = Properties.Settings.Default.Top;
+					this.Width = this.Settings.Width;
+					this.Height = this.Settings.Height;
+					this.Left = this.Settings.Left;
+					this.Top = this.Settings.Top;
 				}
 				else
 				{
@@ -117,33 +117,33 @@ namespace VirtualPrinter.Views
 			if (this.WindowState == WindowState.Normal ||
 				this.WindowState == WindowState.Minimized)
 			{
-				Properties.Settings.Default.Width = this.Width;
-				Properties.Settings.Default.Height = this.Height;
-				Properties.Settings.Default.Left = this.Left;
-				Properties.Settings.Default.Top = this.Top;
-				Properties.Settings.Default.WindowState = (int)this.WindowState;
+				this.Settings.Width = this.Width;
+				this.Settings.Height = this.Height;
+				this.Settings.Left = this.Left;
+				this.Settings.Top = this.Top;
+				this.Settings.WindowState = (int)this.WindowState;
 			}
 			else
 			{
-				Properties.Settings.Default.Width = this.RestoreBounds.Width;
-				Properties.Settings.Default.Height = this.RestoreBounds.Height;
-				Properties.Settings.Default.Left = this.RestoreBounds.Left;
-				Properties.Settings.Default.Top = this.RestoreBounds.Top;
-				Properties.Settings.Default.WindowState = (int)WindowState.Maximized;
+				this.Settings.Width = this.RestoreBounds.Width;
+				this.Settings.Height = this.RestoreBounds.Height;
+				this.Settings.Left = this.RestoreBounds.Left;
+				this.Settings.Top = this.RestoreBounds.Top;
+				this.Settings.WindowState = (int)WindowState.Maximized;
 			}
 
 			if (this.ViewModel.SelectedPrinterConfiguration != null)
 			{
-				Properties.Settings.Default.PrinterConfiguration = this.ViewModel.SelectedPrinterConfiguration.Id;
+				this.Settings.PrinterConfiguration = this.ViewModel.SelectedPrinterConfiguration.Id;
 			}
 			else
 			{
-				Properties.Settings.Default.PrinterConfiguration = 1;
+				this.Settings.PrinterConfiguration = 1;
 			}
 
-			Properties.Settings.Default.AutoStart = this.ViewModel.AutoStart;
-			Properties.Settings.Default.Initialized = true;
-			Properties.Settings.Default.Save();
+			this.Settings.AutoStart = this.ViewModel.AutoStart;
+			this.Settings.Initialized = true;
+			this.Settings.Save();
 		}
 
 		private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

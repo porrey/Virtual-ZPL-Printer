@@ -1,0 +1,12 @@
+{
+	"services": [
+		{
+			"ServiceType": "<IRequestHandler>",
+			"ImplementationType": "VirtualPrinter.Handler.Nop.NopRequestHandler, VirtualPrinter.Handler.Nop",
+			"Lifetime": "Singleton",
+			"Properties": {
+				"Priority": 2
+			}
+		}
+	]
+}

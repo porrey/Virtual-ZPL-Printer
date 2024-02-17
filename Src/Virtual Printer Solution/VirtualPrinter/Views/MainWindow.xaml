@@ -131,6 +131,9 @@
 		<KeyBinding Modifiers="Control"
 					Key="T"
 					Command="{Binding SendTestLabelCommand}" />
+		<KeyBinding Modifiers="Control"
+					Key="F"
+					Command="{Binding FontManagerCommand}" />
 	</Window.InputBindings>
 
 	<DockPanel>
@@ -144,6 +147,14 @@
 						  InputGestureText="Ctrl+E">
 					<MenuItem.Icon>
 						<Image Source="/Assets/edit-printer-configuration.png" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<Separator />
+				<MenuItem Header="_Font Manager"
+						  Command="{Binding FontManagerCommand}"
+						  InputGestureText="Ctrl+F">
+					<MenuItem.Icon>
+						<Image Source="/Assets/font-manager.png" />
 					</MenuItem.Icon>
 				</MenuItem>
 				<Separator />
@@ -293,11 +304,13 @@
 
 								<Image Source="/Assets/edit-printer-configuration.png"
 									   Width="24"
-									   Height="24" />
+									   Height="24"
+									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
 										   Text="Edit"
-										   FontSize="11" />
+										   FontSize="11"
+										   HorizontalAlignment="Center" />
 							</Grid>
 						</Button.Content>
 					</Button>
@@ -345,11 +358,13 @@
 
 								<Image Source="/Assets/stop.png"
 									   Width="24"
-									   Height="24" />
+									   Height="24"
+									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
 										   Text="Stop"
-										   FontSize="11" />
+										   FontSize="11"
+										   HorizontalAlignment="Center" />
 							</Grid>
 						</Button.Content>
 					</Button>
@@ -372,11 +387,13 @@
 
 								<Image Source="/Assets/start.png"
 									   Width="24"
-									   Height="24" />
+									   Height="24"
+									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
 										   Text="Start"
-										   FontSize="11" />
+										   FontSize="11"
+										   HorizontalAlignment="Center" />
 							</Grid>
 						</Button.Content>
 					</Button>
@@ -536,11 +553,13 @@
 
 								<Image Source="/Assets/label-preview.png"
 									   Width="24"
-									   Height="24" />
+									   Height="24"
+									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
 										   Text="View"
-										   FontSize="11" />
+										   FontSize="11"
+										   HorizontalAlignment="Center" />
 							</Grid>
 						</Button.Content>
 					</Button>
@@ -563,11 +582,13 @@
 
 								<Image Source="/Assets/trash-bin.png"
 									   Width="24"
-									   Height="24" />
+									   Height="24"
+									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
 										   Text="Delete"
-										   FontSize="11" />
+										   FontSize="11"
+										   HorizontalAlignment="Center" />
 							</Grid>
 						</Button.Content>
 					</Button>
@@ -590,11 +611,13 @@
 
 								<Image Source="/Assets/clear-label.png"
 									   Width="24"
-									   Height="24" />
+									   Height="24"
+									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
 										   Text="Clear"
-										   FontSize="11" />
+										   FontSize="11"
+										   HorizontalAlignment="Center" />
 							</Grid>
 						</Button.Content>
 					</Button>
@@ -617,11 +640,13 @@
 
 								<Image Source="/Assets/test-label.png"
 									   Width="24"
-									   Height="24" />
+									   Height="24"
+									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
 										   Text="Test"
-										   FontSize="11" />
+										   FontSize="11"
+										   HorizontalAlignment="Center" />
 							</Grid>
 						</Button.Content>
 					</Button>

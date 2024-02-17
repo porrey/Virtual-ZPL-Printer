@@ -1,0 +1,63 @@
+{
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "ILabelRotation",
+			"TypeDefinition": "VirtualPrinter.Repository.LabelParameters.ILabelRotation, VirtualPrinter.Repository.LabelParameters"
+		},
+		{
+			"Key": "LabelRotation",
+			"TypeDefinition": "VirtualPrinter.Repository.LabelParameters.LabelRotation, VirtualPrinter.Repository.LabelParameters"
+		},
+		{
+			"Key": "ILabelUnit",
+			"TypeDefinition": "VirtualPrinter.Repository.LabelParameters.ILabelUnit, VirtualPrinter.Repository.LabelParameters"
+		},
+		{
+			"Key": "LabelUnit",
+			"TypeDefinition": "VirtualPrinter.Repository.LabelParameters.LabelUnit, VirtualPrinter.Repository.LabelParameters"
+		},
+		{
+			"Key": "IResolution",
+			"TypeDefinition": "VirtualPrinter.Repository.LabelParameters.IResolution, VirtualPrinter.Repository.LabelParameters"
+		},
+		{
+			"Key": "Resolution",
+			"TypeDefinition": "VirtualPrinter.Repository.LabelParameters.Resolution, VirtualPrinter.Repository.LabelParameters"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "Diamond.Core.Repository.IEntityFactory`1[[<ILabelRotation>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "Diamond.Core.Repository.EntityFactory`2[[<ILabelRotation>], [<LabelRotation>]], Diamond.Core.Repository",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "Diamond.Core.Repository.IRepository`1[[<ILabelRotation>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "VirtualPrinter.Repository.LabelParameters.LabelRotationRepository, VirtualPrinter.Repository.LabelParameters",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "Diamond.Core.Repository.IEntityFactory`1[[<ILabelUnit>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "Diamond.Core.Repository.EntityFactory`2[[<ILabelUnit>], [<LabelUnit>]], Diamond.Core.Repository",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "Diamond.Core.Repository.IRepository`1[[<ILabelUnit>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "VirtualPrinter.Repository.LabelParameters.LabelUnitRepository, VirtualPrinter.Repository.LabelParameters",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "Diamond.Core.Repository.IEntityFactory`1[[<IResolution>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "Diamond.Core.Repository.EntityFactory`2[[<IResolution>], [<Resolution>]], Diamond.Core.Repository",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "Diamond.Core.Repository.IRepository`1[[<IResolution>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "VirtualPrinter.Repository.LabelParameters.ResolutionRepository, VirtualPrinter.Repository.LabelParameters",
+			"Lifetime": "Transient"
+		}
+	]
+}

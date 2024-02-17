@@ -12,7 +12,7 @@
 		<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 		<converters:NotBooleanToVisibilityConverter x:Key="NotBooleanToVisibilityConverter" />
 		<converters:StringToImageSourceConverter x:Key="StringToImageSourceConverter" />
-		<converters:IpAddressToStringConverter x:Key="IpAddressToStringConverter" />
+		<converters:HostAddressToStringConverter x:Key="HostAddressToStringConverter" />
 		<converters:BooleanResultToColorConverter x:Key="BooleanResultToColorConverter" />
 		<converters:NotObjectToBooleanConverter x:Key="NotObjectToBooleanConverter" />
 		<converters:ListCountToVisibilityConverter x:Key="ListCountToVisibilityConverter" />

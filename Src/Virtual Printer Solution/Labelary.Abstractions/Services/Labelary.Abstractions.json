@@ -8,12 +8,12 @@
 			"TypeDefinition": "Labelary.Abstractions.ILabelService, Labelary.Abstractions"
 		},
 		{
-			"Key": "LabelRotation",
-			"TypeDefinition": "Labelary.Abstractions.LabelRotation, Labelary.Abstractions"
-		},
-		{
 			"Key": "LabelConfiguration",
 			"TypeDefinition": "Labelary.Abstractions.LabelConfiguration, Labelary.Abstractions"
+		},
+		{
+			"Key": "ILabelServiceConfiguration",
+			"TypeDefinition": "Labelary.Abstractions.ILabelServiceConfiguration, Labelary.Abstractions"
 		}
 	]
 }

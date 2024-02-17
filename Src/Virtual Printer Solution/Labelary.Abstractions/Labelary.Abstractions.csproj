@@ -2,9 +2,11 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-		<Version>3.1.1</Version>
-		<FileVersion>3.1.1</FileVersion>
-		<AssemblyVersion>3.1.1</AssemblyVersion>
+		<Version>3.2.0</Version>
+		<FileVersion>3.2.0</FileVersion>
+		<AssemblyVersion>3.2.0</AssemblyVersion>
+		<Nullable>disable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Title>Labelary Library Abstractions</Title>
 		<Description>Provides abstraction for the Labelary C# Library. This library is used by the Virtual ZPL Printer application.</Description>
@@ -17,7 +19,6 @@
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageTags>labelary; zpl</PackageTags>
-		<Nullable>disable</Nullable>
 		<Copyright>Copyright(C) 2021-2024, Daniel M. Porrey. All rights reserved.</Copyright>
 	</PropertyGroup>
 
@@ -39,7 +40,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Repository" Version="8.0.0" />
+		<PackageReference Include="Diamond.Core.Repository" Version="8.0.1" />
 		<PackageReference Include="UnitsNet" Version="5.43.0" />
 	</ItemGroup>
 

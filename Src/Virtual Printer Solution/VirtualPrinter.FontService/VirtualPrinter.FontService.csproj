@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<Version>3.2.0</Version>
+		<FileVersion>3.2.0</FileVersion>
+		<AssemblyVersion>3.2.0</AssemblyVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Services\VirtualPrinter.FontService.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Services\VirtualPrinter.FontService.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+</Project>

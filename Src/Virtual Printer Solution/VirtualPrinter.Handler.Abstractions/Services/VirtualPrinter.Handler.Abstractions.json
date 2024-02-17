@@ -1,0 +1,25 @@
+{
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "IRequestHandlerFactory",
+			"TypeDefinition": "VirtualPrinter.Handler.Abstractions.IRequestHandlerFactory, VirtualPrinter.Handler.Abstractions"
+		},
+		{
+			"Key": "IRequestHandler",
+			"TypeDefinition": "VirtualPrinter.Handler.Abstractions.IRequestHandler, VirtualPrinter.Handler.Abstractions"
+		}
+	],
+	"services": [
+		//
+		// Request handler factory
+		//
+		{
+			"ServiceType": "<IRequestHandlerFactory>",
+			"ImplementationType": "VirtualPrinter.Handler.Abstractions.RequestHandlerFactory, VirtualPrinter.Handler.Abstractions",
+			"Lifetime": "Singleton"
+		}
+	]
+}

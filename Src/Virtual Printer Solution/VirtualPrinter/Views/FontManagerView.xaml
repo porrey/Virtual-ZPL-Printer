@@ -1,0 +1,435 @@
+﻿<Window x:Class="VirtualPrinter.Views.FontManagerView"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		Title="Font Manager"
+		Width="750"
+		Height="775"
+		Icon="/virtual-printer.ico"
+		ResizeMode="NoResize"
+		WindowStartupLocation="CenterOwner"
+		WindowStyle="ThreeDBorderWindow"
+		mc:Ignorable="d">
+
+	<Window.Resources>
+		<DataTemplate x:Key="FontTemplate">
+			<Border Margin="3"
+					BorderBrush="{StaticResource BorderColor}"
+					BorderThickness="1"
+					CornerRadius="{StaticResource Radius}"
+					IsEnabled="{Binding IsIdle}">
+				<Grid Margin="5">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="1*" />
+						<RowDefinition Height="1*" />
+					</Grid.RowDefinitions>
+
+					<!-- Printer Device -->
+					<Grid Grid.Row="0"
+						  Grid.Column="0"
+						  Margin="0,5,0,5">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="120" />
+							<ColumnDefinition Width="50" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Image Grid.Column="0"
+							   Width="18"
+							   Height="18"
+							   Margin="2,2,2,2"
+							   HorizontalAlignment="Center"
+							   VerticalAlignment="Center"
+							   Source="/Assets/font-path.png" />
+						<TextBlock Grid.Column="1"
+								   Margin="5,2,5,2"
+								   HorizontalAlignment="Left"
+								   VerticalAlignment="Center"
+								   Foreground="{StaticResource ForegroundColor1}"
+								   Text="Printer Path" />
+						<ComboBox Grid.Column="2"
+								  Margin="5,2,5,2"
+								  ItemsSource="{Binding PrinterDevices}"
+								  SelectedItem="{Binding PrinterDevice}"
+								  HorizontalAlignment="Stretch"
+								  VerticalContentAlignment="Center"
+								  Foreground="{StaticResource ForegroundColor1}">
+						</ComboBox>
+						<TextBlock Grid.Column="3"
+								   Margin="2,0,2,0"
+								   HorizontalAlignment="Stretch"
+								   VerticalAlignment="Center"
+								   Foreground="{StaticResource ForegroundColor1}"
+								   Text=":" />
+						<TextBox Grid.Column="4"
+								 Margin="5,2,5,2"
+								 HorizontalAlignment="Stretch"
+								 VerticalContentAlignment="Center"
+								 Foreground="{StaticResource ForegroundColor1}"
+								 Text="{Binding FontName}" />
+					</Grid>
+
+					<!-- Characters -->
+					<Grid Grid.Row="1"
+						  Grid.Column="0"
+						  Margin="0,5,0,5">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="120" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="1*" />
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Column="2"
+								   Grid.Row="0"
+								   Margin="5,2,5,2"
+								   VerticalAlignment="Center"
+								   Foreground="{StaticResource ForegroundColor1}"
+								   Text="If provided, the font will be subset to contain only the specified characters."
+								   TextWrapping="Wrap" />
+
+						<Image Grid.Column="0"
+							   Grid.Row="0"
+							   Grid.RowSpan="2"
+							   Width="18"
+							   Height="18"
+							   Margin="2,2,2,2"
+							   HorizontalAlignment="Center"
+							   VerticalAlignment="Center"
+							   Source="/Assets/font-path.png" />
+						<TextBlock Grid.Column="1"
+								   Grid.Row="0"
+								   Grid.RowSpan="2"
+								   Margin="5,2,5,2"
+								   HorizontalAlignment="Left"
+								   VerticalAlignment="Center"
+								   Foreground="{StaticResource ForegroundColor1}"
+								   Text="Characters" />
+						<TextBox Grid.Column="2"
+								 Grid.Row="1"
+								 Margin="5,2,5,2"
+								 HorizontalAlignment="Stretch"
+								 VerticalContentAlignment="Center"
+								 Foreground="{StaticResource ForegroundColor1}"
+								 Text="{Binding Chars}"
+								 IsEnabled="{Binding CanUpdate}"/>
+					</Grid>
+
+					<!-- Source -->
+					<Grid Grid.Row="2"
+						  Grid.Column="0"
+						  Margin="0,5,0,5">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="120" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Image Grid.Column="0"
+							   Grid.Row="0"
+							   Grid.RowSpan="2"
+							   Width="18"
+							   Height="18"
+							   Margin="2,2,2,2"
+							   HorizontalAlignment="Center"
+							   VerticalAlignment="Center"
+							   Source="/Assets/font-source.png" />
+						<TextBlock Grid.Column="1"
+								   Grid.Row="0"
+								   Grid.RowSpan="2"
+								   Margin="5,2,5,2"
+								   HorizontalAlignment="Left"
+								   VerticalAlignment="Center"
+								   Foreground="{StaticResource ForegroundColor1}"
+								   Text="Font Source" />
+						<TextBlock Grid.Column="2"
+								 Grid.Row="1"
+								 Margin="5,2,5,2"
+								 HorizontalAlignment="Left"
+								 VerticalAlignment="Center"
+								 Foreground="{StaticResource ForegroundColor1}"
+								 Text="{Binding FontSourceDescription}"
+								 IsEnabled="{Binding CanUpdate}" />
+					</Grid>
+
+					<!--  Buttons  -->
+					<Grid Grid.Row="0"
+						  Grid.RowSpan="2"
+						  Grid.Column="1">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="1*" />
+							<RowDefinition Height="1*" />
+						</Grid.RowDefinitions>
+
+						<Button Grid.Column="0"
+								Grid.Row="0"
+								Width="32"
+								Height="32"
+								Margin="2"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Command="{Binding BrowseCommand}"
+								Style="{DynamicResource ButtonStyle1}"
+								ToolTip="Browse for a local TrueType font source file.">
+							<Button.Content>
+								<Image Source="/Assets/font-browse.png"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center" />
+							</Button.Content>
+						</Button>
+
+						<Button Grid.Column="1"
+								Grid.Row="0"
+								Width="32"
+								Height="32"
+								Margin="2"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Command="{Binding DeleteCommand}"
+								Style="{DynamicResource ButtonStyle1}"
+								ToolTip="Remove this font from the Font Manager.">
+							<Button.Content>
+								<Image Source="/Assets/font-delete.png"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center" />
+							</Button.Content>
+						</Button>
+
+						<Button Grid.Column="0"
+								Grid.Row="1"
+								Width="32"
+								Height="32"
+								Margin="2"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Command="{Binding SaveCommand}"
+								Style="{DynamicResource ButtonStyle1}"
+								ToolTip="Save the current changes to this font.">
+							<Button.Content>
+								<Image Source="/Assets/font-save.png"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center" />
+							</Button.Content>
+						</Button>
+
+						<Button Grid.Column="1"
+								Grid.Row="1"
+								Width="32"
+								Height="32"
+								Margin="2"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Command="{Binding UpdateCommand}"
+								Style="{DynamicResource ButtonStyle1}"
+								ToolTip="Update the font using Labelary API.">
+							<Button.Content>
+								<Image Source="/Assets/font-update.png"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center" />
+							</Button.Content>
+						</Button>
+					</Grid>
+
+					<!-- Size/Error -->
+					<Grid Grid.Row="2"
+						  Grid.Column="1"
+						  VerticalAlignment="Center"
+						  HorizontalAlignment="Center">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="1*" />
+							<RowDefinition Height="1*" />
+						</Grid.RowDefinitions>
+
+						<Image Grid.Column="0"
+							   Grid.Row="1"
+							   Source="/Assets/font-warning.png"
+							   Width="18"
+							   Height="18"
+							   VerticalAlignment="Center"
+							   HorizontalAlignment="Center"
+							   Visibility="{Binding HasError, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+						<TextBlock Grid.Column="0"
+								   Grid.ColumnSpan="2"
+								   Grid.Row="0"
+								   Text="Byte Count"
+								   FontSize="14.5"
+								   FontWeight="Light"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Center" />
+
+						<TextBlock Grid.Column="1"
+								   Grid.Row="1"
+								   Text="{Binding SizeDescription}"
+								   FontSize="14.5"
+								   FontWeight="ExtraLight"
+								   VerticalAlignment="Center"
+								   HorizontalAlignment="Center" />
+					</Grid>
+				</Grid>
+			</Border>
+		</DataTemplate>
+	</Window.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<Image Grid.Column="0"
+				   Width="38"
+				   Height="38"
+				   Margin="10"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Source="/Assets/font-manager.png" />
+
+			<TextBlock Grid.Column="1"
+					   Margin="15,15,5,15"
+					   VerticalAlignment="Center"
+					   FontSize="12"
+					   Foreground="{StaticResource ForegroundColor1}"
+					   Text="Load custom TrueType fonts to be used in labels. Virtual ZPL Printer will automatically upload the fonts with the each label request to simulate fonts already loaded in the printer."
+					   TextWrapping="Wrap" />
+
+			<Button Grid.Column="2"
+					Width="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
+					Margin="8,3,5,3"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Command="{Binding AddCommand}"
+					Style="{DynamicResource ButtonStyle1}"
+					ToolTip="Add a new custom font.">
+				<Button.Content>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<Image Width="24"
+							   Height="24"
+							   Source="/Assets/font-add.png" />
+
+						<TextBlock Grid.Row="1"
+								   FontSize="11"
+								   HorizontalAlignment="Center"
+								   Text="Add" />
+					</Grid>
+				</Button.Content>
+			</Button>
+		</Grid>
+
+		<ListView Grid.Row="1"
+				  BorderThickness="0"
+				  ItemTemplate="{StaticResource FontTemplate}"
+				  ItemsSource="{Binding Fonts}"
+				  SelectedItem="{Binding SelectedFont}"
+				  SelectionMode="Single"
+				  ScrollViewer.CanContentScroll="False"
+				  SelectionChanged="ListView_SelectionChanged">
+			<ListView.ItemContainerStyle>
+				<Style TargetType="ListViewItem">
+					<Setter Property="HorizontalContentAlignment"
+							Value="Stretch" />
+				</Style>
+			</ListView.ItemContainerStyle>
+		</ListView>
+
+		<!--  Buttons  -->
+		<Grid Grid.Row="2"
+			  Margin="0,25,5,5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<Button Grid.Column="1"
+					Width="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
+					Margin="8,3,0,3"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Click="Button_Click"
+					Command="{Binding OkCommand}"
+					Style="{DynamicResource ButtonStyle1}"
+					ToolTip="Save the changes and close the Font Manager.">
+				<Button.Content>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<Image Width="24"
+							   Height="24"
+							   Source="/Assets/font-ok.png" />
+
+						<TextBlock Grid.Row="1"
+								   FontSize="11"
+								   HorizontalAlignment="Center"
+								   Text="OK" />
+					</Grid>
+				</Button.Content>
+			</Button>
+
+			<Button Grid.Column="2"
+					Width="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
+					Margin="8,3,0,3"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Click="Button_Click"
+					Command="{Binding CancelCommand}"
+					Style="{DynamicResource ButtonStyle1}"
+					ToolTip="Cancel the changes and close the Font Manager.">
+				<Button.Content>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<Image Width="24"
+							   Height="24"
+							   Source="/Assets/font-cancel.png" />
+
+						<TextBlock Grid.Row="1"
+								   FontSize="11"
+								   Text="{Binding ButtonText}"
+								   HorizontalAlignment="Center" />
+					</Grid>
+				</Button.Content>
+			</Button>
+		</Grid>
+	</Grid>
+</Window>

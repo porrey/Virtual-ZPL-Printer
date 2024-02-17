@@ -1,0 +1,57 @@
+{
+	"services": [
+		{
+			//
+			// IMainWindow is used for the startup window.
+			//
+			"ServiceType": "Diamond.Core.Wpf.IMainWindow, Diamond.Core.Wpf.Abstractions",
+			"ImplementationType": "VirtualPrinter.Views.MainView, VirtualPrinter",
+			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.ConfigurationView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.ConfigurationView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.SendTestView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.SendTestView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.EditFiltersView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.EditFiltersView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.EditPrinterView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.EditPrinterView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.GlobalSettingsView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.GlobalSettingsView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.TestLabelaryView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.TestLabelaryView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.AboutView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.AboutView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.ZplView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.ZplView, VirtualPrinter",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "VirtualPrinter.Views.FontManagerView, VirtualPrinter",
+			"ImplementationType": "VirtualPrinter.Views.FontManagerView, VirtualPrinter",
+			"Lifetime": "Transient"
+		}
+	]
+}

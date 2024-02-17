@@ -1,0 +1,12 @@
+{
+	"services": [
+		{
+			"ServiceType": "<IRequestHandler>",
+			"ImplementationType": "VirtualPrinter.Handler.HostStatus.HostStatusRequestHandler, VirtualPrinter.Handler.HostStatus",
+			"Lifetime": "Singleton",
+			"Properties": {
+				"Priority": 2
+			}
+		}
+	]
+}

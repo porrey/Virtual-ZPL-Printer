@@ -1,0 +1,24 @@
+{
+	"aliases": [
+		{
+			"Key": "IPhysicalPrinterFactory",
+			"TypeDefinition": "VirtualPrinter.HostedService.PrintSystem.IPhysicalPrinterFactory, VirtualPrinter.HostedService.PrintSystem"
+		},
+		{
+			"Key": "IPhysicalPrinter",
+			"TypeDefinition": "VirtualPrinter.HostedService.PrintSystem.IPhysicalPrinter, VirtualPrinter.HostedService.PrintSystem"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "<IHostedService>",
+			"ImplementationType": "VirtualPrinter.HostedService.PrintSystem.PrintServer, VirtualPrinter.HostedService.PrintSystem",
+			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "<IPhysicalPrinterFactory>",
+			"ImplementationType": "VirtualPrinter.HostedService.PrintSystem.PhysicalPrinterFactory, VirtualPrinter.HostedService.PrintSystem",
+			"Lifetime": "Singleton"
+		}
+	]
+}

@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Library</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <Version>3.1.1</Version>
-    <FileVersion>3.1.1</FileVersion>
-    <AssemblyVersion>3.1.1</AssemblyVersion>
+    <Version>3.2.0</Version>
+    <FileVersion>3.2.0</FileVersion>
+    <AssemblyVersion>3.2.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,10 +20,10 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Extensions.DependencyInjection.Sqlite" Version="8.0.0" />
-		<PackageReference Include="Diamond.Core.Repository" Version="8.0.0" />
-		<PackageReference Include="Diamond.Core.System.Text" Version="8.0.0" />
-		<PackageReference Include="Diamond.Core.Repository.EntityFrameworkCore" Version="8.0.0" />
+		<PackageReference Include="Diamond.Core.Extensions.DependencyInjection.Sqlite" Version="8.0.1" />
+		<PackageReference Include="Diamond.Core.Repository" Version="8.0.1" />
+		<PackageReference Include="Diamond.Core.System.Text" Version="8.0.1" />
+		<PackageReference Include="Diamond.Core.Repository.EntityFrameworkCore" Version="8.0.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">

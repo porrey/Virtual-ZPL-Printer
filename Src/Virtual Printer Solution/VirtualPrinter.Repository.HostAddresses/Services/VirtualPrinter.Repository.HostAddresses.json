@@ -1,0 +1,27 @@
+{
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "IHostAddress",
+			"TypeDefinition": "VirtualPrinter.Repository.HostAddresses.IHostAddress, VirtualPrinter.Repository.HostAddresses"
+		},
+		{
+			"Key": "HostAddress",
+			"TypeDefinition": "VirtualPrinter.Repository.HostAddresses.HostAddress, VirtualPrinter.Repository.HostAddresses"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "Diamond.Core.Repository.IEntityFactory`1[[<IHostAddress>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "Diamond.Core.Repository.EntityFactory`2[[<IHostAddress>], [<HostAddress>]], Diamond.Core.Repository",
+			"Lifetime": "Transient"
+		},
+		{
+			"ServiceType": "Diamond.Core.Repository.IRepository`1[[<IHostAddress>]], Diamond.Core.Repository.Abstractions",
+			"ImplementationType": "VirtualPrinter.Repository.HostAddresses.HostAddressRepository, VirtualPrinter.Repository.HostAddresses",
+			"Lifetime": "Transient"
+		}
+	]
+}

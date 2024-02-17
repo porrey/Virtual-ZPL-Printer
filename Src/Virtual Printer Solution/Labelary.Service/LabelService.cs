@@ -25,19 +25,15 @@ using System.Threading.Tasks;
 using Labelary.Abstractions;
 using Microsoft.Extensions.Logging;
 using UnitsNet;
+using VirtualPrinter.FontService;
 
 namespace Labelary.Service
 {
-	public class LabelService : ILabelService
+	public class LabelService(ILogger<LabelService> logger, ILabelServiceConfiguration labelServiceConfiguration, IFontService fontService) : ILabelService
 	{
-		public LabelService(ILogger<LabelService> logger, ILabelServiceConfiguration labelServiceConfiguration)
-		{
-			this.Logger = logger;
-			this.LabelServiceConfiguration = labelServiceConfiguration;
-		}
-
-		protected ILogger<LabelService> Logger { get; set; }
-		public ILabelServiceConfiguration LabelServiceConfiguration { get; set; }
+		protected ILogger<LabelService> Logger { get; set; } = logger;
+		public ILabelServiceConfiguration LabelServiceConfiguration { get; set; } = labelServiceConfiguration;
+		protected IFontService FontService { get; set; } = fontService;
 
 		public Task<IGetLabelResponse> GetLabelAsync(ILabelConfiguration labelConfiguration, string zpl, int labelIndex = 0)
 		{
@@ -109,6 +105,12 @@ namespace Labelary.Service
 					returnValue.Zpl = zpl.Filter(labelConfiguration.LabelFilters);
 					this.Logger.LogDebug("Filtered ZPL: '{zpl}'.", returnValue.Zpl.Replace("\"", ""));
 
+					//
+					// Load fonts that are referenced in the ZPL.
+					//
+					IEnumerable<IPrinterFont> fonts = await this.FontService.GetReferencedFontsAsync(zpl);
+					returnValue.Zpl = await this.FontService.ApplyReferencedFontsAsync(fonts, zpl);
+
 					using (StringContent content = new(returnValue.Zpl, Encoding.UTF8, "application/x-www-form-urlencoded"))
 					{
 						double width = new Length(labelConfiguration.LabelWidth, labelConfiguration.Unit).ToUnit(UnitsNet.Units.LengthUnit.Inch).Value;
@@ -137,9 +139,12 @@ namespace Labelary.Service
 							//
 							// Force US formatting for Labelary REST API.
 							//
-							string widthString = width.ToString("#.##", new CultureInfo("us-EN"));
+							CultureInfo culture = new("us-EN");
+							culture.NumberFormat.NumberDecimalSeparator = ".";
+
+							string widthString = width.ToString("#.##", culture);
 							this.Logger.LogDebug("The Width parameter is '{value}'.", widthString);
-							string heightString = height.ToString("#.##", new CultureInfo("us-EN"));
+							string heightString = height.ToString("#.##", culture);
 							this.Logger.LogDebug("The Height parameter is '{value}'.", heightString);
 
 							//

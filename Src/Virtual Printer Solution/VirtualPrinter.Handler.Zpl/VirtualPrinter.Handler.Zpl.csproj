@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-Windows</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<Version>3.2.0</Version>
+		<FileVersion>3.2.0</FileVersion>
+		<AssemblyVersion>3.2.0</AssemblyVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Services\VirtualPrinter.Handler.Zpl.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Services\VirtualPrinter.Handler.Zpl.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Diamond.Core.Repository" Version="8.0.1" />
+		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="8.0.1" />
+		<PackageReference Include="Diamond.Core.System.Text" Version="8.0.1" />
+		<PackageReference Include="Diamond.Core.Wpf" Version="8.0.1" />
+		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.1" />
+		<PackageReference Include="UnitsNet" Version="5.43.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\VirtualPrinter.Handler.Abstractions\VirtualPrinter.Handler.Abstractions.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\8.0.1\contentFiles\any\net8.0\Services\Diamond.Core.Repository.Abstractions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.1\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+</Project>

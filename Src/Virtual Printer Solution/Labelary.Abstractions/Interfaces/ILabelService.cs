@@ -14,9 +14,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace Labelary.Abstractions
 {
 	public interface ILabelService

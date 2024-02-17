@@ -8,6 +8,7 @@
         Icon="/virtual-printer.ico"
 		ResizeMode="NoResize"
 		WindowStyle="ThreeDBorderWindow"
+		WindowStartupLocation="CenterOwner"
 		Height="600"
 		Width="550">
 
@@ -107,7 +108,9 @@
 								Margin="2"
 								ToolTip="Move this filter up.">
 							<Button.Content>
-								<Image Source="/Assets/filter-up.png" />
+								<Image Source="/Assets/filter-up.png"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center" />
 							</Button.Content>
 						</Button>
 
@@ -121,7 +124,9 @@
 								Margin="2"
 								ToolTip="Move this filter down.">
 							<Button.Content>
-								<Image Source="/Assets/filter-down.png" />
+								<Image Source="/Assets/filter-down.png"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center" />
 							</Button.Content>
 						</Button>
 
@@ -135,7 +140,9 @@
 								Margin="2"
 								ToolTip="Delete the this filter.">
 							<Button.Content>
-								<Image Source="/Assets/filter-delete.png" />
+								<Image Source="/Assets/filter-delete.png"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center" />
 							</Button.Content>
 						</Button>
 
@@ -149,7 +156,9 @@
 								Margin="2"
 								ToolTip="Add a new filter before this one.">
 							<Button.Content>
-								<Image Source="/Assets/filter-add.png" />
+								<Image Source="/Assets/filter-add.png"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center" />
 							</Button.Content>
 						</Button>
 					</Grid>
@@ -189,7 +198,7 @@
 				   Margin="10" />
 
 			<TextBlock	Grid.Column="1"
-						Text="The filters are processed on the order they appear, from top to bottom."
+						Text="The filters are processed in the order they appear, from top to bottom."
 						VerticalAlignment="Center"
 						TextWrapping="Wrap"
 						FontSize="12"
@@ -220,7 +229,7 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 
-			<Button Grid.Column="2"
+			<Button Grid.Column="1"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
@@ -243,12 +252,13 @@
 
 						<TextBlock Grid.Row="1"
 								   Text="OK"
-								   FontSize="11" />
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
 					</Grid>
 				</Button.Content>
 			</Button>
 
-			<Button Grid.Column="1"
+			<Button Grid.Column="2"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
@@ -271,7 +281,8 @@
 
 						<TextBlock Grid.Row="1"
 								   Text="Cancel"
-								   FontSize="11" />
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
 					</Grid>
 				</Button.Content>
 			</Button>

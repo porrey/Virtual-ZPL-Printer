@@ -4,6 +4,11 @@
 			"ServiceType": "<ILabelService>",
 			"ImplementationType": "Labelary.Service.LabelService, Labelary.Service",
 			"Lifetime": "Singleton"
+		},
+		{
+			"ServiceType": "<ILabelServiceConfiguration>",
+			"ImplementationType": "Labelary.Service.LabelServiceConfiguration, Labelary.Service",
+			"Lifetime": "Singleton"
 		}
 	]
 }

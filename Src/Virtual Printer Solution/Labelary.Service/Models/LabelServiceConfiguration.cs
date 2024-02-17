@@ -15,13 +15,14 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using Labelary.Abstractions;
+using VirtualPrinter.ApplicationSettings;
 
 namespace Labelary.Service
 {
-	public class LabelServiceConfiguration : ILabelServiceConfiguration
+	public class LabelServiceConfiguration(ISettings settings) : ILabelServiceConfiguration
 	{
-		public string BaseUrl { get; set; }
-		public string Method { get; set; }
-		public bool Linting { get; set; }
+		public string BaseUrl { get; set; } = settings.ApiUrl;
+		public string Method { get; set; } = settings.ApiMethod;
+		public bool Linting { get; set; } = settings.ApiLinting;
 	}
 }

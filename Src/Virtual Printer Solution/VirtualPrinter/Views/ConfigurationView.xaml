@@ -8,6 +8,7 @@
 		Icon="/virtual-printer.ico"
 		ResizeMode="NoResize"
 		WindowStyle="ThreeDBorderWindow"
+		WindowStartupLocation="CenterOwner"
 		Background="White"
 		Width="875"
 		Height="690"
@@ -175,7 +176,7 @@
 						   Foreground="{StaticResource ForegroundColor1}" />
 			</Grid>
 		</DataTemplate>
-		<DataTemplate x:Key="IpAddressTemplate">
+		<DataTemplate x:Key="HostAddressTemplate">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
@@ -189,7 +190,7 @@
 					   Margin="0,0,10,0" />
 
 				<TextBlock Grid.Column="1"
-						   Text="{Binding ., Converter={StaticResource IpAddressToStringConverter}}"
+						   Text="{Binding ., Converter={StaticResource HostAddressToStringConverter}}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Left"
 						   Foreground="{StaticResource ForegroundColor1}" />
@@ -270,7 +271,7 @@
 
 				<TextBlock Grid.Row="1"
 						   Grid.Column="0"
-						   Text="IP Address"
+						   Text="Host Address"
 						   Margin="{StaticResource ControlMargin}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Left"
@@ -284,9 +285,9 @@
 						  IsReadOnly="false"
 						  IsEditable="true"
 						  Foreground="{StaticResource ForegroundColor1}"
-						  ItemsSource="{Binding IpAddresses}"
-						  Text="{Binding IpAddress}"
-						  ItemTemplate="{StaticResource IpAddressTemplate}" />
+						  ItemsSource="{Binding HostAddresses}"
+						  Text="{Binding SelectedHostAddress}"
+						  ItemTemplate="{StaticResource HostAddressTemplate}" />
 
 				<TextBlock Grid.Row="2"
 						   Grid.Column="0"
@@ -506,7 +507,7 @@
 							<TextBlock Grid.Column="1"
 									   Text="Configure"
 									   VerticalAlignment="Center"
-									   HorizontalAlignment="Left"
+									   HorizontalAlignment="Center"
 									   Margin="3" />
 						</Grid>
 					</Button.Content>
@@ -552,7 +553,8 @@
 
 						<TextBlock Grid.Row="1"
 								   Text="Close"
-								   FontSize="11" />
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
 					</Grid>
 				</Button.Content>
 			</Button>
@@ -579,7 +581,8 @@
 
 						<TextBlock Grid.Row="1"
 								   Text="Undo"
-								   FontSize="11" />
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
 					</Grid>
 				</Button.Content>
 			</Button>
@@ -606,7 +609,8 @@
 
 						<TextBlock Grid.Row="1"
 								   Text="Save"
-								   FontSize="11" />
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
 					</Grid>
 				</Button.Content>
 			</Button>
@@ -633,7 +637,8 @@
 
 						<TextBlock Grid.Row="1"
 								   Text="Add"
-								   FontSize="11" />
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
 					</Grid>
 				</Button.Content>
 			</Button>
@@ -660,7 +665,8 @@
 
 						<TextBlock Grid.Row="1"
 								   Text="Delete"
-								   FontSize="11" />
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
 					</Grid>
 				</Button.Content>
 			</Button>
@@ -687,7 +693,8 @@
 
 						<TextBlock Grid.Row="1"
 								   Text="Clone"
-								   FontSize="11" />
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
 					</Grid>
 				</Button.Content>
 			</Button>

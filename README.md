@@ -2,18 +2,14 @@
 An Ethernet based virtual Zebra Label Printer that can be used to test applications that produce bar code labels. This application uses the Labelary service found at [http://labelary.com](http://labelary.com/service.html).
 
 ## Latest Release
-[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Installer/Virtual%20ZPL%20Printer%20Setup.msi) (v 3.1.1)
+[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Installer/Virtual%20ZPL%20Printer%20Setup.msi) (v 3.2.0)
 
 Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have the .NET 8.0 Framework installed automatically.
 
-###### Version 3.1.1 Updates:
-1. Fixed issue #48.
-2. Fixed issue #49.
-3. Refactored TCP listener to allow for extended capabilities in future releases. The listener uses request handlers to process incoming requests.
-4. Corrected issue preventing last filter from being deleted.
-5. Corrected issue where the the application tries to read from the network when there is no more data available. Added a check to `stream.DataAvailable`.
-6. Changed `stream.ReadAsync()` to use memory based overloads.
-7. Added detailed logging using Serilog. The path defaults to ***%USERPROFILE%*** but can be edited in the `appsettings.json` file. Logging will be expanded in each new release.
+###### Version 3.2.0 Updates:
+1. Added the ability to load **custom TrueType fonts** in the printer and use them in the ZPL.
+2. Clicking the Test button will bring the window to the front if it is already open.
+3. Further re-factored the project structure and code to allow for extended capabilities.
 
 ## Screen Shots
 
@@ -30,6 +26,15 @@ Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have th
 ![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-06.png)
 
 ## History
+###### Version 3.1.1 Updates:
+1. Fixed issue #48.
+2. Fixed issue #49.
+3. Refactored TCP listener to allow for extended capabilities in future releases. The listener uses request handlers to process incoming requests.
+4. Corrected issue preventing last filter from being deleted.
+5. Corrected issue where the the application tries to read from the network when there is no more data available. Added a check to `stream.DataAvailable`.
+6. Changed `stream.ReadAsync()` to use memory based overloads.
+7. Added detailed logging using Serilog. The path defaults to ***%USERPROFILE%*** but can be edited in the `appsettings.json` file. Logging will be expanded in each new release.
+
 ###### Version 3.1.0 Updates:
 1. Exposed the Labelary API URL in global settings to allow HTTPS or HTTP.
 2. Added the option to use POST or GET in global settings.

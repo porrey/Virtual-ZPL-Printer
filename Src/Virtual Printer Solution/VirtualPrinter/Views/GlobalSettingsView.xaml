@@ -9,14 +9,14 @@
 		ResizeMode="NoResize"
 		WindowStyle="ThreeDBorderWindow"
 		WindowStartupLocation="CenterOwner"
-		Height="450"
+		Height="480"
 		Width="550">
 
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
-			<RowDefinition Height="40" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
 		<GroupBox Grid.Row="0"
@@ -192,42 +192,71 @@
 		</GroupBox>
 
 		<!-- Buttons -->
-		<StackPanel Grid.Row="2"
-					Orientation="Horizontal"
+		<Grid Grid.Row="2"
+			  Margin="0,25,5,5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+
+			<Button Grid.Column="1"
+					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
-					HorizontalAlignment="Right"
-					Margin="0,0,0,8">
-			<Button Content="OK"
+					HorizontalAlignment="Center"
 					Command="{Binding OkCommand}"
-					Width="75"
-					Height="23"
-					Margin="5,0,5,0"
-					BorderThickness="1"
-					BorderBrush="{StaticResource BorderColor}"
-					Click="Button_Click">
-				<Button.Resources>
-					<Style TargetType="Border">
-						<Setter Property="CornerRadius"
-								Value="3" />
-					</Style>
-				</Button.Resources>
+					Click="Button_Click"
+					Width="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
+					Margin="8,3,0,3"
+					ToolTip="Save the changes and close the dialog.">
+				<Button.Content>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<Image Source="/Assets/delete-printer-configuration.png"
+							   Width="24"
+							   Height="24" />
+
+						<TextBlock Grid.Row="1"
+								   Text="OK"
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
+					</Grid>
+				</Button.Content>
 			</Button>
 
-			<Button Content="Cancel"
+			<Button Grid.Column="2"
+					Style="{DynamicResource ButtonStyle1}"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Center"
 					Command="{Binding CancelCommand}"
-					Width="75"
-					Height="23"
-					Margin="5,0,5,0"
-					BorderThickness="1"
-					BorderBrush="{StaticResource BorderColor}"
-					Click="Button_Click">
-				<Button.Resources>
-					<Style TargetType="Border">
-						<Setter Property="CornerRadius"
-								Value="3" />
-					</Style>
-				</Button.Resources>
+					Click="Button_Click"
+					Width="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
+					Margin="8,3,0,3"
+					ToolTip="Cancel the changes and close the dialog.">
+				<Button.Content>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<Image Source="/Assets/clone-printer-configuration.png"
+							   Width="24"
+							   Height="24" />
+
+						<TextBlock Grid.Row="1"
+								   Text="Cancel"
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
+					</Grid>
+				</Button.Content>
 			</Button>
-		</StackPanel>
+		</Grid>
 	</Grid>
 </Window>

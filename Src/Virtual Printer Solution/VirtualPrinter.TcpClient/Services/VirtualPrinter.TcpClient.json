@@ -1,0 +1,18 @@
+{
+	//
+	// Aliases are global and can be used anywhere.
+	//
+	"aliases": [
+		{
+			"Key": "IZplClient",
+			"TypeDefinition": "VirtualPrinter.TestClient.IZplClient, VirtualPrinter.TestClient"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "<IZplClient>",
+			"ImplementationType": "VirtualPrinter.TestClient.ZplClient, VirtualPrinter.TestClient",
+			"Lifetime": "Transient"
+		}
+	]
+}

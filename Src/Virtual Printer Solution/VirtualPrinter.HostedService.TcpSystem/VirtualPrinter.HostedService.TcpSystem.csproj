@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<Version>3.2.0</Version>
+		<FileVersion>3.2.0</FileVersion>
+		<AssemblyVersion>3.2.0</AssemblyVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Services\VirtualPrinter.HostedService.TcpSystem.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Services\VirtualPrinter.HostedService.TcpSystem.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ImageCache.Abstractions\ImageCache.Abstractions.csproj" />
+		<ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.ApplicationSettings\VirtualPrinter.ApplicationSettings.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Db.Abstractions\VirtualPrinter.Db.Abstractions.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Handler.Abstractions\VirtualPrinter.Handler.Abstractions.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.PublishSubscribe\VirtualPrinter.PublishSubscribe.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.TcpClient\VirtualPrinter.TestClient.csproj" />
+	</ItemGroup>
+
+</Project>

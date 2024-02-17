@@ -8,6 +8,7 @@
 		Icon="/virtual-printer.ico"
 		ResizeMode="NoResize"
 		WindowStyle="ThreeDBorderWindow"
+		WindowStartupLocation="CenterOwner"
 		Height="470"
 		Width="550">
 
@@ -238,7 +239,7 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 
-			<Button Grid.Column="2"
+			<Button Grid.Column="1"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
@@ -261,12 +262,13 @@
 
 						<TextBlock Grid.Row="1"
 								   Text="{Binding ButtonName}"
-								   FontSize="11" />
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
 					</Grid>
 				</Button.Content>
 			</Button>
 
-			<Button Grid.Column="1"
+			<Button Grid.Column="2"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
@@ -290,7 +292,8 @@
 
 						<TextBlock Grid.Row="1"
 								   Text="Cancel"
-								   FontSize="11" />
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
 					</Grid>
 				</Button.Content>
 			</Button>

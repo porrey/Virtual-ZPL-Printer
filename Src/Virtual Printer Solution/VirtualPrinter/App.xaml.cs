@@ -15,14 +15,12 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System.Globalization;
-using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
+using Diamond.Core.Clonable.Newtonsoft;
 using Diamond.Core.Extensions.DependencyInjection;
 using Diamond.Core.Extensions.DependencyInjection.EntityFrameworkCore;
 using Diamond.Core.Wpf;
-using Labelary.Abstractions;
-using Labelary.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -43,7 +41,8 @@ namespace VirtualPrinter
 		{
 			return hostBuilder.ConfigureServicesFolder("Services")
 							  .UseSerilog()
-							  .UseConfiguredDatabaseServices();
+							  .UseConfiguredDatabaseServices()
+							  .UseObjectCloning();
 		}
 
 		protected override void OnConfigureAppConfiguration(HostBuilderContext hostContext, IConfigurationBuilder configurationBuilder)
@@ -103,19 +102,9 @@ namespace VirtualPrinter
 		protected override void OnConfigureServices(HostBuilderContext hostContext, IServiceCollection services)
 		{
 			//
-			// Create an object for LabelServiceConfiguration
+			// Add a memory cache to the services.
 			//
-			ILabelServiceConfiguration labelServiceConfiguration = new LabelServiceConfiguration()
-			{
-				BaseUrl = VirtualPrinter.Properties.Settings.Default.ApiUrl,
-				Method = VirtualPrinter.Properties.Settings.Default.ApiMethod,
-				Linting = VirtualPrinter.Properties.Settings.Default.ApiLinting
-			};
-
-			//
-			// Add a singleton object to services.
-			//
-			services.AddSingleton(labelServiceConfiguration);
+			services.AddMemoryCache();
 		}
 	}
 }
