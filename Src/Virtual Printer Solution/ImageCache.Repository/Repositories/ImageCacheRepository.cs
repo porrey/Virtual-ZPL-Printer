@@ -21,78 +21,98 @@ using System.Linq;
 using System.Threading.Tasks;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using VirtualPrinter.ApplicationSettings;
 
 namespace ImageCache.Repository
 {
-	public class ImageCacheRepository : IImageCacheRepository
+	public class ImageCacheRepository(ILogger<ImageCacheRepository> logger, ISettings settings) : IImageCacheRepository
 	{
+		protected ILogger<ImageCacheRepository> Logger { get; set; } = logger;
+		protected ISettings Settings { get; set; } = settings;
+
 		protected static string FileName(DirectoryInfo imagePathRoot, string baseName, int id) => $@"{imagePathRoot.FullName}\{Path.GetFileNameWithoutExtension(baseName)}-{id}.png";
 		protected static string FileName(DirectoryInfo imagePathRoot, string baseName, int id, int page) => $@"{imagePathRoot.FullName}\{Path.GetFileNameWithoutExtension(baseName)}-{id}-Page{page}.png";
 		public static string MetaDataFile(string imageFile) => $"{Path.GetDirectoryName(imageFile)}/{Path.GetFileNameWithoutExtension(imageFile)}.json";
 		protected object LockObject { get; } = new object();
 		protected int AlternateIndex = 99999;
 
-		protected static FileInfo[] GetFiles(DirectoryInfo imagePathRoot)
+		protected IEnumerable<FileInfo> GetFiles(DirectoryInfo imagePathRoot)
 		{
-			FileInfo[] returnValue = Array.Empty<FileInfo>();
+			IEnumerable<FileInfo> returnValue = null;
 
-			returnValue = (from tbl in imagePathRoot.EnumerateFiles("*.png")
-						   orderby tbl.CreationTime
-						   select tbl).ToArray();
+			this.Logger.LogDebug("Getting file all PNG files in '{name}'.", imagePathRoot.FullName);
+
+			returnValue = [.. (from tbl in imagePathRoot.EnumerateFiles("*.png")
+						   orderby tbl.CreationTime ascending
+						   select tbl)];
 
 			return returnValue;
 		}
 
-		protected static int[] GetFileIndices(DirectoryInfo imagePathRoot)
+		protected int[] GetFileIndices(DirectoryInfo imagePathRoot)
 		{
-			int[] returnValue = Array.Empty<int>();
+			int[] returnValue = [];
 
-			returnValue = (from tbl in imagePathRoot.EnumerateFiles("*.png")
+			this.Logger.LogDebug("Getting file indices for all PNG files in '{name}'.", imagePathRoot.FullName);
+
+			returnValue = [..(from tbl in imagePathRoot.EnumerateFiles("*.png")
 						   orderby tbl.CreationTime
-						   select GetFileIndex(tbl)).ToArray();
+						   select this.GetFileIndex(tbl))];
 
 			return returnValue;
 		}
 
-		protected static int GetFileIndex(FileInfo file)
+		protected int GetFileIndex(FileInfo file)
 		{
 			int returnValue = 1;
 
-			//
-			// Split th file name.
-			//
-			string[] parts = Path.GetFileNameWithoutExtension(file.Name).Split(new char[] { '-' }, StringSplitOptions.TrimEntries & StringSplitOptions.RemoveEmptyEntries);
+			try
+			{
+				//
+				// Split the file name.
+				//
+				this.Logger.LogDebug("Parsing file name '{name}' to get index.", file.Name);
+				string[] parts = Path.GetFileNameWithoutExtension(file.Name).Split(['-'], StringSplitOptions.TrimEntries & StringSplitOptions.RemoveEmptyEntries);
 
-			if (parts.Last().Contains("Page"))
-			{
-				returnValue = Convert.ToInt32(parts[parts.Length - 2]);
+				if (parts.Last().Contains("Page"))
+				{
+					returnValue = Convert.ToInt32(parts[^2]);
+					this.Logger.LogDebug("File index is {index}.", returnValue);
+				}
+				else
+				{
+					returnValue = Convert.ToInt32(parts.Last());
+					this.Logger.LogDebug("File index is {index}.", returnValue);
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				returnValue = Convert.ToInt32(parts.Last());
+				this.Logger.LogError(ex, "Exception parsing file index.");
 			}
 
 			return returnValue;
 		}
 
-		protected static DirectoryInfo GetDirectory(string imagePathRoot)
+		protected DirectoryInfo GetDirectory(string imagePathRoot)
 		{
-			DirectoryInfo returnValue = null;
+			DirectoryInfo returnValue = new(imagePathRoot);
 
-			returnValue = new(imagePathRoot);
+			this.Logger.LogDebug("Ensuring file directory '{name}' exists.", imagePathRoot);
 			returnValue.Create();
 
 			return returnValue;
 		}
 
-		protected static int GetNextIndex(DirectoryInfo imagePathRoot)
+		protected int GetNextIndex(DirectoryInfo imagePathRoot)
 		{
 			int returnValue = 1;
 
-			int[] indices = GetFileIndices(imagePathRoot);
+			this.Logger.LogDebug("Getting next index in '{name}'.", imagePathRoot);
+			int[] indices = this.GetFileIndices(imagePathRoot);
 
-			if (indices.Any())
+			if (indices.Length != 0)
 			{
 				returnValue = indices.Max() + 1;
 			}
@@ -100,21 +120,56 @@ namespace ImageCache.Repository
 			return returnValue;
 		}
 
+		public Task<IEnumerable<IStoredImage>> GetAllAsync(string imagePathRoot)
+		{
+			IList<IStoredImage> returnValue = [];
+
+			this.Logger.LogDebug("Loading all PNG images from '{name}'.", imagePathRoot);
+			DirectoryInfo dir = this.GetDirectory(imagePathRoot);
+
+			if (dir.Exists)
+			{
+				IEnumerable<FileInfo> files = this.GetFiles(dir);
+
+				foreach (FileInfo file in files.OrderBy(t => t.CreationTime))
+				{
+					StoredImage si = new();
+
+					try
+					{
+						si.Id = this.GetFileIndex(file);
+					}
+					catch
+					{
+						si.Id = this.AlternateIndex--;
+					}
+
+					si.FullPath = file.FullName;
+
+					returnValue.Add(si);
+				}
+			}
+
+			return Task.FromResult<IEnumerable<IStoredImage>>(returnValue);
+		}
+
 		public Task<IEnumerable<IStoredImage>> StoreLabelImagesAsync(string imagePathRoot, IEnumerable<IGetLabelResponse> labels)
 		{
 			IList<IStoredImage> returnValue = [];
+
+			this.Logger.LogDebug("Storing {count}  image(s) in {name}.", labels.Count(), imagePathRoot);
 
 			lock (this.LockObject)
 			{
 				//
 				// Ensure the path exists.
 				//
-				DirectoryInfo dir = GetDirectory(imagePathRoot);
+				DirectoryInfo dir = this.GetDirectory(imagePathRoot);
 
 				//
 				// Get the next ID.
 				//
-				int id = GetNextIndex(dir);
+				int id = this.GetNextIndex(dir);
 
 				foreach (IGetLabelResponse label in labels)
 				{
@@ -122,6 +177,7 @@ namespace ImageCache.Repository
 					// Get the file name.
 					//
 					string fileName = label.HasMultipleLabels ? FileName(dir, label.ImageFileName, id, label.LabelIndex + 1) : FileName(dir, label.ImageFileName, id);
+					this.Logger.LogDebug("Storing image to '{name}'.", fileName);
 
 					//
 					// Write the image.
@@ -153,53 +209,24 @@ namespace ImageCache.Repository
 			return Task.FromResult<IEnumerable<IStoredImage>>(returnValue);
 		}
 
-		public Task<IEnumerable<IStoredImage>> GetAllAsync(string imagePathRoot)
-		{
-			IList<IStoredImage> returnValue = [];
-
-			DirectoryInfo dir = GetDirectory(imagePathRoot);
-
-			if (dir.Exists)
-			{
-				FileInfo[] files = GetFiles(dir);
-
-				foreach (FileInfo file in files.OrderBy(t => t.CreationTime))
-				{
-					StoredImage si = new();
-
-					try
-					{
-						si.Id = GetFileIndex(file);
-					}
-					catch
-					{
-						si.Id = this.AlternateIndex--;
-					}
-
-					si.FullPath = file.FullName;
-
-					returnValue.Add(si);
-				}
-			}
-
-			return Task.FromResult<IEnumerable<IStoredImage>>(returnValue.OrderBy(t => t.Timestamp).ToArray());
-		}
-
 		public Task<bool> ClearAllAsync(string imagePathRoot)
 		{
 			bool returnValue = false;
 
-			DirectoryInfo dir = GetDirectory(imagePathRoot);
+			this.Logger.LogDebug("Clearing ALL  image(s) in {name}.", imagePathRoot);
+
+			DirectoryInfo dir = this.GetDirectory(imagePathRoot);
 			int errorCount = 0;
 
 			if (dir.Exists)
 			{
-				FileInfo[] files = GetFiles(dir);
+				IEnumerable<FileInfo> files = this.GetFiles(dir);
 
 				foreach (FileInfo file in files)
 				{
 					try
 					{
+						this.Logger.LogDebug("Attempting to delete file '{name}'.", file.Name);
 						file.Delete();
 
 						//
@@ -210,8 +237,9 @@ namespace ImageCache.Repository
 							File.Delete(MetaDataFile(file.FullName));
 						}
 					}
-					catch
+					catch (Exception ex)
 					{
+						this.Logger.LogError(ex, "Exception while deleting file '{name}'.", file.Name);
 						errorCount++;
 					}
 				}
@@ -226,7 +254,7 @@ namespace ImageCache.Repository
 		{
 			bool returnValue = false;
 
-			DirectoryInfo dir = GetDirectory(imagePathRoot);
+			DirectoryInfo dir = this.GetDirectory(imagePathRoot);
 
 			if (dir.Exists)
 			{
@@ -234,17 +262,25 @@ namespace ImageCache.Repository
 
 				if (file != null)
 				{
-					file.Delete();
-
-					//
-					// Clear the text file too.
-					//
-					if (File.Exists(MetaDataFile(file.FullName)))
+					try
 					{
-						File.Delete(MetaDataFile(file.FullName));
-					}
+						this.Logger.LogDebug("Attempting to delete file '{name}'.", file.Name);
+						file.Delete();
 
-					returnValue = true;
+						//
+						// Clear the text file too.
+						//
+						if (File.Exists(MetaDataFile(file.FullName)))
+						{
+							File.Delete(MetaDataFile(file.FullName));
+						}
+
+						returnValue = true;
+					}
+					catch (Exception ex)
+					{
+						this.Logger.LogError(ex, "Exception while deleting file '{name}'.", file.Name);
+					}
 				}
 			}
 

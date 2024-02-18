@@ -256,7 +256,7 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Source="/Assets/delete-printer-configuration.png"
+						<Image Source="/Assets/ok.png"
 							   Width="24"
 							   Height="24" />
 
@@ -286,7 +286,7 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Source="/Assets/clone-printer-configuration.png"
+						<Image Source="/Assets/cancel.png"
 							   Width="24"
 							   Height="24" />
 

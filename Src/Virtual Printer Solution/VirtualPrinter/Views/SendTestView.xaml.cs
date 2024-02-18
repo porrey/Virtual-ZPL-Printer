@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
-using System;
 using System.ComponentModel;
 using System.Windows;
 using Prism.Events;
@@ -75,6 +74,11 @@ namespace VirtualPrinter.Views
 		{
 			this.SaveWindow();
 			this.EventAggregator.GetEvent<WindowHiddenEvent>().Publish(new WindowHiddenEventArgs() { Window = this });
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
 		}
 	}
 }

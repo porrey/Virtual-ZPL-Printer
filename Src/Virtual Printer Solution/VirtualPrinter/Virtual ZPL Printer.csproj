@@ -10,9 +10,9 @@
 		<AssemblyName>VirtualPrinter</AssemblyName>
 		<StartupObject>VirtualPrinter.App</StartupObject>
 		<RootNamespace>VirtualPrinter</RootNamespace>
-		<Version>3.2.0</Version>
-		<FileVersion>3.2.0</FileVersion>
-		<AssemblyVersion>3.2.0</AssemblyVersion>
+		<Version>3.2.1</Version>
+		<FileVersion>3.2.1</FileVersion>
+		<AssemblyVersion>3.2.1</AssemblyVersion>
 		<SignAssembly>False</SignAssembly>
 	</PropertyGroup>
 
@@ -20,6 +20,7 @@
 		<None Remove="appsettings.json" />
 		<None Remove="Assets\add-printer-configuration.png" />
 		<None Remove="Assets\browse.png" />
+		<None Remove="Assets\cancel.png" />
 		<None Remove="Assets\clear-label.png" />
 		<None Remove="Assets\clone-printer-configuration.png" />
 		<None Remove="Assets\close.png" />
@@ -49,7 +50,10 @@
 		<None Remove="Assets\ip.png" />
 		<None Remove="Assets\label-preview.png" />
 		<None Remove="Assets\label.png" />
+		<None Remove="Assets\labelary-test-close.png" />
+		<None Remove="Assets\labelary-test.png" />
 		<None Remove="Assets\listening.png" />
+		<None Remove="Assets\ok.png" />
 		<None Remove="Assets\printer-configuration.png" />
 		<None Remove="Assets\printer-running-base.png" />
 		<None Remove="Assets\printer-running.png" />
@@ -70,6 +74,7 @@
 		<None Remove="Assets\virtual-printer.png" />
 		<None Remove="Assets\warning-overlay.png" />
 		<None Remove="Assets\warning.png" />
+		<None Remove="Assets\zpl-viewer-close.png" />
 		<None Remove="Services\VirtualPrinter.json" />
 		<None Remove="Services\VirtualPrinter.ViewModels.json" />
 		<None Remove="Services\VirtualPrinter.Views.json" />
@@ -148,6 +153,9 @@
 		<Content Include="Assets\browse.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+		<Content Include="Assets\cancel.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Assets\clone-printer-configuration.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
@@ -209,6 +217,15 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\global-settings.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\labelary-test-close.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\labelary-test.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\ok.png">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\send.png">
@@ -296,6 +313,9 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\warning.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\zpl-viewer-close.png">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Services\VirtualPrinter.ViewModels.json">

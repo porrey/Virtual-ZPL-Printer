@@ -418,7 +418,7 @@ namespace VirtualPrinter.ViewModels
 			return Task.CompletedTask;
 		}
 
-		protected async Task StopAsync()
+		protected Task StopAsync()
 		{
 			try
 			{
@@ -435,6 +435,8 @@ namespace VirtualPrinter.ViewModels
 			{
 				this.RefreshCommands();
 			}
+
+			return Task.CompletedTask;
 		}
 
 		protected Task SendTestLabelAsync()
@@ -679,7 +681,6 @@ namespace VirtualPrinter.ViewModels
 				// Reselect the item.
 				//
 				this.SelectedPrinterConfiguration = this.PrinterConfigurations.Where(t => t.Id == id).SingleOrDefault();
-
 				this.SelectedPrinterConfiguration ??= this.PrinterConfigurations.FirstOrDefault();
 			}
 			catch (Exception ex)

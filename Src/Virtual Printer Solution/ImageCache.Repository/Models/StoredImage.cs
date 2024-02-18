@@ -50,9 +50,17 @@ namespace ImageCache.Repository
 
 				this.Timestamp = File.GetCreationTime(this.FullPath);
 				this.ActualTime = this.Timestamp.ToString("h:mm:ss.fff tt");
-				this.DisplayLabel = this.Timestamp.Humanize();
 				this.RaisePropertyChanged(nameof(this.MetaDataFile));
 				this.RaisePropertyChanged(nameof(this.HasMetaData));
+
+				try
+				{
+					this.DisplayLabel = this.Timestamp.Humanize();
+				}
+				catch
+				{
+					this.DisplayLabel = this.Timestamp.ToString();
+				}
 			}
 		}
 

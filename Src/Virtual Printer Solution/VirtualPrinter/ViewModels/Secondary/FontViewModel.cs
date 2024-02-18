@@ -204,7 +204,6 @@ namespace VirtualPrinter.ViewModels
 					returnValue = !string.IsNullOrWhiteSpace(this.FontDetailsFile) &&
 								  !string.IsNullOrWhiteSpace(this.FontName) &&
 								  !string.IsNullOrWhiteSpace(this.PrinterDevice) &&
-								  //!string.IsNullOrWhiteSpace(this.PrinterShortName) &&
 								  !this.HasError;
 				}
 
@@ -262,7 +261,20 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		public string SizeDescription => this.FontByteLength.Bytes().ToString();
+		public string SizeDescription
+		{
+			get
+			{
+				try
+				{
+					return this.FontByteLength.Bytes().ToString();
+				}
+				catch
+				{
+					return this.FontByteLength.ToString("#,###");
+				}
+			}
+		}
 
 		public async Task SaveAsync()
 		{

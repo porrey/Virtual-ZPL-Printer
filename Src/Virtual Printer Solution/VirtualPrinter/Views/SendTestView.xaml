@@ -82,34 +82,73 @@
 				 VerticalScrollBarVisibility="Auto"
 				 HorizontalScrollBarVisibility="Auto"/>
 
-		<Button Grid.Column="1"
-				Grid.Row="3"
-				Style="{DynamicResource ButtonStyle1}"
-				VerticalAlignment="Center"
-				HorizontalAlignment="Right"
-				Command="{Binding SendCommand}"
-				Width="{StaticResource StatusButtonWidth}"
-				Height="{StaticResource StatusButtonHeight}"
-				Margin="8,3,5,8"
-				ToolTip="Send the test label.">
-			<Button.Content>
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
+		<!-- Buttons -->
+		<Grid Grid.Column="1"
+			  Grid.Row="3"
+			  Margin="0,10,5,5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
 
-					<Image Source="/Assets/send.png"
-						   Width="24"
-						   Height="24"
-						   HorizontalAlignment="Center" />
+			<Button Grid.Column="1"
+					Grid.Row="3"
+					Style="{DynamicResource ButtonStyle1}"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Right"
+					Command="{Binding SendCommand}"
+					Width="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
+					Margin="8,3,5,8"
+					ToolTip="Send the test label.">
+				<Button.Content>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
 
-					<TextBlock Grid.Row="1"
-							   Text="Send"
-							   FontSize="11"
+						<Image Source="/Assets/send.png"
+							   Width="24"
+							   Height="24"
 							   HorizontalAlignment="Center" />
-				</Grid>
-			</Button.Content>
-		</Button>
+
+						<TextBlock Grid.Row="1"
+								   Text="Send"
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
+					</Grid>
+				</Button.Content>
+			</Button>
+
+			<Button Grid.Column="2"
+					Style="{DynamicResource ButtonStyle1}"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Center"
+					Click="Button_Click"
+					Width="{StaticResource StatusButtonWidth}"
+					Height="{StaticResource StatusButtonHeight}"
+					Margin="8,3,5,8"
+					ToolTip="Close the window.">
+				<Button.Content>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<Image Source="/Assets/cancel.png"
+							   Width="24"
+							   Height="24" />
+
+						<TextBlock Grid.Row="1"
+								   Text="Close"
+								   FontSize="11"
+								   HorizontalAlignment="Center" />
+					</Grid>
+				</Button.Content>
+			</Button>
+		</Grid>
 	</Grid>
 </Window>

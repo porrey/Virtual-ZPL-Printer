@@ -322,5 +322,17 @@ namespace VirtualPrinter.ApplicationSettings.Properties {
                 this["RootFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("250")]
+        public int MaximumLables {
+            get {
+                return ((int)(this["MaximumLables"]));
+            }
+            set {
+                this["MaximumLables"] = value;
+            }
+        }
     }
 }

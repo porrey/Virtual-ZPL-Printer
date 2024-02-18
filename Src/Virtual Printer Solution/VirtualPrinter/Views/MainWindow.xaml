@@ -46,7 +46,7 @@
 							<RowDefinition Height="Auto" />
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
-						
+
 						<Button Grid.Row="0"
 								Style="{DynamicResource ButtonStyle1}"
 								Command="{Binding ViewImageCommand}"
@@ -433,7 +433,8 @@
 							<MenuItem Header="View Label Image"
 									  Command="{Binding LabelPreviewCommand}">
 								<MenuItem.Icon>
-									<Image Source="/Assets/label-preview.png" />
+									<Image Source="/Assets/label-preview.png"
+										   IsEnabled="{Binding }" />
 								</MenuItem.Icon>
 							</MenuItem>
 							<MenuItem Header="View Warnings"

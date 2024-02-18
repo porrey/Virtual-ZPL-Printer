@@ -14,23 +14,25 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using Diamond.Core.Wpf;
+using Microsoft.Extensions.Logging;
 using VirtualPrinter.ViewModels;
 
 namespace VirtualPrinter.Views
 {
 	public partial class ZplView : Window
 	{
-		public ZplView(ZplViewModel viewModel, IMainWindow mainWindow)
+		public ZplView(ILogger<ZplView> logger, ZplViewModel viewModel, IMainWindow mainWindow)
 		{
+			this.Logger = logger;
 			this.DataContext = viewModel;
 			this.InitializeComponent();
 			this.Owner = (Window)mainWindow;
 		}
 
+		protected ILogger<ZplView> Logger { get; set; }
 		public ZplViewModel ViewModel => (ZplViewModel)this.DataContext;
 
 		protected override void OnInitialized(EventArgs e)
@@ -45,35 +47,42 @@ namespace VirtualPrinter.Views
 
 		private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (sender is ListView listView)
+			try
 			{
-				if (e.AddedItems.Count > 0)
+				if (sender is ListView listView)
 				{
-					listView.ScrollIntoView(e.AddedItems[e.AddedItems.Count - 1]);
-
-					this.Zpl.CaretIndex = this.ViewModel.SelectedWarning.ByteIndex;
-					this.Zpl.Select(this.ViewModel.SelectedWarning.ByteIndex, this.ViewModel.SelectedWarning.ByteSize);
-					this.Zpl.Focus();
-
-					int lineIndex = this.Zpl.GetLineIndexFromCharacterIndex(this.ViewModel.SelectedWarning.ByteIndex);
-					int firstLine = this.Zpl.GetFirstVisibleLineIndex();
-					int lastLine = this.Zpl.GetLastVisibleLineIndex();
-
-					if (lineIndex < firstLine)
+					if (e.AddedItems.Count > 0)
 					{
-						for (int i = 0; i < (firstLine - lineIndex + 2); i++)
+						listView.ScrollIntoView(e.AddedItems[e.AddedItems.Count - 1]);
+
+						this.Zpl.CaretIndex = this.ViewModel.SelectedWarning.ByteIndex;
+						this.Zpl.Select(this.ViewModel.SelectedWarning.ByteIndex, this.ViewModel.SelectedWarning.ByteSize);
+						this.Zpl.Focus();
+
+						int lineIndex = this.Zpl.GetLineIndexFromCharacterIndex(this.ViewModel.SelectedWarning.ByteIndex);
+						int firstLine = this.Zpl.GetFirstVisibleLineIndex();
+						int lastLine = this.Zpl.GetLastVisibleLineIndex();
+
+						if (lineIndex < firstLine)
 						{
-							this.Zpl.LineUp();
+							for (int i = 0; i < (firstLine - lineIndex + 2); i++)
+							{
+								this.Zpl.LineUp();
+							}
 						}
-					}
-					else
-					{
-						for (int i = 0; i < (lineIndex - lastLine + 2); i++)
+						else
 						{
-							this.Zpl.LineDown();
+							for (int i = 0; i < (lineIndex - lastLine + 2); i++)
+							{
+								this.Zpl.LineDown();
+							}
 						}
 					}
 				}
+			}
+			catch (Exception ex)
+			{
+				this.Logger.LogDebug(ex, $"Exception in {nameof(ZplView)}.{nameof(ListView_SelectionChanged)}.");
 			}
 		}
 	}
