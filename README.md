@@ -24,6 +24,10 @@ Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have th
 
 ![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-06.png)
 
+![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-07.png)
+
+![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-08.png)
+
 ## History
 ###### Version 3.2.0 Updates:
 1. Added the ability to load **custom TrueType fonts** in the printer and use them in the ZPL.
