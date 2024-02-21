@@ -55,7 +55,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.Repository.H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.Repository.LabelParameters", "VirtualPrinter.Repository.LabelParameters\VirtualPrinter.Repository.LabelParameters.csproj", "{2C0B8D22-1A2D-45CB-987D-7033A027238C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualPrinter.TemplateManager", "VirtualPrinter.TemplateManager\VirtualPrinter.TemplateManager.csproj", "{5ABDD52C-C08D-4DDB-9BA8-DE9E9C646896}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.TemplateManager", "VirtualPrinter.TemplateManager\VirtualPrinter.TemplateManager.csproj", "{5ABDD52C-C08D-4DDB-9BA8-DE9E9C646896}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.TestClient", "VirtualPrinter.TcpClient\VirtualPrinter.TestClient.csproj", "{FF57D022-B7CA-4FC1-943C-03E8F27C294A}"
 EndProject
@@ -538,6 +538,8 @@ Global
 		{FF57D022-B7CA-4FC1-943C-03E8F27C294A} = {998059AA-CE27-45C5-BF89-D60A5DDEC3C7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_ConfirmAddLanguageFile = False
+		RESX_ResXSortingComparison = InvariantCultureIgnoreCase
 		SolutionGuid = {B044B05A-9DC2-4AC1-9957-9EBE460C2EDD}
 	EndGlobalSection
 EndGlobal

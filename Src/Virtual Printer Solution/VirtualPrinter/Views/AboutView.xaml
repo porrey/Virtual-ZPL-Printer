@@ -3,8 +3,9 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:resources="clr-namespace:VirtualPrinter.Properties"
 		mc:Ignorable="d"
-		Title="About..."
+		Title="{x:Static resources:Strings.About_Title}"
 		Height="300"
 		Width="600"
 		WindowStyle="ThreeDBorderWindow"
@@ -23,7 +24,7 @@
 				</Grid.RowDefinitions>
 
 				<TextBlock Grid.Row="0"
-						   Text="{Binding Title,FallbackValue=Application}"
+						   Text="{Binding Title}"
 						   Foreground="{StaticResource ForegroundColor1}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Center"
@@ -38,7 +39,7 @@
 					   Opacity=".9" />
 
 				<TextBlock Grid.Row="2"
-						   Text="{Binding Version,FallbackValue=Version}"
+						   Text="{Binding Version}"
 						   Foreground="{StaticResource ForegroundColor1}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Center"

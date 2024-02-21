@@ -3,8 +3,9 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:resources="clr-namespace:VirtualPrinter.Properties"
 		mc:Ignorable="d"
-		Title="Virtual ZPL Printer"
+		Title="{x:Static resources:Strings.Main_Title}"
 		MinHeight="435"
 		MinWidth="600"
 		Icon="/virtual-printer.ico"
@@ -141,7 +142,7 @@
 			  DockPanel.Dock="Top"
 			  BorderThickness="0,0,0,1"
 			  BorderBrush="{StaticResource BorderColor}">
-			<MenuItem Header="_Printer">
+			<MenuItem Header="{x:Static resources:Strings.Main_Menu_Printer}">
 				<MenuItem Header="_Edit"
 						  Command="{Binding EditCommand}"
 						  InputGestureText="Ctrl+E">
@@ -200,7 +201,7 @@
 					</MenuItem.Icon>
 				</MenuItem>
 			</MenuItem>
-			<MenuItem Header="_Connection">
+			<MenuItem Header="{x:Static resources:Strings.Main_Menu_Connection}">
 				<MenuItem Header="_Test Labelary"
 						  Command="{Binding TestLabelaryCommand}">
 					<MenuItem.Icon>
@@ -208,7 +209,7 @@
 					</MenuItem.Icon>
 				</MenuItem>
 			</MenuItem>
-			<MenuItem Header="_Options">
+			<MenuItem Header="{x:Static resources:Strings.Main_Menu_Options}">
 				<MenuItem Header="_Global Settings"
 						  Command="{Binding GlobalSettingsCommand}">
 					<MenuItem.Icon>
@@ -268,7 +269,7 @@
 
 					<TextBlock Grid.Column="0"
 							   Grid.Row="0"
-							   Text="Active Printer Configuration"
+							   Text="{x:Static resources:Strings.Main_TextBlock_SelectConfiguration}"
 							   Margin="5,5,5,0"
 							   VerticalAlignment="Center"
 							   HorizontalAlignment="Left"
@@ -294,7 +295,7 @@
 							Width="{StaticResource StatusButtonWidth}"
 							Height="{StaticResource StatusButtonHeight}"
 							Margin="5,3,5,10"
-							ToolTip="Edit printer configurations.">
+							ToolTip="{x:Static resources:Strings.Main_Button_Edit_Toolip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -308,7 +309,7 @@
 									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
-										   Text="Edit"
+										   Text="{x:Static resources:Strings.Main_Button_Edit_Text}"
 										   FontSize="11"
 										   HorizontalAlignment="Center" />
 							</Grid>
@@ -332,7 +333,7 @@
 					</Grid.ColumnDefinitions>
 
 					<CheckBox Grid.Column="0"
-							  Content="Auto-start"
+							  Content="{x:Static resources:Strings.Main_Checkbox_AutoStart}"
 							  VerticalAlignment="Center"
 							  HorizontalAlignment="Left"
 							  Margin="10,3,10,3"
@@ -348,7 +349,7 @@
 							Width="{StaticResource StatusButtonWidth}"
 							Height="{StaticResource StatusButtonHeight}"
 							Margin="8,5,5,5"
-							ToolTip="Stop the virtual printer from accepting label request.">
+							ToolTip="">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -362,7 +363,7 @@
 									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
-										   Text="Stop"
+										   Text="{x:Static resources:Strings.Main_Button_Stop_Text}"
 										   FontSize="11"
 										   HorizontalAlignment="Center" />
 							</Grid>
@@ -377,7 +378,7 @@
 							Width="{StaticResource StatusButtonWidth}"
 							Height="{StaticResource StatusButtonHeight}"
 							Margin="8,5,5,5"
-							ToolTip="Start the virtual printer.">
+							ToolTip="{x:Static resources:Strings.Main_Button_Start_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -391,7 +392,7 @@
 									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
-										   Text="Start"
+										   Text="{x:Static resources:Strings.Main_Button_Start_Text}"
 										   FontSize="11"
 										   HorizontalAlignment="Center" />
 							</Grid>
@@ -458,7 +459,7 @@
 					</ListView.InputBindings>
 				</ListView>
 
-				<TextBlock Text="no cached labels"
+				<TextBlock Text="{x:Static resources:Strings.Main_TextBlock_NoCachedLabels}"
 						   Margin="0,0,0,10"
 						   FontSize="55"
 						   VerticalAlignment="Center"
@@ -513,7 +514,7 @@
 								Visibility="{Binding IsRunning, Converter={StaticResource NotBooleanToVisibilityConverter}}">
 						<Image Source="/Assets/idle.png"
 							   Width="24" />
-						<TextBlock Text="Idle"
+						<TextBlock Text="{x:Static resources:Strings.Main_Status_Idle}"
 								   VerticalAlignment="Center"
 								   HorizontalAlignment="Center"
 								   FontSize="18"
@@ -528,7 +529,7 @@
 								Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}">
 						<Image Source="/Assets/listening.png"
 							   Width="24" />
-						<TextBlock Text="Listening"
+						<TextBlock Text="{x:Static resources:Strings.Main_Status_Listening}"
 								   VerticalAlignment="Center"
 								   HorizontalAlignment="Center"
 								   FontSize="18"
@@ -544,7 +545,7 @@
 							Width="{StaticResource StatusButtonWidth}"
 							Height="{StaticResource StatusButtonHeight}"
 							Margin="8,5,5,5"
-							ToolTip="View the label image in an external viewer.">
+							ToolTip="{x:Static resources:Strings.Main_Button_View_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -558,7 +559,7 @@
 									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
-										   Text="View"
+										   Text="{x:Static resources:Strings.Main_Button_View_Text}"
 										   FontSize="11"
 										   HorizontalAlignment="Center" />
 							</Grid>
@@ -573,7 +574,7 @@
 							Width="{StaticResource StatusButtonWidth}"
 							Height="{StaticResource StatusButtonHeight}"
 							Margin="8,5,5,5"
-							ToolTip="Delete the selected label.">
+							ToolTip="{x:Static resources:Strings.Main_Button_Delete_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -587,7 +588,7 @@
 									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
-										   Text="Delete"
+										   Text="{x:Static resources:Strings.Main_Button_Delete_Text}"
 										   FontSize="11"
 										   HorizontalAlignment="Center" />
 							</Grid>
@@ -602,7 +603,7 @@
 							Width="{StaticResource StatusButtonWidth}"
 							Height="{StaticResource StatusButtonHeight}"
 							Margin="8,3,0,3"
-							ToolTip="Clear all labels.">
+							ToolTip="{x:Static resources:Strings.Main_ButtonClear_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -616,7 +617,7 @@
 									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
-										   Text="Clear"
+										   Text="{x:Static resources:Strings.Main_ButtonClear_Text}"
 										   FontSize="11"
 										   HorizontalAlignment="Center" />
 							</Grid>
@@ -631,7 +632,7 @@
 							Width="{StaticResource StatusButtonWidth}"
 							Height="{StaticResource StatusButtonHeight}"
 							Margin="8,3,5,3"
-							ToolTip="Send a test label.">
+							ToolTip="{x:Static resources:Strings.Main_Button_Test_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -645,7 +646,7 @@
 									   HorizontalAlignment="Center" />
 
 								<TextBlock Grid.Row="1"
-										   Text="Test"
+										   Text="{x:Static resources:Strings.Main_Button_Test_Text}"
 										   FontSize="11"
 										   HorizontalAlignment="Center" />
 							</Grid>
