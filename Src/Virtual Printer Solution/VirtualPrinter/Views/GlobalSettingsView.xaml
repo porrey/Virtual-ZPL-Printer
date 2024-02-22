@@ -3,16 +3,17 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d"
-		Title="Global Settings"
+		xmlns:resources="clr-namespace:VirtualPrinter.Properties"
+		Title="{x:Static resources:Strings.Global_Settings_Title}"
+		Width="550"
+		Height="480"
 		Icon="/virtual-printer.ico"
 		ResizeMode="NoResize"
-		WindowStyle="ThreeDBorderWindow"
 		WindowStartupLocation="CenterOwner"
-		Height="480"
-		Width="550">
+		WindowStyle="ThreeDBorderWindow"
+		mc:Ignorable="d">
 
-	<Grid>
+	<Grid Grid.IsSharedSizeScope="true">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
@@ -21,7 +22,7 @@
 
 		<GroupBox Grid.Row="0"
 				  Margin="10"
-				  Header="Labelary">
+				  Header="{x:Static resources:Strings.Global_Settings_Group_Header_Labelary}">
 			<Grid Margin="10">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="1*" />
@@ -34,52 +35,51 @@
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 
-				<TextBlock Grid.Column="0"
-						   Grid.Row="0"
-						   Text="API URL"
+				<TextBlock Grid.Row="0"
+						   Grid.Column="0"
 						   Margin="0,5,0,5"
-						   VerticalAlignment="Center" />
-				<TextBox Grid.Column="1"
-						 Grid.Row="0"
-						 Text="{Binding ApiUrl, Mode=TwoWay}"
+						   VerticalAlignment="Center"
+						   Text="API URL" />
+				<TextBox Grid.Row="0"
+						 Grid.Column="1"
 						 Margin="0,5,5,5"
-						 VerticalAlignment="Center" />
+						 VerticalAlignment="Center"
+						 Text="{Binding ApiUrl, Mode=TwoWay}" />
 
-				<TextBlock Grid.Column="0"
-						   Grid.Row="1"
-						   Text="Method"
+				<TextBlock Grid.Row="1"
+						   Grid.Column="0"
 						   Margin="0,5,0,5"
-						   VerticalAlignment="Center" />
-				<ComboBox Grid.Column="1"
-						  Grid.Row="1"
-						  Text="{Binding ApiMethod, Mode=TwoWay}"
-						  Margin="0,5,5,5"
+						   VerticalAlignment="Center"
+						   Text="Method" />
+				<ComboBox Grid.Row="1"
+						  Grid.Column="1"
 						  Width="100"
+						  Margin="0,5,5,5"
 						  HorizontalAlignment="Left"
-						  VerticalAlignment="Center">
+						  VerticalAlignment="Center"
+						  Text="{Binding ApiMethod, Mode=TwoWay}">
 					<ComboBoxItem>POST</ComboBoxItem>
 					<ComboBoxItem>GET</ComboBoxItem>
 				</ComboBox>
 
-				<CheckBox  Grid.Column="0"
-						   Grid.ColumnSpan="2"
-						   Grid.Row="2"
-						   IsChecked="{Binding ApiLinting, Mode=TwoWay}"
-						   Content="Enable Linting"
-						   Margin="0,5,0,5"
-						   VerticalAlignment="Center">
-				</CheckBox>
+				<CheckBox Grid.Row="2"
+						  Grid.Column="0"
+						  Grid.ColumnSpan="2"
+						  Margin="0,5,0,5"
+						  VerticalAlignment="Center"
+						  Content="Enable Linting"
+						  IsChecked="{Binding ApiLinting, Mode=TwoWay}" />
 			</Grid>
 		</GroupBox>
 
 		<GroupBox Grid.Row="1"
 				  Margin="10"
-				  Header="TCP Settings">
+				  Header="{x:Static resources:Strings.Global_Settings_Group_Header_TCP}">
 
 			<StackPanel Orientation="Vertical">
-				<TextBlock Text="These settings are applied to the incoming request from an external application."
-						   Margin="10,8,0,5"
-						   Foreground="{StaticResource ForegroundColor3}" />
+				<TextBlock Margin="10,8,0,5"
+						   Foreground="{StaticResource ForegroundColor3}"
+						   Text="These settings are applied to the incoming request from an external application." />
 				<Grid Margin="10">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="2*" />
@@ -96,94 +96,91 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 
-					<TextBlock Grid.Column="0"
-							   Grid.Row="0"
-							   Text="Receive Timeout (ms)"
+					<TextBlock Grid.Row="0"
+							   Grid.Column="0"
 							   Margin="0"
-							   VerticalAlignment="Center" />
-					<TextBox Grid.Column="1"
-							 Grid.Row="0"
-							 Text="{Binding ReceiveTimeout, Mode=TwoWay}"
+							   VerticalAlignment="Center"
+							   Text="Receive Timeout (ms)" />
+					<TextBox Grid.Row="0"
+							 Grid.Column="1"
 							 Margin="0,0,5,0"
+							 VerticalAlignment="Center"
 							 InputScope="NumberFullWidth"
-							 VerticalAlignment="Center" />
+							 Text="{Binding ReceiveTimeout, Mode=TwoWay}" />
 
-					<TextBlock Grid.Column="2"
-							   Grid.Row="0"
-							   Text="Send Timeout (ms)"
-							   Margin="0,5,0,5"
-							   VerticalAlignment="Center" />
-					<TextBox Grid.Column="3"
-							 Grid.Row="0"
-							 Text="{Binding SendTimeout, Mode=TwoWay}"
+					<TextBlock Grid.Row="0"
+							   Grid.Column="2"
+							   Margin="5,5,0,5"
+							   VerticalAlignment="Center"
+							   Text="Send Timeout (ms)" />
+					<TextBox Grid.Row="0"
+							 Grid.Column="3"
 							 Margin="0,0,5,0"
+							 VerticalAlignment="Center"
 							 InputScope="NumberFullWidth"
-							 VerticalAlignment="Center" />
+							 Text="{Binding SendTimeout, Mode=TwoWay}" />
 
-					<TextBlock Grid.Column="0"
-							   Grid.Row="1"
-							   Text="Receive Buffer Size (bytes)"
+					<TextBlock Grid.Row="1"
+							   Grid.Column="0"
 							   Margin="0,5,0,5"
-							   VerticalAlignment="Center" />
-					<TextBox Grid.Column="1"
-							 Grid.Row="1"
-							 Text="{Binding ReceiveBufferSize, Mode=TwoWay}"
+							   VerticalAlignment="Center"
+							   Text="Receive Buffer Size (bytes)" />
+					<TextBox Grid.Row="1"
+							 Grid.Column="1"
+							 Margin="5,0,5,0"
+							 VerticalAlignment="Center"
+							 InputScope="NumberFullWidth"
+							 Text="{Binding ReceiveBufferSize, Mode=TwoWay}" />
+
+					<TextBlock Grid.Row="1"
+							   Grid.Column="2"
+							   Margin="5,5,0,5"
+							   VerticalAlignment="Center"
+							   Text="Send Buffer Size (bytes)" />
+					<TextBox Grid.Row="1"
+							 Grid.Column="3"
 							 Margin="0,0,5,0"
+							 VerticalAlignment="Center"
 							 InputScope="NumberFullWidth"
-							 VerticalAlignment="Center" />
+							 Text="{Binding SendBufferSize, Mode=TwoWay}" />
 
-					<TextBlock Grid.Column="2"
-							   Grid.Row="1"
-							   Text="Send Buffer Size (bytes)"
-							   Margin="0,5,0,5"
-							   VerticalAlignment="Center" />
-					<TextBox Grid.Column="3"
-							 Grid.Row="1"
-							 Text="{Binding SendBufferSize, Mode=TwoWay}"
-							 Margin="0,0,5,0"
-							 InputScope="NumberFullWidth"
-							 VerticalAlignment="Center" />
+					<CheckBox Grid.Row="2"
+							  Grid.Column="0"
+							  Margin="0,5,0,5"
+							  VerticalAlignment="Center"
+							  Content="No Delay"
+							  IsChecked="{Binding NoDelay, Mode=TwoWay}" />
 
-					<CheckBox  Grid.Column="0"
-							   Grid.Row="2"
-							   IsChecked="{Binding NoDelay, Mode=TwoWay}"
-							   Content="No Delay"
-							   Margin="0,5,0,5"
-							   VerticalAlignment="Center">
-					</CheckBox>
+					<CheckBox Grid.Row="3"
+							  Grid.Column="0"
+							  VerticalAlignment="Center"
+							  Content="Linger"
+							  IsChecked="{Binding Linger, Mode=TwoWay}" />
 
-					<CheckBox  Grid.Column="0"
-							   Grid.Row="3"
-							   IsChecked="{Binding Linger, Mode=TwoWay}"
-							   Content="Linger"
-							   Margin="0,5,0,5"
-							   VerticalAlignment="Center">
-					</CheckBox>
-
-					<TextBlock Grid.Column="2"
-							   Grid.Row="3"
-							   Text="Linger Time (seconds)"
-							   Margin="0,5,0,5"
-							   VerticalAlignment="Center" />
-					<TextBox Grid.Column="3"
-							 Grid.Row="3"
-							 Text="{Binding LingerTime, Mode=TwoWay}"
+					<TextBlock Grid.Row="3"
+							   Grid.Column="2"
+							   Margin="5,5,0,5"
+							   VerticalAlignment="Center"
+							   Text="Linger Time (seconds)" />
+					<TextBox Grid.Row="3"
+							 Grid.Column="3"
 							 Margin="0,5,0,5"
+							 VerticalAlignment="Center"
 							 InputScope="NumberFullWidth"
-							 VerticalAlignment="Center" />
+							 Text="{Binding LingerTime, Mode=TwoWay}" />
 
-					<TextBlock Grid.Column="0"
-							   Grid.Row="4"
-							   Text="Received Data Encoding"
+					<TextBlock Grid.Row="4"
+							   Grid.Column="0"
 							   Margin="0,5,0,5"
-							   VerticalAlignment="Center" />
-					<ComboBox Grid.Column="1"
-							  Grid.Row="4"
-							  Text="{Binding ReceivedDataEncoding, Mode=TwoWay}"
+							   VerticalAlignment="Center"
+							   Text="Received Data Encoding" />
+					<ComboBox Grid.Row="4"
+							  Grid.Column="1"
 							  Margin="0,0,5,0"
+							  VerticalAlignment="Center"
 							  InputScope="NumberFullWidth"
 							  SelectedIndex="0"
-							  VerticalAlignment="Center">
+							  Text="{Binding ReceivedDataEncoding, Mode=TwoWay}">
 						<ComboBoxItem>utf-8</ComboBoxItem>
 						<ComboBoxItem>iso-8859-1</ComboBoxItem>
 					</ComboBox>
@@ -191,25 +188,24 @@
 			</StackPanel>
 		</GroupBox>
 
-		<!-- Buttons -->
+		<!--  Buttons  -->
 		<Grid Grid.Row="2"
 			  Margin="0,10,5,5">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
 			</Grid.ColumnDefinitions>
 
 			<Button Grid.Column="1"
-					Style="{DynamicResource ButtonStyle1}"
-					VerticalAlignment="Center"
-					HorizontalAlignment="Center"
-					Command="{Binding OkCommand}"
-					Click="Button_Click"
-					Width="{StaticResource StatusButtonWidth}"
 					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,0,3"
-					ToolTip="Save the changes and close the dialog.">
+					Margin="{StaticResource ButtonMargin}"
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Center"
+					Click="Button_Click"
+					Command="{Binding OkCommand}"
+					Style="{DynamicResource ButtonStyle1}"
+					ToolTip="{x:Static resources:Strings.Global_Settings_Button_Ok_Toolip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -217,28 +213,29 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Source="/Assets/ok.png"
-							   Width="24"
-							   Height="24" />
+						<Image Width="24"
+							   Height="24"
+							   Source="/Assets/ok.png"
+							   Margin="{StaticResource ButtonImageMargin}" />
 
 						<TextBlock Grid.Row="1"
-								   Text="OK"
+								   HorizontalAlignment="Center"
 								   FontSize="11"
-								   HorizontalAlignment="Center" />
+								   Text="{x:Static resources:Strings.Ok}"
+								   Margin="{StaticResource ButtonTextMargin}" />
 					</Grid>
 				</Button.Content>
 			</Button>
 
 			<Button Grid.Column="2"
-					Style="{DynamicResource ButtonStyle1}"
-					VerticalAlignment="Center"
-					HorizontalAlignment="Center"
-					Command="{Binding CancelCommand}"
-					Click="Button_Click"
-					Width="{StaticResource StatusButtonWidth}"
 					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,0,3"
-					ToolTip="Cancel the changes and close the dialog.">
+					Margin="{StaticResource ButtonMargin}"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					Click="Button_Click"
+					Command="{Binding CancelCommand}"
+					Style="{DynamicResource ButtonStyle1}"
+					ToolTip="{x:Static resources:Strings.Global_Settings_Button_Cancel_Toolip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -246,14 +243,16 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Source="/Assets/cancel.png"
-							   Width="24"
-							   Height="24" />
+						<Image Width="24"
+							   Height="24"
+							   Source="/Assets/cancel.png"
+							   Margin="{StaticResource ButtonImageMargin}" />
 
 						<TextBlock Grid.Row="1"
-								   Text="Cancel"
+								   HorizontalAlignment="Center"
 								   FontSize="11"
-								   HorizontalAlignment="Center" />
+								   Text="{x:Static resources:Strings.Cancel}"
+								   Margin="{StaticResource ButtonTextMargin}" />
 					</Grid>
 				</Button.Content>
 			</Button>

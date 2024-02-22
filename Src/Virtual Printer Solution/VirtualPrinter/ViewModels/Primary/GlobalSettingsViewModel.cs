@@ -201,7 +201,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -235,7 +235,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{

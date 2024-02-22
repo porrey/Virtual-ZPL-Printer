@@ -191,7 +191,7 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		public string FontSourceDescription => this.CanUpdate ? $"{this.FontSource} [Found]" : $"{this.FontSource} [Missing]";
+		public string FontSourceDescription => this.CanUpdate ? $"{this.FontSource} [{Properties.Strings.Font_Source_Found}]" : $"{this.FontSource} [{Properties.Strings.Font_Source_Missing}]";
 
 		public bool CanSave
 		{
@@ -288,7 +288,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -305,7 +305,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -348,7 +348,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -368,7 +368,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -403,7 +403,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -419,7 +419,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -440,7 +440,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -467,12 +467,12 @@ namespace VirtualPrinter.ViewModels
 				else
 				{
 					this.HasError = true;
-					MessageBox.Show(errorMessage, "Error Converting Font", MessageBoxButton.OK, MessageBoxImage.Error);
+					MessageBox.Show(errorMessage, Properties.Strings.MessageBox_FontConversion_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 				}
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -541,14 +541,14 @@ namespace VirtualPrinter.ViewModels
 							result = false;
 							convertedFontData = null;
 							fontName = null;
-							errorMessage = responseData == "ERROR: null" && !string.IsNullOrEmpty(chars) ? "The font does support sub-setting characters." : responseData;
+							errorMessage = responseData == "ERROR: null" && !string.IsNullOrEmpty(chars) ? Properties.Strings.FontConversion_Error : responseData;
 						}
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{

@@ -62,11 +62,11 @@ namespace VirtualPrinter.ViewModels
 
 				if (this.Updated)
 				{
-					this.ButtonName = "Ok";
+					this.ButtonName = Properties.Strings.Ok;
 				}
 				else
 				{
-					this.ButtonName = "Close";
+					this.ButtonName = Properties.Strings.Close;
 				}
 			}
 		}
@@ -251,7 +251,7 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private string _buttonName = "Close";
+		private string _buttonName = Properties.Strings.Close;
 		public string ButtonName
 		{
 			get
@@ -311,7 +311,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -337,7 +337,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{

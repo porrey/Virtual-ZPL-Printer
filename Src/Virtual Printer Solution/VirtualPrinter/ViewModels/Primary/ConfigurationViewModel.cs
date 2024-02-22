@@ -16,6 +16,7 @@
  */
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Net;
 using System.Windows;
 using Diamond.Core.Repository;
 using Labelary.Abstractions;
@@ -262,7 +263,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -316,7 +317,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -350,7 +351,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -384,7 +385,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -416,7 +417,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -450,7 +451,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -491,7 +492,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -518,7 +519,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -567,7 +568,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -585,8 +586,8 @@ namespace VirtualPrinter.ViewModels
 				using IWritableRepository<IPrinterConfiguration> repository = await this.RepositoryFactory.GetWritableAsync<IPrinterConfiguration>();
 
 				IPrinterConfiguration item = await repository.ModelFactory.CreateAsync();
-				item.Name = this.GetNewName("New Printer Configuration");
-				item.HostAddress = "127.0.0.1";
+				item.Name = this.GetNewName(Properties.Strings.New_Printer_Configuratio_Name);
+				item.HostAddress = IPAddress.Loopback.ToString();
 				item.Port = 9100;
 				item.LabelHeight = 6;
 				item.LabelWidth = 4;
@@ -602,7 +603,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -670,7 +671,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -684,7 +685,8 @@ namespace VirtualPrinter.ViewModels
 			{
 				if (this.SelectedPrinterConfiguration != null && this.PrinterConfigurations.Count > 1)
 				{
-					if (MessageBox.Show($"Are you sure you want to delete printer configuration '{this.SelectedPrinterConfiguration.Name}'?", "Delete Printer Configuration", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+					string message = string.Format(Properties.Strings.MessageBox_DeletePrinterConfiguration_Message, this.SelectedPrinterConfiguration.Name);
+					if (MessageBox.Show(message, Properties.Strings.MessageBox_DeletePrinterConfiguration_Title, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
 					{
 						//
 						// Get the database context.
@@ -705,7 +707,7 @@ namespace VirtualPrinter.ViewModels
 							}
 							else
 							{
-								MessageBox.Show("Delete failed.", "Delete Printer Configuration", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+								MessageBox.Show(Properties.Strings.MessageBox_DeletePrinterConfigurationFailed_Message, Properties.Strings.MessageBox_DeletePrinterConfigurationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
 							}
 						}
 					}
@@ -713,7 +715,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -762,7 +764,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -798,7 +800,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -831,7 +833,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{

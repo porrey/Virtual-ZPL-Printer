@@ -199,17 +199,24 @@ namespace VirtualPrinter.ViewModels
 
 				if (this.SelectedLabel != null)
 				{
-					this.StatusText = $"Viewing label {this.Labels.IndexOf(this.SelectedLabel) + 1:#,###} of {this.Labels.Count:#,###}";
+					this.StatusText = $"{Properties.Strings.Main_Status_ViewingLabel} {this.Labels.IndexOf(this.SelectedLabel) + 1:#,###} {Properties.Strings.Main_Status_Of} {this.Labels.Count:#,###}";
 				}
 				else
 				{
 					if (this.Labels.Any())
 					{
-						this.StatusText = $"{this.Labels.Count} label(s)";
+						if (this.Labels.Count == 1)
+						{
+							this.StatusText = $"{this.Labels.Count} {Properties.Strings.Main_Status_Label}";
+						}
+						else
+						{
+							this.StatusText = $"{this.Labels.Count} {Properties.Strings.Main_Status_Labels}";
+						}
 					}
 					else
 					{
-						this.StatusText = "Ready";
+						this.StatusText = Properties.Strings.Main_Status_Ready;
 					}
 				}
 
@@ -245,7 +252,7 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private string _statusText = "Ready";
+		private string _statusText = null;
 		public string StatusText
 		{
 			get
@@ -286,7 +293,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -339,7 +346,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -372,6 +379,8 @@ namespace VirtualPrinter.ViewModels
 		{
 			try
 			{
+				this.StatusText = Properties.Strings.Main_Status_Ready;
+
 				//
 				// Get the filters.
 				//
@@ -408,7 +417,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -429,7 +438,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -456,7 +465,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				this.StatusText = $"Error: {ex.Message}";
+				this.StatusText = $"{Properties.Strings.Error}: {ex.Message}";
 			}
 			finally
 			{
@@ -488,7 +497,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				this.StatusText = $"Error: {ex.Message}";
+				this.StatusText = $"{Properties.Strings.Error}: {ex.Message}";
 			}
 			finally
 			{
@@ -504,7 +513,7 @@ namespace VirtualPrinter.ViewModels
 				// Clear the current list.
 				//
 				this.IsBusy = true;
-				this.StatusText = "Loading cached labels...";
+				this.StatusText = Properties.Strings.Main_Status_LoadingLabels;
 				this.Labels.Clear();
 
 				if (this.SelectedPrinterConfiguration != null)
@@ -539,7 +548,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				this.StatusText = $"Error: {ex.Message}";
+				this.StatusText = $"{Properties.Strings.Error}: {ex.Message}";
 			}
 			finally
 			{
@@ -583,7 +592,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				this.StatusText = $"Error: {ex.Message}";
+				this.StatusText = $"{Properties.Strings.Error}: {ex.Message}";
 			}
 			finally
 			{
@@ -604,7 +613,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				this.StatusText = $"Error: {ex.Message}";
+				this.StatusText = $"{Properties.Strings.Error}: {ex.Message}";
 			}
 			finally
 			{
@@ -642,7 +651,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				this.StatusText = $"Error: {ex.Message}";
+				this.StatusText = $"{Properties.Strings.Error}: {ex.Message}";
 			}
 			finally
 			{
@@ -685,7 +694,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -702,7 +711,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -721,7 +730,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -740,7 +749,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -759,7 +768,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{

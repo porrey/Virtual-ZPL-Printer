@@ -79,6 +79,15 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to by.
+        /// </summary>
+        public static string By {
+            get {
+                return ResourceManager.GetString("By", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -93,6 +102,249 @@ namespace VirtualPrinter.Properties {
         public static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close the window..
+        /// </summary>
+        public static string Close_Tooltip {
+            get {
+                return ResourceManager.GetString("Close_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}Test completed with one or more failures.
+        /// </summary>
+        public static string Connectivity_Test_Failed {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TEST.
+        /// </summary>
+        public static string Connectivity_Test_Label_Text {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Label_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}Getting IP address for host name &apos;{1}.
+        /// </summary>
+        public static string Connectivity_Test_Message_Dns {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_Dns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}DNS lookup failed [FAILED].
+        /// </summary>
+        public static string Connectivity_Test_Message_Dns_Failed {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_Dns_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}Found {1} address for host name [OK].
+        /// </summary>
+        public static string Connectivity_Test_Message_Host {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_Host", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}IP address &apos;{1}&apos; was found for host name &apos;{2}&apos; [OK].
+        /// </summary>
+        public static string Connectivity_Test_Message_Ip {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_Ip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}Checking port &apos;{1}&apos; connectivity for IP address for host name &apos;{2}&apos;.
+        /// </summary>
+        public static string Connectivity_Test_Message_PortTest {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_PortTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}Connection to port &apos;{1}&apos; was unsuccessful [FAILED].
+        /// </summary>
+        public static string Connectivity_Test_Message_PortTest_Failed {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_PortTest_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}Connection to port &apos;{1}&apos; was successful [OK].
+        /// </summary>
+        public static string Connectivity_Test_Message_PortTest_Success {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_PortTest_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Testing connectivity to &apos;{0}&apos;.
+        /// </summary>
+        public static string Connectivity_Test_Message_Start {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}{1}/{2} API method connection was unsuccessful [FAILED].
+        /// </summary>
+        public static string Connectivity_Test_Message_WebMethod_Failed {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_WebMethod_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}Checking {1}/{2} API method connection.
+        /// </summary>
+        public static string Connectivity_Test_Message_WebMethodTest {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_WebMethodTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}{1}/{2} API method connection was successful [OK].
+        /// </summary>
+        public static string Connectivity_Test_Message_WebMethodTest_Success {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_WebMethodTest_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}Test completed successfully.
+        /// </summary>
+        public static string Connectivity_Test_Success {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Labelary Connection.
+        /// </summary>
+        public static string Connectivity_Test_Title {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start the connection test..
+        /// </summary>
+        public static string Connectivity_TestButton_Start_Tooltip {
+            get {
+                return ResourceManager.GetString("Connectivity_TestButton_Start_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dpmm.
+        /// </summary>
+        public static string dpmm {
+            get {
+                return ResourceManager.GetString("dpmm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found.
+        /// </summary>
+        public static string Font_Source_Found {
+            get {
+                return ResourceManager.GetString("Font_Source_Found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing.
+        /// </summary>
+        public static string Font_Source_Missing {
+            get {
+                return ResourceManager.GetString("Font_Source_Missing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The font does support sub-setting characters..
+        /// </summary>
+        public static string FontConversion_Error {
+            get {
+                return ResourceManager.GetString("FontConversion_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel the changes and close the dialog..
+        /// </summary>
+        public static string Global_Settings_Button_Cancel_Toolip {
+            get {
+                return ResourceManager.GetString("Global_Settings_Button_Cancel_Toolip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the changes and close the dialog..
+        /// </summary>
+        public static string Global_Settings_Button_Ok_Toolip {
+            get {
+                return ResourceManager.GetString("Global_Settings_Button_Ok_Toolip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Labelary.
+        /// </summary>
+        public static string Global_Settings_Group_Header_Labelary {
+            get {
+                return ResourceManager.GetString("Global_Settings_Group_Header_Labelary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TCP Settings.
+        /// </summary>
+        public static string Global_Settings_Group_Header_TCP {
+            get {
+                return ResourceManager.GetString("Global_Settings_Group_Header_TCP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global Settings.
+        /// </summary>
+        public static string Global_Settings_Title {
+            get {
+                return ResourceManager.GetString("Global_Settings_Title", resourceCulture);
             }
         }
         
@@ -241,11 +493,38 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Test Labelary.
+        /// </summary>
+        public static string Main_Menu_Connection_Test_Labelary {
+            get {
+                return ResourceManager.GetString("Main_Menu_Connection_Test_Labelary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Options.
         /// </summary>
         public static string Main_Menu_Options {
             get {
                 return ResourceManager.GetString("Main_Menu_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string Main_Menu_Options_About {
+            get {
+                return ResourceManager.GetString("Main_Menu_Options_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global Settings.
+        /// </summary>
+        public static string Main_Menu_Options_Global_Settings {
+            get {
+                return ResourceManager.GetString("Main_Menu_Options_Global_Settings", resourceCulture);
             }
         }
         
@@ -259,6 +538,78 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string Main_Menu_Printer_Clear {
+            get {
+                return ResourceManager.GetString("Main_Menu_Printer_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Main_Menu_Printer_Delete {
+            get {
+                return ResourceManager.GetString("Main_Menu_Printer_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Main_Menu_Printer_Edit {
+            get {
+                return ResourceManager.GetString("Main_Menu_Printer_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font Manager.
+        /// </summary>
+        public static string Main_Menu_Printer_FontManager {
+            get {
+                return ResourceManager.GetString("Main_Menu_Printer_FontManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string Main_Menu_Printer_Start {
+            get {
+                return ResourceManager.GetString("Main_Menu_Printer_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        public static string Main_Menu_Printer_Stop {
+            get {
+                return ResourceManager.GetString("Main_Menu_Printer_Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string Main_Menu_Printer_Test {
+            get {
+                return ResourceManager.GetString("Main_Menu_Printer_Test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        public static string Main_Menu_Printer_View {
+            get {
+                return ResourceManager.GetString("Main_Menu_Printer_View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Idle.
         /// </summary>
         public static string Main_Status_Idle {
@@ -268,11 +619,65 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to label.
+        /// </summary>
+        public static string Main_Status_Label {
+            get {
+                return ResourceManager.GetString("Main_Status_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to labels.
+        /// </summary>
+        public static string Main_Status_Labels {
+            get {
+                return ResourceManager.GetString("Main_Status_Labels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Listening.
         /// </summary>
         public static string Main_Status_Listening {
             get {
                 return ResourceManager.GetString("Main_Status_Listening", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading cached labels....
+        /// </summary>
+        public static string Main_Status_LoadingLabels {
+            get {
+                return ResourceManager.GetString("Main_Status_LoadingLabels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to of.
+        /// </summary>
+        public static string Main_Status_Of {
+            get {
+                return ResourceManager.GetString("Main_Status_Of", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready.
+        /// </summary>
+        public static string Main_Status_Ready {
+            get {
+                return ResourceManager.GetString("Main_Status_Ready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viewing label.
+        /// </summary>
+        public static string Main_Status_ViewingLabel {
+            get {
+                return ResourceManager.GetString("Main_Status_ViewingLabel", resourceCulture);
             }
         }
         
@@ -304,11 +709,209 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete printer configuration &apos;{0}&apos;?.
+        /// </summary>
+        public static string MessageBox_DeletePrinterConfiguration_Message {
+            get {
+                return ResourceManager.GetString("MessageBox_DeletePrinterConfiguration_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Printer Configuration.
+        /// </summary>
+        public static string MessageBox_DeletePrinterConfiguration_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_DeletePrinterConfiguration_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete failed..
+        /// </summary>
+        public static string MessageBox_DeletePrinterConfigurationFailed_Message {
+            get {
+                return ResourceManager.GetString("MessageBox_DeletePrinterConfigurationFailed_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Printer Configuration.
+        /// </summary>
+        public static string MessageBox_DeletePrinterConfigurationFailed_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_DeletePrinterConfigurationFailed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Exception.
+        /// </summary>
+        public static string MessageBox_Exception_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_Exception_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error Converting Font.
+        /// </summary>
+        public static string MessageBox_FontConversion_Exception_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_FontConversion_Exception_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Printer Configuration.
+        /// </summary>
+        public static string New_Printer_Configuratio_Name {
+            get {
+                return ResourceManager.GetString("New_Printer_Configuratio_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string Printer_Configuration_Disabled {
+            get {
+                return ResourceManager.GetString("Printer_Configuration_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string Printer_Configuration_Enabled {
+            get {
+                return ResourceManager.GetString("Printer_Configuration_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host.
+        /// </summary>
+        public static string Printer_Configuration_Host {
+            get {
+                return ResourceManager.GetString("Printer_Configuration_Host", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        public static string Printer_Configuration_Id {
+            get {
+                return ResourceManager.GetString("Printer_Configuration_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Printing.
+        /// </summary>
+        public static string Printer_Configuration_Printing {
+            get {
+                return ResourceManager.GetString("Printer_Configuration_Printing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resolution.
+        /// </summary>
+        public static string Printer_Configuration_Resolution {
+            get {
+                return ResourceManager.GetString("Printer_Configuration_Resolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotation.
+        /// </summary>
+        public static string Printer_Configuration_Rotation {
+            get {
+                return ResourceManager.GetString("Printer_Configuration_Rotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        public static string Printer_Configuration_Size {
+            get {
+                return ResourceManager.GetString("Printer_Configuration_Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        public static string Send_Test_Label_Button_Text {
+            get {
+                return ResourceManager.GetString("Send_Test_Label_Button_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send the selected test label to the virtual printer..
+        /// </summary>
+        public static string Send_Test_Label_Button_Tooltip {
+            get {
+                return ResourceManager.GetString("Send_Test_Label_Button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Test Label.
+        /// </summary>
+        public static string Send_Test_Label_Select {
+            get {
+                return ResourceManager.GetString("Send_Test_Label_Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Test Label.
+        /// </summary>
+        public static string Send_Test_Label_Title {
+            get {
+                return ResourceManager.GetString("Send_Test_Label_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZPL Viewer.
+        /// </summary>
+        public static string ZPL_Viewer_Title {
+            get {
+                return ResourceManager.GetString("ZPL_Viewer_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZPL Warnings.
+        /// </summary>
+        public static string ZPL_Warnings {
+            get {
+                return ResourceManager.GetString("ZPL_Warnings", resourceCulture);
             }
         }
     }

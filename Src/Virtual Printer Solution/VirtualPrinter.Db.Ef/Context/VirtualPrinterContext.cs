@@ -53,7 +53,7 @@ namespace VirtualPrinter.Db.Ef
 				new()
 				{
 					Id = 1,
-					Name = "4x6 w/0˚ Rotation",
+					Name = $"4x6 w/0˚",
 					HostAddress = "0.0.0.0",
 					Port = 9100,
 					LabelHeight = 6,
@@ -67,7 +67,7 @@ namespace VirtualPrinter.Db.Ef
 				new()
 				{
 					Id = 2,
-					Name = "4x6 w/90˚ Rotation",
+					Name = $"4x6 w/90˚",
 					HostAddress = "0.0.0.0",
 					Port = 9100,
 					LabelHeight = 6,
@@ -81,7 +81,7 @@ namespace VirtualPrinter.Db.Ef
 				new()
 				{
 					Id = 3,
-					Name = "4x6 w/180˚ Rotation",
+					Name = $"4x6 w/180˚",
 					HostAddress = "0.0.0.0",
 					Port = 9100,
 					LabelHeight = 6,
@@ -95,7 +95,7 @@ namespace VirtualPrinter.Db.Ef
 				new()
 				{
 					Id = 4,
-					Name = "4x6 w/270˚ Rotation",
+					Name = $"4x6 w/270˚",
 					HostAddress = "0.0.0.0",
 					Port = 9100,
 					LabelHeight = 6,
@@ -122,14 +122,14 @@ namespace VirtualPrinter.Db.Ef
 				}
 			]);
 
-			modelBuilder.Entity<ApplicationVersion>().HasData(new ApplicationVersion[]
-			{
+			modelBuilder.Entity<ApplicationVersion>().HasData(
+			[
 				new()
 				{
 					Id = 1,
-					Name = "2.2.0"
+					Name = "3.0.0"
 				}
-			});
+			]);
 		}
 
 		public async Task CheckUpgradeAsync()

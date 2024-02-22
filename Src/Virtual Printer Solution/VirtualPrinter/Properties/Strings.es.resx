@@ -201,4 +201,208 @@
   <data name="Main_TextBlock_NoCachedLabels" xml:space="preserve">
     <value>sin etiquetas en caché</value>
   </data>
+  <data name="Main_Status_Ready" xml:space="preserve">
+    <value>Listo</value>
+  </data>
+  <data name="Main_Status_Of" xml:space="preserve">
+    <value>de</value>
+  </data>
+  <data name="Main_Status_ViewingLabel" xml:space="preserve">
+    <value>Etiqueta de visualización</value>
+  </data>
+  <data name="Main_Status_Label" xml:space="preserve">
+    <value>etiqueta</value>
+  </data>
+  <data name="Main_Status_Labels" xml:space="preserve">
+    <value>etiquetas</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Main_Status_LoadingLabels" xml:space="preserve">
+    <value>Cargando etiquetas almacenadas en caché...</value>
+  </data>
+  <data name="Printer_Configuration_Host" xml:space="preserve">
+    <value>Anfitrión</value>
+  </data>
+  <data name="Printer_Configuration_Size" xml:space="preserve">
+    <value>Tamaño</value>
+  </data>
+  <data name="Printer_Configuration_Id" xml:space="preserve">
+    <value>IDENTIFICACIÓN</value>
+  </data>
+  <data name="Printer_Configuration_Resolution" xml:space="preserve">
+    <value>Resolución</value>
+  </data>
+  <data name="Printer_Configuration_Rotation" xml:space="preserve">
+    <value>Rotación</value>
+  </data>
+  <data name="Printer_Configuration_Disabled" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="Printer_Configuration_Enabled" xml:space="preserve">
+    <value>Activado</value>
+  </data>
+  <data name="Printer_Configuration_Printing" xml:space="preserve">
+    <value>Impresión</value>
+  </data>
+  <data name="Main_Menu_Printer_Stop" xml:space="preserve">
+    <value>Detener</value>
+  </data>
+  <data name="Main_Menu_Printer_Clear" xml:space="preserve">
+    <value>Claro</value>
+  </data>
+  <data name="Main_Menu_Printer_Delete" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="Main_Menu_Printer_Test" xml:space="preserve">
+    <value>Prueba</value>
+  </data>
+  <data name="Main_Menu_Printer_View" xml:space="preserve">
+    <value>Vista</value>
+  </data>
+  <data name="Main_Menu_Printer_Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Main_Menu_Printer_FontManager" xml:space="preserve">
+    <value>Administrador de fuentes</value>
+  </data>
+  <data name="Main_Menu_Printer_Start" xml:space="preserve">
+    <value>Comenzar</value>
+  </data>
+  <data name="Main_Menu_Connection_Test_Labelary" xml:space="preserve">
+    <value>Etiqueta de prueba</value>
+  </data>
+  <data name="Main_Menu_Options_Global_Settings" xml:space="preserve">
+    <value>Ajustes globales</value>
+  </data>
+  <data name="Main_Menu_Options_About" xml:space="preserve">
+    <value>Acerca de</value>
+  </data>
+  <data name="By" xml:space="preserve">
+    <value>por</value>
+  </data>
+  <data name="dpmm" xml:space="preserve">
+    <value>dpmm</value>
+  </data>
+  <data name="New_Printer_Configuratio_Name" xml:space="preserve">
+    <value>Nueva configuración de impresora</value>
+  </data>
+  <data name="MessageBox_DeletePrinterConfiguration_Message" xml:space="preserve">
+    <value>¿Está seguro de que desea eliminar la configuración de la impresora '{0}'?</value>
+  </data>
+  <data name="MessageBox_DeletePrinterConfiguration_Title" xml:space="preserve">
+    <value>Eliminar la configuración de la impresora</value>
+  </data>
+  <data name="MessageBox_DeletePrinterConfigurationFailed_Message" xml:space="preserve">
+    <value>Error al eliminar.</value>
+  </data>
+  <data name="MessageBox_DeletePrinterConfigurationFailed_Title" xml:space="preserve">
+    <value>Eliminar la configuración de la impresora</value>
+  </data>
+  <data name="Font_Source_Found" xml:space="preserve">
+    <value>Encontró</value>
+  </data>
+  <data name="Font_Source_Missing" xml:space="preserve">
+    <value>Desaparecido</value>
+  </data>
+  <data name="MessageBox_Exception_Title" xml:space="preserve">
+    <value>Excepción desconocida</value>
+  </data>
+  <data name="MessageBox_FontConversion_Exception_Title" xml:space="preserve">
+    <value>Error al convertir la fuente</value>
+  </data>
+  <data name="FontConversion_Error" xml:space="preserve">
+    <value>La fuente admite caracteres de subconfiguración.</value>
+  </data>
+  <data name="ZPL_Warnings" xml:space="preserve">
+    <value>Advertencias ZPL</value>
+  </data>
+  <data name="Connectivity_Test_Message_Dns" xml:space="preserve">
+    <value>{0}Obtener la dirección IP para el nombre de host '{1}</value>
+  </data>
+  <data name="Connectivity_Test_Message_Start" xml:space="preserve">
+    <value>Probando la conectividad a '{0}'</value>
+  </data>
+  <data name="Connectivity_Test_Message_Host" xml:space="preserve">
+    <value>{0}Se encontró {1} dirección para el nombre de host [Aceptar]</value>
+  </data>
+  <data name="Connectivity_Test_Message_Ip" xml:space="preserve">
+    <value>{0}Se encontró la dirección IP '{1}' para el nombre de host '{2}' [OK]</value>
+  </data>
+  <data name="Connectivity_Test_Message_PortTest" xml:space="preserve">
+    <value>{0}Comprobando la conectividad del puerto '{1}' para la dirección IP del nombre de host '{2}'</value>
+  </data>
+  <data name="Connectivity_Test_Message_PortTest_Failed" xml:space="preserve">
+    <value>{0}La conexión al puerto '{1}' no se realizó correctamente [FALLÓ]</value>
+  </data>
+  <data name="Connectivity_Test_Message_PortTest_Success" xml:space="preserve">
+    <value>{0}La conexión al puerto '{1}' se realizó correctamente [Aceptar]</value>
+  </data>
+  <data name="Connectivity_Test_Message_WebMethodTest" xml:space="preserve">
+    <value>{0}Comprobando la conexión del método API {1}/{2}</value>
+  </data>
+  <data name="Connectivity_Test_Message_WebMethodTest_Success" xml:space="preserve">
+    <value>La conexión del método API {0}{1}/{2} se realizó correctamente [Aceptar]</value>
+  </data>
+  <data name="Connectivity_Test_Message_WebMethod_Failed" xml:space="preserve">
+    <value>La conexión del método API {0}{1}/{2} no se realizó correctamente [FALLÓ]</value>
+  </data>
+  <data name="Connectivity_Test_Failed" xml:space="preserve">
+    <value>{0}Prueba completada con uno o más errores</value>
+  </data>
+  <data name="Connectivity_Test_Label_Text" xml:space="preserve">
+    <value>PRUEBA</value>
+  </data>
+  <data name="Connectivity_Test_Message_Dns_Failed" xml:space="preserve">
+    <value>{0}Error en la búsqueda de DNS [FALLADO]</value>
+  </data>
+  <data name="Connectivity_Test_Success" xml:space="preserve">
+    <value>{0}Prueba completada con éxito</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Comenzar</value>
+  </data>
+  <data name="Test_Labelary_Connection_Title" xml:space="preserve">
+    <value>Conexión de etiqueta de prueba</value>
+  </data>
+  <data name="Close_Tooltip" xml:space="preserve">
+    <value>Cerrar la ventana.</value>
+  </data>
+  <data name="Connectivity_TestButton_Start_Tooltip" xml:space="preserve">
+    <value>Inicie la prueba de conexión.</value>
+  </data>
+  <data name="Connectivity_Test_Title" xml:space="preserve">
+    <value>Conexión de etiqueta de prueba</value>
+  </data>
+  <data name="ZPL_Viewer_Title" xml:space="preserve">
+    <value>Visor ZPL</value>
+  </data>
+  <data name="Send_Test_Label_Title" xml:space="preserve">
+    <value>Enviar etiqueta de prueba</value>
+  </data>
+  <data name="Send_Test_Label_Button_Text" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="Send_Test_Label_Button_Tooltip" xml:space="preserve">
+    <value>Envíe la etiqueta de prueba seleccionada a la impresora virtual.</value>
+  </data>
+  <data name="Send_Test_Label_Select" xml:space="preserve">
+    <value>Seleccionar etiqueta de prueba</value>
+  </data>
+  <data name="Global_Settings_Title" xml:space="preserve">
+    <value>Ajustes globales</value>
+  </data>
+  <data name="Global_Settings_Group_Header_Labelary" xml:space="preserve">
+    <value>Etiquetario</value>
+  </data>
+  <data name="Global_Settings_Group_Header_TCP" xml:space="preserve">
+    <value>Configuración TCP</value>
+  </data>
+  <data name="Global_Settings_Button_Cancel_Toolip" xml:space="preserve">
+    <value>Cancele los cambios y cierre el cuadro de diálogo.</value>
+  </data>
+  <data name="Global_Settings_Button_Ok_Toolip" xml:space="preserve">
+    <value>Guarde los cambios y cierre el cuadro de diálogo.</value>
+  </data>
 </root>
