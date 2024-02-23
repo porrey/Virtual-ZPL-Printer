@@ -11,7 +11,7 @@
 	<SolidColorBrush x:Key="BorderColor">#AA4472C4</SolidColorBrush>
 	<system:Double x:Key="ControlHeight">29</system:Double>
 	<Thickness x:Key="ControlMargin">5,5,5,5</Thickness>
-	
+
 	<system:Double x:Key="ButtonWidth">100</system:Double>
 	<system:Double x:Key="StatusButtonWidth">48</system:Double>
 	<system:Double x:Key="StatusButtonHeight">48</system:Double>
@@ -20,7 +20,7 @@
 	<Thickness x:Key="ButtonMargin">8,5,5,5</Thickness>
 	<Thickness x:Key="ButtonTextMargin">3,0,3,3</Thickness>
 	<Thickness x:Key="ButtonImageMargin">7,3,7,0</Thickness>
-	
+
 	<Style x:Key="FocusVisual">
 		<Setter Property="Control.Template">
 			<Setter.Value>

@@ -405,4 +405,118 @@
   <data name="Global_Settings_Button_Ok_Toolip" xml:space="preserve">
     <value>Guarde los cambios y cierre el cuadro de diálogo.</value>
   </data>
+  <data name="Configuration_View_Title" xml:space="preserve">
+    <value>Editar la configuración de la impresora</value>
+  </data>
+  <data name="Configuration_View_Button_Clone_Text" xml:space="preserve">
+    <value>Clon</value>
+  </data>
+  <data name="Configuration_View_Button_Clone_Tooltip" xml:space="preserve">
+    <value>Clona la configuración de la impresora seleccionada.</value>
+  </data>
+  <data name="Configuration_View_Button_Delete_Text" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="Configuration_View_Button_Delete_Tooltip" xml:space="preserve">
+    <value>Elimine la configuración de la impresora seleccionada.</value>
+  </data>
+  <data name="Configuration_View_Button_Add_Text" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
+  <data name="Configuration_View_Button_Add_Tooltip" xml:space="preserve">
+    <value>Agregue una nueva configuración de impresora.</value>
+  </data>
+  <data name="Configuration_View_Button_Save_Text" xml:space="preserve">
+    <value>Ahorrar</value>
+  </data>
+  <data name="Configuration_View_Button_Save_Tooltip" xml:space="preserve">
+    <value>Guarde los cambios en la configuración actual de la impresora.</value>
+  </data>
+  <data name="Configuration_View_Button_Undo_Text" xml:space="preserve">
+    <value>Deshacer</value>
+  </data>
+  <data name="Configuration_View_Button_Undo_Tooltip" xml:space="preserve">
+    <value>Deshacer los cambios actuales.</value>
+  </data>
+  <data name="Configuration_View_Button_Configure_Text" xml:space="preserve">
+    <value>Configurar</value>
+  </data>
+  <data name="Configuration_View_Button_Configure_Tooltip" xml:space="preserve">
+    <value>Haga clic para editar la impresora física.</value>
+  </data>
+  <data name="Configuration_View_Label_PhysicalPrinter" xml:space="preserve">
+    <value>Impresora física</value>
+  </data>
+  <data name="Configuration_Browse_Button_Tooltip" xml:space="preserve">
+    <value>Busque una carpeta para especificar dónde se almacenan en caché las imágenes de etiquetas.</value>
+  </data>
+  <data name="Configuration_Filters_Button_Tooltip" xml:space="preserve">
+    <value>Haga clic para editar los filtros ZPL.</value>
+  </data>
+  <data name="Configuration_View_Label_LabelCache" xml:space="preserve">
+    <value>Caché de etiquetas</value>
+  </data>
+  <data name="Configuration_View_Label_LabelHeight" xml:space="preserve">
+    <value>Altura de la etiqueta</value>
+  </data>
+  <data name="Configuration_View_Label_LabelWidth" xml:space="preserve">
+    <value>Ancho de etiqueta</value>
+  </data>
+  <data name="Configuration_View_Label_LabelUnits" xml:space="preserve">
+    <value>Unidades de etiqueta</value>
+  </data>
+  <data name="Configuration_View_Label_HostAddress" xml:space="preserve">
+    <value>Dirección del servidor</value>
+  </data>
+  <data name="Configuration_View_Label_Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Configuration_View_Label_TcpPort" xml:space="preserve">
+    <value>Puerto TCP</value>
+  </data>
+  <data name="Filters_None" xml:space="preserve">
+    <value>Sin filtros</value>
+  </data>
+  <data name="HostAddress_Any" xml:space="preserve">
+    <value>Cualquier</value>
+  </data>
+  <data name="HostAddress_Loopback" xml:space="preserve">
+    <value>Bucle invertido</value>
+  </data>
+  <data name="HostAddress_Unknown" xml:space="preserve">
+    <value>Desconocido</value>
+  </data>
+  <data name="Edit_Filters_Title" xml:space="preserve">
+    <value>Editar filtros</value>
+  </data>
+  <data name="Edit_Filters_Label" xml:space="preserve">
+    <value>Los filtros se procesan en el orden en que aparecen, de arriba a abajo.</value>
+  </data>
+  <data name="Edit_Filters_Button_Ok_Tooltip" xml:space="preserve">
+    <value>Guarde los cambios y cierre el cuadro de diálogo.</value>
+  </data>
+  <data name="Edit_Filters_Button_Cancel_Tooltip" xml:space="preserve">
+    <value>Cancele los cambios y cierre el cuadro de diálogo.</value>
+  </data>
+  <data name="Edit_Filters_Label_Find" xml:space="preserve">
+    <value>Encontrar</value>
+  </data>
+  <data name="Edit_Filters_Label_Replace" xml:space="preserve">
+    <value>Reemplazar</value>
+  </data>
+  <data name="Edit_Filters_Button_Down_Tooltip" xml:space="preserve">
+    <value>Mueva este filtro hacia abajo.</value>
+  </data>
+  <data name="Edit_Filters_Button_Up_Tooltip" xml:space="preserve">
+    <value>Mueva este filtro hacia arriba.</value>
+  </data>
+  <data name="Edit_Filters_Button_Delete_Tooltip" xml:space="preserve">
+    <value>Elimina este filtro.</value>
+  </data>
+  <data name="Edit_Filters_Button_Add_Tooltip" xml:space="preserve">
+    <value>Agregue un nuevo filtro antes de este.</value>
+  </data>
+  <data name="Edit_Filters_CheckBox_RegEx_Text" xml:space="preserve">
+    <value>Trate la búsqueda como una expresión regular.</value>
+  </data>
 </root>

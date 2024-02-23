@@ -1,11 +1,12 @@
 ﻿<Window x:Class="VirtualPrinter.Views.EditFiltersView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Title="Edit Filters"
-        Icon="/virtual-printer.ico"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:resources="clr-namespace:VirtualPrinter.Properties"
+		mc:Ignorable="d"
+		Title="{x:Static resources:Strings.Edit_Filters_Title}"
+		Icon="/virtual-printer.ico"
 		ResizeMode="NoResize"
 		WindowStyle="ThreeDBorderWindow"
 		WindowStartupLocation="CenterOwner"
@@ -44,7 +45,7 @@
 
 					<TextBlock Grid.Row="0"
 							   Grid.Column="1"
-							   Text="Find"
+							   Text="{x:Static resources:Strings.Edit_Filters_Label_Find}"
 							   Margin="5,2,5,2"
 							   FontSize="12"
 							   Foreground="{StaticResource ForegroundColor1}"
@@ -71,7 +72,7 @@
 
 					<TextBlock Grid.Row="0"
 							   Grid.Column="3"
-							   Text="Replace"
+							   Text="{x:Static resources:Strings.Edit_Filters_Label_Replace}"
 							   Margin="5,2,5,2"
 							   FontSize="12"
 							   Foreground="{StaticResource ForegroundColor1}"
@@ -106,7 +107,7 @@
 								Width="32"
 								Height="32"
 								Margin="2"
-								ToolTip="Move this filter up.">
+								ToolTip="{x:Static resources:Strings.Edit_Filters_Button_Up_Tooltip}">
 							<Button.Content>
 								<Image Source="/Assets/filter-up.png"
 									   HorizontalAlignment="Center"
@@ -122,7 +123,7 @@
 								Width="32"
 								Height="32"
 								Margin="2"
-								ToolTip="Move this filter down.">
+								ToolTip="{x:Static resources:Strings.Edit_Filters_Button_Down_Tooltip}">
 							<Button.Content>
 								<Image Source="/Assets/filter-down.png"
 									   HorizontalAlignment="Center"
@@ -138,7 +139,7 @@
 								Width="32"
 								Height="32"
 								Margin="2"
-								ToolTip="Delete the this filter.">
+								ToolTip="{x:Static resources:Strings.Edit_Filters_Button_Delete_Tooltip}">
 							<Button.Content>
 								<Image Source="/Assets/filter-delete.png"
 									   HorizontalAlignment="Center"
@@ -154,7 +155,7 @@
 								Width="32"
 								Height="32"
 								Margin="2"
-								ToolTip="Add a new filter before this one.">
+								ToolTip="{x:Static resources:Strings.Edit_Filters_Button_Add_Tooltip}">
 							<Button.Content>
 								<Image Source="/Assets/filter-add.png"
 									   HorizontalAlignment="Center"
@@ -166,7 +167,7 @@
 					<CheckBox Grid.Row="2"
 							  Grid.Column="0"
 							  Grid.ColumnSpan="5"
-							  Content="Treat Find as Regular Expression"
+							  Content="{x:Static resources:Strings.Edit_Filters_CheckBox_RegEx_Text}"
 							  IsChecked="{Binding TreatAsRegularExpression}"
 							  Foreground="{StaticResource ForegroundColor1}"
 							  VerticalAlignment="Center"
@@ -198,7 +199,7 @@
 				   Margin="10" />
 
 			<TextBlock	Grid.Column="1"
-						Text="The filters are processed in the order they appear, from top to bottom."
+						Text="{x:Static resources:Strings.Edit_Filters_Label}"
 						VerticalAlignment="Center"
 						TextWrapping="Wrap"
 						FontSize="12"
@@ -222,23 +223,23 @@
 
 		<!-- Buttons -->
 		<Grid Grid.Row="2"
-			  Margin="0,10,5,5">
+			  Margin="0,10,5,5"
+			  Grid.IsSharedSizeScope="True">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
 			</Grid.ColumnDefinitions>
 
 			<Button Grid.Column="1"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
-					HorizontalAlignment="Center"
+					HorizontalAlignment="Stretch"
 					Command="{Binding OkCommand}"
 					Click="Button_Click"
-					Width="{StaticResource StatusButtonWidth}"
 					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,0,3"
-					ToolTip="Save the changes and close the dialog.">
+					Margin="{StaticResource ButtonMargin}"
+					ToolTip="{x:Static resources:Strings.Edit_Filters_Button_Ok_Tooltip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -248,12 +249,14 @@
 
 						<Image Source="/Assets/ok.png"
 							   Width="24"
-							   Height="24" />
+							   Height="24"
+							   Margin="{StaticResource ButtonImageMargin}" />
 
 						<TextBlock Grid.Row="1"
-								   Text="OK"
+								   Text="{x:Static resources:Strings.Ok}"
 								   FontSize="11"
-								   HorizontalAlignment="Center" />
+								   HorizontalAlignment="Center"
+								   Margin="{StaticResource ButtonTextMargin}" />
 					</Grid>
 				</Button.Content>
 			</Button>
@@ -261,13 +264,12 @@
 			<Button Grid.Column="2"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
-					HorizontalAlignment="Center"
+					HorizontalAlignment="Stretch"
 					Command="{Binding CancelCommand}"
 					Click="Button_Click"
-					Width="{StaticResource StatusButtonWidth}"
 					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,0,3"
-					ToolTip="Cancel the changes and close the dialog.">
+					Margin="{StaticResource ButtonMargin}"
+					ToolTip="{x:Static resources:Strings.Edit_Filters_Button_Cancel_Tooltip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -277,12 +279,14 @@
 
 						<Image Source="/Assets/cancel.png"
 							   Width="24"
-							   Height="24" />
+							   Height="24"
+							   Margin="{StaticResource ButtonImageMargin}" />
 
 						<TextBlock Grid.Row="1"
-								   Text="Cancel"
+								   Text="{x:Static resources:Strings.Cancel}"
 								   FontSize="11"
-								   HorizontalAlignment="Center" />
+								   HorizontalAlignment="Center"
+								   Margin="{StaticResource ButtonTextMargin}" />
 					</Grid>
 				</Button.Content>
 			</Button>

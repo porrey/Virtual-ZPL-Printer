@@ -115,6 +115,213 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse for a folder to specify where label images are cached..
+        /// </summary>
+        public static string Configuration_Browse_Button_Tooltip {
+            get {
+                return ResourceManager.GetString("Configuration_Browse_Button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to edit ZPL filters..
+        /// </summary>
+        public static string Configuration_Filters_Button_Tooltip {
+            get {
+                return ResourceManager.GetString("Configuration_Filters_Button_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Configuration_View_Button_Add_Text {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Add_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a new printer configuration..
+        /// </summary>
+        public static string Configuration_View_Button_Add_Tooltip {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Add_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clone.
+        /// </summary>
+        public static string Configuration_View_Button_Clone_Text {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Clone_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clone the selected printer configuration..
+        /// </summary>
+        public static string Configuration_View_Button_Clone_Tooltip {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Clone_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure.
+        /// </summary>
+        public static string Configuration_View_Button_Configure_Text {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Configure_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to edit the physical printer..
+        /// </summary>
+        public static string Configuration_View_Button_Configure_Tooltip {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Configure_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Configuration_View_Button_Delete_Text {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Delete_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete the selected printer configuration..
+        /// </summary>
+        public static string Configuration_View_Button_Delete_Tooltip {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Delete_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Configuration_View_Button_Save_Text {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Save_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes to the current printer configuration..
+        /// </summary>
+        public static string Configuration_View_Button_Save_Tooltip {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Save_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo.
+        /// </summary>
+        public static string Configuration_View_Button_Undo_Text {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Undo_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo the current changes..
+        /// </summary>
+        public static string Configuration_View_Button_Undo_Tooltip {
+            get {
+                return ResourceManager.GetString("Configuration_View_Button_Undo_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host Address.
+        /// </summary>
+        public static string Configuration_View_Label_HostAddress {
+            get {
+                return ResourceManager.GetString("Configuration_View_Label_HostAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Label Cache.
+        /// </summary>
+        public static string Configuration_View_Label_LabelCache {
+            get {
+                return ResourceManager.GetString("Configuration_View_Label_LabelCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Label Height.
+        /// </summary>
+        public static string Configuration_View_Label_LabelHeight {
+            get {
+                return ResourceManager.GetString("Configuration_View_Label_LabelHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Label Units.
+        /// </summary>
+        public static string Configuration_View_Label_LabelUnits {
+            get {
+                return ResourceManager.GetString("Configuration_View_Label_LabelUnits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Label Width.
+        /// </summary>
+        public static string Configuration_View_Label_LabelWidth {
+            get {
+                return ResourceManager.GetString("Configuration_View_Label_LabelWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Configuration_View_Label_Name {
+            get {
+                return ResourceManager.GetString("Configuration_View_Label_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Physical Printer.
+        /// </summary>
+        public static string Configuration_View_Label_PhysicalPrinter {
+            get {
+                return ResourceManager.GetString("Configuration_View_Label_PhysicalPrinter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TCP Port.
+        /// </summary>
+        public static string Configuration_View_Label_TcpPort {
+            get {
+                return ResourceManager.GetString("Configuration_View_Label_TcpPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Printer Configuration.
+        /// </summary>
+        public static string Configuration_View_Title {
+            get {
+                return ResourceManager.GetString("Configuration_View_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}Test completed with one or more failures.
         /// </summary>
         public static string Connectivity_Test_Failed {
@@ -268,11 +475,119 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add a new filter before this one..
+        /// </summary>
+        public static string Edit_Filters_Button_Add_Tooltip {
+            get {
+                return ResourceManager.GetString("Edit_Filters_Button_Add_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel the changes and close the dialog..
+        /// </summary>
+        public static string Edit_Filters_Button_Cancel_Tooltip {
+            get {
+                return ResourceManager.GetString("Edit_Filters_Button_Cancel_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete the this filter..
+        /// </summary>
+        public static string Edit_Filters_Button_Delete_Tooltip {
+            get {
+                return ResourceManager.GetString("Edit_Filters_Button_Delete_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move this filter down..
+        /// </summary>
+        public static string Edit_Filters_Button_Down_Tooltip {
+            get {
+                return ResourceManager.GetString("Edit_Filters_Button_Down_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the changes and close the dialog..
+        /// </summary>
+        public static string Edit_Filters_Button_Ok_Tooltip {
+            get {
+                return ResourceManager.GetString("Edit_Filters_Button_Ok_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move this filter up..
+        /// </summary>
+        public static string Edit_Filters_Button_Up_Tooltip {
+            get {
+                return ResourceManager.GetString("Edit_Filters_Button_Up_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Treat Find as Regular Expression..
+        /// </summary>
+        public static string Edit_Filters_CheckBox_RegEx_Text {
+            get {
+                return ResourceManager.GetString("Edit_Filters_CheckBox_RegEx_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The filters are processed in the order they appear, from top to bottom..
+        /// </summary>
+        public static string Edit_Filters_Label {
+            get {
+                return ResourceManager.GetString("Edit_Filters_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find.
+        /// </summary>
+        public static string Edit_Filters_Label_Find {
+            get {
+                return ResourceManager.GetString("Edit_Filters_Label_Find", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace.
+        /// </summary>
+        public static string Edit_Filters_Label_Replace {
+            get {
+                return ResourceManager.GetString("Edit_Filters_Label_Replace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Filters.
+        /// </summary>
+        public static string Edit_Filters_Title {
+            get {
+                return ResourceManager.GetString("Edit_Filters_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Filters.
+        /// </summary>
+        public static string Filters_None {
+            get {
+                return ResourceManager.GetString("Filters_None", resourceCulture);
             }
         }
         
@@ -345,6 +660,33 @@ namespace VirtualPrinter.Properties {
         public static string Global_Settings_Title {
             get {
                 return ResourceManager.GetString("Global_Settings_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any.
+        /// </summary>
+        public static string HostAddress_Any {
+            get {
+                return ResourceManager.GetString("HostAddress_Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loopback.
+        /// </summary>
+        public static string HostAddress_Loopback {
+            get {
+                return ResourceManager.GetString("HostAddress_Loopback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        public static string HostAddress_Unknown {
+            get {
+                return ResourceManager.GetString("HostAddress_Unknown", resourceCulture);
             }
         }
         

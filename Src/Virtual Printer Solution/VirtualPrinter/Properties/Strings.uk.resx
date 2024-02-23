@@ -405,4 +405,118 @@
   <data name="Global_Settings_Button_Ok_Toolip" xml:space="preserve">
     <value>Збережіть зміни та закрийте діалогове вікно.</value>
   </data>
+  <data name="Configuration_View_Title" xml:space="preserve">
+    <value>Редагувати конфігурацію принтера</value>
+  </data>
+  <data name="Configuration_View_Button_Clone_Text" xml:space="preserve">
+    <value>Клон</value>
+  </data>
+  <data name="Configuration_View_Button_Clone_Tooltip" xml:space="preserve">
+    <value>Скопіюйте вибрану конфігурацію принтера.</value>
+  </data>
+  <data name="Configuration_View_Button_Delete_Text" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="Configuration_View_Button_Delete_Tooltip" xml:space="preserve">
+    <value>Видалити вибрану конфігурацію принтера.</value>
+  </data>
+  <data name="Configuration_View_Button_Add_Text" xml:space="preserve">
+    <value>додати</value>
+  </data>
+  <data name="Configuration_View_Button_Add_Tooltip" xml:space="preserve">
+    <value>Додайте нову конфігурацію принтера.</value>
+  </data>
+  <data name="Configuration_View_Button_Save_Text" xml:space="preserve">
+    <value>зберегти</value>
+  </data>
+  <data name="Configuration_View_Button_Save_Tooltip" xml:space="preserve">
+    <value>Збережіть зміни в поточній конфігурації принтера.</value>
+  </data>
+  <data name="Configuration_View_Button_Undo_Text" xml:space="preserve">
+    <value>Скасувати</value>
+  </data>
+  <data name="Configuration_View_Button_Undo_Tooltip" xml:space="preserve">
+    <value>Скасувати поточні зміни.</value>
+  </data>
+  <data name="Configuration_View_Button_Configure_Text" xml:space="preserve">
+    <value>Налаштувати</value>
+  </data>
+  <data name="Configuration_View_Button_Configure_Tooltip" xml:space="preserve">
+    <value>Натисніть, щоб редагувати фізичний принтер.</value>
+  </data>
+  <data name="Configuration_View_Label_PhysicalPrinter" xml:space="preserve">
+    <value>Фізичний принтер</value>
+  </data>
+  <data name="Configuration_Browse_Button_Tooltip" xml:space="preserve">
+    <value>Перегляньте папку, щоб указати, де кешуються зображення міток.</value>
+  </data>
+  <data name="Configuration_Filters_Button_Tooltip" xml:space="preserve">
+    <value>Натисніть, щоб редагувати фільтри ZPL.</value>
+  </data>
+  <data name="Configuration_View_Label_LabelCache" xml:space="preserve">
+    <value>Кеш міток</value>
+  </data>
+  <data name="Configuration_View_Label_LabelHeight" xml:space="preserve">
+    <value>Висота етикетки</value>
+  </data>
+  <data name="Configuration_View_Label_LabelWidth" xml:space="preserve">
+    <value>Ширина етикетки</value>
+  </data>
+  <data name="Configuration_View_Label_LabelUnits" xml:space="preserve">
+    <value>Одиниці етикетки</value>
+  </data>
+  <data name="Configuration_View_Label_HostAddress" xml:space="preserve">
+    <value>Адреса хоста</value>
+  </data>
+  <data name="Configuration_View_Label_Name" xml:space="preserve">
+    <value>Ім'я</value>
+  </data>
+  <data name="Configuration_View_Label_TcpPort" xml:space="preserve">
+    <value>Порт TCP</value>
+  </data>
+  <data name="Filters_None" xml:space="preserve">
+    <value>Без фільтрів</value>
+  </data>
+  <data name="HostAddress_Any" xml:space="preserve">
+    <value>Будь-який</value>
+  </data>
+  <data name="HostAddress_Loopback" xml:space="preserve">
+    <value>Петля</value>
+  </data>
+  <data name="HostAddress_Unknown" xml:space="preserve">
+    <value>Невідомий</value>
+  </data>
+  <data name="Edit_Filters_Title" xml:space="preserve">
+    <value>Редагувати фільтри</value>
+  </data>
+  <data name="Edit_Filters_Label" xml:space="preserve">
+    <value>Фільтри обробляються в тому порядку, в якому вони з’являються, зверху вниз.</value>
+  </data>
+  <data name="Edit_Filters_Button_Ok_Tooltip" xml:space="preserve">
+    <value>Збережіть зміни та закрийте діалогове вікно.</value>
+  </data>
+  <data name="Edit_Filters_Button_Cancel_Tooltip" xml:space="preserve">
+    <value>Скасуйте зміни та закрийте діалогове вікно.</value>
+  </data>
+  <data name="Edit_Filters_Label_Find" xml:space="preserve">
+    <value>знайти</value>
+  </data>
+  <data name="Edit_Filters_Label_Replace" xml:space="preserve">
+    <value>Замінити</value>
+  </data>
+  <data name="Edit_Filters_Button_Down_Tooltip" xml:space="preserve">
+    <value>Перемістіть цей фільтр вниз.</value>
+  </data>
+  <data name="Edit_Filters_Button_Up_Tooltip" xml:space="preserve">
+    <value>Перемістіть цей фільтр вгору.</value>
+  </data>
+  <data name="Edit_Filters_Button_Delete_Tooltip" xml:space="preserve">
+    <value>Видаліть цей фільтр.</value>
+  </data>
+  <data name="Edit_Filters_Button_Add_Tooltip" xml:space="preserve">
+    <value>Додайте новий фільтр перед цим.</value>
+  </data>
+  <data name="Edit_Filters_CheckBox_RegEx_Text" xml:space="preserve">
+    <value>Розглядати Знайти як регулярний вираз.</value>
+  </data>
 </root>
