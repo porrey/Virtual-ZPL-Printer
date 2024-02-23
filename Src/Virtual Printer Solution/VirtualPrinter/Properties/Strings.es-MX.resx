@@ -118,463 +118,462 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About_Title" xml:space="preserve">
-    <value>About</value>
+    <value>Acerca de</value>
   </data>
   <data name="About_Version" xml:space="preserve">
-    <value>Version</value>
+    <value>Versión</value>
   </data>
   <data name="By" xml:space="preserve">
-    <value>by</value>
+    <value>por</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancelar</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Cerca</value>
   </data>
   <data name="Close_Tooltip" xml:space="preserve">
-    <value>Close the window.</value>
+    <value>Cerrar la ventana.</value>
   </data>
   <data name="Configuration_Browse_Button_Tooltip" xml:space="preserve">
-    <value>Browse for a folder to specify where label images are cached.</value>
+    <value>Explore una carpeta para especificar dónde se almacenan en caché las imágenes de la etiqueta.</value>
   </data>
   <data name="Configuration_Filters_Button_Tooltip" xml:space="preserve">
-    <value>Click to edit ZPL filters.</value>
+    <value>Haga clic para editar filtros ZPL.</value>
   </data>
   <data name="Configuration_View_Button_Add_Text" xml:space="preserve">
-    <value>Add</value>
+    <value>Agregar</value>
   </data>
   <data name="Configuration_View_Button_Add_Tooltip" xml:space="preserve">
-    <value>Add a new printer configuration.</value>
+    <value>Agregue una nueva configuración de la impresora.</value>
   </data>
   <data name="Configuration_View_Button_Clone_Text" xml:space="preserve">
-    <value>Clone</value>
+    <value>Clon</value>
   </data>
   <data name="Configuration_View_Button_Clone_Tooltip" xml:space="preserve">
-    <value>Clone the selected printer configuration.</value>
+    <value>Clon la configuración de la impresora seleccionada.</value>
   </data>
   <data name="Configuration_View_Button_Configure_Text" xml:space="preserve">
-    <value>Configure</value>
+    <value>Configurar</value>
   </data>
   <data name="Configuration_View_Button_Configure_Tooltip" xml:space="preserve">
-    <value>Click to edit the physical printer.</value>
+    <value>Haga clic para editar la impresora física.</value>
   </data>
   <data name="Configuration_View_Button_Delete_Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Borrar</value>
   </data>
   <data name="Configuration_View_Button_Delete_Tooltip" xml:space="preserve">
-    <value>Delete the selected printer configuration.</value>
+    <value>Elimine la configuración de la impresora seleccionada.</value>
   </data>
   <data name="Configuration_View_Button_Save_Text" xml:space="preserve">
-    <value>Save</value>
+    <value>Ahorrar</value>
   </data>
   <data name="Configuration_View_Button_Save_Tooltip" xml:space="preserve">
-    <value>Save changes to the current printer configuration.</value>
+    <value>Guarde los cambios en la configuración de la impresora actual.</value>
   </data>
   <data name="Configuration_View_Button_Undo_Text" xml:space="preserve">
-    <value>Undo</value>
+    <value>Deshacer</value>
   </data>
   <data name="Configuration_View_Button_Undo_Tooltip" xml:space="preserve">
-    <value>Undo the current changes.</value>
+    <value>Deshacer los cambios actuales.</value>
   </data>
   <data name="Configuration_View_Label_HostAddress" xml:space="preserve">
-    <value>Host Address</value>
+    <value>Dirección del servidor</value>
   </data>
   <data name="Configuration_View_Label_LabelCache" xml:space="preserve">
-    <value>Label Cache</value>
+    <value>Caché de la etiqueta</value>
   </data>
   <data name="Configuration_View_Label_LabelHeight" xml:space="preserve">
-    <value>Label Height</value>
+    <value>Altura de la etiqueta</value>
   </data>
   <data name="Configuration_View_Label_LabelUnits" xml:space="preserve">
-    <value>Label Units</value>
+    <value>Unidades de etiqueta</value>
   </data>
   <data name="Configuration_View_Label_LabelWidth" xml:space="preserve">
-    <value>Label Width</value>
+    <value>Ancho de la etiqueta</value>
   </data>
   <data name="Configuration_View_Label_Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Nombre</value>
   </data>
   <data name="Configuration_View_Label_PhysicalPrinter" xml:space="preserve">
-    <value>Physical Printer</value>
+    <value>Impresora física</value>
   </data>
   <data name="Configuration_View_Label_TcpPort" xml:space="preserve">
-    <value>TCP Port</value>
+    <value>Puerto TCP</value>
   </data>
   <data name="Configuration_View_Title" xml:space="preserve">
-    <value>Edit Printer Configuration</value>
+    <value>Editar configuración de la impresora</value>
   </data>
   <data name="Configure_Printer_Button_Save_Tooltip" xml:space="preserve">
-    <value>Save changes to the current printer.</value>
+    <value>Guarde los cambios en la impresora actual.</value>
   </data>
   <data name="Configure_Printer_Title" xml:space="preserve">
-    <value>Configure Printer</value>
+    <value>Configurar impresora</value>
   </data>
   <data name="Connectivity_Test_Failed" xml:space="preserve">
-    <value>{0}Test completed with one or more failures</value>
+    <value>{0} prueba completada con una o más fallas</value>
   </data>
   <data name="Connectivity_Test_Label_Text" xml:space="preserve">
-    <value>TEST</value>
+    <value>PRUEBA</value>
   </data>
   <data name="Connectivity_Test_Message_Dns" xml:space="preserve">
-    <value>{0}Getting IP address for host name '{1}</value>
+    <value>{0} Obtener la dirección IP para el nombre del host '{1}</value>
   </data>
   <data name="Connectivity_Test_Message_Dns_Failed" xml:space="preserve">
-    <value>{0}DNS lookup failed [FAILED]</value>
+    <value>{0} Búsqueda DNS fallida [fallida]</value>
   </data>
   <data name="Connectivity_Test_Message_Host" xml:space="preserve">
-    <value>{0}Found {1} address for host name [OK]</value>
+    <value>{0} encontrado {1} dirección para el nombre del host [OK]</value>
   </data>
   <data name="Connectivity_Test_Message_Ip" xml:space="preserve">
-    <value>{0}IP address '{1}' was found for host name '{2}' [OK]</value>
+    <value>{0} dirección IP '{1}' se encontró para el nombre de host '{2}' [OK]</value>
   </data>
   <data name="Connectivity_Test_Message_PortTest" xml:space="preserve">
-    <value>{0}Checking port '{1}' connectivity for IP address for host name '{2}'</value>
+    <value>{0} Puerto de corriente '{1}' Conectividad para la dirección IP para el nombre de host '{2}'</value>
   </data>
   <data name="Connectivity_Test_Message_PortTest_Failed" xml:space="preserve">
-    <value>{0}Connection to port '{1}' was unsuccessful [FAILED]</value>
+    <value>{0} conexión al puerto '{1}' no tuvo éxito [fallido]</value>
   </data>
   <data name="Connectivity_Test_Message_PortTest_Success" xml:space="preserve">
-    <value>{0}Connection to port '{1}' was successful [OK]</value>
+    <value>{0} conexión al puerto '{1}' fue exitoso [OK]</value>
   </data>
   <data name="Connectivity_Test_Message_Start" xml:space="preserve">
-    <value>Testing connectivity to '{0}'</value>
+    <value>Prueba de conectividad a '{0}'</value>
   </data>
   <data name="Connectivity_Test_Message_WebMethod_Failed" xml:space="preserve">
-    <value>{0}{1}/{2} API method connection was unsuccessful [FAILED]</value>
+    <value>{0} {1}/{2} La conexión del método API no tuvo éxito [fallido]</value>
   </data>
   <data name="Connectivity_Test_Message_WebMethodTest" xml:space="preserve">
-    <value>{0}Checking {1}/{2} API method connection</value>
+    <value>{0} verificación {1}/{2} Conexión del método API</value>
   </data>
   <data name="Connectivity_Test_Message_WebMethodTest_Success" xml:space="preserve">
-    <value>{0}{1}/{2} API method connection was successful [OK]</value>
+    <value>{0} {1}/{2} La conexión del método API fue exitosa [OK]</value>
   </data>
   <data name="Connectivity_Test_Success" xml:space="preserve">
-    <value>{0}Test completed successfully</value>
+    <value>{0} prueba completada con éxito</value>
   </data>
   <data name="Connectivity_Test_Title" xml:space="preserve">
-    <value>Test Labelary Connection</value>
+    <value>Conexión de la etiqueta de prueba</value>
   </data>
   <data name="Connectivity_TestButton_Start_Tooltip" xml:space="preserve">
-    <value>Start the connection test.</value>
+    <value>Inicie la prueba de conexión.</value>
   </data>
   <data name="dpmm" xml:space="preserve">
     <value>dpmm</value>
-    <comment>Dots Per Milimeter</comment>
   </data>
   <data name="Edit_Filters_Button_Add_Tooltip" xml:space="preserve">
-    <value>Add a new filter before this one.</value>
+    <value>Agregue un nuevo filtro antes de este.</value>
   </data>
   <data name="Edit_Filters_Button_Cancel_Tooltip" xml:space="preserve">
-    <value>Cancel the changes and close the dialog.</value>
+    <value>Cancele los cambios y cierre el diálogo.</value>
   </data>
   <data name="Edit_Filters_Button_Delete_Tooltip" xml:space="preserve">
-    <value>Delete the this filter.</value>
+    <value>Elimine este filtro.</value>
   </data>
   <data name="Edit_Filters_Button_Down_Tooltip" xml:space="preserve">
-    <value>Move this filter down.</value>
+    <value>Mueva este filtro hacia abajo.</value>
   </data>
   <data name="Edit_Filters_Button_Ok_Tooltip" xml:space="preserve">
-    <value>Save the changes and close the dialog.</value>
+    <value>Guarde los cambios y cierre el diálogo.</value>
   </data>
   <data name="Edit_Filters_Button_Up_Tooltip" xml:space="preserve">
-    <value>Move this filter up.</value>
+    <value>Mueva este filtro hacia arriba.</value>
   </data>
   <data name="Edit_Filters_CheckBox_RegEx_Text" xml:space="preserve">
-    <value>Treat Find as Regular Expression.</value>
+    <value>Tratar el hallazgo como expresión regular.</value>
   </data>
   <data name="Edit_Filters_Label" xml:space="preserve">
-    <value>The filters are processed in the order they appear, from top to bottom.</value>
+    <value>Los filtros se procesan en el orden en que aparecen, de arriba a abajo.</value>
   </data>
   <data name="Edit_Filters_Label_Find" xml:space="preserve">
-    <value>Find</value>
+    <value>Encontrar</value>
   </data>
   <data name="Edit_Filters_Label_Replace" xml:space="preserve">
-    <value>Replace</value>
+    <value>Reemplazar</value>
   </data>
   <data name="Edit_Filters_Title" xml:space="preserve">
-    <value>Edit Filters</value>
+    <value>Editar filtros</value>
   </data>
   <data name="Edit_Printer_Button_Cancel_Tooltip" xml:space="preserve">
-    <value>Cancel the changes and close the dialog.</value>
+    <value>Cancele los cambios y cierre el diálogo.</value>
   </data>
   <data name="Edit_Printer_Checkbox_Text" xml:space="preserve">
-    <value>Enable Send to Printer</value>
+    <value>Habilitar enviar a la impresora</value>
   </data>
   <data name="Edit_Printer_Group_Text_Horizontal" xml:space="preserve">
-    <value>Horizontal Alignment</value>
+    <value>Alineación horizontal</value>
   </data>
   <data name="Edit_Printer_Group_Text_Vertical" xml:space="preserve">
-    <value>Vertical Alignment</value>
+    <value>Alineamiento vertical</value>
   </data>
   <data name="Edit_Printer_Label_BottomMargin" xml:space="preserve">
-    <value>Bottom Margin</value>
+    <value>Margen inferior</value>
   </data>
   <data name="Edit_Printer_Label_LeftMargin" xml:space="preserve">
-    <value>Left Margin</value>
+    <value>Margen izquierdo</value>
   </data>
   <data name="Edit_Printer_Label_RightMargin" xml:space="preserve">
-    <value>Right Margin</value>
+    <value>Margen derecho</value>
   </data>
   <data name="Edit_Printer_Label_SelectPrinter" xml:space="preserve">
-    <value>Select Printer</value>
+    <value>Seleccionar impresora</value>
   </data>
   <data name="Edit_Printer_Label_TopMargin" xml:space="preserve">
-    <value>Top Margin</value>
+    <value>Margen superior</value>
   </data>
   <data name="Edit_Printer_RadioButton_Bottom" xml:space="preserve">
-    <value>Bottom</value>
+    <value>Abajo</value>
   </data>
   <data name="Edit_Printer_RadioButton_Center" xml:space="preserve">
-    <value>Center</value>
+    <value>Centro</value>
   </data>
   <data name="Edit_Printer_RadioButton_Left" xml:space="preserve">
-    <value>Left</value>
+    <value>Izquierda</value>
   </data>
   <data name="Edit_Printer_RadioButton_Middle" xml:space="preserve">
-    <value>Middle</value>
+    <value>Medio</value>
   </data>
   <data name="Edit_Printer_RadioButton_Right" xml:space="preserve">
-    <value>Right</value>
+    <value>Bien</value>
   </data>
   <data name="Edit_Printer_RadioButton_Top" xml:space="preserve">
-    <value>Top</value>
+    <value>Arriba</value>
   </data>
   <data name="Edit_Printer_TextLabel" xml:space="preserve">
-    <value>When enabled, the image retrieved for the label is sent to this printer.</value>
+    <value>Cuando está habilitado, la imagen recuperada para la etiqueta se envía a esta impresora.</value>
   </data>
   <data name="Edit_Printer_TextLabel_BottomMargin" xml:space="preserve">
-    <value>Bottom Margin</value>
+    <value>Margen inferior</value>
   </data>
   <data name="Edit_Printer_TextLabel_TopMargin" xml:space="preserve">
-    <value>Top Margin</value>
+    <value>Margen superior</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="Filters_None" xml:space="preserve">
-    <value>No Filters</value>
+    <value>Sin filtros</value>
   </data>
   <data name="Font_Source_Found" xml:space="preserve">
-    <value>Found</value>
+    <value>Encontró</value>
   </data>
   <data name="Font_Source_Missing" xml:space="preserve">
-    <value>Missing</value>
+    <value>Desaparecido</value>
   </data>
   <data name="FontConversion_Error" xml:space="preserve">
-    <value>The font does not support sub-setting characters.</value>
+    <value>La fuente no es compatible con los personajes sub-establecidos.</value>
   </data>
   <data name="Global_Settings_Button_Cancel_Toolip" xml:space="preserve">
-    <value>Cancel the changes and close the dialog.</value>
+    <value>Cancele los cambios y cierre el diálogo.</value>
   </data>
   <data name="Global_Settings_Button_Ok_Toolip" xml:space="preserve">
-    <value>Save the changes and close the dialog.</value>
+    <value>Guarde los cambios y cierre el diálogo.</value>
   </data>
   <data name="Global_Settings_Group_Header_Labelary" xml:space="preserve">
-    <value>Labelary</value>
+    <value>Etiqueta</value>
   </data>
   <data name="Global_Settings_Group_Header_TCP" xml:space="preserve">
-    <value>TCP Settings</value>
+    <value>Configuración de TCP</value>
   </data>
   <data name="Global_Settings_Title" xml:space="preserve">
-    <value>Global Settings</value>
+    <value>Ajustes globales</value>
   </data>
   <data name="HostAddress_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>Cualquier</value>
   </data>
   <data name="HostAddress_Loopback" xml:space="preserve">
-    <value>Loopback</value>
+    <value>Bucleza</value>
   </data>
   <data name="HostAddress_Unknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>Desconocido</value>
   </data>
   <data name="Main_Button_Delete_Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Borrar</value>
   </data>
   <data name="Main_Button_Delete_Tooltip" xml:space="preserve">
-    <value>Delete the selected label.</value>
+    <value>Elimine la etiqueta seleccionada.</value>
   </data>
   <data name="Main_Button_Edit_Text" xml:space="preserve">
-    <value>Edit</value>
+    <value>Editar</value>
   </data>
   <data name="Main_Button_Edit_Toolip" xml:space="preserve">
-    <value>Edit printer configurations.</value>
+    <value>Editar configuraciones de impresora.</value>
   </data>
   <data name="Main_Button_Start_Text" xml:space="preserve">
-    <value>Start</value>
+    <value>Comenzar</value>
   </data>
   <data name="Main_Button_Start_Tooltip" xml:space="preserve">
-    <value>Start the virtual printer.</value>
+    <value>Inicie la impresora virtual.</value>
   </data>
   <data name="Main_Button_Stop_Text" xml:space="preserve">
-    <value>Stop</value>
+    <value>Detener</value>
   </data>
   <data name="Main_Button_Stop_Tooltip" xml:space="preserve">
-    <value>Stop the virtual printer from accepting label request.</value>
+    <value>Detente que la impresora virtual acepte la solicitud de etiqueta.</value>
   </data>
   <data name="Main_Button_Test_Text" xml:space="preserve">
-    <value>Test</value>
+    <value>Prueba</value>
   </data>
   <data name="Main_Button_Test_Tooltip" xml:space="preserve">
-    <value>Send a test label.</value>
+    <value>Envíe una etiqueta de prueba.</value>
   </data>
   <data name="Main_Button_View_Text" xml:space="preserve">
-    <value>View</value>
+    <value>Vista</value>
   </data>
   <data name="Main_Button_View_Tooltip" xml:space="preserve">
-    <value>View the label image in an external viewer.</value>
+    <value>Vea la imagen de la etiqueta en un visor externo.</value>
   </data>
   <data name="Main_ButtonClear_Text" xml:space="preserve">
-    <value>Clear</value>
+    <value>Claro</value>
   </data>
   <data name="Main_ButtonClear_Tooltip" xml:space="preserve">
-    <value>Clear all labels.</value>
+    <value>Borrar todas las etiquetas.</value>
   </data>
   <data name="Main_Checkbox_AutoStart" xml:space="preserve">
-    <value>Auto-Start</value>
+    <value>Autoencendido</value>
   </data>
   <data name="Main_Menu_Connection" xml:space="preserve">
-    <value>_Connection</value>
+    <value>Conexión</value>
   </data>
   <data name="Main_Menu_Connection_Test_Labelary" xml:space="preserve">
-    <value>Test Labelary</value>
+    <value>Etiqueta de prueba</value>
   </data>
   <data name="Main_Menu_Options" xml:space="preserve">
-    <value>_Options</value>
+    <value>Opción</value>
   </data>
   <data name="Main_Menu_Options_About" xml:space="preserve">
-    <value>About</value>
+    <value>Acerca de</value>
   </data>
   <data name="Main_Menu_Options_Global_Settings" xml:space="preserve">
-    <value>Global Settings</value>
+    <value>Ajustes globales</value>
   </data>
   <data name="Main_Menu_Printer" xml:space="preserve">
-    <value>_Printer</value>
+    <value>Impresora</value>
   </data>
   <data name="Main_Menu_Printer_Clear" xml:space="preserve">
-    <value>Clear</value>
+    <value>Claro</value>
   </data>
   <data name="Main_Menu_Printer_Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Borrar</value>
   </data>
   <data name="Main_Menu_Printer_Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Editar</value>
   </data>
   <data name="Main_Menu_Printer_FontManager" xml:space="preserve">
-    <value>Font Manager</value>
+    <value>Gerente de fuente</value>
   </data>
   <data name="Main_Menu_Printer_Start" xml:space="preserve">
-    <value>Start</value>
+    <value>Comenzar</value>
   </data>
   <data name="Main_Menu_Printer_Stop" xml:space="preserve">
-    <value>Stop</value>
+    <value>Detener</value>
   </data>
   <data name="Main_Menu_Printer_Test" xml:space="preserve">
-    <value>Test</value>
+    <value>Prueba</value>
   </data>
   <data name="Main_Menu_Printer_View" xml:space="preserve">
-    <value>View</value>
+    <value>Vista</value>
   </data>
   <data name="Main_Status_Idle" xml:space="preserve">
-    <value>Idle</value>
+    <value>Inactivo</value>
   </data>
   <data name="Main_Status_Label" xml:space="preserve">
-    <value>label</value>
+    <value>etiqueta</value>
   </data>
   <data name="Main_Status_Labels" xml:space="preserve">
-    <value>labels</value>
+    <value>etiquetas</value>
   </data>
   <data name="Main_Status_Listening" xml:space="preserve">
-    <value>Listening</value>
+    <value>Escuchando</value>
   </data>
   <data name="Main_Status_LoadingLabels" xml:space="preserve">
-    <value>Loading cached labels...</value>
+    <value>Cargando etiquetas en caché ...</value>
   </data>
   <data name="Main_Status_Of" xml:space="preserve">
-    <value>of</value>
+    <value>de</value>
   </data>
   <data name="Main_Status_Ready" xml:space="preserve">
-    <value>Ready</value>
+    <value>Listo</value>
   </data>
   <data name="Main_Status_ViewingLabel" xml:space="preserve">
-    <value>Viewing label</value>
+    <value>Visualización de la etiqueta</value>
   </data>
   <data name="Main_TextBlock_NoCachedLabels" xml:space="preserve">
-    <value>no cached labels</value>
+    <value>No hay etiquetas en caché</value>
   </data>
   <data name="Main_TextBlock_SelectConfiguration" xml:space="preserve">
-    <value>Active Printer Configuration</value>
+    <value>Configuración de la impresora activa</value>
   </data>
   <data name="Main_Title" xml:space="preserve">
-    <value>Virtual ZPL Printer</value>
+    <value>Impresora virtual ZPL</value>
   </data>
   <data name="MessageBox_DeletePrinterConfiguration_Message" xml:space="preserve">
-    <value>Are you sure you want to delete printer configuration '{0}'?</value>
+    <value>¿Estás seguro de que quieres eliminar la configuración de la impresora '{0}'?</value>
   </data>
   <data name="MessageBox_DeletePrinterConfiguration_Title" xml:space="preserve">
-    <value>Delete Printer Configuration</value>
+    <value>Eliminar la configuración de la impresora</value>
   </data>
   <data name="MessageBox_DeletePrinterConfigurationFailed_Message" xml:space="preserve">
-    <value>Delete failed.</value>
+    <value>Eliminar falló.</value>
   </data>
   <data name="MessageBox_DeletePrinterConfigurationFailed_Title" xml:space="preserve">
-    <value>Delete Printer Configuration</value>
+    <value>Eliminar la configuración de la impresora</value>
   </data>
   <data name="MessageBox_Exception_Title" xml:space="preserve">
-    <value>Unknown Exception</value>
+    <value>Excepción desconocida</value>
   </data>
   <data name="MessageBox_FontConversion_Exception_Title" xml:space="preserve">
-    <value>Error Converting Font</value>
+    <value>Error de conversión de fuente</value>
   </data>
   <data name="New_Printer_Configuratio_Name" xml:space="preserve">
-    <value>New Printer Configuration</value>
+    <value>Nueva configuración de impresora</value>
   </data>
   <data name="Ok" xml:space="preserve">
-    <value>Ok</value>
+    <value>De acuerdo</value>
   </data>
   <data name="Printer_Configuration_Disabled" xml:space="preserve">
-    <value>Disabled</value>
+    <value>Desactivado</value>
   </data>
   <data name="Printer_Configuration_Enabled" xml:space="preserve">
-    <value>Enabled</value>
+    <value>Activado</value>
   </data>
   <data name="Printer_Configuration_Host" xml:space="preserve">
-    <value>Host</value>
+    <value>Anfitrión</value>
   </data>
   <data name="Printer_Configuration_Id" xml:space="preserve">
-    <value>ID</value>
+    <value>IDENTIFICACIÓN</value>
   </data>
   <data name="Printer_Configuration_Printing" xml:space="preserve">
-    <value>Printing</value>
+    <value>Impresión</value>
   </data>
   <data name="Printer_Configuration_Resolution" xml:space="preserve">
-    <value>Resolution</value>
+    <value>Resolución</value>
   </data>
   <data name="Printer_Configuration_Rotation" xml:space="preserve">
-    <value>Rotation</value>
+    <value>Rotación</value>
   </data>
   <data name="Printer_Configuration_Size" xml:space="preserve">
-    <value>Size</value>
+    <value>Tamaño</value>
   </data>
   <data name="Send_Test_Label_Button_Text" xml:space="preserve">
-    <value>Send</value>
+    <value>Enviar</value>
   </data>
   <data name="Send_Test_Label_Button_Tooltip" xml:space="preserve">
-    <value>Send the selected test label to the virtual printer.</value>
+    <value>Envíe la etiqueta de prueba seleccionada a la impresora virtual.</value>
   </data>
   <data name="Send_Test_Label_Select" xml:space="preserve">
-    <value>Select Test Label</value>
+    <value>Seleccionar etiqueta de prueba</value>
   </data>
   <data name="Send_Test_Label_Title" xml:space="preserve">
-    <value>Send Test Label</value>
+    <value>Enviar etiqueta de prueba</value>
   </data>
   <data name="Start" xml:space="preserve">
-    <value>Start</value>
+    <value>Comenzar</value>
   </data>
   <data name="ZPL_Viewer_Title" xml:space="preserve">
-    <value>ZPL Viewer</value>
+    <value>Visor ZPL</value>
   </data>
   <data name="ZPL_Warnings" xml:space="preserve">
-    <value>ZPL Warnings</value>
+    <value>Advertencias de ZPL</value>
   </data>
 </root>

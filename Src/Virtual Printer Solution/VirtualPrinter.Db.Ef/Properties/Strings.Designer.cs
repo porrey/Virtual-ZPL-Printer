@@ -59,14 +59,5 @@ namespace VirtualPrinter.Db.Ef.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rotation.
-        /// </summary>
-        internal static string Rotation {
-            get {
-                return ResourceManager.GetString("Rotation", resourceCulture);
-            }
-        }
     }
 }

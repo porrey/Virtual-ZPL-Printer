@@ -123,206 +123,104 @@
   <data name="About_Version" xml:space="preserve">
     <value>Версія</value>
   </data>
+  <data name="By" xml:space="preserve">
+    <value>за</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Скасувати</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Закрити</value>
   </data>
-  <data name="Main_Title" xml:space="preserve">
-    <value>Віртуальний принтер ZPL</value>
+  <data name="Close_Tooltip" xml:space="preserve">
+    <value>Закрити вікно.</value>
   </data>
-  <data name="Ok" xml:space="preserve">
-    <value>В порядку</value>
+  <data name="Configuration_Browse_Button_Tooltip" xml:space="preserve">
+    <value>Перегляньте папку, щоб указати, де кешуються зображення міток.</value>
   </data>
-  <data name="Main_ButtonClear_Text" xml:space="preserve">
-    <value>ясно</value>
+  <data name="Configuration_Filters_Button_Tooltip" xml:space="preserve">
+    <value>Натисніть, щоб редагувати фільтри ZPL.</value>
   </data>
-  <data name="Main_ButtonClear_Tooltip" xml:space="preserve">
-    <value>Очистити всі мітки.</value>
+  <data name="Configuration_View_Button_Add_Text" xml:space="preserve">
+    <value>додати</value>
   </data>
-  <data name="Main_Button_Delete_Text" xml:space="preserve">
+  <data name="Configuration_View_Button_Add_Tooltip" xml:space="preserve">
+    <value>Додайте нову конфігурацію принтера.</value>
+  </data>
+  <data name="Configuration_View_Button_Clone_Text" xml:space="preserve">
+    <value>Клон</value>
+  </data>
+  <data name="Configuration_View_Button_Clone_Tooltip" xml:space="preserve">
+    <value>Скопіюйте вибрану конфігурацію принтера.</value>
+  </data>
+  <data name="Configuration_View_Button_Configure_Text" xml:space="preserve">
+    <value>Налаштувати</value>
+  </data>
+  <data name="Configuration_View_Button_Configure_Tooltip" xml:space="preserve">
+    <value>Натисніть, щоб редагувати фізичний принтер.</value>
+  </data>
+  <data name="Configuration_View_Button_Delete_Text" xml:space="preserve">
     <value>Видалити</value>
   </data>
-  <data name="Main_Button_Delete_Tooltip" xml:space="preserve">
-    <value>Видалити вибрану мітку.</value>
+  <data name="Configuration_View_Button_Delete_Tooltip" xml:space="preserve">
+    <value>Видалити вибрану конфігурацію принтера.</value>
   </data>
-  <data name="Main_Button_Edit_Toolip" xml:space="preserve">
-    <value>Редагувати конфігурації принтера.</value>
+  <data name="Configuration_View_Button_Save_Text" xml:space="preserve">
+    <value>зберегти</value>
   </data>
-  <data name="Main_Button_Edit_Text" xml:space="preserve">
-    <value>Редагувати</value>
+  <data name="Configuration_View_Button_Save_Tooltip" xml:space="preserve">
+    <value>Збережіть зміни в поточній конфігурації принтера.</value>
   </data>
-  <data name="Main_Button_Start_Tooltip" xml:space="preserve">
-    <value>Запустіть віртуальний принтер.</value>
+  <data name="Configuration_View_Button_Undo_Text" xml:space="preserve">
+    <value>Скасувати</value>
   </data>
-  <data name="Main_Button_Start_Text" xml:space="preserve">
-    <value>старт</value>
+  <data name="Configuration_View_Button_Undo_Tooltip" xml:space="preserve">
+    <value>Скасувати поточні зміни.</value>
   </data>
-  <data name="Main_Button_Stop_Tooltip" xml:space="preserve">
-    <value>Зупиніть віртуальний принтер приймати запит на етикетку.</value>
+  <data name="Configuration_View_Label_HostAddress" xml:space="preserve">
+    <value>Адреса хоста</value>
   </data>
-  <data name="Main_Button_Stop_Text" xml:space="preserve">
-    <value>СТІЙ</value>
+  <data name="Configuration_View_Label_LabelCache" xml:space="preserve">
+    <value>Кеш міток</value>
   </data>
-  <data name="Main_Button_Test_Text" xml:space="preserve">
-    <value>Тест</value>
+  <data name="Configuration_View_Label_LabelHeight" xml:space="preserve">
+    <value>Висота етикетки</value>
   </data>
-  <data name="Main_Button_Test_Tooltip" xml:space="preserve">
-    <value>Надішліть пробну етикетку.</value>
+  <data name="Configuration_View_Label_LabelUnits" xml:space="preserve">
+    <value>Одиниці етикетки</value>
   </data>
-  <data name="Main_Button_View_Text" xml:space="preserve">
-    <value>Переглянути</value>
+  <data name="Configuration_View_Label_LabelWidth" xml:space="preserve">
+    <value>Ширина етикетки</value>
   </data>
-  <data name="Main_Button_View_Tooltip" xml:space="preserve">
-    <value>Перегляньте зображення мітки у зовнішньому засобі перегляду.</value>
+  <data name="Configuration_View_Label_Name" xml:space="preserve">
+    <value>Ім'я</value>
   </data>
-  <data name="Main_Checkbox_AutoStart" xml:space="preserve">
-    <value>Авто старт</value>
+  <data name="Configuration_View_Label_PhysicalPrinter" xml:space="preserve">
+    <value>Фізичний принтер</value>
   </data>
-  <data name="Main_Menu_Connection" xml:space="preserve">
-    <value>Підключення</value>
+  <data name="Configuration_View_Label_TcpPort" xml:space="preserve">
+    <value>Порт TCP</value>
   </data>
-  <data name="Main_Menu_Options" xml:space="preserve">
-    <value>Опції</value>
+  <data name="Configuration_View_Title" xml:space="preserve">
+    <value>Редагувати конфігурацію принтера</value>
   </data>
-  <data name="Main_Menu_Printer" xml:space="preserve">
-    <value>Принтер</value>
+  <data name="Configure_Printer_Button_Save_Tooltip" xml:space="preserve">
+    <value>Збережіть зміни поточного принтера.</value>
   </data>
-  <data name="Main_Status_Idle" xml:space="preserve">
-    <value>Бездіяльність</value>
+  <data name="Configure_Printer_Title" xml:space="preserve">
+    <value>Налаштувати принтер</value>
   </data>
-  <data name="Main_Status_Listening" xml:space="preserve">
-    <value>Слухання</value>
+  <data name="Connectivity_Test_Failed" xml:space="preserve">
+    <value>{0}Тестування завершено з однією чи кількома помилками</value>
   </data>
-  <data name="Main_TextBlock_NoCachedLabels" xml:space="preserve">
-    <value>немає кешованих міток</value>
-  </data>
-  <data name="Main_TextBlock_SelectConfiguration" xml:space="preserve">
-    <value>Активна конфігурація принтера</value>
-  </data>
-  <data name="Main_Status_Ready" xml:space="preserve">
-    <value>Готовий</value>
-  </data>
-  <data name="Main_Status_Of" xml:space="preserve">
-    <value>з</value>
-  </data>
-  <data name="Main_Status_ViewingLabel" xml:space="preserve">
-    <value>Перегляд мітки</value>
-  </data>
-  <data name="Main_Status_Label" xml:space="preserve">
-    <value>етикетка</value>
-  </data>
-  <data name="Main_Status_Labels" xml:space="preserve">
-    <value>етикетки</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>Помилка</value>
-  </data>
-  <data name="Main_Status_LoadingLabels" xml:space="preserve">
-    <value>Завантаження кешованих міток...</value>
-  </data>
-  <data name="Printer_Configuration_Host" xml:space="preserve">
-    <value>Хост</value>
-  </data>
-  <data name="Printer_Configuration_Size" xml:space="preserve">
-    <value>Розмір</value>
-  </data>
-  <data name="Printer_Configuration_Id" xml:space="preserve">
-    <value>ID</value>
-  </data>
-  <data name="Printer_Configuration_Resolution" xml:space="preserve">
-    <value>роздільна здатність</value>
-  </data>
-  <data name="Printer_Configuration_Rotation" xml:space="preserve">
-    <value>Обертання</value>
-  </data>
-  <data name="Printer_Configuration_Disabled" xml:space="preserve">
-    <value>Вимкнено</value>
-  </data>
-  <data name="Printer_Configuration_Enabled" xml:space="preserve">
-    <value>Увімкнено</value>
-  </data>
-  <data name="Printer_Configuration_Printing" xml:space="preserve">
-    <value>Друк</value>
-  </data>
-  <data name="Main_Menu_Printer_Stop" xml:space="preserve">
-    <value>СТІЙ</value>
-  </data>
-  <data name="Main_Menu_Printer_Clear" xml:space="preserve">
-    <value>ясно</value>
-  </data>
-  <data name="Main_Menu_Printer_Delete" xml:space="preserve">
-    <value>Видалити</value>
-  </data>
-  <data name="Main_Menu_Printer_Test" xml:space="preserve">
-    <value>Тест</value>
-  </data>
-  <data name="Main_Menu_Printer_View" xml:space="preserve">
-    <value>Переглянути</value>
-  </data>
-  <data name="Main_Menu_Printer_Edit" xml:space="preserve">
-    <value>Редагувати</value>
-  </data>
-  <data name="Main_Menu_Printer_FontManager" xml:space="preserve">
-    <value>Менеджер шрифтів</value>
-  </data>
-  <data name="Main_Menu_Printer_Start" xml:space="preserve">
-    <value>старт</value>
-  </data>
-  <data name="Main_Menu_Connection_Test_Labelary" xml:space="preserve">
-    <value>Тест Labelary</value>
-  </data>
-  <data name="Main_Menu_Options_Global_Settings" xml:space="preserve">
-    <value>Глобальні налаштування</value>
-  </data>
-  <data name="Main_Menu_Options_About" xml:space="preserve">
-    <value>про</value>
-  </data>
-  <data name="By" xml:space="preserve">
-    <value>за</value>
-  </data>
-  <data name="dpmm" xml:space="preserve">
-    <value>dpmm</value>
-  </data>
-  <data name="New_Printer_Configuratio_Name" xml:space="preserve">
-    <value>Нова конфігурація принтера</value>
-  </data>
-  <data name="MessageBox_DeletePrinterConfiguration_Message" xml:space="preserve">
-    <value>Ви впевнені, що бажаєте видалити конфігурацію принтера "{0}"?</value>
-  </data>
-  <data name="MessageBox_DeletePrinterConfiguration_Title" xml:space="preserve">
-    <value>Видалити конфігурацію принтера</value>
-  </data>
-  <data name="MessageBox_DeletePrinterConfigurationFailed_Message" xml:space="preserve">
-    <value>Не вдалося видалити.</value>
-  </data>
-  <data name="MessageBox_DeletePrinterConfigurationFailed_Title" xml:space="preserve">
-    <value>Видалити конфігурацію принтера</value>
-  </data>
-  <data name="Font_Source_Found" xml:space="preserve">
-    <value>знайдено</value>
-  </data>
-  <data name="Font_Source_Missing" xml:space="preserve">
-    <value>Відсутня</value>
-  </data>
-  <data name="MessageBox_Exception_Title" xml:space="preserve">
-    <value>Невідомий виняток</value>
-  </data>
-  <data name="MessageBox_FontConversion_Exception_Title" xml:space="preserve">
-    <value>Помилка перетворення шрифту</value>
-  </data>
-  <data name="FontConversion_Error" xml:space="preserve">
-    <value>Шрифт підтримує символи піднабору.</value>
-  </data>
-  <data name="ZPL_Warnings" xml:space="preserve">
-    <value>Попередження ZPL</value>
+  <data name="Connectivity_Test_Label_Text" xml:space="preserve">
+    <value>ТЕСТ</value>
   </data>
   <data name="Connectivity_Test_Message_Dns" xml:space="preserve">
     <value>{0}Отримання IP-адреси для імені хоста '{1}</value>
   </data>
-  <data name="Connectivity_Test_Message_Start" xml:space="preserve">
-    <value>Тестування підключення до "{0}"</value>
+  <data name="Connectivity_Test_Message_Dns_Failed" xml:space="preserve">
+    <value>{0}Помилка пошуку DNS [НЕВІД]</value>
   </data>
   <data name="Connectivity_Test_Message_Host" xml:space="preserve">
     <value>{0}Знайдено {1} адресу для імені хоста [OK]</value>
@@ -339,65 +237,131 @@
   <data name="Connectivity_Test_Message_PortTest_Success" xml:space="preserve">
     <value>{0}Підключення до порту '{1}' було успішним [OK]</value>
   </data>
+  <data name="Connectivity_Test_Message_Start" xml:space="preserve">
+    <value>Тестування підключення до "{0}"</value>
+  </data>
+  <data name="Connectivity_Test_Message_WebMethod_Failed" xml:space="preserve">
+    <value>{0}{1}/{2} Підключення методу API не вдалось [ПОМИЛКА]</value>
+  </data>
   <data name="Connectivity_Test_Message_WebMethodTest" xml:space="preserve">
     <value>{0}Перевірка підключення методу API {1}/{2}</value>
   </data>
   <data name="Connectivity_Test_Message_WebMethodTest_Success" xml:space="preserve">
     <value>{0}{1}/{2} Підключення методу API було успішним [OK]</value>
   </data>
-  <data name="Connectivity_Test_Message_WebMethod_Failed" xml:space="preserve">
-    <value>{0}{1}/{2} Підключення методу API не вдалось [ПОМИЛКА]</value>
-  </data>
-  <data name="Connectivity_Test_Failed" xml:space="preserve">
-    <value>{0}Тестування завершено з однією чи кількома помилками</value>
-  </data>
-  <data name="Connectivity_Test_Label_Text" xml:space="preserve">
-    <value>ТЕСТ</value>
-  </data>
-  <data name="Connectivity_Test_Message_Dns_Failed" xml:space="preserve">
-    <value>{0}Помилка пошуку DNS [НЕВІД]</value>
-  </data>
   <data name="Connectivity_Test_Success" xml:space="preserve">
     <value>{0}Тест успішно завершено</value>
-  </data>
-  <data name="Start" xml:space="preserve">
-    <value>старт</value>
-  </data>
-  <data name="Test_Labelary_Connection_Title" xml:space="preserve">
-    <value>Тест Labelary Connection</value>
-  </data>
-  <data name="Close_Tooltip" xml:space="preserve">
-    <value>Закрити вікно.</value>
-  </data>
-  <data name="Connectivity_TestButton_Start_Tooltip" xml:space="preserve">
-    <value>Почніть перевірку підключення.</value>
   </data>
   <data name="Connectivity_Test_Title" xml:space="preserve">
     <value>Тест Labelary Connection</value>
   </data>
-  <data name="ZPL_Viewer_Title" xml:space="preserve">
-    <value>Переглядач ZPL</value>
+  <data name="Connectivity_TestButton_Start_Tooltip" xml:space="preserve">
+    <value>Почніть перевірку підключення.</value>
   </data>
-  <data name="Send_Test_Label_Title" xml:space="preserve">
-    <value>Надіслати тестову етикетку</value>
+  <data name="dpmm" xml:space="preserve">
+    <value>dpmm</value>
   </data>
-  <data name="Send_Test_Label_Button_Text" xml:space="preserve">
-    <value>Надіслати</value>
+  <data name="Edit_Filters_Button_Add_Tooltip" xml:space="preserve">
+    <value>Додайте новий фільтр перед цим.</value>
   </data>
-  <data name="Send_Test_Label_Button_Tooltip" xml:space="preserve">
-    <value>Надішліть вибрану тестову етикетку на віртуальний принтер.</value>
+  <data name="Edit_Filters_Button_Cancel_Tooltip" xml:space="preserve">
+    <value>Скасуйте зміни та закрийте діалогове вікно.</value>
   </data>
-  <data name="Send_Test_Label_Select" xml:space="preserve">
-    <value>Виберіть Test Label</value>
+  <data name="Edit_Filters_Button_Delete_Tooltip" xml:space="preserve">
+    <value>Видаліть цей фільтр.</value>
   </data>
-  <data name="Global_Settings_Title" xml:space="preserve">
-    <value>Глобальні налаштування</value>
+  <data name="Edit_Filters_Button_Down_Tooltip" xml:space="preserve">
+    <value>Перемістіть цей фільтр вниз.</value>
   </data>
-  <data name="Global_Settings_Group_Header_Labelary" xml:space="preserve">
-    <value>Етикетка</value>
+  <data name="Edit_Filters_Button_Ok_Tooltip" xml:space="preserve">
+    <value>Збережіть зміни та закрийте діалогове вікно.</value>
   </data>
-  <data name="Global_Settings_Group_Header_TCP" xml:space="preserve">
-    <value>Налаштування TCP</value>
+  <data name="Edit_Filters_Button_Up_Tooltip" xml:space="preserve">
+    <value>Перемістіть цей фільтр вгору.</value>
+  </data>
+  <data name="Edit_Filters_CheckBox_RegEx_Text" xml:space="preserve">
+    <value>Розглядати Знайти як регулярний вираз.</value>
+  </data>
+  <data name="Edit_Filters_Label" xml:space="preserve">
+    <value>Фільтри обробляються в тому порядку, в якому вони з’являються, зверху вниз.</value>
+  </data>
+  <data name="Edit_Filters_Label_Find" xml:space="preserve">
+    <value>знайти</value>
+  </data>
+  <data name="Edit_Filters_Label_Replace" xml:space="preserve">
+    <value>Замінити</value>
+  </data>
+  <data name="Edit_Filters_Title" xml:space="preserve">
+    <value>Редагувати фільтри</value>
+  </data>
+  <data name="Edit_Printer_Button_Cancel_Tooltip" xml:space="preserve">
+    <value>Скасуйте зміни та закрийте діалогове вікно.</value>
+  </data>
+  <data name="Edit_Printer_Checkbox_Text" xml:space="preserve">
+    <value>Увімкнути відправити на принтер</value>
+  </data>
+  <data name="Edit_Printer_Group_Text_Horizontal" xml:space="preserve">
+    <value>Горизонтальне вирівнювання</value>
+  </data>
+  <data name="Edit_Printer_Group_Text_Vertical" xml:space="preserve">
+    <value>Вертикальне вирівнювання</value>
+  </data>
+  <data name="Edit_Printer_Label_BottomMargin" xml:space="preserve">
+    <value>Нижня маржа</value>
+  </data>
+  <data name="Edit_Printer_Label_LeftMargin" xml:space="preserve">
+    <value>Ліва маржа</value>
+  </data>
+  <data name="Edit_Printer_Label_RightMargin" xml:space="preserve">
+    <value>Правий запас</value>
+  </data>
+  <data name="Edit_Printer_Label_SelectPrinter" xml:space="preserve">
+    <value>Виберіть принтер</value>
+  </data>
+  <data name="Edit_Printer_Label_TopMargin" xml:space="preserve">
+    <value>Верхній запас</value>
+  </data>
+  <data name="Edit_Printer_RadioButton_Bottom" xml:space="preserve">
+    <value>Дно</value>
+  </data>
+  <data name="Edit_Printer_RadioButton_Center" xml:space="preserve">
+    <value>Центр</value>
+  </data>
+  <data name="Edit_Printer_RadioButton_Left" xml:space="preserve">
+    <value>Лівий</value>
+  </data>
+  <data name="Edit_Printer_RadioButton_Middle" xml:space="preserve">
+    <value>Середина</value>
+  </data>
+  <data name="Edit_Printer_RadioButton_Right" xml:space="preserve">
+    <value>Право</value>
+  </data>
+  <data name="Edit_Printer_RadioButton_Top" xml:space="preserve">
+    <value>Топ</value>
+  </data>
+  <data name="Edit_Printer_TextLabel" xml:space="preserve">
+    <value>Якщо ввімкнено, зображення, отримане для мітки, надсилається на цей принтер.</value>
+  </data>
+  <data name="Edit_Printer_TextLabel_BottomMargin" xml:space="preserve">
+    <value>Нижня маржа</value>
+  </data>
+  <data name="Edit_Printer_TextLabel_TopMargin" xml:space="preserve">
+    <value>Верхній запас</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Помилка</value>
+  </data>
+  <data name="Filters_None" xml:space="preserve">
+    <value>Без фільтрів</value>
+  </data>
+  <data name="Font_Source_Found" xml:space="preserve">
+    <value>знайдено</value>
+  </data>
+  <data name="Font_Source_Missing" xml:space="preserve">
+    <value>Відсутня</value>
+  </data>
+  <data name="FontConversion_Error" xml:space="preserve">
+    <value>Шрифт не підтримує символи піднабору.</value>
   </data>
   <data name="Global_Settings_Button_Cancel_Toolip" xml:space="preserve">
     <value>Скасуйте зміни та закрийте діалогове вікно.</value>
@@ -405,77 +369,14 @@
   <data name="Global_Settings_Button_Ok_Toolip" xml:space="preserve">
     <value>Збережіть зміни та закрийте діалогове вікно.</value>
   </data>
-  <data name="Configuration_View_Title" xml:space="preserve">
-    <value>Редагувати конфігурацію принтера</value>
+  <data name="Global_Settings_Group_Header_Labelary" xml:space="preserve">
+    <value>Етикетка</value>
   </data>
-  <data name="Configuration_View_Button_Clone_Text" xml:space="preserve">
-    <value>Клон</value>
+  <data name="Global_Settings_Group_Header_TCP" xml:space="preserve">
+    <value>Налаштування TCP</value>
   </data>
-  <data name="Configuration_View_Button_Clone_Tooltip" xml:space="preserve">
-    <value>Скопіюйте вибрану конфігурацію принтера.</value>
-  </data>
-  <data name="Configuration_View_Button_Delete_Text" xml:space="preserve">
-    <value>Видалити</value>
-  </data>
-  <data name="Configuration_View_Button_Delete_Tooltip" xml:space="preserve">
-    <value>Видалити вибрану конфігурацію принтера.</value>
-  </data>
-  <data name="Configuration_View_Button_Add_Text" xml:space="preserve">
-    <value>додати</value>
-  </data>
-  <data name="Configuration_View_Button_Add_Tooltip" xml:space="preserve">
-    <value>Додайте нову конфігурацію принтера.</value>
-  </data>
-  <data name="Configuration_View_Button_Save_Text" xml:space="preserve">
-    <value>зберегти</value>
-  </data>
-  <data name="Configuration_View_Button_Save_Tooltip" xml:space="preserve">
-    <value>Збережіть зміни в поточній конфігурації принтера.</value>
-  </data>
-  <data name="Configuration_View_Button_Undo_Text" xml:space="preserve">
-    <value>Скасувати</value>
-  </data>
-  <data name="Configuration_View_Button_Undo_Tooltip" xml:space="preserve">
-    <value>Скасувати поточні зміни.</value>
-  </data>
-  <data name="Configuration_View_Button_Configure_Text" xml:space="preserve">
-    <value>Налаштувати</value>
-  </data>
-  <data name="Configuration_View_Button_Configure_Tooltip" xml:space="preserve">
-    <value>Натисніть, щоб редагувати фізичний принтер.</value>
-  </data>
-  <data name="Configuration_View_Label_PhysicalPrinter" xml:space="preserve">
-    <value>Фізичний принтер</value>
-  </data>
-  <data name="Configuration_Browse_Button_Tooltip" xml:space="preserve">
-    <value>Перегляньте папку, щоб указати, де кешуються зображення міток.</value>
-  </data>
-  <data name="Configuration_Filters_Button_Tooltip" xml:space="preserve">
-    <value>Натисніть, щоб редагувати фільтри ZPL.</value>
-  </data>
-  <data name="Configuration_View_Label_LabelCache" xml:space="preserve">
-    <value>Кеш міток</value>
-  </data>
-  <data name="Configuration_View_Label_LabelHeight" xml:space="preserve">
-    <value>Висота етикетки</value>
-  </data>
-  <data name="Configuration_View_Label_LabelWidth" xml:space="preserve">
-    <value>Ширина етикетки</value>
-  </data>
-  <data name="Configuration_View_Label_LabelUnits" xml:space="preserve">
-    <value>Одиниці етикетки</value>
-  </data>
-  <data name="Configuration_View_Label_HostAddress" xml:space="preserve">
-    <value>Адреса хоста</value>
-  </data>
-  <data name="Configuration_View_Label_Name" xml:space="preserve">
-    <value>Ім'я</value>
-  </data>
-  <data name="Configuration_View_Label_TcpPort" xml:space="preserve">
-    <value>Порт TCP</value>
-  </data>
-  <data name="Filters_None" xml:space="preserve">
-    <value>Без фільтрів</value>
+  <data name="Global_Settings_Title" xml:space="preserve">
+    <value>Глобальні налаштування</value>
   </data>
   <data name="HostAddress_Any" xml:space="preserve">
     <value>Будь-який</value>
@@ -486,37 +387,193 @@
   <data name="HostAddress_Unknown" xml:space="preserve">
     <value>Невідомий</value>
   </data>
-  <data name="Edit_Filters_Title" xml:space="preserve">
-    <value>Редагувати фільтри</value>
+  <data name="Main_Button_Delete_Text" xml:space="preserve">
+    <value>Видалити</value>
   </data>
-  <data name="Edit_Filters_Label" xml:space="preserve">
-    <value>Фільтри обробляються в тому порядку, в якому вони з’являються, зверху вниз.</value>
+  <data name="Main_Button_Delete_Tooltip" xml:space="preserve">
+    <value>Видалити вибрану мітку.</value>
   </data>
-  <data name="Edit_Filters_Button_Ok_Tooltip" xml:space="preserve">
-    <value>Збережіть зміни та закрийте діалогове вікно.</value>
+  <data name="Main_Button_Edit_Text" xml:space="preserve">
+    <value>Редагувати</value>
   </data>
-  <data name="Edit_Filters_Button_Cancel_Tooltip" xml:space="preserve">
-    <value>Скасуйте зміни та закрийте діалогове вікно.</value>
+  <data name="Main_Button_Edit_Toolip" xml:space="preserve">
+    <value>Редагувати конфігурації принтера.</value>
   </data>
-  <data name="Edit_Filters_Label_Find" xml:space="preserve">
-    <value>знайти</value>
+  <data name="Main_Button_Start_Text" xml:space="preserve">
+    <value>Почніть</value>
   </data>
-  <data name="Edit_Filters_Label_Replace" xml:space="preserve">
-    <value>Замінити</value>
+  <data name="Main_Button_Start_Tooltip" xml:space="preserve">
+    <value>Запустіть віртуальний принтер.</value>
   </data>
-  <data name="Edit_Filters_Button_Down_Tooltip" xml:space="preserve">
-    <value>Перемістіть цей фільтр вниз.</value>
+  <data name="Main_Button_Stop_Text" xml:space="preserve">
+    <value>СТІЙ</value>
   </data>
-  <data name="Edit_Filters_Button_Up_Tooltip" xml:space="preserve">
-    <value>Перемістіть цей фільтр вгору.</value>
+  <data name="Main_Button_Stop_Tooltip" xml:space="preserve">
+    <value>Зупиніть віртуальний принтер приймати запит на етикетку.</value>
   </data>
-  <data name="Edit_Filters_Button_Delete_Tooltip" xml:space="preserve">
-    <value>Видаліть цей фільтр.</value>
+  <data name="Main_Button_Test_Text" xml:space="preserve">
+    <value>Тест</value>
   </data>
-  <data name="Edit_Filters_Button_Add_Tooltip" xml:space="preserve">
-    <value>Додайте новий фільтр перед цим.</value>
+  <data name="Main_Button_Test_Tooltip" xml:space="preserve">
+    <value>Надішліть пробну етикетку.</value>
   </data>
-  <data name="Edit_Filters_CheckBox_RegEx_Text" xml:space="preserve">
-    <value>Розглядати Знайти як регулярний вираз.</value>
+  <data name="Main_Button_View_Text" xml:space="preserve">
+    <value>Переглянути</value>
+  </data>
+  <data name="Main_Button_View_Tooltip" xml:space="preserve">
+    <value>Перегляньте зображення мітки у зовнішньому засобі перегляду.</value>
+  </data>
+  <data name="Main_ButtonClear_Text" xml:space="preserve">
+    <value>ясно</value>
+  </data>
+  <data name="Main_ButtonClear_Tooltip" xml:space="preserve">
+    <value>Очистити всі мітки.</value>
+  </data>
+  <data name="Main_Checkbox_AutoStart" xml:space="preserve">
+    <value>Авто старт</value>
+  </data>
+  <data name="Main_Menu_Connection" xml:space="preserve">
+    <value>Підключення</value>
+  </data>
+  <data name="Main_Menu_Connection_Test_Labelary" xml:space="preserve">
+    <value>Тест Labelary</value>
+  </data>
+  <data name="Main_Menu_Options" xml:space="preserve">
+    <value>Опції</value>
+  </data>
+  <data name="Main_Menu_Options_About" xml:space="preserve">
+    <value>про</value>
+  </data>
+  <data name="Main_Menu_Options_Global_Settings" xml:space="preserve">
+    <value>Глобальні налаштування</value>
+  </data>
+  <data name="Main_Menu_Printer" xml:space="preserve">
+    <value>Принтер</value>
+  </data>
+  <data name="Main_Menu_Printer_Clear" xml:space="preserve">
+    <value>ясно</value>
+  </data>
+  <data name="Main_Menu_Printer_Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="Main_Menu_Printer_Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="Main_Menu_Printer_FontManager" xml:space="preserve">
+    <value>Менеджер шрифтів</value>
+  </data>
+  <data name="Main_Menu_Printer_Start" xml:space="preserve">
+    <value>Почніть</value>
+  </data>
+  <data name="Main_Menu_Printer_Stop" xml:space="preserve">
+    <value>СТІЙ</value>
+  </data>
+  <data name="Main_Menu_Printer_Test" xml:space="preserve">
+    <value>Тест</value>
+  </data>
+  <data name="Main_Menu_Printer_View" xml:space="preserve">
+    <value>Переглянути</value>
+  </data>
+  <data name="Main_Status_Idle" xml:space="preserve">
+    <value>Бездіяльність</value>
+  </data>
+  <data name="Main_Status_Label" xml:space="preserve">
+    <value>етикетка</value>
+  </data>
+  <data name="Main_Status_Labels" xml:space="preserve">
+    <value>етикетки</value>
+  </data>
+  <data name="Main_Status_Listening" xml:space="preserve">
+    <value>Слухання</value>
+  </data>
+  <data name="Main_Status_LoadingLabels" xml:space="preserve">
+    <value>Завантаження кешованих міток...</value>
+  </data>
+  <data name="Main_Status_Of" xml:space="preserve">
+    <value>з</value>
+  </data>
+  <data name="Main_Status_Ready" xml:space="preserve">
+    <value>Готовий</value>
+  </data>
+  <data name="Main_Status_ViewingLabel" xml:space="preserve">
+    <value>Перегляд мітки</value>
+  </data>
+  <data name="Main_TextBlock_NoCachedLabels" xml:space="preserve">
+    <value>немає кешованих міток</value>
+  </data>
+  <data name="Main_TextBlock_SelectConfiguration" xml:space="preserve">
+    <value>Активна конфігурація принтера</value>
+  </data>
+  <data name="Main_Title" xml:space="preserve">
+    <value>Віртуальний принтер ZPL</value>
+  </data>
+  <data name="MessageBox_DeletePrinterConfiguration_Message" xml:space="preserve">
+    <value>Ви впевнені, що бажаєте видалити конфігурацію принтера "{0}"?</value>
+  </data>
+  <data name="MessageBox_DeletePrinterConfiguration_Title" xml:space="preserve">
+    <value>Видалити конфігурацію принтера</value>
+  </data>
+  <data name="MessageBox_DeletePrinterConfigurationFailed_Message" xml:space="preserve">
+    <value>Не вдалося видалити.</value>
+  </data>
+  <data name="MessageBox_DeletePrinterConfigurationFailed_Title" xml:space="preserve">
+    <value>Видалити конфігурацію принтера</value>
+  </data>
+  <data name="MessageBox_Exception_Title" xml:space="preserve">
+    <value>Невідомий виняток</value>
+  </data>
+  <data name="MessageBox_FontConversion_Exception_Title" xml:space="preserve">
+    <value>Помилка перетворення шрифту</value>
+  </data>
+  <data name="New_Printer_Configuratio_Name" xml:space="preserve">
+    <value>Нова конфігурація принтера</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>В порядку</value>
+  </data>
+  <data name="Printer_Configuration_Disabled" xml:space="preserve">
+    <value>Вимкнено</value>
+  </data>
+  <data name="Printer_Configuration_Enabled" xml:space="preserve">
+    <value>Увімкнено</value>
+  </data>
+  <data name="Printer_Configuration_Host" xml:space="preserve">
+    <value>Хост</value>
+  </data>
+  <data name="Printer_Configuration_Id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Printer_Configuration_Printing" xml:space="preserve">
+    <value>Друк</value>
+  </data>
+  <data name="Printer_Configuration_Resolution" xml:space="preserve">
+    <value>роздільна здатність</value>
+  </data>
+  <data name="Printer_Configuration_Rotation" xml:space="preserve">
+    <value>Обертання</value>
+  </data>
+  <data name="Printer_Configuration_Size" xml:space="preserve">
+    <value>Розмір</value>
+  </data>
+  <data name="Send_Test_Label_Button_Text" xml:space="preserve">
+    <value>Надіслати</value>
+  </data>
+  <data name="Send_Test_Label_Button_Tooltip" xml:space="preserve">
+    <value>Надішліть вибрану тестову етикетку на віртуальний принтер.</value>
+  </data>
+  <data name="Send_Test_Label_Select" xml:space="preserve">
+    <value>Виберіть Test Label</value>
+  </data>
+  <data name="Send_Test_Label_Title" xml:space="preserve">
+    <value>Надіслати тестову етикетку</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Почніть</value>
+  </data>
+  <data name="ZPL_Viewer_Title" xml:space="preserve">
+    <value>Переглядач ZPL</value>
+  </data>
+  <data name="ZPL_Warnings" xml:space="preserve">
+    <value>Попередження ZPL</value>
   </data>
 </root>

@@ -322,6 +322,24 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save changes to the current printer..
+        /// </summary>
+        public static string Configure_Printer_Button_Save_Tooltip {
+            get {
+                return ResourceManager.GetString("Configure_Printer_Button_Save_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure Printer.
+        /// </summary>
+        public static string Configure_Printer_Title {
+            get {
+                return ResourceManager.GetString("Configure_Printer_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}Test completed with one or more failures.
         /// </summary>
         public static string Connectivity_Test_Failed {
@@ -574,6 +592,168 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel the changes and close the dialog..
+        /// </summary>
+        public static string Edit_Printer_Button_Cancel_Tooltip {
+            get {
+                return ResourceManager.GetString("Edit_Printer_Button_Cancel_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Send to Printer.
+        /// </summary>
+        public static string Edit_Printer_Checkbox_Text {
+            get {
+                return ResourceManager.GetString("Edit_Printer_Checkbox_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal Alignment.
+        /// </summary>
+        public static string Edit_Printer_Group_Text_Horizontal {
+            get {
+                return ResourceManager.GetString("Edit_Printer_Group_Text_Horizontal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical Alignment.
+        /// </summary>
+        public static string Edit_Printer_Group_Text_Vertical {
+            get {
+                return ResourceManager.GetString("Edit_Printer_Group_Text_Vertical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom Margin.
+        /// </summary>
+        public static string Edit_Printer_Label_BottomMargin {
+            get {
+                return ResourceManager.GetString("Edit_Printer_Label_BottomMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left Margin.
+        /// </summary>
+        public static string Edit_Printer_Label_LeftMargin {
+            get {
+                return ResourceManager.GetString("Edit_Printer_Label_LeftMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right Margin.
+        /// </summary>
+        public static string Edit_Printer_Label_RightMargin {
+            get {
+                return ResourceManager.GetString("Edit_Printer_Label_RightMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Printer.
+        /// </summary>
+        public static string Edit_Printer_Label_SelectPrinter {
+            get {
+                return ResourceManager.GetString("Edit_Printer_Label_SelectPrinter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top Margin.
+        /// </summary>
+        public static string Edit_Printer_Label_TopMargin {
+            get {
+                return ResourceManager.GetString("Edit_Printer_Label_TopMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom.
+        /// </summary>
+        public static string Edit_Printer_RadioButton_Bottom {
+            get {
+                return ResourceManager.GetString("Edit_Printer_RadioButton_Bottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Center.
+        /// </summary>
+        public static string Edit_Printer_RadioButton_Center {
+            get {
+                return ResourceManager.GetString("Edit_Printer_RadioButton_Center", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left.
+        /// </summary>
+        public static string Edit_Printer_RadioButton_Left {
+            get {
+                return ResourceManager.GetString("Edit_Printer_RadioButton_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Middle.
+        /// </summary>
+        public static string Edit_Printer_RadioButton_Middle {
+            get {
+                return ResourceManager.GetString("Edit_Printer_RadioButton_Middle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right.
+        /// </summary>
+        public static string Edit_Printer_RadioButton_Right {
+            get {
+                return ResourceManager.GetString("Edit_Printer_RadioButton_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top.
+        /// </summary>
+        public static string Edit_Printer_RadioButton_Top {
+            get {
+                return ResourceManager.GetString("Edit_Printer_RadioButton_Top", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When enabled, the image retrieved for the label is sent to this printer..
+        /// </summary>
+        public static string Edit_Printer_TextLabel {
+            get {
+                return ResourceManager.GetString("Edit_Printer_TextLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom Margin.
+        /// </summary>
+        public static string Edit_Printer_TextLabel_BottomMargin {
+            get {
+                return ResourceManager.GetString("Edit_Printer_TextLabel_BottomMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top Margin.
+        /// </summary>
+        public static string Edit_Printer_TextLabel_TopMargin {
+            get {
+                return ResourceManager.GetString("Edit_Printer_TextLabel_TopMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -610,7 +790,7 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The font does support sub-setting characters..
+        ///   Looks up a localized string similar to The font does not support sub-setting characters..
         /// </summary>
         public static string FontConversion_Error {
             get {

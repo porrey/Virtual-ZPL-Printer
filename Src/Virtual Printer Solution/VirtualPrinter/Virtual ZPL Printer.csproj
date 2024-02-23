@@ -343,6 +343,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Update="Properties\Strings.en-US.resx">
+		  <SubType>Designer</SubType>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Properties\Strings.resx">
 		  <SubType>Designer</SubType>
 		  <LastGenOutput>Strings.Designer.cs</LastGenOutput>

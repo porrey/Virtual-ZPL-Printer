@@ -201,8 +201,7 @@
 
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="63.52" />
-			<ColumnDefinition Width="261.48" />
+			<ColumnDefinition Width="325" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
@@ -222,13 +221,12 @@
 				  Margin="5,5,5,5"
 				  ScrollViewer.CanContentScroll="False"
 				  IsEnabled="{Binding Changes, Converter={StaticResource NotBooleanConverter}}"
-				  SelectionMode="Single"
-				  Grid.ColumnSpan="2">
+				  SelectionMode="Single">
 
 		</ListView>
 
 		<!-- Properties -->
-		<Border Grid.Column="2"
+		<Border Grid.Column="1"
 				Grid.Row="0"
 				BorderBrush="{StaticResource BorderColor}"
 				BorderThickness="1"
@@ -519,9 +517,10 @@
 		</Border>
 
 		<!-- Buttons -->
-		<Grid Grid.Column="2"
+		<Grid Grid.Column="1"
 			  Grid.Row="1"
-			  Margin="0,10,5,5" Grid.IsSharedSizeScope="True">
+			  Margin="0,10,5,5"
+			  Grid.IsSharedSizeScope="True">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />

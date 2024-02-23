@@ -538,10 +538,13 @@ Global
 		{FF57D022-B7CA-4FC1-943C-03E8F27C294A} = {998059AA-CE27-45C5-BF89-D60A5DDEC3C7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_SortFileContentOnSave = True
-		RESX_ConfirmAddLanguageFile = True
-		RESX_ResXSortingComparison = InvariantCultureIgnoreCase
+		RESX_RemoveEmptyEntries = False
+		RESX_SaveFilesImmediatelyUponChange = True
 		SolutionGuid = {B044B05A-9DC2-4AC1-9957-9EBE460C2EDD}
+		RESX_ResXSortingComparison = InvariantCultureIgnoreCase
+		RESX_ConfirmAddLanguageFile = True
+		RESX_SortFileContentOnSave = True
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_CultureCountyOverrides = es=es-CO
 	EndGlobalSection
 EndGlobal

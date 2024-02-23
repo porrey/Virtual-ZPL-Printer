@@ -349,7 +349,7 @@
 							Command="{Binding StopCommand}"
 							Height="{StaticResource StatusButtonHeight}"
 							Margin="{StaticResource ButtonMargin}"
-							ToolTip="">
+							ToolTip="{x:Static resources:Strings.Main_Button_Stop_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
