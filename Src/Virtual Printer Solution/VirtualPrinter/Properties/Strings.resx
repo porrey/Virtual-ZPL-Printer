@@ -123,7 +123,7 @@
   <data name="About_Version" xml:space="preserve">
     <value>Version</value>
   </data>
-  <data name="By" xml:space="preserve">
+  <data name="PrinterConfigurationViewModel_By" xml:space="preserve">
     <value>by</value>
   </data>
   <data name="Cancel" xml:space="preserve">
@@ -135,10 +135,10 @@
   <data name="Close_Tooltip" xml:space="preserve">
     <value>Close the window.</value>
   </data>
-  <data name="Configuration_Browse_Button_Tooltip" xml:space="preserve">
+  <data name="Configuration_Button_Browse_Tooltip" xml:space="preserve">
     <value>Browse for a folder to specify where label images are cached.</value>
   </data>
-  <data name="Configuration_Filters_Button_Tooltip" xml:space="preserve">
+  <data name="Configuration_Button_Filters_Tooltip" xml:space="preserve">
     <value>Click to edit ZPL filters.</value>
   </data>
   <data name="Configuration_View_Button_Add_Text" xml:space="preserve">
@@ -210,7 +210,7 @@
   <data name="Configure_Printer_Title" xml:space="preserve">
     <value>Configure Printer</value>
   </data>
-  <data name="Connectivity_Test_Failed" xml:space="preserve">
+  <data name="Connectivity_Test_Message_Failed" xml:space="preserve">
     <value>{0}Test completed with one or more failures</value>
   </data>
   <data name="Connectivity_Test_Label_Text" xml:space="preserve">
@@ -249,7 +249,7 @@
   <data name="Connectivity_Test_Message_WebMethodTest_Success" xml:space="preserve">
     <value>{0}{1}/{2} API method connection was successful [OK]</value>
   </data>
-  <data name="Connectivity_Test_Success" xml:space="preserve">
+  <data name="Connectivity_Test_Message_Success" xml:space="preserve">
     <value>{0}Test completed successfully</value>
   </data>
   <data name="Connectivity_Test_Title" xml:space="preserve">
@@ -307,6 +307,9 @@
   <data name="Edit_Printer_Group_Text_Vertical" xml:space="preserve">
     <value>Vertical Alignment</value>
   </data>
+  <data name="Edit_Printer_Label" xml:space="preserve">
+    <value>When enabled, the image retrieved for the label is sent to this printer.</value>
+  </data>
   <data name="Edit_Printer_Label_BottomMargin" xml:space="preserve">
     <value>Bottom Margin</value>
   </data>
@@ -339,15 +342,6 @@
   </data>
   <data name="Edit_Printer_RadioButton_Top" xml:space="preserve">
     <value>Top</value>
-  </data>
-  <data name="Edit_Printer_TextLabel" xml:space="preserve">
-    <value>When enabled, the image retrieved for the label is sent to this printer.</value>
-  </data>
-  <data name="Edit_Printer_TextLabel_BottomMargin" xml:space="preserve">
-    <value>Bottom Margin</value>
-  </data>
-  <data name="Edit_Printer_TextLabel_TopMargin" xml:space="preserve">
-    <value>Top Margin</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -526,7 +520,7 @@
   <data name="MessageBox_FontConversion_Exception_Title" xml:space="preserve">
     <value>Error Converting Font</value>
   </data>
-  <data name="New_Printer_Configuratio_Name" xml:space="preserve">
+  <data name="New_Printer_Configuration_Name" xml:space="preserve">
     <value>New Printer Configuration</value>
   </data>
   <data name="Ok" xml:space="preserve">

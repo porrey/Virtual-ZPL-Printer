@@ -7,8 +7,6 @@
 		<Version>3.2.1</Version>
 		<FileVersion>3.2.1</FileVersion>
 		<AssemblyVersion>3.2.1</AssemblyVersion>
-		<GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
-		<UICulture>en-US</UICulture>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -41,23 +39,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Properties\Strings.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Strings.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
 		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.1\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Update="Properties\Strings.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>Strings.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
 	</ItemGroup>
 </Project>

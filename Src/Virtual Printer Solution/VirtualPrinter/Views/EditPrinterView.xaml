@@ -71,7 +71,7 @@
 				VerticalAlignment="Center"
 				FontSize="12"
 				Foreground="{StaticResource ForegroundColor1}"
-				Text="{x:Static resources:Strings.Edit_Printer_TextLabel}"
+				Text="{x:Static resources:Strings.Edit_Printer_Label}"
 				TextWrapping="Wrap" />
 		</Grid>
 
@@ -235,7 +235,7 @@
 							<TextBlock
 								Grid.Column="0"
 								Margin="5"
-								Text="{x:Static resources:Strings.Edit_Printer_TextLabel_TopMargin}" />
+								Text="{x:Static resources:Strings.Edit_Printer_Label_TopMargin}" />
 
 							<TextBox
 								Grid.Column="1"
@@ -245,7 +245,7 @@
 							<TextBlock
 								Grid.Column="2"
 								Margin="5"
-								Text="{x:Static resources:Strings.Edit_Printer_TextLabel_BottomMargin}" />
+								Text="{x:Static resources:Strings.Edit_Printer_Label_BottomMargin}" />
 
 							<TextBox
 								Grid.Column="3"

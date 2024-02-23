@@ -79,15 +79,6 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to by.
-        /// </summary>
-        public static string By {
-            get {
-                return ResourceManager.GetString("By", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -117,18 +108,18 @@ namespace VirtualPrinter.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Browse for a folder to specify where label images are cached..
         /// </summary>
-        public static string Configuration_Browse_Button_Tooltip {
+        public static string Configuration_Button_Browse_Tooltip {
             get {
-                return ResourceManager.GetString("Configuration_Browse_Button_Tooltip", resourceCulture);
+                return ResourceManager.GetString("Configuration_Button_Browse_Tooltip", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Click to edit ZPL filters..
         /// </summary>
-        public static string Configuration_Filters_Button_Tooltip {
+        public static string Configuration_Button_Filters_Tooltip {
             get {
-                return ResourceManager.GetString("Configuration_Filters_Button_Tooltip", resourceCulture);
+                return ResourceManager.GetString("Configuration_Button_Filters_Tooltip", resourceCulture);
             }
         }
         
@@ -340,15 +331,6 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}Test completed with one or more failures.
-        /// </summary>
-        public static string Connectivity_Test_Failed {
-            get {
-                return ResourceManager.GetString("Connectivity_Test_Failed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to TEST.
         /// </summary>
         public static string Connectivity_Test_Label_Text {
@@ -372,6 +354,15 @@ namespace VirtualPrinter.Properties {
         public static string Connectivity_Test_Message_Dns_Failed {
             get {
                 return ResourceManager.GetString("Connectivity_Test_Message_Dns_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}Test completed with one or more failures.
+        /// </summary>
+        public static string Connectivity_Test_Message_Failed {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_Failed", resourceCulture);
             }
         }
         
@@ -430,6 +421,15 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}Test completed successfully.
+        /// </summary>
+        public static string Connectivity_Test_Message_Success {
+            get {
+                return ResourceManager.GetString("Connectivity_Test_Message_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}{1}/{2} API method connection was unsuccessful [FAILED].
         /// </summary>
         public static string Connectivity_Test_Message_WebMethod_Failed {
@@ -453,15 +453,6 @@ namespace VirtualPrinter.Properties {
         public static string Connectivity_Test_Message_WebMethodTest_Success {
             get {
                 return ResourceManager.GetString("Connectivity_Test_Message_WebMethodTest_Success", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0}Test completed successfully.
-        /// </summary>
-        public static string Connectivity_Test_Success {
-            get {
-                return ResourceManager.GetString("Connectivity_Test_Success", resourceCulture);
             }
         }
         
@@ -628,6 +619,15 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to When enabled, the image retrieved for the label is sent to this printer..
+        /// </summary>
+        public static string Edit_Printer_Label {
+            get {
+                return ResourceManager.GetString("Edit_Printer_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bottom Margin.
         /// </summary>
         public static string Edit_Printer_Label_BottomMargin {
@@ -723,33 +723,6 @@ namespace VirtualPrinter.Properties {
         public static string Edit_Printer_RadioButton_Top {
             get {
                 return ResourceManager.GetString("Edit_Printer_RadioButton_Top", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to When enabled, the image retrieved for the label is sent to this printer..
-        /// </summary>
-        public static string Edit_Printer_TextLabel {
-            get {
-                return ResourceManager.GetString("Edit_Printer_TextLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bottom Margin.
-        /// </summary>
-        public static string Edit_Printer_TextLabel_BottomMargin {
-            get {
-                return ResourceManager.GetString("Edit_Printer_TextLabel_BottomMargin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Top Margin.
-        /// </summary>
-        public static string Edit_Printer_TextLabel_TopMargin {
-            get {
-                return ResourceManager.GetString("Edit_Printer_TextLabel_TopMargin", resourceCulture);
             }
         }
         
@@ -1287,9 +1260,9 @@ namespace VirtualPrinter.Properties {
         /// <summary>
         ///   Looks up a localized string similar to New Printer Configuration.
         /// </summary>
-        public static string New_Printer_Configuratio_Name {
+        public static string New_Printer_Configuration_Name {
             get {
-                return ResourceManager.GetString("New_Printer_Configuratio_Name", resourceCulture);
+                return ResourceManager.GetString("New_Printer_Configuration_Name", resourceCulture);
             }
         }
         
@@ -1371,6 +1344,15 @@ namespace VirtualPrinter.Properties {
         public static string Printer_Configuration_Size {
             get {
                 return ResourceManager.GetString("Printer_Configuration_Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to by.
+        /// </summary>
+        public static string PrinterConfigurationViewModel_By {
+            get {
+                return ResourceManager.GetString("PrinterConfigurationViewModel_By", resourceCulture);
             }
         }
         

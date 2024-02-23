@@ -586,7 +586,7 @@ namespace VirtualPrinter.ViewModels
 				using IWritableRepository<IPrinterConfiguration> repository = await this.RepositoryFactory.GetWritableAsync<IPrinterConfiguration>();
 
 				IPrinterConfiguration item = await repository.ModelFactory.CreateAsync();
-				item.Name = this.GetNewName(Properties.Strings.New_Printer_Configuratio_Name);
+				item.Name = this.GetNewName(Properties.Strings.New_Printer_Configuration_Name);
 				item.HostAddress = IPAddress.Loopback.ToString();
 				item.Port = 9100;
 				item.LabelHeight = 6;

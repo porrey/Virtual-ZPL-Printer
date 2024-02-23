@@ -160,12 +160,12 @@ namespace VirtualPrinter.ViewModels
 					this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_Dns_Failed, Environment.NewLine);
 				}
 
-				this.Text += string.Format(Properties.Strings.Connectivity_Test_Success, Environment.NewLine);
+				this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_Success, Environment.NewLine);
 			}
 			catch (Exception ex)
 			{
 				this.Text += $"{Environment.NewLine}{ex.Message}";
-				this.Text += string.Format(Properties.Strings.Connectivity_Test_Failed, Environment.NewLine);
+				this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_Failed, Environment.NewLine);
 			}
 			finally
 			{

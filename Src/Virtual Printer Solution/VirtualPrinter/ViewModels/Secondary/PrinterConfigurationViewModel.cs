@@ -223,7 +223,7 @@ namespace VirtualPrinter.ViewModels
 
 		public string IdSummary => $"{Properties.Strings.Printer_Configuration_Id}: {this.Id}";
 		public string HostSummary => $"{Properties.Strings.Printer_Configuration_Host}: {this.HostAddress}:{this.Port}";
-		public string SizeSummary => $"{Properties.Strings.Printer_Configuration_Size}: {this.LabelWidth} {this.Unit} {Properties.Strings.By} {this.LabelHeight} {this.Unit}";
+		public string SizeSummary => $"{Properties.Strings.Printer_Configuration_Size}: {this.LabelWidth} {this.Unit} {Properties.Strings.PrinterConfigurationViewModel_By} {this.LabelHeight} {this.Unit}";
 		public string ResolutionSummary => $"{Properties.Strings.Printer_Configuration_Resolution}: {this.ResolutionInDpmm} {Properties.Strings.dpmm}";
 		public string RotationSummary => $"{Properties.Strings.Printer_Configuration_Rotation}: {this.RotationAngle}˚";
 		public string Description => $"{this.Name} [{this.HostSummary}, {this.SizeSummary}, {this.ResolutionSummary}, {this.RotationSummary}, {this.PhysicalPrinterDescription}]";
