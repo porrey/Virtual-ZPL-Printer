@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VirtualPrinter.Repository.LabelParameters.Properties {
+namespace VirtualPrinter.Db.Ef.Properties {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace VirtualPrinter.Repository.LabelParameters.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace VirtualPrinter.Repository.LabelParameters.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VirtualPrinter.Repository.LabelParameters.Properties.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VirtualPrinter.Db.Ef.Properties.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace VirtualPrinter.Repository.LabelParameters.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,38 +61,29 @@ namespace VirtualPrinter.Repository.LabelParameters.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to dpi.
+        ///   Looks up a localized string similar to Address Label.
         /// </summary>
-        internal static string Dpi {
+        public static string Data_AddressLabel {
             get {
-                return ResourceManager.GetString("Dpi", resourceCulture);
+                return ResourceManager.GetString("Data_AddressLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to dpmm.
+        ///   Looks up a localized string similar to {0}˚ Rotation.
         /// </summary>
-        internal static string Dpmm {
+        public static string Data_RotationValueFormat {
             get {
-                return ResourceManager.GetString("Dpmm", resourceCulture);
+                return ResourceManager.GetString("Data_RotationValueFormat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clockwise.
+        ///   Looks up a localized string similar to Shipping Label.
         /// </summary>
-        internal static string Rotation_Clockwise {
+        public static string Data_ShippingLabel {
             get {
-                return ResourceManager.GetString("Rotation_Clockwise", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to None.
-        /// </summary>
-        internal static string Rotation_None {
-            get {
-                return ResourceManager.GetString("Rotation_None", resourceCulture);
+                return ResourceManager.GetString("Data_ShippingLabel", resourceCulture);
             }
         }
     }

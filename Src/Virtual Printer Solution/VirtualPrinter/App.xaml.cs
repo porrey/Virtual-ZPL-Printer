@@ -63,7 +63,8 @@ namespace VirtualPrinter
 		protected override void OnBeginStartup(StartupEventArgs e)
 		{
 #if DEBUG
-			CultureInfo culture = new("en");
+			CultureInfo culture = new("uk-UA");
+			culture.ClearCachedData();
 #else
 			CultureInfo culture = CultureInfo.CurrentCulture;
 #endif
@@ -84,6 +85,7 @@ namespace VirtualPrinter
 			//
 			try
 			{
+				Thread.CurrentThread.CurrentCulture = new CultureInfo(culture.LCID, true);
 				Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture.LCID, true);
 			}
 			catch

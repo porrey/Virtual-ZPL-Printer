@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,16 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dpi" xml:space="preserve">
-    <value>DPI</value>
+  <data name="Data_AddressLabel" xml:space="preserve">
+    <value>Address Label</value>
   </data>
-  <data name="Dpmm" xml:space="preserve">
-    <value>DPMM</value>
+  <data name="Data_RotationValueFormat" xml:space="preserve">
+    <value>{0}˚ Rotation</value>
   </data>
-  <data name="Rotation_Clockwise" xml:space="preserve">
-    <value>За годинниковою стрілкою</value>
-  </data>
-  <data name="Rotation_None" xml:space="preserve">
-    <value>Жодного</value>
+  <data name="Data_ShippingLabel" xml:space="preserve">
+    <value>Shipping Label</value>
   </data>
 </root>

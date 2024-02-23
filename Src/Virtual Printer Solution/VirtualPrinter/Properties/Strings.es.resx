@@ -226,7 +226,7 @@
     <value>{0}Se encontró {1} dirección para el nombre de host [Aceptar]</value>
   </data>
   <data name="Connectivity_Test_Message_Ip" xml:space="preserve">
-    <value>{0}Se encontró la dirección IP '{1}' para el nombre de host '{2}' [OK]</value>
+    <value>{0}Se encontró la dirección IP '{1}' para el nombre de host '{2}' [Aceptar]</value>
   </data>
   <data name="Connectivity_Test_Message_PortTest" xml:space="preserve">
     <value>{0}Comprobando la conectividad del puerto '{1}' para la dirección IP del nombre de host '{2}'</value>
