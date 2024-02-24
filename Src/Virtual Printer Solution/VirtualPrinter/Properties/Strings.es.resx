@@ -123,9 +123,6 @@
   <data name="About_Version" xml:space="preserve">
     <value>Versión</value>
   </data>
-  <data name="PrinterConfigurationViewModel_By" xml:space="preserve">
-    <value>por</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
@@ -210,9 +207,6 @@
   <data name="Configure_Printer_Title" xml:space="preserve">
     <value>Configurar impresora</value>
   </data>
-  <data name="Connectivity_Test_Message_Failed" xml:space="preserve">
-    <value>{0}Prueba completada con uno o más errores</value>
-  </data>
   <data name="Connectivity_Test_Label_Text" xml:space="preserve">
     <value>PRUEBA</value>
   </data>
@@ -221,6 +215,9 @@
   </data>
   <data name="Connectivity_Test_Message_Dns_Failed" xml:space="preserve">
     <value>{0}Error en la búsqueda de DNS [FALLADO]</value>
+  </data>
+  <data name="Connectivity_Test_Message_Failed" xml:space="preserve">
+    <value>{0}Prueba completada con uno o más errores</value>
   </data>
   <data name="Connectivity_Test_Message_Host" xml:space="preserve">
     <value>{0}Se encontró {1} dirección para el nombre de host [Aceptar]</value>
@@ -240,6 +237,9 @@
   <data name="Connectivity_Test_Message_Start" xml:space="preserve">
     <value>Probando la conectividad a '{0}'</value>
   </data>
+  <data name="Connectivity_Test_Message_Success" xml:space="preserve">
+    <value>{0}Prueba completada con éxito</value>
+  </data>
   <data name="Connectivity_Test_Message_WebMethod_Failed" xml:space="preserve">
     <value>La conexión del método API {0}{1}/{2} no se realizó correctamente [FALLÓ]</value>
   </data>
@@ -248,9 +248,6 @@
   </data>
   <data name="Connectivity_Test_Message_WebMethodTest_Success" xml:space="preserve">
     <value>La conexión del método API {0}{1}/{2} se realizó correctamente [Aceptar]</value>
-  </data>
-  <data name="Connectivity_Test_Message_Success" xml:space="preserve">
-    <value>{0}Prueba completada con éxito</value>
   </data>
   <data name="Connectivity_Test_Title" xml:space="preserve">
     <value>Conexión de etiqueta de prueba</value>
@@ -348,11 +345,71 @@
   <data name="Filters_None" xml:space="preserve">
     <value>Sin filtros</value>
   </data>
+  <data name="Font_Manager_Button_Add_Text" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
+  <data name="Font_Manager_Button_Add_Tooltip" xml:space="preserve">
+    <value>Agregue una nueva fuente personalizada.</value>
+  </data>
+  <data name="Font_Manager_Button_Browse_Tooltip" xml:space="preserve">
+    <value>Explore para un archivo fuente de fuente TrueType local.</value>
+  </data>
+  <data name="Font_Manager_Button_Cancel_Tooltip" xml:space="preserve">
+    <value>Cancele los cambios actuales y/o cierre el administrador de fuentes.</value>
+  </data>
+  <data name="Font_Manager_Button_Delete_Tooltip" xml:space="preserve">
+    <value>Elimine esta fuente del administrador de fuentes.</value>
+  </data>
+  <data name="Font_Manager_Button_Ok_Text" xml:space="preserve">
+    <value>De acuerdo</value>
+  </data>
+  <data name="Font_Manager_Button_Ok_Tooltip" xml:space="preserve">
+    <value>Guarde los cambios y cierre el administrador de fuentes.</value>
+  </data>
+  <data name="Font_Manager_Button_Save_Tooltip" xml:space="preserve">
+    <value>Guarde los cambios actuales en esta fuente.</value>
+  </data>
+  <data name="Font_Manager_Button_Update_Tooltip" xml:space="preserve">
+    <value>Actualice la fuente usando la API LATTARY.</value>
+  </data>
+  <data name="Font_Manager_Label" xml:space="preserve">
+    <value>Cargue las fuentes TrueType personalizadas que se utilizarán en etiquetas. La impresora Virtual ZPL cargará automáticamente las fuentes con cada solicitud de etiqueta para simular fuentes ya cargadas en la impresora.</value>
+  </data>
+  <data name="Font_Manager_Label_ByteCount" xml:space="preserve">
+    <value>Recuento de bytes</value>
+  </data>
+  <data name="Font_Manager_Label_CharacterDescription" xml:space="preserve">
+    <value>Si se proporciona, la fuente será subconjunto para contener solo los caracteres especificados.</value>
+  </data>
+  <data name="Font_Manager_Label_Characters" xml:space="preserve">
+    <value>Caracteres</value>
+  </data>
+  <data name="Font_Manager_Label_FontSource" xml:space="preserve">
+    <value>Fuente de fuente</value>
+  </data>
+  <data name="Font_Manager_Label_PrinterPath" xml:space="preserve">
+    <value>Ruta de la impresora</value>
+  </data>
+  <data name="Font_Manager_Title" xml:space="preserve">
+    <value>Administrador de fuentes</value>
+  </data>
   <data name="Font_Source_Found" xml:space="preserve">
     <value>Encontró</value>
   </data>
   <data name="Font_Source_Missing" xml:space="preserve">
     <value>Desaparecido</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Delete_Text" xml:space="preserve">
+    <value>¿Estás seguro de que quieres eliminar la fuente seleccionada?</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Delete_Title" xml:space="preserve">
+    <value>Eliminar fuente</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Filter" xml:space="preserve">
+    <value>TrueType Font |*.ttf | Todos los archivos |*.*</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Title" xml:space="preserve">
+    <value>Seleccione el archivo de fuente TrueType</value>
   </data>
   <data name="FontConversion_Error" xml:space="preserve">
     <value>La fuente no admite caracteres de subconfiguración.</value>
@@ -363,11 +420,47 @@
   <data name="Global_Settings_Button_Ok_Toolip" xml:space="preserve">
     <value>Guarde los cambios y cierre el cuadro de diálogo.</value>
   </data>
+  <data name="Global_Settings_Checkbox_EnableLinting_Text" xml:space="preserve">
+    <value>Habilitar la pelusa</value>
+  </data>
   <data name="Global_Settings_Group_Header_Labelary" xml:space="preserve">
     <value>Etiquetario</value>
   </data>
   <data name="Global_Settings_Group_Header_TCP" xml:space="preserve">
     <value>Configuración TCP</value>
+  </data>
+  <data name="Global_Settings_Label_ApiUrl" xml:space="preserve">
+    <value>URL API</value>
+  </data>
+  <data name="Global_Settings_Label_Linger" xml:space="preserve">
+    <value>Persistir</value>
+  </data>
+  <data name="Global_Settings_Label_LingerTime" xml:space="preserve">
+    <value>Tiempo permanente (segundos)</value>
+  </data>
+  <data name="Global_Settings_Label_Method" xml:space="preserve">
+    <value>Método</value>
+  </data>
+  <data name="Global_Settings_Label_NoDelay" xml:space="preserve">
+    <value>Sin demora</value>
+  </data>
+  <data name="Global_Settings_Label_ReceiveBufferSize" xml:space="preserve">
+    <value>Recibir el tamaño del búfer (bytes)</value>
+  </data>
+  <data name="Global_Settings_Label_ReceivedDataEncoding" xml:space="preserve">
+    <value>Codificación de datos recibida</value>
+  </data>
+  <data name="Global_Settings_Label_ReceiveTimeout" xml:space="preserve">
+    <value>Reciba tiempo de espera (MS)</value>
+  </data>
+  <data name="Global_Settings_Label_SendBufferSize" xml:space="preserve">
+    <value>Enviar tamaño de búfer (bytes)</value>
+  </data>
+  <data name="Global_Settings_Label_SendTimeout" xml:space="preserve">
+    <value>Enviar tiempo de espera (MS)</value>
+  </data>
+  <data name="Global_Settings_Label_Tcp" xml:space="preserve">
+    <value>Estas configuraciones se aplican a la solicitud entrante desde una aplicación externa.</value>
   </data>
   <data name="Global_Settings_Title" xml:space="preserve">
     <value>Ajustes globales</value>
@@ -548,6 +641,9 @@
   </data>
   <data name="Printer_Configuration_Size" xml:space="preserve">
     <value>Tamaño</value>
+  </data>
+  <data name="PrinterConfigurationViewModel_By" xml:space="preserve">
+    <value>por</value>
   </data>
   <data name="Send_Test_Label_Button_Text" xml:space="preserve">
     <value>Enviar</value>

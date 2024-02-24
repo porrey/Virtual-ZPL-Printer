@@ -745,6 +745,150 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Font_Manager_Button_Add_Text {
+            get {
+                return ResourceManager.GetString("Font_Manager_Button_Add_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a new custom font..
+        /// </summary>
+        public static string Font_Manager_Button_Add_Tooltip {
+            get {
+                return ResourceManager.GetString("Font_Manager_Button_Add_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse for a local TrueType font source file..
+        /// </summary>
+        public static string Font_Manager_Button_Browse_Tooltip {
+            get {
+                return ResourceManager.GetString("Font_Manager_Button_Browse_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel the current changes and/or close the Font Manager..
+        /// </summary>
+        public static string Font_Manager_Button_Cancel_Tooltip {
+            get {
+                return ResourceManager.GetString("Font_Manager_Button_Cancel_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete this font from the Font Manager..
+        /// </summary>
+        public static string Font_Manager_Button_Delete_Tooltip {
+            get {
+                return ResourceManager.GetString("Font_Manager_Button_Delete_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string Font_Manager_Button_Ok_Text {
+            get {
+                return ResourceManager.GetString("Font_Manager_Button_Ok_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the changes and close the Font Manager..
+        /// </summary>
+        public static string Font_Manager_Button_Ok_Tooltip {
+            get {
+                return ResourceManager.GetString("Font_Manager_Button_Ok_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the current changes to this font..
+        /// </summary>
+        public static string Font_Manager_Button_Save_Tooltip {
+            get {
+                return ResourceManager.GetString("Font_Manager_Button_Save_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update the font using Labelary API..
+        /// </summary>
+        public static string Font_Manager_Button_Update_Tooltip {
+            get {
+                return ResourceManager.GetString("Font_Manager_Button_Update_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load custom TrueType fonts to be used in labels. Virtual ZPL Printer will automatically upload the fonts with the each label request to simulate fonts already loaded in the printer..
+        /// </summary>
+        public static string Font_Manager_Label {
+            get {
+                return ResourceManager.GetString("Font_Manager_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Byte Count.
+        /// </summary>
+        public static string Font_Manager_Label_ByteCount {
+            get {
+                return ResourceManager.GetString("Font_Manager_Label_ByteCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If provided, the font will be subset to contain only the specified characters..
+        /// </summary>
+        public static string Font_Manager_Label_CharacterDescription {
+            get {
+                return ResourceManager.GetString("Font_Manager_Label_CharacterDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Characters.
+        /// </summary>
+        public static string Font_Manager_Label_Characters {
+            get {
+                return ResourceManager.GetString("Font_Manager_Label_Characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font Source.
+        /// </summary>
+        public static string Font_Manager_Label_FontSource {
+            get {
+                return ResourceManager.GetString("Font_Manager_Label_FontSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Printer Path.
+        /// </summary>
+        public static string Font_Manager_Label_PrinterPath {
+            get {
+                return ResourceManager.GetString("Font_Manager_Label_PrinterPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font Manager.
+        /// </summary>
+        public static string Font_Manager_Title {
+            get {
+                return ResourceManager.GetString("Font_Manager_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Found.
         /// </summary>
         public static string Font_Source_Found {
@@ -759,6 +903,42 @@ namespace VirtualPrinter.Properties {
         public static string Font_Source_Missing {
             get {
                 return ResourceManager.GetString("Font_Source_Missing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the selected font?.
+        /// </summary>
+        public static string Font_ViewModel_Dialog_Delete_Text {
+            get {
+                return ResourceManager.GetString("Font_ViewModel_Dialog_Delete_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Font.
+        /// </summary>
+        public static string Font_ViewModel_Dialog_Delete_Title {
+            get {
+                return ResourceManager.GetString("Font_ViewModel_Dialog_Delete_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TrueType Font|*.ttf|All Files|*.*.
+        /// </summary>
+        public static string Font_ViewModel_Dialog_Filter {
+            get {
+                return ResourceManager.GetString("Font_ViewModel_Dialog_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select TrueType Font File.
+        /// </summary>
+        public static string Font_ViewModel_Dialog_Title {
+            get {
+                return ResourceManager.GetString("Font_ViewModel_Dialog_Title", resourceCulture);
             }
         }
         
@@ -790,6 +970,15 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable Linting.
+        /// </summary>
+        public static string Global_Settings_Checkbox_EnableLinting_Text {
+            get {
+                return ResourceManager.GetString("Global_Settings_Checkbox_EnableLinting_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Labelary.
         /// </summary>
         public static string Global_Settings_Group_Header_Labelary {
@@ -804,6 +993,105 @@ namespace VirtualPrinter.Properties {
         public static string Global_Settings_Group_Header_TCP {
             get {
                 return ResourceManager.GetString("Global_Settings_Group_Header_TCP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to API URL.
+        /// </summary>
+        public static string Global_Settings_Label_ApiUrl {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_ApiUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Linger.
+        /// </summary>
+        public static string Global_Settings_Label_Linger {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_Linger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Linger Time (seconds).
+        /// </summary>
+        public static string Global_Settings_Label_LingerTime {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_LingerTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Method.
+        /// </summary>
+        public static string Global_Settings_Label_Method {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_Method", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Delay.
+        /// </summary>
+        public static string Global_Settings_Label_NoDelay {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_NoDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receive Buffer Size (bytes).
+        /// </summary>
+        public static string Global_Settings_Label_ReceiveBufferSize {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_ReceiveBufferSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Received Data Encoding.
+        /// </summary>
+        public static string Global_Settings_Label_ReceivedDataEncoding {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_ReceivedDataEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receive Timeout (ms).
+        /// </summary>
+        public static string Global_Settings_Label_ReceiveTimeout {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_ReceiveTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Buffer Size (bytes).
+        /// </summary>
+        public static string Global_Settings_Label_SendBufferSize {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_SendBufferSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Timeout (ms).
+        /// </summary>
+        public static string Global_Settings_Label_SendTimeout {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_SendTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These settings are applied to the incoming request from an external application..
+        /// </summary>
+        public static string Global_Settings_Label_Tcp {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_Tcp", resourceCulture);
             }
         }
         

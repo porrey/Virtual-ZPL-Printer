@@ -36,6 +36,7 @@ namespace VirtualPrinter.Views
 		{
 			base.OnInitialized(e);
 			await this.ViewModel.InitializeAsync();
+			this.SizeToContent = SizeToContent.Width;
 		}
 
 		private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

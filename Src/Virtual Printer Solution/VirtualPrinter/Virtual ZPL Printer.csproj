@@ -10,9 +10,9 @@
 		<AssemblyName>VirtualPrinter</AssemblyName>
 		<StartupObject>VirtualPrinter.App</StartupObject>
 		<RootNamespace>VirtualPrinter</RootNamespace>
-		<Version>3.2.1</Version>
-		<FileVersion>3.2.1</FileVersion>
-		<AssemblyVersion>3.2.1</AssemblyVersion>
+		<Version>3.3.0</Version>
+		<FileVersion>3.3.0</FileVersion>
+		<AssemblyVersion>3.3.0</AssemblyVersion>
 		<SignAssembly>False</SignAssembly>
 		<GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
 		<UICulture>en-US</UICulture>
@@ -332,6 +332,10 @@
 		<Content Include="virtual-printer.ico">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
 
 	<ItemGroup>

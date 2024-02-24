@@ -123,9 +123,6 @@
   <data name="About_Version" xml:space="preserve">
     <value>Версія</value>
   </data>
-  <data name="PrinterConfigurationViewModel_By" xml:space="preserve">
-    <value>за</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Скасувати</value>
   </data>
@@ -210,9 +207,6 @@
   <data name="Configure_Printer_Title" xml:space="preserve">
     <value>Налаштувати принтер</value>
   </data>
-  <data name="Connectivity_Test_Message_Failed" xml:space="preserve">
-    <value>{0}Тестування завершено з однією чи кількома помилками</value>
-  </data>
   <data name="Connectivity_Test_Label_Text" xml:space="preserve">
     <value>ТЕСТ</value>
   </data>
@@ -221,6 +215,9 @@
   </data>
   <data name="Connectivity_Test_Message_Dns_Failed" xml:space="preserve">
     <value>{0}Помилка пошуку DNS [НЕВІД]</value>
+  </data>
+  <data name="Connectivity_Test_Message_Failed" xml:space="preserve">
+    <value>{0}Тестування завершено з однією чи кількома помилками</value>
   </data>
   <data name="Connectivity_Test_Message_Host" xml:space="preserve">
     <value>{0}Знайдено {1} адресу для імені хоста [OK]</value>
@@ -240,6 +237,9 @@
   <data name="Connectivity_Test_Message_Start" xml:space="preserve">
     <value>Тестування підключення до "{0}"</value>
   </data>
+  <data name="Connectivity_Test_Message_Success" xml:space="preserve">
+    <value>{0}Тест успішно завершено</value>
+  </data>
   <data name="Connectivity_Test_Message_WebMethod_Failed" xml:space="preserve">
     <value>{0}{1}/{2} Підключення методу API не вдалось [ПОМИЛКА]</value>
   </data>
@@ -248,9 +248,6 @@
   </data>
   <data name="Connectivity_Test_Message_WebMethodTest_Success" xml:space="preserve">
     <value>{0}{1}/{2} Підключення методу API було успішним [OK]</value>
-  </data>
-  <data name="Connectivity_Test_Message_Success" xml:space="preserve">
-    <value>{0}Тест успішно завершено</value>
   </data>
   <data name="Connectivity_Test_Title" xml:space="preserve">
     <value>Тест Labelary Connection</value>
@@ -348,11 +345,71 @@
   <data name="Filters_None" xml:space="preserve">
     <value>Без фільтрів</value>
   </data>
+  <data name="Font_Manager_Button_Add_Text" xml:space="preserve">
+    <value>додати</value>
+  </data>
+  <data name="Font_Manager_Button_Add_Tooltip" xml:space="preserve">
+    <value>Додайте новий спеціальний шрифт.</value>
+  </data>
+  <data name="Font_Manager_Button_Browse_Tooltip" xml:space="preserve">
+    <value>Перегляньте локальний вихідний файл шрифту Truetype.</value>
+  </data>
+  <data name="Font_Manager_Button_Cancel_Tooltip" xml:space="preserve">
+    <value>Скасувати поточні зміни та/або закрити менеджер шрифтів.</value>
+  </data>
+  <data name="Font_Manager_Button_Delete_Tooltip" xml:space="preserve">
+    <value>Видаліть цей шрифт від менеджера шрифтів.</value>
+  </data>
+  <data name="Font_Manager_Button_Ok_Text" xml:space="preserve">
+    <value>В порядку</value>
+  </data>
+  <data name="Font_Manager_Button_Ok_Tooltip" xml:space="preserve">
+    <value>Збережіть зміни та закрийте менеджера шрифтів.</value>
+  </data>
+  <data name="Font_Manager_Button_Save_Tooltip" xml:space="preserve">
+    <value>Збережіть поточні зміни цього шрифту.</value>
+  </data>
+  <data name="Font_Manager_Button_Update_Tooltip" xml:space="preserve">
+    <value>Оновіть шрифт за допомогою API мітки.</value>
+  </data>
+  <data name="Font_Manager_Label" xml:space="preserve">
+    <value>Завантажте власні шрифти Truetype, які будуть використовуватися в мітках. Віртуальний принтер ZPL автоматично завантажить шрифти з кожним запитом мітки для імітації шрифтів, які вже завантажені в принтер.</value>
+  </data>
+  <data name="Font_Manager_Label_ByteCount" xml:space="preserve">
+    <value>Кількість байтів</value>
+  </data>
+  <data name="Font_Manager_Label_CharacterDescription" xml:space="preserve">
+    <value>Якщо надано, шрифт буде підмножиною, щоб містити лише вказані символи.</value>
+  </data>
+  <data name="Font_Manager_Label_Characters" xml:space="preserve">
+    <value>Персонажі</value>
+  </data>
+  <data name="Font_Manager_Label_FontSource" xml:space="preserve">
+    <value>Джерело шрифту</value>
+  </data>
+  <data name="Font_Manager_Label_PrinterPath" xml:space="preserve">
+    <value>Шлях принтера</value>
+  </data>
+  <data name="Font_Manager_Title" xml:space="preserve">
+    <value>Менеджер шрифтів</value>
+  </data>
   <data name="Font_Source_Found" xml:space="preserve">
     <value>знайдено</value>
   </data>
   <data name="Font_Source_Missing" xml:space="preserve">
     <value>Відсутня</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Delete_Text" xml:space="preserve">
+    <value>Ви впевнені, що хочете видалити вибраний шрифт?</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Delete_Title" xml:space="preserve">
+    <value>Видалити шрифт</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Filter" xml:space="preserve">
+    <value>Truetype font |*.ttf | всі файли |*.*</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Title" xml:space="preserve">
+    <value>Виберіть файл шрифту Truetype</value>
   </data>
   <data name="FontConversion_Error" xml:space="preserve">
     <value>Шрифт не підтримує символи піднабору.</value>
@@ -363,11 +420,47 @@
   <data name="Global_Settings_Button_Ok_Toolip" xml:space="preserve">
     <value>Збережіть зміни та закрийте діалогове вікно.</value>
   </data>
+  <data name="Global_Settings_Checkbox_EnableLinting_Text" xml:space="preserve">
+    <value>Увімкнути вал</value>
+  </data>
   <data name="Global_Settings_Group_Header_Labelary" xml:space="preserve">
     <value>Етикетка</value>
   </data>
   <data name="Global_Settings_Group_Header_TCP" xml:space="preserve">
     <value>Налаштування TCP</value>
+  </data>
+  <data name="Global_Settings_Label_ApiUrl" xml:space="preserve">
+    <value>URL -адреса API</value>
+  </data>
+  <data name="Global_Settings_Label_Linger" xml:space="preserve">
+    <value>Затримати</value>
+  </data>
+  <data name="Global_Settings_Label_LingerTime" xml:space="preserve">
+    <value>Час затримки (секунди)</value>
+  </data>
+  <data name="Global_Settings_Label_Method" xml:space="preserve">
+    <value>Метод</value>
+  </data>
+  <data name="Global_Settings_Label_NoDelay" xml:space="preserve">
+    <value>Немає затримки</value>
+  </data>
+  <data name="Global_Settings_Label_ReceiveBufferSize" xml:space="preserve">
+    <value>Отримати розмір буфера (байти)</value>
+  </data>
+  <data name="Global_Settings_Label_ReceivedDataEncoding" xml:space="preserve">
+    <value>Отримані кодування даних</value>
+  </data>
+  <data name="Global_Settings_Label_ReceiveTimeout" xml:space="preserve">
+    <value>Отримати тайм -аут (MS)</value>
+  </data>
+  <data name="Global_Settings_Label_SendBufferSize" xml:space="preserve">
+    <value>Надіслати розмір буфера (байти)</value>
+  </data>
+  <data name="Global_Settings_Label_SendTimeout" xml:space="preserve">
+    <value>Надіслати тайм -аут (MS)</value>
+  </data>
+  <data name="Global_Settings_Label_Tcp" xml:space="preserve">
+    <value>Ці налаштування застосовуються до вхідного запиту із зовнішньої програми.</value>
   </data>
   <data name="Global_Settings_Title" xml:space="preserve">
     <value>Глобальні налаштування</value>
@@ -548,6 +641,9 @@
   </data>
   <data name="Printer_Configuration_Size" xml:space="preserve">
     <value>Розмір</value>
+  </data>
+  <data name="PrinterConfigurationViewModel_By" xml:space="preserve">
+    <value>за</value>
   </data>
   <data name="Send_Test_Label_Button_Text" xml:space="preserve">
     <value>Надіслати</value>

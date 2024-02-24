@@ -2,9 +2,11 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows</TargetFramework>
-		<Version>3.2.1</Version>
-		<FileVersion>3.2.1</FileVersion>
-		<AssemblyVersion>3.2.1</AssemblyVersion>
+		<Version>3.3.0</Version>
+		<FileVersion>3.3.0</FileVersion>
+		<AssemblyVersion>3.3.0</AssemblyVersion>
+		<GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
+		<UICulture>en-US</UICulture>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -49,4 +51,23 @@
 		<ProjectReference Include="..\VirtualPrinter.ApplicationSettings\VirtualPrinter.ApplicationSettings.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Properties\Strings.Designer.cs">
+	    <DependentUpon>Strings.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Strings.resx">
+	    <SubType>Designer</SubType>
+	    <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	</ItemGroup>
 </Project>

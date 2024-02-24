@@ -6,9 +6,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:resources="clr-namespace:VirtualPrinter.Properties"
 	Title="{x:Static resources:Strings.Configuration_View_Title}"
-	Width="875"
+	Width="Auto"
 	Height="690"
-	MinHeight="525"
 	Background="White"
 	Icon="/virtual-printer.ico"
 	ResizeMode="NoResize"
@@ -217,8 +216,8 @@
 
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="325" />
-			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="Auto" MinWidth="325"/>
+			<ColumnDefinition Width="*" MinWidth="425"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />

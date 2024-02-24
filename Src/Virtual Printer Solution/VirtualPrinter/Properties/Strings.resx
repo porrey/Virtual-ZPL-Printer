@@ -123,9 +123,6 @@
   <data name="About_Version" xml:space="preserve">
     <value>Version</value>
   </data>
-  <data name="PrinterConfigurationViewModel_By" xml:space="preserve">
-    <value>by</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -210,9 +207,6 @@
   <data name="Configure_Printer_Title" xml:space="preserve">
     <value>Configure Printer</value>
   </data>
-  <data name="Connectivity_Test_Message_Failed" xml:space="preserve">
-    <value>{0}Test completed with one or more failures</value>
-  </data>
   <data name="Connectivity_Test_Label_Text" xml:space="preserve">
     <value>TEST</value>
   </data>
@@ -221,6 +215,9 @@
   </data>
   <data name="Connectivity_Test_Message_Dns_Failed" xml:space="preserve">
     <value>{0}DNS lookup failed [FAILED]</value>
+  </data>
+  <data name="Connectivity_Test_Message_Failed" xml:space="preserve">
+    <value>{0}Test completed with one or more failures</value>
   </data>
   <data name="Connectivity_Test_Message_Host" xml:space="preserve">
     <value>{0}Found {1} address for host name [OK]</value>
@@ -240,6 +237,9 @@
   <data name="Connectivity_Test_Message_Start" xml:space="preserve">
     <value>Testing connectivity to '{0}'</value>
   </data>
+  <data name="Connectivity_Test_Message_Success" xml:space="preserve">
+    <value>{0}Test completed successfully</value>
+  </data>
   <data name="Connectivity_Test_Message_WebMethod_Failed" xml:space="preserve">
     <value>{0}{1}/{2} API method connection was unsuccessful [FAILED]</value>
   </data>
@@ -248,9 +248,6 @@
   </data>
   <data name="Connectivity_Test_Message_WebMethodTest_Success" xml:space="preserve">
     <value>{0}{1}/{2} API method connection was successful [OK]</value>
-  </data>
-  <data name="Connectivity_Test_Message_Success" xml:space="preserve">
-    <value>{0}Test completed successfully</value>
   </data>
   <data name="Connectivity_Test_Title" xml:space="preserve">
     <value>Test Labelary Connection</value>
@@ -349,11 +346,71 @@
   <data name="Filters_None" xml:space="preserve">
     <value>No Filters</value>
   </data>
+  <data name="Font_Manager_Button_Add_Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Font_Manager_Button_Add_Tooltip" xml:space="preserve">
+    <value>Add a new custom font.</value>
+  </data>
+  <data name="Font_Manager_Button_Browse_Tooltip" xml:space="preserve">
+    <value>Browse for a local TrueType font source file.</value>
+  </data>
+  <data name="Font_Manager_Button_Cancel_Tooltip" xml:space="preserve">
+    <value>Cancel the current changes and/or close the Font Manager.</value>
+  </data>
+  <data name="Font_Manager_Button_Delete_Tooltip" xml:space="preserve">
+    <value>Delete this font from the Font Manager.</value>
+  </data>
+  <data name="Font_Manager_Button_Ok_Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Font_Manager_Button_Ok_Tooltip" xml:space="preserve">
+    <value>Save the changes and close the Font Manager.</value>
+  </data>
+  <data name="Font_Manager_Button_Save_Tooltip" xml:space="preserve">
+    <value>Save the current changes to this font.</value>
+  </data>
+  <data name="Font_Manager_Button_Update_Tooltip" xml:space="preserve">
+    <value>Update the font using Labelary API.</value>
+  </data>
+  <data name="Font_Manager_Label" xml:space="preserve">
+    <value>Load custom TrueType fonts to be used in labels. Virtual ZPL Printer will automatically upload the fonts with the each label request to simulate fonts already loaded in the printer.</value>
+  </data>
+  <data name="Font_Manager_Label_ByteCount" xml:space="preserve">
+    <value>Byte Count</value>
+  </data>
+  <data name="Font_Manager_Label_CharacterDescription" xml:space="preserve">
+    <value>If provided, the font will be subset to contain only the specified characters.</value>
+  </data>
+  <data name="Font_Manager_Label_Characters" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="Font_Manager_Label_FontSource" xml:space="preserve">
+    <value>Font Source</value>
+  </data>
+  <data name="Font_Manager_Label_PrinterPath" xml:space="preserve">
+    <value>Printer Path</value>
+  </data>
+  <data name="Font_Manager_Title" xml:space="preserve">
+    <value>Font Manager</value>
+  </data>
   <data name="Font_Source_Found" xml:space="preserve">
     <value>Found</value>
   </data>
   <data name="Font_Source_Missing" xml:space="preserve">
     <value>Missing</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Delete_Text" xml:space="preserve">
+    <value>Are you sure you want to delete the selected font?</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Delete_Title" xml:space="preserve">
+    <value>Delete Font</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Filter" xml:space="preserve">
+    <value>TrueType Font|*.ttf|All Files|*.*</value>
+  </data>
+  <data name="Font_ViewModel_Dialog_Title" xml:space="preserve">
+    <value>Select TrueType Font File</value>
   </data>
   <data name="FontConversion_Error" xml:space="preserve">
     <value>The font does not support sub-setting characters.</value>
@@ -364,11 +421,47 @@
   <data name="Global_Settings_Button_Ok_Toolip" xml:space="preserve">
     <value>Save the changes and close the dialog.</value>
   </data>
+  <data name="Global_Settings_Checkbox_EnableLinting_Text" xml:space="preserve">
+    <value>Enable Linting</value>
+  </data>
   <data name="Global_Settings_Group_Header_Labelary" xml:space="preserve">
     <value>Labelary</value>
   </data>
   <data name="Global_Settings_Group_Header_TCP" xml:space="preserve">
     <value>TCP Settings</value>
+  </data>
+  <data name="Global_Settings_Label_ApiUrl" xml:space="preserve">
+    <value>API URL</value>
+  </data>
+  <data name="Global_Settings_Label_Linger" xml:space="preserve">
+    <value>Linger</value>
+  </data>
+  <data name="Global_Settings_Label_LingerTime" xml:space="preserve">
+    <value>Linger Time (seconds)</value>
+  </data>
+  <data name="Global_Settings_Label_Method" xml:space="preserve">
+    <value>Method</value>
+  </data>
+  <data name="Global_Settings_Label_NoDelay" xml:space="preserve">
+    <value>No Delay</value>
+  </data>
+  <data name="Global_Settings_Label_ReceiveBufferSize" xml:space="preserve">
+    <value>Receive Buffer Size (bytes)</value>
+  </data>
+  <data name="Global_Settings_Label_ReceivedDataEncoding" xml:space="preserve">
+    <value>Received Data Encoding</value>
+  </data>
+  <data name="Global_Settings_Label_ReceiveTimeout" xml:space="preserve">
+    <value>Receive Timeout (ms)</value>
+  </data>
+  <data name="Global_Settings_Label_SendBufferSize" xml:space="preserve">
+    <value>Send Buffer Size (bytes)</value>
+  </data>
+  <data name="Global_Settings_Label_SendTimeout" xml:space="preserve">
+    <value>Send Timeout (ms)</value>
+  </data>
+  <data name="Global_Settings_Label_Tcp" xml:space="preserve">
+    <value>These settings are applied to the incoming request from an external application.</value>
   </data>
   <data name="Global_Settings_Title" xml:space="preserve">
     <value>Global Settings</value>
@@ -549,6 +642,9 @@
   </data>
   <data name="Printer_Configuration_Size" xml:space="preserve">
     <value>Size</value>
+  </data>
+  <data name="PrinterConfigurationViewModel_By" xml:space="preserve">
+    <value>by</value>
   </data>
   <data name="Send_Test_Label_Button_Text" xml:space="preserve">
     <value>Send</value>

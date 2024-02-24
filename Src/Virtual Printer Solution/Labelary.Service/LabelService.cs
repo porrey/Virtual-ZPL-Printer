@@ -46,7 +46,7 @@ namespace Labelary.Service
 				this.Logger.LogDebug("Calling Labelary using POST method.");
 				returnValue = this.GetLabelViaPostAsync(labelConfiguration, zpl, labelIndex);
 			}
-			else
+			if (this.LabelServiceConfiguration.Method == "GET")
 			{
 				this.Logger.LogDebug("Calling Labelary using GET method.");
 				returnValue = this.GetLabelViaGetAsync(labelConfiguration, zpl, labelIndex);

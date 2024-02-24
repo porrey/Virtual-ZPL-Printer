@@ -49,7 +49,7 @@ namespace ImageCache.Repository
 				this.SetProperty(ref this._fullPath, value);
 
 				this.Timestamp = File.GetCreationTime(this.FullPath);
-				this.ActualTime = this.Timestamp.ToString("h:mm:ss.fff tt");
+				this.ActualTime = this.Timestamp.ToString();
 				this.RaisePropertyChanged(nameof(this.MetaDataFile));
 				this.RaisePropertyChanged(nameof(this.HasMetaData));
 
@@ -114,7 +114,7 @@ namespace ImageCache.Repository
 
 				if (this.HasMetaData)
 				{
-					returnValue = $"{returnValue} [The ZPL contains warnings]";
+					returnValue = $"{returnValue} [{Properties.Strings.Warnings}]";
 				}
 
 				return returnValue;

@@ -5,8 +5,8 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:resources="clr-namespace:VirtualPrinter.Properties"
 		Title="{x:Static resources:Strings.Global_Settings_Title}"
-		Width="550"
-		Height="480"
+		Width="Auto"
+		Height="Auto"
 		Icon="/virtual-printer.ico"
 		ResizeMode="NoResize"
 		WindowStartupLocation="CenterOwner"
@@ -25,8 +25,8 @@
 				  Header="{x:Static resources:Strings.Global_Settings_Group_Header_Labelary}">
 			<Grid Margin="10">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="1*" />
-					<ColumnDefinition Width="7*" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 
 				<Grid.RowDefinitions>
@@ -37,24 +37,24 @@
 
 				<TextBlock Grid.Row="0"
 						   Grid.Column="0"
-						   Margin="0,5,0,5"
+						   Margin="0,5,5,5"
 						   VerticalAlignment="Center"
-						   Text="API URL" />
+						   Text="{x:Static resources:Strings.Global_Settings_Label_ApiUrl}" />
 				<TextBox Grid.Row="0"
 						 Grid.Column="1"
-						 Margin="0,5,5,5"
+						 Margin="0,5,0,5"
 						 VerticalAlignment="Center"
 						 Text="{Binding ApiUrl, Mode=TwoWay}" />
 
 				<TextBlock Grid.Row="1"
 						   Grid.Column="0"
-						   Margin="0,5,0,5"
-						   VerticalAlignment="Center"
-						   Text="Method" />
+						   Margin="0,0,5,8"
+						   VerticalAlignment="Bottom"
+						   Text="{x:Static resources:Strings.Global_Settings_Label_Method}" />
 				<ComboBox Grid.Row="1"
 						  Grid.Column="1"
-						  Width="100"
-						  Margin="0,5,5,5"
+						  Width="175"
+						  Margin="0,5,0,5"
 						  HorizontalAlignment="Left"
 						  VerticalAlignment="Center"
 						  Text="{Binding ApiMethod, Mode=TwoWay}">
@@ -65,9 +65,9 @@
 				<CheckBox Grid.Row="2"
 						  Grid.Column="0"
 						  Grid.ColumnSpan="2"
-						  Margin="0,5,0,5"
+						  Margin="0,5,5,5"
 						  VerticalAlignment="Center"
-						  Content="Enable Linting"
+						  Content="{x:Static resources:Strings.Global_Settings_Checkbox_EnableLinting_Text}"
 						  IsChecked="{Binding ApiLinting, Mode=TwoWay}" />
 			</Grid>
 		</GroupBox>
@@ -79,13 +79,15 @@
 			<StackPanel Orientation="Vertical">
 				<TextBlock Margin="10,8,0,5"
 						   Foreground="{StaticResource ForegroundColor3}"
-						   Text="These settings are applied to the incoming request from an external application." />
+						   Text="{x:Static resources:Strings.Global_Settings_Label_Tcp}" />
 				<Grid Margin="10">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="2*" />
-						<ColumnDefinition Width="1*" />
-						<ColumnDefinition Width="2*" />
-						<ColumnDefinition Width="1*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="1*"
+										  MinWidth="120" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="1*"
+										  MinWidth="120" />
 					</Grid.ColumnDefinitions>
 
 					<Grid.RowDefinitions>
@@ -98,91 +100,95 @@
 
 					<TextBlock Grid.Row="0"
 							   Grid.Column="0"
-							   Margin="0"
+							   Margin="0,5,5,5"
 							   VerticalAlignment="Center"
-							   Text="Receive Timeout (ms)" />
+							   Text="{x:Static resources:Strings.Global_Settings_Label_ReceiveTimeout}" />
 					<TextBox Grid.Row="0"
 							 Grid.Column="1"
-							 Margin="0,0,5,0"
+							 Margin="0,5,0,5"
 							 VerticalAlignment="Center"
 							 InputScope="NumberFullWidth"
 							 Text="{Binding ReceiveTimeout, Mode=TwoWay}" />
 
 					<TextBlock Grid.Row="0"
 							   Grid.Column="2"
-							   Margin="5,5,0,5"
+							   Margin="5,5,5,5"
 							   VerticalAlignment="Center"
-							   Text="Send Timeout (ms)" />
+							   Text="{x:Static resources:Strings.Global_Settings_Label_SendTimeout}" />
 					<TextBox Grid.Row="0"
 							 Grid.Column="3"
-							 Margin="0,0,5,0"
+							 Margin="0,5,0,5"
 							 VerticalAlignment="Center"
 							 InputScope="NumberFullWidth"
 							 Text="{Binding SendTimeout, Mode=TwoWay}" />
 
 					<TextBlock Grid.Row="1"
 							   Grid.Column="0"
-							   Margin="0,5,0,5"
+							   Margin="0,5,5,5"
 							   VerticalAlignment="Center"
-							   Text="Receive Buffer Size (bytes)" />
+							   Text="{x:Static resources:Strings.Global_Settings_Label_ReceiveBufferSize}" />
 					<TextBox Grid.Row="1"
 							 Grid.Column="1"
-							 Margin="5,0,5,0"
+							 Margin="0,5,0,5"
 							 VerticalAlignment="Center"
 							 InputScope="NumberFullWidth"
 							 Text="{Binding ReceiveBufferSize, Mode=TwoWay}" />
 
 					<TextBlock Grid.Row="1"
 							   Grid.Column="2"
-							   Margin="5,5,0,5"
+							   Margin="5,5,5,5"
 							   VerticalAlignment="Center"
-							   Text="Send Buffer Size (bytes)" />
+							   Text="{x:Static resources:Strings.Global_Settings_Label_SendBufferSize}" />
 					<TextBox Grid.Row="1"
 							 Grid.Column="3"
-							 Margin="0,0,5,0"
+							 Margin="0,5,0,5"
 							 VerticalAlignment="Center"
 							 InputScope="NumberFullWidth"
 							 Text="{Binding SendBufferSize, Mode=TwoWay}" />
 
 					<CheckBox Grid.Row="2"
 							  Grid.Column="0"
-							  Margin="0,5,0,5"
+							  Margin="0,5,5,5"
 							  VerticalAlignment="Center"
-							  Content="No Delay"
+							  Content="{x:Static resources:Strings.Global_Settings_Label_NoDelay}"
 							  IsChecked="{Binding NoDelay, Mode=TwoWay}" />
 
-					<CheckBox Grid.Row="3"
+					<CheckBox x:Name="Linger"
+							  Grid.Row="3"
 							  Grid.Column="0"
+							  Margin="0,5,5,5"
 							  VerticalAlignment="Center"
-							  Content="Linger"
+							  Content="{x:Static resources:Strings.Global_Settings_Label_Linger}"
 							  IsChecked="{Binding Linger, Mode=TwoWay}" />
 
 					<TextBlock Grid.Row="3"
 							   Grid.Column="2"
-							   Margin="5,5,0,5"
+							   Margin="5,5,5,5"
 							   VerticalAlignment="Center"
-							   Text="Linger Time (seconds)" />
+							   Text="{x:Static resources:Strings.Global_Settings_Label_LingerTime}"
+							   IsEnabled="{Binding IsChecked, ElementName=Linger, Converter={StaticResource BooleanToVisibilityConverter}}" />
 					<TextBox Grid.Row="3"
 							 Grid.Column="3"
 							 Margin="0,5,0,5"
 							 VerticalAlignment="Center"
 							 InputScope="NumberFullWidth"
-							 Text="{Binding LingerTime, Mode=TwoWay}" />
+							 Text="{Binding LingerTime, Mode=TwoWay}"
+							 IsEnabled="{Binding IsChecked, ElementName=Linger, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
 					<TextBlock Grid.Row="4"
 							   Grid.Column="0"
-							   Margin="0,5,0,5"
+							   Margin="0,5,5,5"
 							   VerticalAlignment="Center"
-							   Text="Received Data Encoding" />
+							   Text="{x:Static resources:Strings.Global_Settings_Label_ReceivedDataEncoding}" />
 					<ComboBox Grid.Row="4"
 							  Grid.Column="1"
-							  Margin="0,0,5,0"
+							  Margin="0,5,0,5"
 							  VerticalAlignment="Center"
 							  InputScope="NumberFullWidth"
 							  SelectedIndex="0"
 							  Text="{Binding ReceivedDataEncoding, Mode=TwoWay}">
-						<ComboBoxItem>utf-8</ComboBoxItem>
-						<ComboBoxItem>iso-8859-1</ComboBoxItem>
+						<ComboBoxItem>UTF-8</ComboBoxItem>
+						<ComboBoxItem>ISO-8859-1</ComboBoxItem>
 					</ComboBox>
 				</Grid>
 			</StackPanel>
@@ -215,14 +221,14 @@
 
 						<Image Width="24"
 							   Height="24"
-							   Source="/Assets/ok.png"
-							   Margin="{StaticResource ButtonImageMargin}" />
+							   Margin="{StaticResource ButtonImageMargin}"
+							   Source="/Assets/ok.png" />
 
 						<TextBlock Grid.Row="1"
+								   Margin="{StaticResource ButtonTextMargin}"
 								   HorizontalAlignment="Center"
 								   FontSize="11"
-								   Text="{x:Static resources:Strings.Ok}"
-								   Margin="{StaticResource ButtonTextMargin}" />
+								   Text="{x:Static resources:Strings.Ok}" />
 					</Grid>
 				</Button.Content>
 			</Button>
@@ -245,14 +251,14 @@
 
 						<Image Width="24"
 							   Height="24"
-							   Source="/Assets/cancel.png"
-							   Margin="{StaticResource ButtonImageMargin}" />
+							   Margin="{StaticResource ButtonImageMargin}"
+							   Source="/Assets/cancel.png" />
 
 						<TextBlock Grid.Row="1"
+								   Margin="{StaticResource ButtonTextMargin}"
 								   HorizontalAlignment="Center"
 								   FontSize="11"
-								   Text="{x:Static resources:Strings.Cancel}"
-								   Margin="{StaticResource ButtonTextMargin}" />
+								   Text="{x:Static resources:Strings.Cancel}" />
 					</Grid>
 				</Button.Content>
 			</Button>
