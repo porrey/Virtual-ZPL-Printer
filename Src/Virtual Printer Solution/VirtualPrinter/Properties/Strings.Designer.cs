@@ -1105,6 +1105,24 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GET.
+        /// </summary>
+        public static string Global_Settings_WebMethod_Get {
+            get {
+                return ResourceManager.GetString("Global_Settings_WebMethod_Get", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POST.
+        /// </summary>
+        public static string Global_Settings_WebMethod_Post {
+            get {
+                return ResourceManager.GetString("Global_Settings_WebMethod_Post", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Any.
         /// </summary>
         public static string HostAddress_Any {

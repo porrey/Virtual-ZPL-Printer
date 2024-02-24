@@ -1,26 +1,28 @@
-﻿<Window x:Class="VirtualPrinter.Views.MainView"
-		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:resources="clr-namespace:VirtualPrinter.Properties"
-		mc:Ignorable="d"
-		Title="{x:Static resources:Strings.Main_Title}"
-		MinHeight="435"
-		MinWidth="600"
-		Icon="/virtual-printer.ico"
-		ResizeMode="CanResize"
-		WindowStartupLocation="Manual"
-		WindowStyle="ThreeDBorderWindow"
-		Background="White">
+﻿<Window
+	x:Class="VirtualPrinter.Views.MainView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:resources="clr-namespace:VirtualPrinter.Properties"
+	Title="{x:Static resources:Strings.Main_Title}"
+	MinWidth="600"
+	MinHeight="435"
+	Background="White"
+	Icon="/virtual-printer.ico"
+	ResizeMode="CanResize"
+	WindowStartupLocation="Manual"
+	WindowStyle="ThreeDBorderWindow"
+	mc:Ignorable="d">
 
 	<Window.Resources>
 		<DataTemplate x:Key="LabelTemplate">
-			<Border Background="{StaticResource BackgroundColor1}"
-					CornerRadius="{StaticResource Radius}"
-					Margin="5"
-					Width="105"
-					ToolTip="{Binding Information}">
+			<Border
+				Width="105"
+				Margin="5"
+				Background="{StaticResource BackgroundColor1}"
+				CornerRadius="{StaticResource Radius}"
+				ToolTip="{Binding StoredImage.Information}">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*" />
@@ -31,67 +33,74 @@
 						<ColumnDefinition Width="30" />
 					</Grid.ColumnDefinitions>
 
-					<Image Grid.Row="0"
-						   Grid.Column="0"
-						   Margin="3,8,3,2"
-						   Source="{Binding StoredImage.FullPath, Converter={StaticResource StringToImageSourceConverter}}"
-						   HorizontalAlignment="Center"
-						   Width="64"
-						   Height="64" />
+					<Image
+						Grid.Row="0"
+						Grid.Column="0"
+						Width="64"
+						Height="64"
+						Margin="3,8,3,2"
+						HorizontalAlignment="Center"
+						Source="{Binding StoredImage.FullPath, Converter={StaticResource StringToImageSourceConverter}}" />
 
-					<Grid Grid.Row="0"
-						  Grid.RowSpan="2"
-						  Grid.Column="1">
+					<Grid
+						Grid.Row="0"
+						Grid.RowSpan="2"
+						Grid.Column="1">
 
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Button Grid.Row="0"
-								Style="{DynamicResource ButtonStyle1}"
-								Command="{Binding ViewImageCommand}"
-								VerticalAlignment="Top"
-								HorizontalAlignment="Right"
-								Width="24"
-								Height="24"
-								Margin="0,2,2,0">
+						<Button
+							Grid.Row="0"
+							Width="24"
+							Height="24"
+							Margin="0,2,2,0"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Top"
+							Command="{Binding ViewImageCommand}"
+							Style="{DynamicResource ButtonStyle1}">
 							<Button.Content>
-								<Image Grid.Row="0"
-									   Margin="3,3,3,3"
-									   Source="/Assets/label-preview.png"
-									   HorizontalAlignment="Center" />
+								<Image
+									Grid.Row="0"
+									Margin="3,3,3,3"
+									HorizontalAlignment="Center"
+									Source="/Assets/label-preview.png" />
 							</Button.Content>
 						</Button>
 
-						<Button Grid.Row="1"
-								Style="{DynamicResource ButtonStyle1}"
-								Command="{Binding ViewMetaDataCommand}"
-								VerticalAlignment="Top"
-								HorizontalAlignment="Right"
-								Width="24"
-								Height="24"
-								Margin="0,2,2,0"
-								Visibility="{Binding StoredImage.HasMetaData, Converter={StaticResource BooleanToVisibilityConverter}}">
+						<Button
+							Grid.Row="1"
+							Width="24"
+							Height="24"
+							Margin="0,2,2,0"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Top"
+							Command="{Binding ViewMetaDataCommand}"
+							Style="{DynamicResource ButtonStyle1}"
+							Visibility="{Binding StoredImage.HasMetaData, Converter={StaticResource BooleanToVisibilityConverter}}">
 							<Button.Content>
-								<Image Grid.Row="0"
-									   Margin="3,3,3,3"
-									   Source="/Assets/warning.png"
-									   HorizontalAlignment="Center" />
+								<Image
+									Grid.Row="0"
+									Margin="3,3,3,3"
+									HorizontalAlignment="Center"
+									Source="/Assets/warning.png" />
 							</Button.Content>
 						</Button>
 					</Grid>
 
-					<TextBlock Grid.Row="1"
-							   Grid.ColumnSpan="2"
-							   Grid.Column="0"
-							   Text="{Binding StoredImage.DisplayLabel}"
-							   VerticalAlignment="Center"
-							   HorizontalAlignment="Center"
-							   Foreground="White"
-							   Margin="4,2,8,3"
-							   TextWrapping="Wrap"
-							   TextAlignment="Center" />
+					<TextBlock
+						Grid.Row="1"
+						Grid.Column="0"
+						Grid.ColumnSpan="2"
+						Margin="4,2,8,3"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						Foreground="White"
+						Text="{Binding StoredImage.DisplayLabel}"
+						TextAlignment="Center"
+						TextWrapping="Wrap" />
 				</Grid>
 			</Border>
 		</DataTemplate>
@@ -102,123 +111,130 @@
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
-				<Image Grid.Column="0"
-					   Source="/Assets/printer-configuration.png"
-					   Height="24"
-					   Width="24"
-					   Margin="0,0,10,0" />
+				<Image
+					Grid.Column="0"
+					Width="24"
+					Height="24"
+					Margin="0,0,10,0"
+					Source="/Assets/printer-configuration.png" />
 
-				<TextBlock Grid.Column="1"
-						   Text="{Binding Description}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   TextWrapping="NoWrap"
-						   TextTrimming="CharacterEllipsis"
-						   Foreground="{StaticResource ForegroundColor1}" />
+				<TextBlock
+					Grid.Column="1"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{Binding Description}"
+					TextTrimming="CharacterEllipsis"
+					TextWrapping="NoWrap" />
 			</Grid>
 		</DataTemplate>
 	</Window.Resources>
 
 	<Window.InputBindings>
-		<KeyBinding Modifiers="Control"
-					Key="E"
-					Command="{Binding EditCommand}" />
-		<KeyBinding Modifiers="Control"
-					Key="P"
-					Command="{Binding StartCommand}" />
-		<KeyBinding Modifiers="Control"
-					Key="S"
-					Command="{Binding StopCommand}" />
-		<KeyBinding Modifiers="Control"
-					Key="T"
-					Command="{Binding SendTestLabelCommand}" />
-		<KeyBinding Modifiers="Control"
-					Key="F"
-					Command="{Binding FontManagerCommand}" />
+		<KeyBinding
+			Key="E"
+			Command="{Binding EditCommand}"
+			Modifiers="Control" />
+		<KeyBinding
+			Key="P"
+			Command="{Binding StartCommand}"
+			Modifiers="Control" />
+		<KeyBinding
+			Key="S"
+			Command="{Binding StopCommand}"
+			Modifiers="Control" />
+		<KeyBinding
+			Key="T"
+			Command="{Binding SendTestLabelCommand}"
+			Modifiers="Control" />
+		<KeyBinding
+			Key="F"
+			Command="{Binding FontManagerCommand}"
+			Modifiers="Control" />
 	</Window.InputBindings>
 
 	<DockPanel>
-		<Menu Padding="2,5,2,5"
-			  DockPanel.Dock="Top"
-			  BorderThickness="0,0,0,1"
-			  BorderBrush="{StaticResource BorderColor}">
+		<Menu
+			Padding="2,5,2,5"
+			BorderBrush="{StaticResource BorderColor}"
+			BorderThickness="0,0,0,1"
+			DockPanel.Dock="Top">
 			<MenuItem Header="{x:Static resources:Strings.Main_Menu_Printer}">
-				<MenuItem Header="{x:Static resources:Strings.Main_Menu_Printer_Edit}"
-						  Command="{Binding EditCommand}"
-						  InputGestureText="Ctrl+E">
+				<MenuItem
+					Command="{Binding EditCommand}"
+					Header="{x:Static resources:Strings.Main_Menu_Printer_Edit}"
+					InputGestureText="Ctrl+E">
 					<MenuItem.Icon>
 						<Image Source="/Assets/edit-printer-configuration.png" />
 					</MenuItem.Icon>
 				</MenuItem>
 				<Separator />
-				<MenuItem Header="{x:Static resources:Strings.Main_Menu_Printer_FontManager}"
-						  Command="{Binding FontManagerCommand}"
-						  InputGestureText="Ctrl+F">
+				<MenuItem
+					Command="{Binding FontManagerCommand}"
+					Header="{x:Static resources:Strings.Main_Menu_Printer_FontManager}"
+					InputGestureText="Ctrl+F">
 					<MenuItem.Icon>
 						<Image Source="/Assets/font-manager.png" />
 					</MenuItem.Icon>
 				</MenuItem>
 				<Separator />
-				<MenuItem Header="{x:Static resources:Strings.Main_Menu_Printer_Start}"
-						  Command="{Binding StartCommand}"
-						  InputGestureText="Ctrl+P">
+				<MenuItem
+					Command="{Binding StartCommand}"
+					Header="{x:Static resources:Strings.Main_Menu_Printer_Start}"
+					InputGestureText="Ctrl+P">
 					<MenuItem.Icon>
 						<Image Source="/Assets/start.png" />
 					</MenuItem.Icon>
 				</MenuItem>
-				<MenuItem Header="{x:Static resources:Strings.Main_Menu_Printer_Stop}"
-						  Command="{Binding StopCommand}"
-						  InputGestureText="Ctrl+S">
+				<MenuItem
+					Command="{Binding StopCommand}"
+					Header="{x:Static resources:Strings.Main_Menu_Printer_Stop}"
+					InputGestureText="Ctrl+S">
 					<MenuItem.Icon>
 						<Image Source="/Assets/stop.png" />
 					</MenuItem.Icon>
 				</MenuItem>
 				<Separator />
-				<MenuItem Header="{x:Static resources:Strings.Main_Menu_Printer_View}"
-						  Command="{Binding LabelPreviewCommand}">
+				<MenuItem Command="{Binding LabelPreviewCommand}" Header="{x:Static resources:Strings.Main_Menu_Printer_View}">
 					<MenuItem.Icon>
 						<Image Source="/Assets/label-preview.png" />
 					</MenuItem.Icon>
 				</MenuItem>
-				<MenuItem Header="{x:Static resources:Strings.Main_Menu_Printer_Delete}"
-						  Command="{Binding DeleteLabelCommand}">
+				<MenuItem Command="{Binding DeleteLabelCommand}" Header="{x:Static resources:Strings.Main_Menu_Printer_Delete}">
 					<MenuItem.Icon>
 						<Image Source="/Assets/trash-bin.png" />
 					</MenuItem.Icon>
 				</MenuItem>
-				<MenuItem Header="{x:Static resources:Strings.Main_Menu_Printer_Clear}"
-						  Command="{Binding ClearLabelsCommand}">
+				<MenuItem Command="{Binding ClearLabelsCommand}" Header="{x:Static resources:Strings.Main_Menu_Printer_Clear}">
 					<MenuItem.Icon>
 						<Image Source="/Assets/clear-label.png" />
 					</MenuItem.Icon>
 				</MenuItem>
 				<Separator />
-				<MenuItem Header="{x:Static resources:Strings.Main_Menu_Printer_Test}"
-						  Command="{Binding SendTestLabelCommand}"
-						  InputGestureText="Ctrl+T">
+				<MenuItem
+					Command="{Binding SendTestLabelCommand}"
+					Header="{x:Static resources:Strings.Main_Menu_Printer_Test}"
+					InputGestureText="Ctrl+T">
 					<MenuItem.Icon>
 						<Image Source="/Assets/test-label.png" />
 					</MenuItem.Icon>
 				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="{x:Static resources:Strings.Main_Menu_Connection}">
-				<MenuItem Header="{x:Static resources:Strings.Main_Menu_Connection_Test_Labelary}"
-						  Command="{Binding TestLabelaryCommand}">
+				<MenuItem Command="{Binding TestLabelaryCommand}" Header="{x:Static resources:Strings.Main_Menu_Connection_Test_Labelary}">
 					<MenuItem.Icon>
 						<Image Source="/Assets/test-labelary.png" />
 					</MenuItem.Icon>
 				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="{x:Static resources:Strings.Main_Menu_Options}">
-				<MenuItem Header="{x:Static resources:Strings.Main_Menu_Options_Global_Settings}"
-						  Command="{Binding GlobalSettingsCommand}">
+				<MenuItem Command="{Binding GlobalSettingsCommand}" Header="{x:Static resources:Strings.Main_Menu_Options_Global_Settings}">
 					<MenuItem.Icon>
 						<Image Source="/Assets/global-settings.png" />
 					</MenuItem.Icon>
 				</MenuItem>
 				<Separator />
-				<MenuItem Header="{x:Static resources:Strings.Main_Menu_Options_About}"
-						  Command="{Binding AboutCommand}">
+				<MenuItem Command="{Binding AboutCommand}" Header="{x:Static resources:Strings.Main_Menu_Options_About}">
 					<MenuItem.Icon>
 						<Image Source="/Assets/virtual-printer.png" />
 					</MenuItem.Icon>
@@ -231,70 +247,72 @@
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
-				<RowDefinition Height="Auto"
-							   MinHeight="140" />
+				<RowDefinition Height="Auto" MinHeight="140" />
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 
-			<!-- Properties -->
-			<Grid Grid.Row="0"
-				  IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}">
+			<!--  Properties  -->
+			<Grid Grid.Row="0" IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 
-				<Image Source="/Assets/printer-running.png"
-					   Width="42"
-					   Height="42"
-					   Margin="15"
-					   Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" />
+				<Image
+					Width="42"
+					Height="42"
+					Margin="15"
+					Source="/Assets/printer-running.png"
+					Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" />
 
-				<Image Source="/Assets/printer-stopped.png"
-					   Width="42"
-					   Height="42"
-					   Margin="15"
-					   Visibility="{Binding IsRunning, Converter={StaticResource NotBooleanToVisibilityConverter}, FallbackValue=Visible}" />
+				<Image
+					Width="42"
+					Height="42"
+					Margin="15"
+					Source="/Assets/printer-stopped.png"
+					Visibility="{Binding IsRunning, Converter={StaticResource NotBooleanToVisibilityConverter}, FallbackValue=Visible}" />
 
-				<Grid Grid.Column="1"
-					  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}">
+				<Grid Grid.Column="1" IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
-						<ColumnDefinition SharedSizeGroup="ButtonGroup1"/>
+						<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
 					</Grid.ColumnDefinitions>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="1*" />
 						<RowDefinition Height="1*" />
 					</Grid.RowDefinitions>
 
-					<TextBlock Grid.Column="0"
-							   Grid.Row="0"
-							   Text="{x:Static resources:Strings.Main_TextBlock_SelectConfiguration}"
-							   Margin="5,5,5,0"
-							   VerticalAlignment="Center"
-							   HorizontalAlignment="Left"
-							   Foreground="{StaticResource ForegroundColor1}" />
-					<ComboBox Grid.Column="0"
-							  Grid.Row="1"
-							  Margin="5,0,5,10"
-							  Height="{StaticResource ControlHeight}"
-							  VerticalContentAlignment="Center"
-							  HorizontalContentAlignment="Left"
-							  IsReadOnly="true"
-							  Foreground="{StaticResource ForegroundColor1}"
-							  ItemsSource="{Binding PrinterConfigurations}"
-							  SelectedItem="{Binding SelectedPrinterConfiguration}"
-							  ItemTemplate="{StaticResource PrinterConfigurationTemplate}" />
-					<Button Grid.Column="1"
-							Grid.Row="0"
-							Grid.RowSpan="2"
-							Style="{DynamicResource ButtonStyle1}"
-							VerticalAlignment="Bottom"
-							HorizontalAlignment="Stretch"
-							Command="{Binding EditCommand}"
-							Height="{StaticResource StatusButtonHeight}"
-							Margin="{StaticResource ButtonMargin}"
-							ToolTip="{x:Static resources:Strings.Main_Button_Edit_Toolip}">
+					<TextBlock
+						Grid.Row="0"
+						Grid.Column="0"
+						Margin="5,5,5,0"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Center"
+						Foreground="{StaticResource ForegroundColor1}"
+						Text="{x:Static resources:Strings.Main_TextBlock_SelectConfiguration}" />
+					<ComboBox
+						Grid.Row="1"
+						Grid.Column="0"
+						Height="{StaticResource ControlHeight}"
+						Margin="5,0,5,10"
+						HorizontalContentAlignment="Left"
+						VerticalContentAlignment="Center"
+						Foreground="{StaticResource ForegroundColor1}"
+						IsReadOnly="true"
+						ItemTemplate="{StaticResource PrinterConfigurationTemplate}"
+						ItemsSource="{Binding PrinterConfigurations}"
+						SelectedItem="{Binding SelectedPrinterConfiguration}" />
+					<Button
+						Grid.Row="0"
+						Grid.RowSpan="2"
+						Grid.Column="1"
+						Height="{StaticResource StatusButtonHeight}"
+						Margin="{StaticResource ButtonMargin}"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Bottom"
+						Command="{Binding EditCommand}"
+						Style="{DynamicResource ButtonStyle1}"
+						ToolTip="{x:Static resources:Strings.Main_Button_Edit_Toolip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -302,29 +320,32 @@
 									<RowDefinition Height="Auto" />
 								</Grid.RowDefinitions>
 
-								<Image Source="/Assets/edit-printer-configuration.png"
-									   Width="24"
-									   Height="24"
-									   HorizontalAlignment="Center"
-									   Margin="{StaticResource ButtonImageMargin}" />
+								<Image
+									Width="24"
+									Height="24"
+									Margin="{StaticResource ButtonImageMargin}"
+									HorizontalAlignment="Center"
+									Source="/Assets/edit-printer-configuration.png" />
 
-								<TextBlock Grid.Row="1"
-										   Text="{x:Static resources:Strings.Main_Button_Edit_Text}"
-										   FontSize="11"
-										   HorizontalAlignment="Center"
-										   Margin="{StaticResource ButtonTextMargin}" />
+								<TextBlock
+									Grid.Row="1"
+									Margin="{StaticResource ButtonTextMargin}"
+									HorizontalAlignment="Center"
+									FontSize="11"
+									Text="{x:Static resources:Strings.Main_Button_Edit_Text}" />
 							</Grid>
 						</Button.Content>
 					</Button>
 				</Grid>
 			</Grid>
 
-			<!-- Control Panel -->
-			<Border Grid.Row="1"
-					BorderThickness="0,1,0,0"
-					BorderBrush="{StaticResource BorderColor}"
-					IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}"
-					Background="#f5f5f5">
+			<!--  Control Panel  -->
+			<Border
+				Grid.Row="1"
+				Background="#f5f5f5"
+				BorderBrush="{StaticResource BorderColor}"
+				BorderThickness="0,1,0,0"
+				IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}">
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -333,23 +354,25 @@
 						<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
 					</Grid.ColumnDefinitions>
 
-					<CheckBox Grid.Column="0"
-							  Content="{x:Static resources:Strings.Main_Checkbox_AutoStart}"
-							  VerticalAlignment="Center"
-							  HorizontalAlignment="Left"
-							  Margin="10,3,10,3"
-							  IsChecked="{Binding AutoStart}"
-							  IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}"
-							  Foreground="{StaticResource ForegroundColor1}" />
+					<CheckBox
+						Grid.Column="0"
+						Margin="10,3,10,3"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Center"
+						Content="{x:Static resources:Strings.Main_Checkbox_AutoStart}"
+						Foreground="{StaticResource ForegroundColor1}"
+						IsChecked="{Binding AutoStart}"
+						IsEnabled="{Binding IsRunning, Converter={StaticResource NotBooleanConverter}}" />
 
-					<Button Grid.Column="3"
-							Style="{DynamicResource ButtonStyle1}"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Stretch"
-							Command="{Binding StopCommand}"
-							Height="{StaticResource StatusButtonHeight}"
-							Margin="{StaticResource ButtonMargin}"
-							ToolTip="{x:Static resources:Strings.Main_Button_Stop_Tooltip}">
+					<Button
+						Grid.Column="3"
+						Height="{StaticResource StatusButtonHeight}"
+						Margin="{StaticResource ButtonMargin}"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Center"
+						Command="{Binding StopCommand}"
+						Style="{DynamicResource ButtonStyle1}"
+						ToolTip="{x:Static resources:Strings.Main_Button_Stop_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -357,29 +380,32 @@
 									<RowDefinition Height="Auto" />
 								</Grid.RowDefinitions>
 
-								<Image Source="/Assets/stop.png"
-									   Width="24"
-									   Height="24"
-									   HorizontalAlignment="Center"
-									   Margin="{StaticResource ButtonImageMargin}" />
+								<Image
+									Width="24"
+									Height="24"
+									Margin="{StaticResource ButtonImageMargin}"
+									HorizontalAlignment="Center"
+									Source="/Assets/stop.png" />
 
-								<TextBlock Grid.Row="1"
-										   Text="{x:Static resources:Strings.Main_Button_Stop_Text}"
-										   FontSize="11"
-										   HorizontalAlignment="Center"
-										   Margin="{StaticResource ButtonTextMargin}" />
+								<TextBlock
+									Grid.Row="1"
+									Margin="{StaticResource ButtonTextMargin}"
+									HorizontalAlignment="Center"
+									FontSize="11"
+									Text="{x:Static resources:Strings.Main_Button_Stop_Text}" />
 							</Grid>
 						</Button.Content>
 					</Button>
 
-					<Button Grid.Column="2"
-							Style="{DynamicResource ButtonStyle1}"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Stretch"
-							Command="{Binding StartCommand}"
-							Height="{StaticResource StatusButtonHeight}"
-							Margin="{StaticResource ButtonMargin}"
-							ToolTip="{x:Static resources:Strings.Main_Button_Start_Tooltip}">
+					<Button
+						Grid.Column="2"
+						Height="{StaticResource StatusButtonHeight}"
+						Margin="{StaticResource ButtonMargin}"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Center"
+						Command="{Binding StartCommand}"
+						Style="{DynamicResource ButtonStyle1}"
+						ToolTip="{x:Static resources:Strings.Main_Button_Start_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -387,46 +413,50 @@
 									<RowDefinition Height="Auto" />
 								</Grid.RowDefinitions>
 
-								<Image Source="/Assets/start.png"
-									   Width="24"
-									   Height="24"
-									   HorizontalAlignment="Center"
-									   Margin="{StaticResource ButtonImageMargin}" />
+								<Image
+									Width="24"
+									Height="24"
+									Margin="{StaticResource ButtonImageMargin}"
+									HorizontalAlignment="Center"
+									Source="/Assets/start.png" />
 
-								<TextBlock Grid.Row="1"
-										   Text="{x:Static resources:Strings.Main_Button_Start_Text}"
-										   FontSize="11"
-										   HorizontalAlignment="Center"
-										   Margin="{StaticResource ButtonTextMargin}" />
+								<TextBlock
+									Grid.Row="1"
+									Margin="{StaticResource ButtonTextMargin}"
+									HorizontalAlignment="Center"
+									FontSize="11"
+									Text="{x:Static resources:Strings.Main_Button_Start_Text}" />
 							</Grid>
 						</Button.Content>
 					</Button>
 				</Grid>
 			</Border>
 
-			<!-- Label Image -->
-			<Grid x:Name="LabelImage"
-				  Grid.Row="2"
-				  Background="{StaticResource BackgroundColor1}">
-				<Image Source="{Binding SelectedLabel.StoredImage.FullPath, Converter={StaticResource StringToImageSourceConverter}}"
-					   Stretch="Uniform"
-					   Visibility="{Binding SelectedLabel.StoredImage, Converter={StaticResource ObjectToVisibilityConverter}}"
-					   Margin="10,20,10,20">
-				</Image>
+			<!--  Label Image  -->
+			<Grid
+				x:Name="LabelImage"
+				Grid.Row="2"
+				Background="{StaticResource BackgroundColor1}">
+				<Image
+					Margin="10,20,10,20"
+					Source="{Binding SelectedLabel.StoredImage.FullPath, Converter={StaticResource StringToImageSourceConverter}}"
+					Stretch="Uniform"
+					Visibility="{Binding SelectedLabel.StoredImage, Converter={StaticResource ObjectToVisibilityConverter}}" />
 			</Grid>
 
-			<!-- Label History -->
+			<!--  Label History  -->
 			<Grid Grid.Row="3">
-				<ListView x:Name="ListView"
-						  BorderThickness="0"
-						  SelectionChanged="ListView_SelectionChanged"
-						  ItemsSource="{Binding Labels}"
-						  ItemTemplate="{StaticResource LabelTemplate}"
-						  SelectedItem="{Binding SelectedLabel}"
-						  SelectionMode="Single"
-						  ScrollViewer.CanContentScroll="False"
-						  IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}"
-						  Margin="0,0,0,1">
+				<ListView
+					x:Name="ListView"
+					Margin="0,0,0,1"
+					BorderThickness="0"
+					IsEnabled="{Binding IsBusy, Converter={StaticResource NotBooleanConverter}}"
+					ItemTemplate="{StaticResource LabelTemplate}"
+					ItemsSource="{Binding Labels}"
+					ScrollViewer.CanContentScroll="False"
+					SelectedItem="{Binding SelectedLabel}"
+					SelectionChanged="ListView_SelectionChanged"
+					SelectionMode="Single">
 					<ListView.ItemsPanel>
 						<ItemsPanelTemplate>
 							<StackPanel Orientation="Horizontal" />
@@ -434,22 +464,18 @@
 					</ListView.ItemsPanel>
 					<ListView.ContextMenu>
 						<ContextMenu Opened="ContextMenu_Opened">
-							<MenuItem Header="View Label Image"
-									  Command="{Binding LabelPreviewCommand}">
+							<MenuItem Command="{Binding LabelPreviewCommand}" Header="View Label Image">
 								<MenuItem.Icon>
-									<Image Source="/Assets/label-preview.png"
-										   IsEnabled="{Binding }" />
+									<Image Source="/Assets/label-preview.png" />
 								</MenuItem.Icon>
 							</MenuItem>
-							<MenuItem Header="View Warnings"
-									  Command="{Binding LabelWarningsCommand}">
+							<MenuItem Command="{Binding LabelWarningsCommand}" Header="View Warnings">
 								<MenuItem.Icon>
 									<Image Source="/Assets/warning.png" />
 								</MenuItem.Icon>
 							</MenuItem>
 							<Separator />
-							<MenuItem Header="Delete"
-									  Command="{Binding DeleteLabelCommand}">
+							<MenuItem Command="{Binding DeleteLabelCommand}" Header="Delete">
 								<MenuItem.Icon>
 									<Image Source="/Assets/trash-bin.png" />
 								</MenuItem.Icon>
@@ -457,25 +483,26 @@
 						</ContextMenu>
 					</ListView.ContextMenu>
 					<ListView.InputBindings>
-						<KeyBinding Key="Del"
-									Command="{Binding DeleteLabelCommand}" />
+						<KeyBinding Key="Del" Command="{Binding DeleteLabelCommand}" />
 					</ListView.InputBindings>
 				</ListView>
 
-				<TextBlock Text="{x:Static resources:Strings.Main_TextBlock_NoCachedLabels}"
-						   Margin="0,0,0,10"
-						   FontSize="55"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Center"
-						   Foreground="#f1f1f1"
-						   Visibility="{Binding Labels, Converter={StaticResource ListZeroCountToVisibilityConverter}, Mode=OneWay}" />
+				<TextBlock
+					Margin="0,0,0,10"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center"
+					FontSize="55"
+					Foreground="#f1f1f1"
+					Text="{x:Static resources:Strings.Main_TextBlock_NoCachedLabels}"
+					Visibility="{Binding Labels, Converter={StaticResource ListZeroCountToVisibilityConverter}, Mode=OneWay}" />
 			</Grid>
 
-			<!-- Status Bar -->
-			<Border Grid.Row="4"
-					BorderThickness="0,1,0,0"
-					BorderBrush="{StaticResource BorderColor}"
-					Padding="0,3,0,3">
+			<!--  Status Bar  -->
+			<Border
+				Grid.Row="4"
+				Padding="0,3,0,3"
+				BorderBrush="{StaticResource BorderColor}"
+				BorderThickness="0,1,0,0">
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="3*" />
@@ -488,67 +515,73 @@
 						<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
 					</Grid.ColumnDefinitions>
 
-					<TextBlock Grid.Column="0"
-							   Text="{Binding StatusText}"
-							   VerticalAlignment="Center"
-							   HorizontalAlignment="Left"
-							   FontSize="18"
-							   Margin="10,0,0,0"
-							   Foreground="{StaticResource ForegroundColor1}" />
+					<TextBlock
+						Grid.Column="0"
+						Margin="10,0,0,0"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Center"
+						FontSize="18"
+						Foreground="{StaticResource ForegroundColor1}"
+						Text="{Binding StatusText}" />
 
-					<ProgressBar Style="{DynamicResource ProgressBarStyle1}"
-								 Grid.Column="1"
-								 Width="75"
-								 IsIndeterminate="True"
-								 Margin="3,15,3,15"
-								 Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
-								 Orientation="Horizontal" />
+					<ProgressBar
+						Grid.Column="1"
+						Width="75"
+						Margin="3,15,3,15"
+						IsIndeterminate="True"
+						Orientation="Horizontal"
+						Style="{DynamicResource ProgressBarStyle1}"
+						Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-					<Rectangle Grid.Column="2"
-							   VerticalAlignment="Stretch"
-							   HorizontalAlignment="Center"
-							   Margin="2,10,2,10"
-							   Width="1"
-							   Fill="{StaticResource BorderColor}" />
+					<Rectangle
+						Grid.Column="2"
+						Width="1"
+						Margin="2,10,2,10"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Stretch"
+						Fill="{StaticResource BorderColor}" />
 
-					<!-- Idle -->
-					<StackPanel Grid.Column="3"
-								Orientation="Horizontal"
-								Margin="20,0,20,0"
-								Visibility="{Binding IsRunning, Converter={StaticResource NotBooleanToVisibilityConverter}}">
-						<Image Source="/Assets/idle.png"
-							   Width="24" />
-						<TextBlock Text="{x:Static resources:Strings.Main_Status_Idle}"
-								   VerticalAlignment="Center"
-								   HorizontalAlignment="Center"
-								   FontSize="18"
-								   Margin="5,0,0,0"
-								   Foreground="{StaticResource ForegroundColor1}" />
+					<!--  Idle  -->
+					<StackPanel
+						Grid.Column="3"
+						Margin="20,0,20,0"
+						Orientation="Horizontal"
+						Visibility="{Binding IsRunning, Converter={StaticResource NotBooleanToVisibilityConverter}}">
+						<Image Width="24" Source="/Assets/idle.png" />
+						<TextBlock
+							Margin="5,0,0,0"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							FontSize="18"
+							Foreground="{StaticResource ForegroundColor1}"
+							Text="{x:Static resources:Strings.Main_Status_Idle}" />
 					</StackPanel>
 
-					<!-- Listening -->
-					<StackPanel Grid.Column="3"
-								Orientation="Horizontal"
-								Margin="20,0,20,0"
-								Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}">
-						<Image Source="/Assets/listening.png"
-							   Width="24" />
-						<TextBlock Text="{x:Static resources:Strings.Main_Status_Listening}"
-								   VerticalAlignment="Center"
-								   HorizontalAlignment="Center"
-								   FontSize="18"
-								   Margin="5,0,0,0"
-								   Foreground="{StaticResource ForegroundColor1}" />
+					<!--  Listening  -->
+					<StackPanel
+						Grid.Column="3"
+						Margin="20,0,20,0"
+						Orientation="Horizontal"
+						Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}">
+						<Image Width="24" Source="/Assets/listening.png" />
+						<TextBlock
+							Margin="5,0,0,0"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							FontSize="18"
+							Foreground="{StaticResource ForegroundColor1}"
+							Text="{x:Static resources:Strings.Main_Status_Listening}" />
 					</StackPanel>
 
-					<Button Grid.Column="4"
-							Style="{DynamicResource ButtonStyle1}"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Stretch"
-							Command="{Binding LabelPreviewCommand}"
-							Height="{StaticResource StatusButtonHeight}"
-							Margin="{StaticResource ButtonMargin}"
-							ToolTip="{x:Static resources:Strings.Main_Button_View_Tooltip}">
+					<Button
+						Grid.Column="4"
+						Height="{StaticResource StatusButtonHeight}"
+						Margin="{StaticResource ButtonMargin}"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Center"
+						Command="{Binding LabelPreviewCommand}"
+						Style="{DynamicResource ButtonStyle1}"
+						ToolTip="{x:Static resources:Strings.Main_Button_View_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -556,29 +589,32 @@
 									<RowDefinition Height="Auto" />
 								</Grid.RowDefinitions>
 
-								<Image Source="/Assets/label-preview.png"
-									   Width="24"
-									   Height="24"
-									   HorizontalAlignment="Center"
-									   Margin="{StaticResource ButtonImageMargin}" />
+								<Image
+									Width="24"
+									Height="24"
+									Margin="{StaticResource ButtonImageMargin}"
+									HorizontalAlignment="Center"
+									Source="/Assets/label-preview.png" />
 
-								<TextBlock Grid.Row="1"
-										   Text="{x:Static resources:Strings.Main_Button_View_Text}"
-										   FontSize="11"
-										   HorizontalAlignment="Center"
-										   Margin="{StaticResource ButtonTextMargin}" />
+								<TextBlock
+									Grid.Row="1"
+									Margin="{StaticResource ButtonTextMargin}"
+									HorizontalAlignment="Center"
+									FontSize="11"
+									Text="{x:Static resources:Strings.Main_Button_View_Text}" />
 							</Grid>
 						</Button.Content>
 					</Button>
 
-					<Button Grid.Column="5"
-							Style="{DynamicResource ButtonStyle1}"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Stretch"
-							Command="{Binding DeleteLabelCommand}"
-							Height="{StaticResource StatusButtonHeight}"
-							Margin="{StaticResource ButtonMargin}"
-							ToolTip="{x:Static resources:Strings.Main_Button_Delete_Tooltip}">
+					<Button
+						Grid.Column="5"
+						Height="{StaticResource StatusButtonHeight}"
+						Margin="{StaticResource ButtonMargin}"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Center"
+						Command="{Binding DeleteLabelCommand}"
+						Style="{DynamicResource ButtonStyle1}"
+						ToolTip="{x:Static resources:Strings.Main_Button_Delete_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -586,29 +622,32 @@
 									<RowDefinition Height="Auto" />
 								</Grid.RowDefinitions>
 
-								<Image Source="/Assets/trash-bin.png"
-									   Width="24"
-									   Height="24"
-									   HorizontalAlignment="Center"
-									   Margin="{StaticResource ButtonImageMargin}" />
+								<Image
+									Width="24"
+									Height="24"
+									Margin="{StaticResource ButtonImageMargin}"
+									HorizontalAlignment="Center"
+									Source="/Assets/trash-bin.png" />
 
-								<TextBlock Grid.Row="1"
-										   Text="{x:Static resources:Strings.Main_Button_Delete_Text}"
-										   FontSize="11"
-										   HorizontalAlignment="Center"
-										   Margin="{StaticResource ButtonTextMargin}" />
+								<TextBlock
+									Grid.Row="1"
+									Margin="{StaticResource ButtonTextMargin}"
+									HorizontalAlignment="Center"
+									FontSize="11"
+									Text="{x:Static resources:Strings.Main_Button_Delete_Text}" />
 							</Grid>
 						</Button.Content>
 					</Button>
 
-					<Button Grid.Column="6"
-							Style="{DynamicResource ButtonStyle1}"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Stretch"
-							Command="{Binding ClearLabelsCommand}"
-							Height="{StaticResource StatusButtonHeight}"
-							Margin="{StaticResource ButtonMargin}"
-							ToolTip="{x:Static resources:Strings.Main_ButtonClear_Tooltip}">
+					<Button
+						Grid.Column="6"
+						Height="{StaticResource StatusButtonHeight}"
+						Margin="{StaticResource ButtonMargin}"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Center"
+						Command="{Binding ClearLabelsCommand}"
+						Style="{DynamicResource ButtonStyle1}"
+						ToolTip="{x:Static resources:Strings.Main_ButtonClear_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -616,29 +655,32 @@
 									<RowDefinition Height="Auto" />
 								</Grid.RowDefinitions>
 
-								<Image Source="/Assets/clear-label.png"
-									   Width="24"
-									   Height="24"
-									   HorizontalAlignment="Center"
-									   Margin="{StaticResource ButtonImageMargin}" />
+								<Image
+									Width="24"
+									Height="24"
+									Margin="{StaticResource ButtonImageMargin}"
+									HorizontalAlignment="Center"
+									Source="/Assets/clear-label.png" />
 
-								<TextBlock Grid.Row="1"
-										   Text="{x:Static resources:Strings.Main_ButtonClear_Text}"
-										   FontSize="11"
-										   HorizontalAlignment="Center"
-										   Margin="{StaticResource ButtonTextMargin}" />
+								<TextBlock
+									Grid.Row="1"
+									Margin="{StaticResource ButtonTextMargin}"
+									HorizontalAlignment="Center"
+									FontSize="11"
+									Text="{x:Static resources:Strings.Main_ButtonClear_Text}" />
 							</Grid>
 						</Button.Content>
 					</Button>
 
-					<Button Grid.Column="7"
-							Style="{DynamicResource ButtonStyle1}"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Stretch"
-							Command="{Binding SendTestLabelCommand}"
-							Height="{StaticResource StatusButtonHeight}"
-							Margin="{StaticResource ButtonMargin}"
-							ToolTip="{x:Static resources:Strings.Main_Button_Test_Tooltip}">
+					<Button
+						Grid.Column="7"
+						Height="{StaticResource StatusButtonHeight}"
+						Margin="{StaticResource ButtonMargin}"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Center"
+						Command="{Binding SendTestLabelCommand}"
+						Style="{DynamicResource ButtonStyle1}"
+						ToolTip="{x:Static resources:Strings.Main_Button_Test_Tooltip}">
 						<Button.Content>
 							<Grid>
 								<Grid.RowDefinitions>
@@ -646,17 +688,19 @@
 									<RowDefinition Height="Auto" />
 								</Grid.RowDefinitions>
 
-								<Image Source="/Assets/test-label.png"
-									   Width="24"
-									   Height="24"
-									   HorizontalAlignment="Center"
-									   Margin="{StaticResource ButtonImageMargin}" />
+								<Image
+									Width="24"
+									Height="24"
+									Margin="{StaticResource ButtonImageMargin}"
+									HorizontalAlignment="Center"
+									Source="/Assets/test-label.png" />
 
-								<TextBlock Grid.Row="1"
-										   Text="{x:Static resources:Strings.Main_Button_Test_Text}"
-										   FontSize="11"
-										   HorizontalAlignment="Center"
-										   Margin="{StaticResource ButtonTextMargin}" />
+								<TextBlock
+									Grid.Row="1"
+									Margin="{StaticResource ButtonTextMargin}"
+									HorizontalAlignment="Center"
+									FontSize="11"
+									Text="{x:Static resources:Strings.Main_Button_Test_Text}" />
 							</Grid>
 						</Button.Content>
 					</Button>

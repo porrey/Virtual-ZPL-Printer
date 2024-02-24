@@ -99,7 +99,8 @@
 					Command="{Binding CloseCommand}"
 					Height="{StaticResource StatusButtonHeight}"
 					Margin="{StaticResource ButtonMargin}"
-					ToolTip="{x:Static resources:Strings.Close_Tooltip}">
+					ToolTip="{x:Static resources:Strings.Close_Tooltip}"
+					Click="Button_Click">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>

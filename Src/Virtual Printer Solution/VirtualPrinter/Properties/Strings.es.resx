@@ -465,6 +465,12 @@
   <data name="Global_Settings_Title" xml:space="preserve">
     <value>Ajustes globales</value>
   </data>
+  <data name="Global_Settings_WebMethod_Get" xml:space="preserve">
+    <value>CONSEGUIR</value>
+  </data>
+  <data name="Global_Settings_WebMethod_Post" xml:space="preserve">
+    <value>CORREO</value>
+  </data>
   <data name="HostAddress_Any" xml:space="preserve">
     <value>Cualquier</value>
   </data>

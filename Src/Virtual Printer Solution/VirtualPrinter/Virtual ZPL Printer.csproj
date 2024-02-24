@@ -21,6 +21,7 @@
 	<ItemGroup>
 		<None Remove="appsettings.json" />
 		<None Remove="Assets\add-printer-configuration.png" />
+		<None Remove="Assets\api-method.png" />
 		<None Remove="Assets\browse.png" />
 		<None Remove="Assets\cancel.png" />
 		<None Remove="Assets\clear-label.png" />
@@ -71,6 +72,7 @@
 		<None Remove="Assets\stop.png" />
 		<None Remove="Assets\test-label.png" />
 		<None Remove="Assets\test-labelary.png" />
+		<None Remove="Assets\text-encoding.png" />
 		<None Remove="Assets\trash-bin.png" />
 		<None Remove="Assets\undo.png" />
 		<None Remove="Assets\virtual-printer.png" />
@@ -151,6 +153,9 @@
 		</Content>
 		<Content Include="Assets\add-printer-configuration.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\api-method.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\browse.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -235,6 +240,9 @@
 		</Content>
 		<Content Include="Assets\test-labelary.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Assets\text-encoding.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Assets\undo.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -1,17 +1,63 @@
-﻿<Window x:Class="VirtualPrinter.Views.GlobalSettingsView"
-		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:resources="clr-namespace:VirtualPrinter.Properties"
-		Title="{x:Static resources:Strings.Global_Settings_Title}"
-		Width="Auto"
-		Height="Auto"
-		Icon="/virtual-printer.ico"
-		ResizeMode="NoResize"
-		WindowStartupLocation="CenterOwner"
-		WindowStyle="ThreeDBorderWindow"
-		mc:Ignorable="d">
+﻿<Window
+	x:Class="VirtualPrinter.Views.GlobalSettingsView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:resources="clr-namespace:VirtualPrinter.Properties"
+	Title="{x:Static resources:Strings.Global_Settings_Title}"
+	Width="Auto"
+	Height="Auto"
+	Icon="/virtual-printer.ico"
+	ResizeMode="NoResize"
+	WindowStartupLocation="CenterOwner"
+	WindowStyle="ThreeDBorderWindow"
+	mc:Ignorable="d">
+
+	<Window.Resources>
+		<DataTemplate x:Key="ApiMethodTemplate">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<Image Grid.Column="0"
+					   Width="16"
+					   Height="16"
+					   Margin="1,1,2,1"
+					   Source="/Assets/api-method.png" />
+
+				<TextBlock Grid.Column="1"
+						   Margin="2,2,5,2"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Text="{Binding DisplayName}" />
+			</Grid>
+		</DataTemplate>
+		<DataTemplate x:Key="TextEncodingTemplate">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<Image
+					Grid.Column="0"
+					Width="16"
+					Height="16"
+					Margin="1,1,2,1"
+					   Source="/Assets/text-encoding.png" />
+
+				<TextBlock
+					Grid.Column="1"
+					Margin="2,2,5,2"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Text="{Binding DisplayName}" />
+			</Grid>
+		</DataTemplate>
+	</Window.Resources>
 
 	<Grid Grid.IsSharedSizeScope="true">
 		<Grid.RowDefinitions>
@@ -20,74 +66,78 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
-		<GroupBox Grid.Row="0"
-				  Margin="10"
-				  Header="{x:Static resources:Strings.Global_Settings_Group_Header_Labelary}">
+		<GroupBox
+			Grid.Row="0"
+			Margin="10"
+			Header="{x:Static resources:Strings.Global_Settings_Group_Header_Labelary}">
 			<Grid Margin="10">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
-
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 
-				<TextBlock Grid.Row="0"
-						   Grid.Column="0"
-						   Margin="0,5,5,5"
-						   VerticalAlignment="Center"
-						   Text="{x:Static resources:Strings.Global_Settings_Label_ApiUrl}" />
-				<TextBox Grid.Row="0"
-						 Grid.Column="1"
-						 Margin="0,5,0,5"
-						 VerticalAlignment="Center"
-						 Text="{Binding ApiUrl, Mode=TwoWay}" />
+				<TextBlock
+					Grid.Row="0"
+					Grid.Column="0"
+					Margin="0,5,5,5"
+					VerticalAlignment="Center"
+					Text="{x:Static resources:Strings.Global_Settings_Label_ApiUrl}" />
+				<TextBox
+					Grid.Row="0"
+					Grid.Column="1"
+					Margin="0,5,0,5"
+					VerticalAlignment="Center"
+					Text="{Binding ApiUrl, Mode=TwoWay}" />
 
-				<TextBlock Grid.Row="1"
-						   Grid.Column="0"
-						   Margin="0,0,5,8"
-						   VerticalAlignment="Bottom"
-						   Text="{x:Static resources:Strings.Global_Settings_Label_Method}" />
-				<ComboBox Grid.Row="1"
-						  Grid.Column="1"
-						  Width="175"
-						  Margin="0,5,0,5"
-						  HorizontalAlignment="Left"
-						  VerticalAlignment="Center"
-						  Text="{Binding ApiMethod, Mode=TwoWay}">
-					<ComboBoxItem>POST</ComboBoxItem>
-					<ComboBoxItem>GET</ComboBoxItem>
-				</ComboBox>
+				<TextBlock
+					Grid.Row="1"
+					Grid.Column="0"
+					Margin="0,0,5,8"
+					VerticalAlignment="Bottom"
+					Text="{x:Static resources:Strings.Global_Settings_Label_Method}" />
+				<ComboBox
+					Grid.Row="1"
+					Grid.Column="1"
+					Width="275"
+					Margin="0,5,0,5"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					ItemTemplate="{StaticResource ApiMethodTemplate}"
+					ItemsSource="{Binding ApiMethods}"
+					SelectedItem="{Binding ApiMethod, Mode=TwoWay}" />
 
-				<CheckBox Grid.Row="2"
-						  Grid.Column="0"
-						  Grid.ColumnSpan="2"
-						  Margin="0,5,5,5"
-						  VerticalAlignment="Center"
-						  Content="{x:Static resources:Strings.Global_Settings_Checkbox_EnableLinting_Text}"
-						  IsChecked="{Binding ApiLinting, Mode=TwoWay}" />
+				<CheckBox
+					Grid.Row="2"
+					Grid.Column="0"
+					Grid.ColumnSpan="2"
+					Margin="0,5,5,5"
+					VerticalAlignment="Center"
+					Content="{x:Static resources:Strings.Global_Settings_Checkbox_EnableLinting_Text}"
+					IsChecked="{Binding ApiLinting, Mode=TwoWay}" />
 			</Grid>
 		</GroupBox>
 
-		<GroupBox Grid.Row="1"
-				  Margin="10"
-				  Header="{x:Static resources:Strings.Global_Settings_Group_Header_TCP}">
+		<GroupBox
+			Grid.Row="1"
+			Margin="10"
+			Header="{x:Static resources:Strings.Global_Settings_Group_Header_TCP}">
 
 			<StackPanel Orientation="Vertical">
-				<TextBlock Margin="10,8,0,5"
-						   Foreground="{StaticResource ForegroundColor3}"
-						   Text="{x:Static resources:Strings.Global_Settings_Label_Tcp}" />
+				<TextBlock
+					Margin="10,8,0,5"
+					Foreground="{StaticResource ForegroundColor3}"
+					Text="{x:Static resources:Strings.Global_Settings_Label_Tcp}" />
 				<Grid Margin="10">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="1*"
-										  MinWidth="120" />
+						<ColumnDefinition Width="1*" MinWidth="120" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="1*"
-										  MinWidth="120" />
+						<ColumnDefinition Width="1*" MinWidth="120" />
 					</Grid.ColumnDefinitions>
 
 					<Grid.RowDefinitions>
@@ -98,120 +148,131 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 
-					<TextBlock Grid.Row="0"
-							   Grid.Column="0"
-							   Margin="0,5,5,5"
-							   VerticalAlignment="Center"
-							   Text="{x:Static resources:Strings.Global_Settings_Label_ReceiveTimeout}" />
-					<TextBox Grid.Row="0"
-							 Grid.Column="1"
-							 Margin="0,5,0,5"
-							 VerticalAlignment="Center"
-							 InputScope="NumberFullWidth"
-							 Text="{Binding ReceiveTimeout, Mode=TwoWay}" />
+					<TextBlock
+						Grid.Row="0"
+						Grid.Column="0"
+						Margin="0,5,5,5"
+						VerticalAlignment="Center"
+						Text="{x:Static resources:Strings.Global_Settings_Label_ReceiveTimeout}" />
+					<TextBox
+						Grid.Row="0"
+						Grid.Column="1"
+						Margin="0,5,0,5"
+						VerticalAlignment="Center"
+						InputScope="NumberFullWidth"
+						Text="{Binding ReceiveTimeout, Mode=TwoWay}" />
 
-					<TextBlock Grid.Row="0"
-							   Grid.Column="2"
-							   Margin="5,5,5,5"
-							   VerticalAlignment="Center"
-							   Text="{x:Static resources:Strings.Global_Settings_Label_SendTimeout}" />
-					<TextBox Grid.Row="0"
-							 Grid.Column="3"
-							 Margin="0,5,0,5"
-							 VerticalAlignment="Center"
-							 InputScope="NumberFullWidth"
-							 Text="{Binding SendTimeout, Mode=TwoWay}" />
+					<TextBlock
+						Grid.Row="0"
+						Grid.Column="2"
+						Margin="5,5,5,5"
+						VerticalAlignment="Center"
+						Text="{x:Static resources:Strings.Global_Settings_Label_SendTimeout}" />
+					<TextBox
+						Grid.Row="0"
+						Grid.Column="3"
+						Margin="0,5,0,5"
+						VerticalAlignment="Center"
+						InputScope="NumberFullWidth"
+						Text="{Binding SendTimeout, Mode=TwoWay}" />
 
-					<TextBlock Grid.Row="1"
-							   Grid.Column="0"
-							   Margin="0,5,5,5"
-							   VerticalAlignment="Center"
-							   Text="{x:Static resources:Strings.Global_Settings_Label_ReceiveBufferSize}" />
-					<TextBox Grid.Row="1"
-							 Grid.Column="1"
-							 Margin="0,5,0,5"
-							 VerticalAlignment="Center"
-							 InputScope="NumberFullWidth"
-							 Text="{Binding ReceiveBufferSize, Mode=TwoWay}" />
+					<TextBlock
+						Grid.Row="1"
+						Grid.Column="0"
+						Margin="0,5,5,5"
+						VerticalAlignment="Center"
+						Text="{x:Static resources:Strings.Global_Settings_Label_ReceiveBufferSize}" />
+					<TextBox
+						Grid.Row="1"
+						Grid.Column="1"
+						Margin="0,5,0,5"
+						VerticalAlignment="Center"
+						InputScope="NumberFullWidth"
+						Text="{Binding ReceiveBufferSize, Mode=TwoWay}" />
 
-					<TextBlock Grid.Row="1"
-							   Grid.Column="2"
-							   Margin="5,5,5,5"
-							   VerticalAlignment="Center"
-							   Text="{x:Static resources:Strings.Global_Settings_Label_SendBufferSize}" />
-					<TextBox Grid.Row="1"
-							 Grid.Column="3"
-							 Margin="0,5,0,5"
-							 VerticalAlignment="Center"
-							 InputScope="NumberFullWidth"
-							 Text="{Binding SendBufferSize, Mode=TwoWay}" />
+					<TextBlock
+						Grid.Row="1"
+						Grid.Column="2"
+						Margin="5,5,5,5"
+						VerticalAlignment="Center"
+						Text="{x:Static resources:Strings.Global_Settings_Label_SendBufferSize}" />
+					<TextBox
+						Grid.Row="1"
+						Grid.Column="3"
+						Margin="0,5,0,5"
+						VerticalAlignment="Center"
+						InputScope="NumberFullWidth"
+						Text="{Binding SendBufferSize, Mode=TwoWay}" />
 
-					<CheckBox Grid.Row="2"
-							  Grid.Column="0"
-							  Margin="0,5,5,5"
-							  VerticalAlignment="Center"
-							  Content="{x:Static resources:Strings.Global_Settings_Label_NoDelay}"
-							  IsChecked="{Binding NoDelay, Mode=TwoWay}" />
+					<CheckBox
+						Grid.Row="2"
+						Grid.Column="0"
+						Margin="0,5,5,5"
+						VerticalAlignment="Center"
+						Content="{x:Static resources:Strings.Global_Settings_Label_NoDelay}"
+						IsChecked="{Binding NoDelay, Mode=TwoWay}" />
 
-					<CheckBox x:Name="Linger"
-							  Grid.Row="3"
-							  Grid.Column="0"
-							  Margin="0,5,5,5"
-							  VerticalAlignment="Center"
-							  Content="{x:Static resources:Strings.Global_Settings_Label_Linger}"
-							  IsChecked="{Binding Linger, Mode=TwoWay}" />
+					<CheckBox
+						x:Name="Linger"
+						Grid.Row="3"
+						Grid.Column="0"
+						Margin="0,5,5,5"
+						VerticalAlignment="Center"
+						Content="{x:Static resources:Strings.Global_Settings_Label_Linger}"
+						IsChecked="{Binding Linger, Mode=TwoWay}" />
 
-					<TextBlock Grid.Row="3"
-							   Grid.Column="2"
-							   Margin="5,5,5,5"
-							   VerticalAlignment="Center"
-							   Text="{x:Static resources:Strings.Global_Settings_Label_LingerTime}"
-							   IsEnabled="{Binding IsChecked, ElementName=Linger, Converter={StaticResource BooleanToVisibilityConverter}}" />
-					<TextBox Grid.Row="3"
-							 Grid.Column="3"
-							 Margin="0,5,0,5"
-							 VerticalAlignment="Center"
-							 InputScope="NumberFullWidth"
-							 Text="{Binding LingerTime, Mode=TwoWay}"
-							 IsEnabled="{Binding IsChecked, ElementName=Linger, Converter={StaticResource BooleanToVisibilityConverter}}" />
+					<TextBlock
+						Grid.Row="3"
+						Grid.Column="2"
+						Margin="5,5,5,5"
+						VerticalAlignment="Center"
+						IsEnabled="{Binding IsChecked, ElementName=Linger, Converter={StaticResource BooleanToVisibilityConverter}}"
+						Text="{x:Static resources:Strings.Global_Settings_Label_LingerTime}" />
+					<TextBox
+						Grid.Row="3"
+						Grid.Column="3"
+						Margin="0,5,0,5"
+						VerticalAlignment="Center"
+						InputScope="NumberFullWidth"
+						IsEnabled="{Binding IsChecked, ElementName=Linger, Converter={StaticResource BooleanToVisibilityConverter}}"
+						Text="{Binding LingerTime, Mode=TwoWay}" />
 
-					<TextBlock Grid.Row="4"
-							   Grid.Column="0"
-							   Margin="0,5,5,5"
-							   VerticalAlignment="Center"
-							   Text="{x:Static resources:Strings.Global_Settings_Label_ReceivedDataEncoding}" />
-					<ComboBox Grid.Row="4"
-							  Grid.Column="1"
-							  Margin="0,5,0,5"
-							  VerticalAlignment="Center"
-							  InputScope="NumberFullWidth"
-							  SelectedIndex="0"
-							  Text="{Binding ReceivedDataEncoding, Mode=TwoWay}">
-						<ComboBoxItem>UTF-8</ComboBoxItem>
-						<ComboBoxItem>ISO-8859-1</ComboBoxItem>
-					</ComboBox>
+					<TextBlock
+						Grid.Row="4"
+						Grid.Column="0"
+						Margin="0,5,5,5"
+						VerticalAlignment="Center"
+						Text="{x:Static resources:Strings.Global_Settings_Label_ReceivedDataEncoding}" />
+					<ComboBox
+						Grid.Row="4"
+						Grid.Column="1"
+						Margin="0,5,0,5"
+						VerticalAlignment="Center"
+						ItemTemplate="{StaticResource TextEncodingTemplate}"
+						ItemsSource="{Binding TextEncodings}"
+						SelectedItem="{Binding ReceivedDataEncoding, Mode=TwoWay}" />
 				</Grid>
 			</StackPanel>
 		</GroupBox>
 
 		<!--  Buttons  -->
-		<Grid Grid.Row="2"
-			  Margin="0,10,5,5">
+		<Grid Grid.Row="2" Margin="0,10,5,5">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
 				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
 			</Grid.ColumnDefinitions>
 
-			<Button Grid.Column="1"
-					Height="{StaticResource StatusButtonHeight}"
-					Margin="{StaticResource ButtonMargin}"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Center"
-					Click="Button_Click"
-					Command="{Binding OkCommand}"
-					Style="{DynamicResource ButtonStyle1}"
-					ToolTip="{x:Static resources:Strings.Global_Settings_Button_Ok_Toolip}">
+			<Button
+				Grid.Column="1"
+				Height="{StaticResource StatusButtonHeight}"
+				Margin="{StaticResource ButtonMargin}"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Center"
+				Click="Button_Click"
+				Command="{Binding OkCommand}"
+				Style="{DynamicResource ButtonStyle1}"
+				ToolTip="{x:Static resources:Strings.Global_Settings_Button_Ok_Toolip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -219,29 +280,32 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Width="24"
-							   Height="24"
-							   Margin="{StaticResource ButtonImageMargin}"
-							   Source="/Assets/ok.png" />
+						<Image
+							Width="24"
+							Height="24"
+							Margin="{StaticResource ButtonImageMargin}"
+							Source="/Assets/ok.png" />
 
-						<TextBlock Grid.Row="1"
-								   Margin="{StaticResource ButtonTextMargin}"
-								   HorizontalAlignment="Center"
-								   FontSize="11"
-								   Text="{x:Static resources:Strings.Ok}" />
+						<TextBlock
+							Grid.Row="1"
+							Margin="{StaticResource ButtonTextMargin}"
+							HorizontalAlignment="Center"
+							FontSize="11"
+							Text="{x:Static resources:Strings.Ok}" />
 					</Grid>
 				</Button.Content>
 			</Button>
 
-			<Button Grid.Column="2"
-					Height="{StaticResource StatusButtonHeight}"
-					Margin="{StaticResource ButtonMargin}"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					Click="Button_Click"
-					Command="{Binding CancelCommand}"
-					Style="{DynamicResource ButtonStyle1}"
-					ToolTip="{x:Static resources:Strings.Global_Settings_Button_Cancel_Toolip}">
+			<Button
+				Grid.Column="2"
+				Height="{StaticResource StatusButtonHeight}"
+				Margin="{StaticResource ButtonMargin}"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Center"
+				Click="Button_Click"
+				Command="{Binding CancelCommand}"
+				Style="{DynamicResource ButtonStyle1}"
+				ToolTip="{x:Static resources:Strings.Global_Settings_Button_Cancel_Toolip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -249,16 +313,18 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Width="24"
-							   Height="24"
-							   Margin="{StaticResource ButtonImageMargin}"
-							   Source="/Assets/cancel.png" />
+						<Image
+							Width="24"
+							Height="24"
+							Margin="{StaticResource ButtonImageMargin}"
+							Source="/Assets/cancel.png" />
 
-						<TextBlock Grid.Row="1"
-								   Margin="{StaticResource ButtonTextMargin}"
-								   HorizontalAlignment="Center"
-								   FontSize="11"
-								   Text="{x:Static resources:Strings.Cancel}" />
+						<TextBlock
+							Grid.Row="1"
+							Margin="{StaticResource ButtonTextMargin}"
+							HorizontalAlignment="Center"
+							FontSize="11"
+							Text="{x:Static resources:Strings.Cancel}" />
 					</Grid>
 				</Button.Content>
 			</Button>
