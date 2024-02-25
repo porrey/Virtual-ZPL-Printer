@@ -264,7 +264,7 @@
 					<RowDefinition Height="1*" />
 				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="90" />
+					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="1*" />
 				</Grid.ColumnDefinitions>
 

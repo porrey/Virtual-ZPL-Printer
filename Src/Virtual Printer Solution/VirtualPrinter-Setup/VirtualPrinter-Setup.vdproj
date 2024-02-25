@@ -4,9 +4,9 @@
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
 "ProjectName" = "8:Virtual ZPL Printer Setup"
-"LanguageId" = "3:1033"
+"LanguageId" = "3:0"
 "CodePage" = "3:1252"
-"UILanguageId" = "3:1033"
+"UILanguageId" = "3:0"
 "SccProjectName" = "8:"
 "SccLocalPath" = "8:"
 "SccAuxPath" = "8:"
@@ -15,43 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0FCFD3CDF40E4A66A80D8998D90B1C01"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_20B50381D97A445AB3ED4B438C37D1B3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_43F9EE2557BD47809D5D86EC3AC97F95"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_75389246AD0D4AB4AF0FB6B9E7FCB697"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_9F590A75A84E41D88F76D4967EEDAE96"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_EC22235902124187808B39ACDCFA60F0"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_EF79936E6F9A4C48BB47064D776C7822"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -157,126 +121,6 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0FCFD3CDF40E4A66A80D8998D90B1C01"
-            {
-            "SourcePath" = "8:..\\VirtualPrinter.TemplateManager\\Templates\\4x6 Shipping Label (8 dpmm).zpl"
-            "TargetName" = "8:4x6 Shipping Label (8 dpmm).zpl"
-            "Tag" = "8:"
-            "Folder" = "8:_C905FF4E195C47A99DD04849F64F590C"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_20B50381D97A445AB3ED4B438C37D1B3"
-            {
-            "SourcePath" = "8:..\\VirtualPrinter.TemplateManager\\Templates\\Test Label (8 dpmm).zpl"
-            "TargetName" = "8:Test Label (8 dpmm).zpl"
-            "Tag" = "8:"
-            "Folder" = "8:_C905FF4E195C47A99DD04849F64F590C"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_43F9EE2557BD47809D5D86EC3AC97F95"
-            {
-            "SourcePath" = "8:..\\VirtualPrinter.TemplateManager\\Templates\\4x6 USPS Shipping Label (8 dpmm).zpl"
-            "TargetName" = "8:4x6 USPS Shipping Label (8 dpmm).zpl"
-            "Tag" = "8:"
-            "Folder" = "8:_C905FF4E195C47A99DD04849F64F590C"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_75389246AD0D4AB4AF0FB6B9E7FCB697"
-            {
-            "SourcePath" = "8:..\\VirtualPrinter.TemplateManager\\Templates\\Referenced Font Example (8 dpmm).zpl"
-            "TargetName" = "8:Referenced Font Example (8 dpmm).zpl"
-            "Tag" = "8:"
-            "Folder" = "8:_C905FF4E195C47A99DD04849F64F590C"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EC22235902124187808B39ACDCFA60F0"
-            {
-            "SourcePath" = "8:..\\VirtualPrinter.TemplateManager\\Templates\\Embedded Font Example (8 dpmm).zpl"
-            "TargetName" = "8:Embedded Font Example (8 dpmm).zpl"
-            "Tag" = "8:"
-            "Folder" = "8:_C905FF4E195C47A99DD04849F64F590C"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EF79936E6F9A4C48BB47064D776C7822"
-            {
-            "SourcePath" = "8:..\\VirtualPrinter.TemplateManager\\Templates\\2x2 Product Label (8 dpmm).zpl"
-            "TargetName" = "8:2x2 Product Label (8 dpmm).zpl"
-            "Tag" = "8:"
-            "Folder" = "8:_C905FF4E195C47A99DD04849F64F590C"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
         }
         "FileType"
         {
@@ -292,50 +136,6 @@
             "Property" = "8:PersonalFolder"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_3BFC30C5817F403A90452C659F46EBBE"
-                    {
-                    "Name" = "8:Virtual ZPL Printer"
-                    "AlwaysCreate" = "11:TRUE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_DB56A59A6F624B458ADE2EB13860D826"
-                        "Folders"
-                        {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_614F8E2FAC6245A18C3A684F944C615D"
-                            {
-                            "Name" = "8:Database"
-                            "AlwaysCreate" = "11:TRUE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_BB4D7AF9CBF74435A333D3E3C4F355A2"
-                                "Folders"
-                                {
-                                }
-                            }
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_C905FF4E195C47A99DD04849F64F590C"
-                            {
-                            "Name" = "8:Templates"
-                            "AlwaysCreate" = "11:TRUE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_8D1D757E69D344E089448EB5741093E3"
-                                "Folders"
-                                {
-                                }
-                            }
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_DC2C0C519F644FEE893BFF2AB7A18D45"
-                            {
-                            "Name" = "8:Image Cache"
-                            "AlwaysCreate" = "11:TRUE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_92DEF4D319DA418AB1A7596719B865B8"
-                                "Folders"
-                                {
-                                }
-                            }
-                        }
-                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_7BAA302689ED4BF5A07DF2EEF368F3B6"
@@ -381,7 +181,7 @@
         }
         "MsiBootstrapper"
         {
-        "LangId" = "3:1033"
+        "LangId" = "3:0"
         "RequiresElevation" = "11:FALSE"
         }
         "Product"
@@ -389,7 +189,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Virtual ZPL Printer"
         "ProductCode" = "8:{DE4C9C35-5BC2-4EA7-8D7C-5558E087973A}"
-        "PackageCode" = "8:{7D4B5608-F611-42F9-93F8-7C7028874D73}"
+        "PackageCode" = "8:{57FA86AF-0BEE-422D-816E-61BCFBA3A07F}"
         "UpgradeCode" = "8:{32EBCEBE-7298-4898-A855-DE97B7DDACEA}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -922,9 +722,93 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_1DFF92BF29A24B13ADFEA1399C36372C"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CE212C03354141C1A9AB5482FB65476A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
+            "OutputProjectGuid" = "8:{184BBFDD-E5EB-477F-BC6A-6990E92BDC0C}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_248620E848E34894ADF9E41D9A3F809F"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CE212C03354141C1A9AB5482FB65476A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
+            "OutputProjectGuid" = "8:{B1AF2E8D-3350-4B00-8A4F-4101B234325F}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_9D6D9EA0BF4A4B8DB2E0F8CCA907D6F9"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CE212C03354141C1A9AB5482FB65476A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
+            "OutputProjectGuid" = "8:{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_9F590A75A84E41D88F76D4967EEDAE96"
             {
-            "SourcePath" = "8:..\\VirtualPrinter\\obj\\Debug\\net8.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\VirtualPrinter\\obj\\Release\\net8.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CE212C03354141C1A9AB5482FB65476A"
@@ -945,6 +829,34 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B17C96411C154A208070B1932146FCF6"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CE212C03354141C1A9AB5482FB65476A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
+            "OutputProjectGuid" = "8:{2C0B8D22-1A2D-45CB-987D-7033A027238C}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

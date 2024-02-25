@@ -21,10 +21,18 @@
     <Content Include="Services\VirtualPrinter.TemplateManager.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Templates\2x2 Product Label (8 dpmm).zpl" />
-    <Content Include="Templates\4x6 Shipping Label (8 dpmm).zpl" />
-    <Content Include="Templates\4x6 USPS Shipping Label (8 dpmm).zpl" />
-    <Content Include="Templates\Test Label (8 dpmm).zpl" />
+    <Content Include="Templates\2x2 Product Label (8 dpmm).zpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\4x6 Shipping Label (8 dpmm).zpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\4x6 USPS Shipping Label (8 dpmm).zpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Test Label (8 dpmm).zpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -39,5 +47,14 @@
 
 	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Templates\Embedded Font Example %288 dpmm%29.zpl">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Templates\Referenced Font Example %288 dpmm%29.zpl">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 </Project>
