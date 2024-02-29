@@ -8,6 +8,7 @@ Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have th
 
 ###### Version 3.3.0 Updates:
 1. Added multi-language support. Currently added support for Spanish (**es**) and Ukrainian (**uk**). Both translations were done using Google Translate tool and require additional work to be done. These languages can be updated via a pull-request or a new language supported added via same. Right to Left reading languages have not been tested yet. See section on adding, requesting or updating languages. Note that the Labelary API returns messages in English and they are not translated. This language also uses a library called **UnitsNet** that has its own language support. In some cases output from this library may be in English.
+2. Moved core ZPL templates to application folder. Custom templates can still be dropped in the personal folder as before.
 
 ## Screen Shots
 

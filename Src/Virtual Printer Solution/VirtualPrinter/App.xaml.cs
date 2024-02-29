@@ -64,7 +64,7 @@ namespace VirtualPrinter
 		{
 #if DEBUG
 			string[] testCultures = ["en-US", "uk-UA", "es"];
-			CultureInfo culture = new(testCultures[2]);
+			CultureInfo culture = new(testCultures[0]);
 			culture.ClearCachedData();
 #else
 			CultureInfo culture = CultureInfo.CurrentCulture;

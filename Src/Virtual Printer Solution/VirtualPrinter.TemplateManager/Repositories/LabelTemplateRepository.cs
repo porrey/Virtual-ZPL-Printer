@@ -15,6 +15,7 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System.Linq.Expressions;
+using System.Reflection;
 using Diamond.Core.Repository;
 using Microsoft.Extensions.Logging;
 using VirtualPrinter.ApplicationSettings;
@@ -40,16 +41,38 @@ namespace VirtualPrinter.TemplateManager
 			templateFolder.Create();
 
 			//
-			// Load the templates.
+			// Map the application folder.
 			//
-			this.Items = (from tbl in templateFolder.EnumerateFiles("*.zpl")
-						  where tbl.Exists
-						  select new LabelTemplate()
-						  {
-							  TemplateFile = tbl,
-							  Name = Path.GetFileNameWithoutExtension(tbl.Name),
-							  Zpl = File.ReadAllText(tbl.FullName)
-						  }).ToArray();
+			DirectoryInfo applicationFolder = new($"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}/Templates");
+
+			//
+			// Load the templates from the application folder.
+			//
+			IEnumerable<LabelTemplate> items1 = from tbl in applicationFolder.EnumerateFiles("*.zpl")
+												where tbl.Exists
+												select new LabelTemplate()
+												{
+													TemplateFile = tbl,
+													Name = Path.GetFileNameWithoutExtension(tbl.Name),
+													Zpl = File.ReadAllText(tbl.FullName)
+												};
+
+			//
+			// Load the templates from the user folder.
+			//
+			IEnumerable<LabelTemplate> items2 = from tbl in templateFolder.EnumerateFiles("*.zpl")
+												where tbl.Exists
+												select new LabelTemplate()
+												{
+													TemplateFile = tbl,
+													Name = Path.GetFileNameWithoutExtension(tbl.Name),
+													Zpl = File.ReadAllText(tbl.FullName)
+												};
+
+			//
+			// Combine the lists.
+			//
+			this.Items = items1.Union(items2).ToArray();
 		}
 
 		protected ILogger<LabelTemplateRepository> Logger { get; set; }
