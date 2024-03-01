@@ -7,7 +7,7 @@ An Ethernet based virtual Zebra Label Printer that can be used to test applicati
 Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have the .NET 8.0 Framework installed automatically.
 
 ###### Version 3.2.1 Updates:
-1. Fixed Issue #51 - Humanizer library caused a crash on unsupported languages. Add exception handling and fallback formatting when language is not supported. Also added all currently supported languages.
+1. Fixed Issue #51 - Humanizer library caused a crash on unsupported languages. Added exception handling and fallback formatting when language is not supported. Also added all currently supported languages.
 2. Updated button icons.
 
 ## Screen Shots
