@@ -44,7 +44,7 @@ Issues posted to correct or change a specific word will not be accepted. If you 
 
 ## History
 ###### Version 3.2.1 Updates:
-1. Fixed Issue #51 - Humanizer library caused a crash on unsupported languages. Add exception handling and fallback formatting when language is not supported. Also added all currently supported languages.
+1. Fixed Issue #51 - Humanizer library caused a crash on unsupported languages. Added exception handling and fallback formatting when language is not supported. Also added all currently supported languages.
 2. Updated button icons.
 
 ###### Version 3.2.0 Updates:
