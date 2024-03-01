@@ -22,7 +22,17 @@ Issues posted to correct or change a specific word will not be accepted. If you 
 ### Updating Language/Region Support
 Add a pull-request with the title "**Updated Language xx-YY**" or "**Updated Language xx**". Only the the XML string files should be included in the pull request. If any other files are modified, the pull request will not be accepted. Ensure the files are not renamed. If you are not the original creator of the language file, please seek a review from the original creator. If the original creator does not respond within one week, the pull-request can be accepted without their review.
 
-Issues posted to correct or change a specific word will not be accepted. If you come across a word that should be translated differently, perform a pull-request to change it.
+#### Not Allowed
+
+- Issues posted to correct or change a specific word will not be accepted. If you come across a word that should be translated differently, report a bug or perform a pull-request to change it.
+- Adding new keywords to the XML file will not be accepted. If a translation was missed in code please report a bug or perform a separate pull request.
+
+#### Current XML Files
+
+1. Src/Virtual Printer Solution/VirtualPrinter/Properties
+2. Src/Virtual Printer Solution/ImageCache.Repository/Properties
+3. Src/Virtual Printer Solution/VirtualPrinter.Db.Ef/Properties
+4. Src/Virtual Printer Solution/VirtualPrinter.Repository.LabelParameters/Properties
 
 ## Screen Shots
 
