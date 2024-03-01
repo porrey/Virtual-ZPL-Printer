@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Data_AddressLabel" xml:space="preserve">
+		<value>Address Label</value>
+	</data>
+	<data name="Data_RotationValueFormat" xml:space="preserve">
+		<value>{0}˚ Rotation</value>
+	</data>
+	<data name="Data_ShippingLabel" xml:space="preserve">
+		<value>Shipping Label</value>
+	</data>
+</root>

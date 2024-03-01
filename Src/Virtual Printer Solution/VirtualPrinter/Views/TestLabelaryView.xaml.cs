@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
-using System;
 using System.Windows;
 using Diamond.Core.Wpf;
 using VirtualPrinter.ViewModels;
@@ -36,6 +35,7 @@ namespace VirtualPrinter.Views
 		{
 			base.OnInitialized(e);
 			await this.ViewModel.InitializeAsync();
+			this.SizeToContent = SizeToContent.Width;
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)

@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using VirtualPrinter.ApplicationSettings;
 using VirtualPrinter.FontService;
 using VirtualPrinter.PublishSubscribe;
 
@@ -27,12 +28,13 @@ namespace VirtualPrinter.ViewModels
 {
 	public class FontManagerViewModel : BindableBase
 	{
-		public FontManagerViewModel(ILogger<FontManagerViewModel> logger, IEventAggregator eventAggregator, IFontService fontService)
+		public FontManagerViewModel(ILogger<FontManagerViewModel> logger, IEventAggregator eventAggregator, IFontService fontService, ISettings settings)
 			: base()
 		{
 			this.Logger = logger;
 			this.EventAggregator = eventAggregator;
 			this.FontService = fontService;
+			this.Settings = settings;
 
 			this.OkCommand = new(async () => await this.OkCommandAsync(), () => this.EnableOkCommand());
 			this.CancelCommand = new(async () => await this.CancelCommandAsync(), () => true);
@@ -48,6 +50,7 @@ namespace VirtualPrinter.ViewModels
 		protected ILogger<FontManagerViewModel> Logger { get; set; }
 		protected IEventAggregator EventAggregator { get; set; }
 		protected IFontService FontService { get; set; }
+		protected ISettings Settings { get; set; }
 
 		public DelegateCommand OkCommand { get; set; }
 		public DelegateCommand CancelCommand { get; set; }
@@ -83,7 +86,7 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private string _buttonText = "Close";
+		private string _buttonText = Properties.Strings.Close;
 		public string ButtonText
 		{
 			get
@@ -106,7 +109,7 @@ namespace VirtualPrinter.ViewModels
 			catch (Exception ex)
 			{
 				this.Logger.LogError(ex, $"Exception in {nameof(FontManagerViewModel)}.{nameof(this.InitializeAsync)}");
-				MessageBox.Show(ex.Message, "Initialize Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -133,14 +136,14 @@ namespace VirtualPrinter.ViewModels
 				//
 				foreach (IPrinterFont font in fonts)
 				{
-					FontViewModel item = new(this.EventAggregator, this.FontService, font);
+					FontViewModel item = new(this.EventAggregator, this.FontService, font, this.Settings);
 					this.Fonts.Add(item);
 				}
 			}
 			catch (Exception ex)
 			{
 				this.Logger.LogError(ex, $"Exception in {nameof(FontManagerViewModel)}.{nameof(this.LoadFontsAsync)}");
-				MessageBox.Show(ex.Message, "Load Fonts Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -160,7 +163,7 @@ namespace VirtualPrinter.ViewModels
 			catch (Exception ex)
 			{
 				this.Logger.LogError(ex, $"Exception in {nameof(FontManagerViewModel)}.{nameof(this.OkCommandAsync)}");
-				MessageBox.Show(ex.Message, "Save Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -185,7 +188,7 @@ namespace VirtualPrinter.ViewModels
 								where tbl.Changed
 								select tbl).Count();
 
-			this.ButtonText = changedCount > 0 ? "Cancel" : "Close";
+			this.ButtonText = changedCount > 0 ? Properties.Strings.Cancel : Properties.Strings.Close;
 		}
 
 		protected void DeleteFont(FontViewModel font)
@@ -198,7 +201,7 @@ namespace VirtualPrinter.ViewModels
 			catch (Exception ex)
 			{
 				this.Logger.LogError(ex, $"Exception in {nameof(FontManagerViewModel)}.{nameof(this.DeleteFont)}");
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -215,7 +218,7 @@ namespace VirtualPrinter.ViewModels
 			catch (Exception ex)
 			{
 				this.Logger.LogError(ex, $"Exception in {nameof(FontManagerViewModel)}.{nameof(this.SaveFont)}");
-				MessageBox.Show(ex.Message, "Save Font", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -227,7 +230,7 @@ namespace VirtualPrinter.ViewModels
 		{
 			try
 			{
-				FontViewModel model = new(this.EventAggregator, this.FontService, await this.FontService.CreateAsync())
+				FontViewModel model = new(this.EventAggregator, this.FontService, await this.FontService.CreateAsync(), this.Settings)
 				{
 					PrinterDevice = "R"
 				};
@@ -238,7 +241,7 @@ namespace VirtualPrinter.ViewModels
 			catch (Exception ex)
 			{
 				this.Logger.LogError(ex, $"Exception in {nameof(FontManagerViewModel)}.{nameof(this.AddCommandAsync)}");
-				MessageBox.Show(ex.Message, "Add Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -265,7 +268,7 @@ namespace VirtualPrinter.ViewModels
 			catch (Exception ex)
 			{
 				this.Logger.LogError(ex, $"Exception in {nameof(FontManagerViewModel)}.{nameof(this.EnableOkCommand)}");
-				MessageBox.Show(ex.Message, "Enable OK Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 
 			return returnValue;

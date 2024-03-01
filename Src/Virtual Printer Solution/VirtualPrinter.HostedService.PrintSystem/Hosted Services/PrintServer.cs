@@ -55,19 +55,22 @@ namespace VirtualPrinter.HostedService.PrintSystem
 		{
 			try
 			{
-				PhysicalPrinter physicalPrinter = JsonConvert.DeserializeObject<PhysicalPrinter>(e.PrinterConfiguration.PhysicalPrinter);
-
-				if (physicalPrinter.Enabled && this.PrinterExists(physicalPrinter.PrinterName) && e.Result)
+				if (e.PrinterConfiguration.PhysicalPrinter != null)
 				{
-					this.Logger.LogDebug("Sending label to printer '{name}'.", physicalPrinter.PrinterName);
+					PhysicalPrinter physicalPrinter = JsonConvert.DeserializeObject<PhysicalPrinter>(e.PrinterConfiguration.PhysicalPrinter);
 
-					//
-					// Start the print on another thread.
-					//
-					Task.Factory.StartNew(() =>
+					if (physicalPrinter.Enabled && this.PrinterExists(physicalPrinter.PrinterName) && e.Result)
 					{
-						this.PrintLabel(physicalPrinter, e);
-					});
+						this.Logger.LogDebug("Sending label to printer '{name}'.", physicalPrinter.PrinterName);
+
+						//
+						// Start the print on another thread.
+						//
+						Task.Factory.StartNew(() =>
+						{
+							this.PrintLabel(physicalPrinter, e);
+						});
+					}
 				}
 			}
 			catch (Exception ex)

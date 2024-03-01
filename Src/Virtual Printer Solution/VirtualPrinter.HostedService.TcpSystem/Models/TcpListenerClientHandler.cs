@@ -61,7 +61,7 @@ namespace VirtualPrinter.HostedService.TcpSystem
 			}
 			catch (Exception ex)
 			{
-				this.Logger.LogError(ex, "Exception while attempting to use encoding '{encoding}'.", this.Settings.ReceivedDataEncoding);
+				this.Logger.LogError(ex, "Exception while attempting to use encoding '{encoding}'. Falling back to UTF-8", this.Settings.ReceivedDataEncoding);
 			}
 
 			//

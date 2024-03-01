@@ -1,0 +1,17 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:converters="clr-namespace:VirtualPrinter.Converters">
+
+	<converters:NotBooleanConverter x:Key="NotBooleanConverter" />
+	<converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter" />
+	<converters:NotObjectToVisibilityConverter x:Key="NotObjectToVisibilityConverter" />
+	<converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+	<converters:NotBooleanToVisibilityConverter x:Key="NotBooleanToVisibilityConverter" />
+	<converters:StringToImageSourceConverter x:Key="StringToImageSourceConverter" />
+	<converters:HostAddressToStringConverter x:Key="HostAddressToStringConverter" />
+	<converters:BooleanResultToColorConverter x:Key="BooleanResultToColorConverter" />
+	<converters:NotObjectToBooleanConverter x:Key="NotObjectToBooleanConverter" />
+	<converters:ListCountToVisibilityConverter x:Key="ListCountToVisibilityConverter" />
+	<converters:ListZeroCountToVisibilityConverter x:Key="ListZeroCountToVisibilityConverter" />
+</ResourceDictionary>

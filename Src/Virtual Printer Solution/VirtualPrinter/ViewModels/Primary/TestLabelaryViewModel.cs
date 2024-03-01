@@ -14,10 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
-using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 using Labelary.Abstractions;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -78,7 +76,7 @@ namespace VirtualPrinter.ViewModels
 			{
 				this.Running = true;
 				this.Text = string.Empty;
-				this.Text += $"Testing connectivity to '{this.LabelService.LabelServiceConfiguration.BaseUrl}'";
+				this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_Start, this.LabelService.LabelServiceConfiguration.BaseUrl);
 				await Task.Delay(250);
 
 				//
@@ -89,16 +87,16 @@ namespace VirtualPrinter.ViewModels
 				//
 				// Check DNS.
 				//
-				this.Text += $"{Environment.NewLine}Getting IP address for host name '{uri.DnsSafeHost}";
+				this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_Dns, Environment.NewLine, uri.DnsSafeHost);
 				IPHostEntry hostEntry = Dns.GetHostEntry(uri.DnsSafeHost);
 
 				if (hostEntry.AddressList.Length != 0)
 				{
-					this.Text += $"{Environment.NewLine}Found {hostEntry.AddressList.Length} address for host name [OK]";
+					this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_Host, Environment.NewLine, hostEntry.AddressList.Length);
 
 					foreach (IPAddress ip in hostEntry.AddressList)
 					{
-						this.Text += $"{Environment.NewLine}IP address '{ip}' was found for host name '{uri.DnsSafeHost}' [OK]";
+						this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_Ip, Environment.NewLine, ip, uri.DnsSafeHost);
 						await Task.Delay(250);
 					}
 
@@ -107,18 +105,18 @@ namespace VirtualPrinter.ViewModels
 					//
 					foreach (IPAddress ip in hostEntry.AddressList)
 					{
-						this.Text += $"{Environment.NewLine}Checking port '{uri.Port}' connectivity for IP address for host name '{ip}'";
+						this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_PortTest, Environment.NewLine, uri.Port, ip);
 
 						using (TcpClient client = new())
 						{
 							try
 							{
 								client.Connect(new IPEndPoint(ip, uri.Port));
-								this.Text += $"{Environment.NewLine}Connection to port '{uri.Port}' was successful [OK]";
+								this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_PortTest_Success, Environment.NewLine, uri.Port);
 							}
 							catch
 							{
-								this.Text += $"{Environment.NewLine}Connection to port '{uri.Port}' was unsuccessful [FAILED]";
+								this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_PortTest_Failed, Environment.NewLine, uri.Port);
 							}
 						}
 
@@ -128,7 +126,7 @@ namespace VirtualPrinter.ViewModels
 					//
 					// Check web method connection
 					//
-					this.Text += $"{Environment.NewLine}Checking {uri.Scheme.ToUpper()}/{this.LabelService.LabelServiceConfiguration.Method} API method connection";
+					this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_WebMethodTest, Environment.NewLine, uri.Scheme.ToUpper(), this.LabelService.LabelServiceConfiguration.Method);
 
 					//
 					// Create a basic configuration.
@@ -146,28 +144,28 @@ namespace VirtualPrinter.ViewModels
 					//
 					// Call to get a very basic label.
 					//
-					IGetLabelResponse response = await this.LabelService.GetLabelAsync(labelConfiguration, "^XA\r\n^FO10,10^FDTEST^FS\r\n^XZ", 0);
+					IGetLabelResponse response = await this.LabelService.GetLabelAsync(labelConfiguration, $"^XA\r\n^FO10,10^FD{Properties.Strings.Connectivity_Test_Label_Text}^FS\r\n^XZ", 0);
 
 					if (response != null && response.Result)
 					{
-						this.Text += $"{Environment.NewLine}{uri.Scheme.ToUpper()}/{this.LabelService.LabelServiceConfiguration.Method} API method connection was successful [OK]";
+						this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_WebMethodTest_Success, Environment.NewLine, uri.Scheme.ToUpper(), this.LabelService.LabelServiceConfiguration.Method);
 					}
 					else
 					{
-						this.Text += $"{Environment.NewLine}{uri.Scheme.ToUpper()}/{this.LabelService.LabelServiceConfiguration.Method} API method connection was unsuccessful [FAILED]";
+						this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_WebMethod_Failed, Environment.NewLine, uri.Scheme.ToUpper(), this.LabelService.LabelServiceConfiguration.Method);
 					}
 				}
 				else
 				{
-					this.Text += $"{Environment.NewLine}DNS lookup failed [FAILED]";
+					this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_Dns_Failed, Environment.NewLine);
 				}
 
-				this.Text += $"{Environment.NewLine}Test completed successfully";
+				this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_Success, Environment.NewLine);
 			}
 			catch (Exception ex)
 			{
 				this.Text += $"{Environment.NewLine}{ex.Message}";
-				this.Text += $"{Environment.NewLine}Test completed with one or more failures";
+				this.Text += string.Format(Properties.Strings.Connectivity_Test_Message_Failed, Environment.NewLine);
 			}
 			finally
 			{

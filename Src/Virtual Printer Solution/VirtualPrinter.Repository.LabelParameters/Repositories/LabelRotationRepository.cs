@@ -24,10 +24,11 @@ namespace VirtualPrinter.Repository.LabelParameters
 		public LabelRotationRepository()
 		{
 			this.Name = this.GetType().Name.Replace("Repository", "");
-			this.Items.Add(new LabelRotation() { Label = "None", Value = 0 });
-			this.Items.Add(new LabelRotation() { Label = "90˚ Clockwise", Value = 90 });
-			this.Items.Add(new LabelRotation() { Label = "180˚ Clockwise", Value = 180 });
-			this.Items.Add(new LabelRotation() { Label = "270˚ Clockwise", Value = 270 });
+
+			this.Items.Add(new LabelRotation() { Label = Properties.Strings.Rotation_None, Value = 0 });
+			this.Items.Add(new LabelRotation() { Label = $"90˚ {Properties.Strings.Rotation_Clockwise}", Value = 90 });
+			this.Items.Add(new LabelRotation() { Label = $"180˚ {Properties.Strings.Rotation_Clockwise}", Value = 180 });
+			this.Items.Add(new LabelRotation() { Label = $"270˚ {Properties.Strings.Rotation_Clockwise}", Value = 270 });
 		}
 
 		protected IList<ILabelRotation> Items { get; } = [];

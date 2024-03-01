@@ -23,6 +23,7 @@ using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using VirtualPrinter.ApplicationSettings;
 using VirtualPrinter.FontService;
 using VirtualPrinter.PublishSubscribe;
 
@@ -30,7 +31,7 @@ namespace VirtualPrinter.ViewModels
 {
 	public class FontViewModel : BindableBase
 	{
-		public FontViewModel(IEventAggregator eventAggregator, IFontService fontService, IPrinterFont printerFont)
+		public FontViewModel(IEventAggregator eventAggregator, IFontService fontService, IPrinterFont printerFont, ISettings settings)
 		{
 			this.BrowseCommand = new(async () => await this.BrowseCommandAsync(), () => true);
 			this.DeleteCommand = new(async () => await this.DeleteCommandAsync(), () => true);
@@ -39,6 +40,7 @@ namespace VirtualPrinter.ViewModels
 
 			this.EventAggregator = eventAggregator;
 			this.FontService = fontService;
+			this.Settings = settings;
 
 			try
 			{
@@ -59,8 +61,10 @@ namespace VirtualPrinter.ViewModels
 		}
 
 		protected IEventAggregator EventAggregator { get; set; }
-		protected bool Loading { get; set; }
 		protected IFontService FontService { get; set; }
+		protected ISettings Settings { get; set; }
+
+		protected bool Loading { get; set; }
 
 		public ObservableCollection<string> PrinterDevices { get; } = ["R", "B", "E", "A"];
 
@@ -191,7 +195,7 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		public string FontSourceDescription => this.CanUpdate ? $"{this.FontSource} [Found]" : $"{this.FontSource} [Missing]";
+		public string FontSourceDescription => this.CanUpdate ? $"{this.FontSource} [{Properties.Strings.Font_Source_Found}]" : $"{this.FontSource} [{Properties.Strings.Font_Source_Missing}]";
 
 		public bool CanSave
 		{
@@ -288,7 +292,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -305,7 +309,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -348,7 +352,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -361,14 +365,14 @@ namespace VirtualPrinter.ViewModels
 		{
 			try
 			{
-				if (MessageBox.Show("Are you sure you want to delete the selected font?", "Delete Font", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+				if (MessageBox.Show(Properties.Strings.Font_ViewModel_Dialog_Delete_Text, Properties.Strings.Font_ViewModel_Dialog_Delete_Title, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
 				{
 					this.EventAggregator.GetEvent<ChangeEvent<FontViewModel>>().Publish(new ChangeEventArgs<FontViewModel>(ChangeActionType.Delete, this));
 				}
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -388,10 +392,10 @@ namespace VirtualPrinter.ViewModels
 					CheckFileExists = true,
 					CheckPathExists = true,
 					DefaultExt = "ttf",
-					Filter = "TrueType Font|*.ttf|All Files|*.*",
+					Filter = Properties.Strings.Font_ViewModel_Dialog_Filter,
 					FilterIndex = 0,
 					Multiselect = false,
-					Title = "Select TrueType Font File"
+					Title = Properties.Strings.Font_ViewModel_Dialog_Title
 				};
 
 				dialog.ShowDialog();
@@ -403,7 +407,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -419,7 +423,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -440,7 +444,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -467,12 +471,12 @@ namespace VirtualPrinter.ViewModels
 				else
 				{
 					this.HasError = true;
-					MessageBox.Show(errorMessage, "Error Converting Font", MessageBoxButton.OK, MessageBoxImage.Error);
+					MessageBox.Show(errorMessage, Properties.Strings.MessageBox_FontConversion_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 				}
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -516,7 +520,8 @@ namespace VirtualPrinter.ViewModels
 							content.Add(new StringContent(chars), "chars");
 						}
 
-						HttpResponseMessage response = await client.PostAsync("https://api.labelary.com/v1/fonts", content);
+						string url = this.Settings.ApiUrl.Replace("printers", "fonts");
+						HttpResponseMessage response = await client.PostAsync(url, content);
 
 						string responseData = await response.Content.ReadAsStringAsync();
 
@@ -541,14 +546,14 @@ namespace VirtualPrinter.ViewModels
 							result = false;
 							convertedFontData = null;
 							fontName = null;
-							errorMessage = responseData == "ERROR: null" && !string.IsNullOrEmpty(chars) ? "The font does support sub-setting characters." : responseData;
+							errorMessage = responseData == "ERROR: null" && !string.IsNullOrEmpty(chars) ? Properties.Strings.FontConversion_Error : responseData;
 						}
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{

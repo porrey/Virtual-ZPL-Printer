@@ -14,6 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using System.Collections.ObjectModel;
 using System.Windows;
 using Labelary.Abstractions;
 using Prism.Commands;
@@ -36,6 +37,9 @@ namespace VirtualPrinter.ViewModels
 
 		protected ILabelServiceConfiguration LabelServiceConfiguration { get; set; }
 		protected ISettings Settings { get; set; }
+
+		public ObservableCollection<ApiMethodViewModel> ApiMethods { get; } = [];
+		public ObservableCollection<TextEncodingViewModel> TextEncodings { get; } = [];
 
 		public DelegateCommand OkCommand { get; set; }
 		public DelegateCommand CancelCommand { get; set; }
@@ -131,8 +135,8 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private string _receivedDataEncoding = "utf-8";
-		public string ReceivedDataEncoding
+		private TextEncodingViewModel _receivedDataEncoding = null;
+		public TextEncodingViewModel ReceivedDataEncoding
 		{
 			get
 			{
@@ -157,8 +161,8 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private string _apiMethod = null;
-		public string ApiMethod
+		private ApiMethodViewModel _apiMethod = null;
+		public ApiMethodViewModel ApiMethod
 		{
 			get
 			{
@@ -187,6 +191,16 @@ namespace VirtualPrinter.ViewModels
 		{
 			try
 			{
+				this.ApiMethods.Add(new ApiMethodViewModel() { DisplayName = Properties.Strings.Global_Settings_WebMethod_Post, Value = "POST" });
+				this.ApiMethods.Add(new ApiMethodViewModel() { DisplayName = Properties.Strings.Global_Settings_WebMethod_Get, Value = "GET" });
+
+				this.TextEncodings.Add(new TextEncodingViewModel() { DisplayName = "ASCII", Value = "ASCII" });
+				this.TextEncodings.Add(new TextEncodingViewModel() { DisplayName = "UTF-7", Value = "UTF-7" });
+				this.TextEncodings.Add(new TextEncodingViewModel() { DisplayName = "UTF-8", Value = "UTF-8" });
+				this.TextEncodings.Add(new TextEncodingViewModel() { DisplayName = "UTF-32", Value = "UTF-32" });
+				this.TextEncodings.Add(new TextEncodingViewModel() { DisplayName = "UTF-64", Value = "UTF-64" });
+				this.TextEncodings.Add(new TextEncodingViewModel() { DisplayName = "ISO-8859-1", Value = "ISO-8859-1" });
+
 				this.ReceiveTimeout = this.Settings.ReceiveTimeout;
 				this.SendTimeout = this.Settings.SendTimeout;
 				this.ReceiveBufferSize = this.Settings.ReceiveBufferSize;
@@ -194,14 +208,14 @@ namespace VirtualPrinter.ViewModels
 				this.NoDelay = this.Settings.NoDelay;
 				this.Linger = this.Settings.Linger;
 				this.LingerTime = this.Settings.LingerTime;
-				this.ReceivedDataEncoding = this.Settings.ReceivedDataEncoding;
+				this.ReceivedDataEncoding = this.TextEncodings.Where(t => t.Value == this.Settings.ReceivedDataEncoding).FirstOrDefault();
 				this.ApiUrl = this.Settings.ApiUrl;
-				this.ApiMethod = this.Settings.ApiMethod;
+				this.ApiMethod = this.ApiMethods.Where(t => t.Value == this.Settings.ApiMethod).FirstOrDefault();
 				this.ApiLinting = this.Settings.ApiLinting;
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{
@@ -222,20 +236,20 @@ namespace VirtualPrinter.ViewModels
 				this.Settings.NoDelay = this.NoDelay;
 				this.Settings.Linger = this.Linger;
 				this.Settings.LingerTime = this.LingerTime;
-				this.Settings.ReceivedDataEncoding = this.ReceivedDataEncoding;
+				this.Settings.ReceivedDataEncoding = this.ReceivedDataEncoding?.Value;
 
 				this.Settings.ApiUrl = this.ApiUrl;
 				this.LabelServiceConfiguration.BaseUrl = this.ApiUrl;
 
-				this.Settings.ApiMethod = this.ApiMethod;
-				this.LabelServiceConfiguration.Method = this.ApiMethod;
+				this.Settings.ApiMethod = this.ApiMethod?.Value;
+				this.LabelServiceConfiguration.Method = this.ApiMethod?.Value;
 
 				this.Settings.ApiLinting = this.ApiLinting;
 				this.LabelServiceConfiguration.Linting = this.ApiLinting;
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(ex.Message, Properties.Strings.MessageBox_Exception_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
 			{

@@ -1,46 +1,69 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-    <Version>3.2.1</Version>
-    <FileVersion>3.2.1</FileVersion>
-    <AssemblyVersion>3.2.1</AssemblyVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<Version>3.3.0</Version>
+		<FileVersion>3.3.0</FileVersion>
+		<AssemblyVersion>3.3.0</AssemblyVersion>
+		<GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
+		<UICulture>en-US</UICulture>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Services\VirtualPrinter.Db.Ef.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Services\VirtualPrinter.Db.Ef.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Services\VirtualPrinter.Db.Ef.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="Services\VirtualPrinter.Db.Ef.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Diamond.Core.Extensions.DependencyInjection.Sqlite" Version="8.0.1" />
 		<PackageReference Include="Diamond.Core.Repository" Version="8.0.1" />
 		<PackageReference Include="Diamond.Core.System.Text" Version="8.0.1" />
 		<PackageReference Include="Diamond.Core.Repository.EntityFrameworkCore" Version="8.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="UnitsNet" Version="5.43.0" />
+		<PackageReference Include="UnitsNet.NumberExtensions" Version="5.43.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
-	  <ProjectReference Include="..\VirtualPrinter.Db.Abstractions\VirtualPrinter.Db.Abstractions.csproj" />
+		<ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Db.Abstractions\VirtualPrinter.Db.Abstractions.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.1\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+	  <Compile Update="Properties\Strings.Designer.cs">
+	    <DependentUpon>Strings.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.1\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Strings.resx">
+	    <SubType>Designer</SubType>
+	    <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
 </Project>

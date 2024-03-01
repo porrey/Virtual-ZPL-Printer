@@ -62,12 +62,32 @@ namespace VirtualPrinter
 
 		protected override void OnBeginStartup(StartupEventArgs e)
 		{
+#if DEBUG
+			string[] testCultures = ["en-US", "uk-UA", "es"];
+			CultureInfo culture = new(testCultures[0]);
+			culture.ClearCachedData();
+#else
+			CultureInfo culture = CultureInfo.CurrentCulture;
+#endif
+
+			//
+			// Attempt to set culture for the resource manager.
+			//
+			try
+			{
+				VirtualPrinter.Properties.Strings.Culture = culture;
+			}
+			catch
+			{
+			}
+
 			//
 			// Attempt to set culture for the current thread.
 			//
 			try
 			{
-				Thread.CurrentThread.CurrentUICulture = new CultureInfo(CultureInfo.CurrentCulture.LCID, true);
+				Thread.CurrentThread.CurrentCulture = new CultureInfo(culture.LCID, true);
+				Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture.LCID, true);
 			}
 			catch
 			{
@@ -78,7 +98,7 @@ namespace VirtualPrinter
 			//
 			try
 			{
-				FrameworkPropertyMetadata metaData = new(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag));
+				FrameworkPropertyMetadata metaData = new(XmlLanguage.GetLanguage(culture.IetfLanguageTag));
 				FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), metaData);
 			}
 			catch

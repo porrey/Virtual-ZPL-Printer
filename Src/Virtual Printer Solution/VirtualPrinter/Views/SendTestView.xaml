@@ -3,8 +3,9 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:resources="clr-namespace:VirtualPrinter.Properties"
+		Title="{x:Static resources:Strings.Send_Test_Label_Title}"
 		mc:Ignorable="d"
-		Title="Send Test Label"
 		MinHeight="350"
 		MinWidth="350"
 		ResizeMode="CanResizeWithGrip"
@@ -59,7 +60,7 @@
 
 		<TextBlock Grid.Column="1"
 				   Grid.Row="0"
-				   Text="Select Test Label"
+				   Text="{x:Static resources:Strings.Send_Test_Label_Select}"
 				   Margin="10" />
 
 		<ComboBox Grid.Row="1"
@@ -85,23 +86,23 @@
 		<!-- Buttons -->
 		<Grid Grid.Column="1"
 			  Grid.Row="3"
-			  Margin="0,10,5,5">
+			  Margin="0,10,5,5"
+			  Grid.IsSharedSizeScope="True">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
 			</Grid.ColumnDefinitions>
 
 			<Button Grid.Column="1"
 					Grid.Row="3"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
-					HorizontalAlignment="Right"
+					HorizontalAlignment="Stretch"
 					Command="{Binding SendCommand}"
-					Width="{StaticResource StatusButtonWidth}"
 					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,5,8"
-					ToolTip="Send the test label.">
+					Margin="{StaticResource ButtonMargin}"
+					ToolTip="{x:Static resources:Strings.Send_Test_Label_Button_Tooltip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -112,12 +113,14 @@
 						<Image Source="/Assets/send.png"
 							   Width="24"
 							   Height="24"
-							   HorizontalAlignment="Center" />
+							   HorizontalAlignment="Center"
+							   Margin="{StaticResource ButtonImageMargin}" />
 
 						<TextBlock Grid.Row="1"
-								   Text="Send"
+								   Text="{x:Static resources:Strings.Send_Test_Label_Button_Text}"
 								   FontSize="11"
-								   HorizontalAlignment="Center" />
+								   HorizontalAlignment="Center"
+								   Margin="{StaticResource ButtonTextMargin}" />
 					</Grid>
 				</Button.Content>
 			</Button>
@@ -125,12 +128,11 @@
 			<Button Grid.Column="2"
 					Style="{DynamicResource ButtonStyle1}"
 					VerticalAlignment="Center"
-					HorizontalAlignment="Center"
+					HorizontalAlignment="Stretch"
 					Click="Button_Click"
-					Width="{StaticResource StatusButtonWidth}"
 					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,5,8"
-					ToolTip="Close the window.">
+					Margin="{StaticResource ButtonMargin}"
+					ToolTip="{x:Static resources:Strings.Close_Tooltip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -140,12 +142,14 @@
 
 						<Image Source="/Assets/cancel.png"
 							   Width="24"
-							   Height="24" />
+							   Height="24"
+							   Margin="{StaticResource ButtonImageMargin}" />
 
 						<TextBlock Grid.Row="1"
-								   Text="Close"
+								   Text="{x:Static resources:Strings.Close}"
 								   FontSize="11"
-								   HorizontalAlignment="Center" />
+								   HorizontalAlignment="Center"
+								   Margin="{StaticResource ButtonTextMargin}" />
 					</Grid>
 				</Button.Content>
 			</Button>

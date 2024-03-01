@@ -14,27 +14,26 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
-using System;
 using System.Reflection;
 
 namespace VirtualPrinter.ViewModels
 {
 	public class AboutViewModel
 	{
-        public string Title
-        {
-            get
-            {
-                return "Virtual ZPL Printer";
-            }
-        }
+		public string Title
+		{
+			get
+			{
+				return Properties.Strings.Main_Title;
+			}
+		}
 
 		public string Version
 		{
 			get
 			{
 				Version version = Assembly.GetEntryAssembly().GetName().Version;
-				return $"Version {version.Major}.{version.Minor}.{version.Build}";
+				return $"{Properties.Strings.About_Version} {version.Major}.{version.Minor}.{version.Build}";
 			}
 		}
 	}

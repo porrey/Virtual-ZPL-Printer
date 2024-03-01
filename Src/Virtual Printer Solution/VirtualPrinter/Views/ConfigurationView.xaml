@@ -1,23 +1,23 @@
-﻿<Window x:Class="VirtualPrinter.Views.ConfigurationView"
-		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d"
-		Title="Edit Printer Configuration"
-		Icon="/virtual-printer.ico"
-		ResizeMode="NoResize"
-		WindowStyle="ThreeDBorderWindow"
-		WindowStartupLocation="CenterOwner"
-		Background="White"
-		Width="875"
-		Height="690"
-		MinHeight="525">
+﻿<Window
+	x:Class="VirtualPrinter.Views.ConfigurationView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:resources="clr-namespace:VirtualPrinter.Properties"
+	Title="{x:Static resources:Strings.Configuration_View_Title}"
+	Width="Auto"
+	Height="690"
+	Background="White"
+	Icon="/virtual-printer.ico"
+	ResizeMode="NoResize"
+	WindowStartupLocation="CenterOwner"
+	WindowStyle="ThreeDBorderWindow"
+	mc:Ignorable="d">
 
 	<Window.Resources>
 		<DataTemplate x:Key="PrinterConfigurationTemplate">
-			<Border CornerRadius="{StaticResource Radius}"
-					Margin="5">
+			<Border Margin="5" CornerRadius="{StaticResource Radius}">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="1*" />
@@ -33,86 +33,94 @@
 						<ColumnDefinition Width="1*" />
 					</Grid.ColumnDefinitions>
 
-					<Image Grid.Row="0"
-						   Grid.RowSpan="5"
-						   Grid.Column="0"
-						   Margin="1,1,5,0"
-						   Source="/Assets/printer-configuration.png"
-						   HorizontalAlignment="Left"
-						   VerticalAlignment="Top"
-						   Width="38"
-						   Height="38" />
+					<Image
+						Grid.Row="0"
+						Grid.RowSpan="5"
+						Grid.Column="0"
+						Width="38"
+						Height="38"
+						Margin="1,1,5,0"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						Source="/Assets/printer-configuration.png" />
 
-					<TextBlock Grid.Row="0"
-							   Grid.Column="1"
-							   Text="{Binding Name}"
-							   VerticalAlignment="Top"
-							   HorizontalAlignment="Left"
-							   Margin="05,2,0,2"
-							   FontWeight="Bold"
-							   TextWrapping="NoWrap"
-							   TextTrimming="CharacterEllipsis"
-							   TextAlignment="Center" />
+					<TextBlock
+						Grid.Row="0"
+						Grid.Column="1"
+						Margin="05,2,0,2"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						FontWeight="Bold"
+						Text="{Binding Name}"
+						TextAlignment="Center"
+						TextTrimming="CharacterEllipsis"
+						TextWrapping="NoWrap" />
 
-					<TextBlock Grid.Row="1"
-							   Grid.Column="1"
-							   Text="{Binding IdSummary}"
-							   VerticalAlignment="Top"
-							   HorizontalAlignment="Left"
-							   Margin="5,2,0,2"
-							   TextWrapping="NoWrap"
-							   TextTrimming="CharacterEllipsis"
-							   TextAlignment="Center" />
+					<TextBlock
+						Grid.Row="1"
+						Grid.Column="1"
+						Margin="5,2,0,2"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						Text="{Binding IdSummary}"
+						TextAlignment="Center"
+						TextTrimming="CharacterEllipsis"
+						TextWrapping="NoWrap" />
 
-					<TextBlock Grid.Row="2"
-							   Grid.Column="1"
-							   Text="{Binding HostSummary}"
-							   VerticalAlignment="Top"
-							   HorizontalAlignment="Left"
-							   Margin="5,2,0,2"
-							   TextWrapping="NoWrap"
-							   TextTrimming="CharacterEllipsis"
-							   TextAlignment="Center" />
+					<TextBlock
+						Grid.Row="2"
+						Grid.Column="1"
+						Margin="5,2,0,2"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						Text="{Binding HostSummary}"
+						TextAlignment="Center"
+						TextTrimming="CharacterEllipsis"
+						TextWrapping="NoWrap" />
 
-					<TextBlock Grid.Row="3"
-							   Grid.Column="1"
-							   Text="{Binding SizeSummary}"
-							   VerticalAlignment="Top"
-							   HorizontalAlignment="Left"
-							   Margin="5,2,0,2"
-							   TextWrapping="NoWrap"
-							   TextTrimming="CharacterEllipsis"
-							   TextAlignment="Center" />
+					<TextBlock
+						Grid.Row="3"
+						Grid.Column="1"
+						Margin="5,2,0,2"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						Text="{Binding SizeSummary}"
+						TextAlignment="Center"
+						TextTrimming="CharacterEllipsis"
+						TextWrapping="NoWrap" />
 
-					<TextBlock Grid.Row="4"
-							   Grid.Column="1"
-							   Text="{Binding ResolutionSummary}"
-							   VerticalAlignment="Top"
-							   HorizontalAlignment="Left"
-							   Margin="5,2,0,2"
-							   TextWrapping="NoWrap"
-							   TextTrimming="CharacterEllipsis"
-							   TextAlignment="Center" />
+					<TextBlock
+						Grid.Row="4"
+						Grid.Column="1"
+						Margin="5,2,0,2"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						Text="{Binding ResolutionSummary}"
+						TextAlignment="Center"
+						TextTrimming="CharacterEllipsis"
+						TextWrapping="NoWrap" />
 
-					<TextBlock Grid.Row="5"
-							   Grid.Column="1"
-							   Text="{Binding RotationSummary}"
-							   VerticalAlignment="Top"
-							   HorizontalAlignment="Left"
-							   Margin="5,2,0,2"
-							   TextWrapping="NoWrap"
-							   TextTrimming="CharacterEllipsis"
-							   TextAlignment="Center" />
+					<TextBlock
+						Grid.Row="5"
+						Grid.Column="1"
+						Margin="5,2,0,2"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						Text="{Binding RotationSummary}"
+						TextAlignment="Center"
+						TextTrimming="CharacterEllipsis"
+						TextWrapping="NoWrap" />
 
-					<TextBlock Grid.Row="6"
-							   Grid.Column="1"
-							   Text="{Binding PhysicalPrinterDescription}"
-							   VerticalAlignment="Top"
-							   HorizontalAlignment="Left"
-							   Margin="5,2,0,2"
-							   TextWrapping="NoWrap"
-							   TextTrimming="CharacterEllipsis"
-							   TextAlignment="Center" />
+					<TextBlock
+						Grid.Row="6"
+						Grid.Column="1"
+						Margin="5,2,0,2"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						Text="{Binding PhysicalPrinterDescription}"
+						TextAlignment="Center"
+						TextTrimming="CharacterEllipsis"
+						TextWrapping="NoWrap" />
 				</Grid>
 			</Border>
 		</DataTemplate>
@@ -123,17 +131,19 @@
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
-				<Image Grid.Column="0"
-					   Source="/Assets/resolution.png"
-					   Height="24"
-					   Width="24"
-					   Margin="0,0,10,0" />
+				<Image
+					Grid.Column="0"
+					Width="24"
+					Height="24"
+					Margin="0,0,10,0"
+					Source="/Assets/resolution.png" />
 
-				<TextBlock Grid.Column="1"
-						   Text="{Binding Display}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
+				<TextBlock
+					Grid.Column="1"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{Binding Display}" />
 			</Grid>
 		</DataTemplate>
 		<DataTemplate x:Key="RotationTemplate">
@@ -143,17 +153,19 @@
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
-				<Image Grid.Column="0"
-					   Source="/Assets/rotate.png"
-					   Height="24"
-					   Width="24"
-					   Margin="0,0,10,0" />
+				<Image
+					Grid.Column="0"
+					Width="24"
+					Height="24"
+					Margin="0,0,10,0"
+					Source="/Assets/rotate.png" />
 
-				<TextBlock Grid.Column="1"
-						   Text="{Binding Label}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
+				<TextBlock
+					Grid.Column="1"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{Binding Label}" />
 			</Grid>
 		</DataTemplate>
 		<DataTemplate x:Key="LabelUnitTemplate">
@@ -163,17 +175,19 @@
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
-				<Image Grid.Column="0"
-					   Source="/Assets/ruler.png"
-					   Height="24"
-					   Width="24"
-					   Margin="0,0,10,0" />
+				<Image
+					Grid.Column="0"
+					Width="24"
+					Height="24"
+					Margin="0,0,10,0"
+					Source="/Assets/ruler.png" />
 
-				<TextBlock Grid.Column="1"
-						   Text="{Binding Display}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
+				<TextBlock
+					Grid.Column="1"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{Binding Display}" />
 			</Grid>
 		</DataTemplate>
 		<DataTemplate x:Key="HostAddressTemplate">
@@ -183,56 +197,58 @@
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 
-				<Image Grid.Column="0"
-					   Source="/Assets/ip.png"
-					   Height="24"
-					   Width="24"
-					   Margin="0,0,10,0" />
+				<Image
+					Grid.Column="0"
+					Width="24"
+					Height="24"
+					Margin="0,0,10,0"
+					Source="/Assets/ip.png" />
 
-				<TextBlock Grid.Column="1"
-						   Text="{Binding ., Converter={StaticResource HostAddressToStringConverter}}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
+				<TextBlock
+					Grid.Column="1"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{Binding ., Converter={StaticResource HostAddressToStringConverter}}" />
 			</Grid>
 		</DataTemplate>
 	</Window.Resources>
 
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="325" />
-			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="Auto" MinWidth="325"/>
+			<ColumnDefinition Width="*" MinWidth="425"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
-		<!-- Configuration List -->
-		<ListView x:Name="ConfigurationList"
-				  Grid.Column="0"
-				  Grid.Row="0"
-				  Grid.RowSpan="2"
-				  ItemsSource="{Binding PrinterConfigurations}"
-				  ItemTemplate="{StaticResource PrinterConfigurationTemplate}"
-				  SelectedItem="{Binding SelectedPrinterConfiguration}"
-				  SelectionChanged="ListView_SelectionChanged"
-				  Margin="5"
-				  ScrollViewer.CanContentScroll="False"
-				  IsEnabled="{Binding Changes, Converter={StaticResource NotBooleanConverter}}"
-				  SelectionMode="Single">
+		<!--  Configuration List  -->
+		<ListView
+			x:Name="ConfigurationList"
+			Grid.Row="0"
+			Grid.RowSpan="2"
+			Grid.Column="0"
+			Margin="5,5,5,5"
+			IsEnabled="{Binding Changes, Converter={StaticResource NotBooleanConverter}}"
+			ItemTemplate="{StaticResource PrinterConfigurationTemplate}"
+			ItemsSource="{Binding PrinterConfigurations}"
+			ScrollViewer.CanContentScroll="False"
+			SelectedItem="{Binding SelectedPrinterConfiguration}"
+			SelectionChanged="ListView_SelectionChanged"
+			SelectionMode="Single" />
 
-		</ListView>
-
-		<!-- Properties -->
-		<Border Grid.Column="1"
-				Grid.Row="0"
-				BorderBrush="{StaticResource BorderColor}"
-				BorderThickness="1"
-				CornerRadius="{StaticResource Radius}"
-				Margin="5,5,5,5"
-				Padding="5,0,0,0"
-				IsEnabled="{Binding SelectedPrinterConfiguration, Converter={StaticResource NotObjectToBooleanConverter}}">
+		<!--  Properties  -->
+		<Border
+			Grid.Row="0"
+			Grid.Column="1"
+			Margin="5,5,5,5"
+			Padding="5,0,0,0"
+			BorderBrush="{StaticResource BorderColor}"
+			BorderThickness="1"
+			CornerRadius="{StaticResource Radius}"
+			IsEnabled="{Binding SelectedPrinterConfiguration, Converter={StaticResource NotObjectToBooleanConverter}}">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="1*" />
@@ -248,249 +264,277 @@
 					<RowDefinition Height="1*" />
 				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="90" />
+					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="1*" />
 				</Grid.ColumnDefinitions>
 
-				<TextBlock Grid.Row="0"
-						   Grid.Column="0"
-						   Text="Name"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<TextBox Grid.Row="0"
-						 Grid.Column="1"
-						 Text="{Binding Name}"
-						 Margin="{StaticResource ControlMargin}"
-						 Height="{StaticResource ControlHeight}"
-						 VerticalContentAlignment="Center"
-						 HorizontalContentAlignment="Left"
-						 InputScope="Number"
-						 Foreground="{StaticResource ForegroundColor1}" />
+				<TextBlock
+					Grid.Row="0"
+					Grid.Column="0"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{x:Static resources:Strings.Configuration_View_Label_Name}" />
+				<TextBox
+					Grid.Row="0"
+					Grid.Column="1"
+					Height="{StaticResource ControlHeight}"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalContentAlignment="Left"
+					VerticalContentAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					InputScope="Number"
+					Text="{Binding Name}" />
 
-				<TextBlock Grid.Row="1"
-						   Grid.Column="0"
-						   Text="Host Address"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<ComboBox Grid.Row="1"
-						  Grid.Column="1"
-						  Margin="{StaticResource ControlMargin}"
-						  Height="{StaticResource ControlHeight}"
-						  VerticalContentAlignment="Center"
-						  HorizontalContentAlignment="Left"
-						  IsReadOnly="false"
-						  IsEditable="true"
-						  Foreground="{StaticResource ForegroundColor1}"
-						  ItemsSource="{Binding HostAddresses}"
-						  Text="{Binding SelectedHostAddress}"
-						  ItemTemplate="{StaticResource HostAddressTemplate}" />
+				<TextBlock
+					Grid.Row="1"
+					Grid.Column="0"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{x:Static resources:Strings.Configuration_View_Label_HostAddress}" />
+				<ComboBox
+					Grid.Row="1"
+					Grid.Column="1"
+					Height="{StaticResource ControlHeight}"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalContentAlignment="Left"
+					VerticalContentAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					IsEditable="true"
+					IsReadOnly="false"
+					ItemTemplate="{StaticResource HostAddressTemplate}"
+					ItemsSource="{Binding HostAddresses}"
+					Text="{Binding SelectedHostAddress}" />
 
-				<TextBlock Grid.Row="2"
-						   Grid.Column="0"
-						   Text="TCP Port"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<TextBox Grid.Row="2"
-						 Grid.Column="1"
-						 Text="{Binding Port, Mode=TwoWay}"
-						 Margin="5"
-						 Height="{StaticResource ControlHeight}"
-						 VerticalContentAlignment="Center"
-						 HorizontalContentAlignment="Left"
-						 InputScope="Number"
-						 Foreground="{StaticResource ForegroundColor1}" />
+				<TextBlock
+					Grid.Row="2"
+					Grid.Column="0"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{x:Static resources:Strings.Configuration_View_Label_TcpPort}" />
+				<TextBox
+					Grid.Row="2"
+					Grid.Column="1"
+					Height="{StaticResource ControlHeight}"
+					Margin="5"
+					HorizontalContentAlignment="Left"
+					VerticalContentAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					InputScope="Number"
+					Text="{Binding Port, Mode=TwoWay}" />
 
-				<TextBlock Grid.Row="3"
-						   Grid.Column="0"
-						   Text="Label Units"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<ComboBox Grid.Row="3"
-						  Grid.Column="1"
-						  Margin="{StaticResource ControlMargin}"
-						  Height="{StaticResource ControlHeight}"
-						  ItemsSource="{Binding LabelUnits}"
-						  SelectedItem="{Binding SelectedLabelUnit, Mode=TwoWay}"
-						  ItemTemplate="{StaticResource LabelUnitTemplate}" />
+				<TextBlock
+					Grid.Row="3"
+					Grid.Column="0"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{x:Static resources:Strings.Configuration_View_Label_LabelUnits}" />
+				<ComboBox
+					Grid.Row="3"
+					Grid.Column="1"
+					Height="{StaticResource ControlHeight}"
+					Margin="{StaticResource ControlMargin}"
+					ItemTemplate="{StaticResource LabelUnitTemplate}"
+					ItemsSource="{Binding LabelUnits}"
+					SelectedItem="{Binding SelectedLabelUnit, Mode=TwoWay}" />
 
-				<TextBlock Grid.Row="4"
-						   Grid.Column="0"
-						   Text="Label Height"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<TextBox Grid.Row="4"
-						 Grid.Column="1"
-						 Text="{Binding LabelHeight}"
-						 Margin="{StaticResource ControlMargin}"
-						 Height="{StaticResource ControlHeight}"
-						 VerticalContentAlignment="Center"
-						 HorizontalContentAlignment="Left"
-						 InputScope="Number"
-						 Foreground="{StaticResource ForegroundColor1}" />
+				<TextBlock
+					Grid.Row="4"
+					Grid.Column="0"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{x:Static resources:Strings.Configuration_View_Label_LabelHeight}" />
+				<TextBox
+					Grid.Row="4"
+					Grid.Column="1"
+					Height="{StaticResource ControlHeight}"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalContentAlignment="Left"
+					VerticalContentAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					InputScope="Number"
+					Text="{Binding LabelHeight}" />
 
-				<TextBlock Grid.Row="5"
-						   Grid.Column="0"
-						   Text="Label Width"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<TextBox Grid.Row="5"
-						 Grid.Column="1"
-						 Text="{Binding LabelWidth}"
-						 Margin="{StaticResource ControlMargin}"
-						 Height="{StaticResource ControlHeight}"
-						 VerticalContentAlignment="Center"
-						 HorizontalContentAlignment="Left"
-						 InputScope="Number"
-						 Foreground="{StaticResource ForegroundColor1}" />
+				<TextBlock
+					Grid.Row="5"
+					Grid.Column="0"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{x:Static resources:Strings.Configuration_View_Label_LabelWidth}" />
+				<TextBox
+					Grid.Row="5"
+					Grid.Column="1"
+					Height="{StaticResource ControlHeight}"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalContentAlignment="Left"
+					VerticalContentAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					InputScope="Number"
+					Text="{Binding LabelWidth}" />
 
-				<TextBlock Grid.Row="6"
-						   Grid.Column="0"
-						   Text="Resolution"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<ComboBox Grid.Row="6"
-						  Grid.Column="1"
-						  Margin="{StaticResource ControlMargin}"
-						  Height="{StaticResource ControlHeight}"
-						  ItemsSource="{Binding Resolutions}"
-						  SelectedItem="{Binding SelectedResolution, Mode=TwoWay}"
-						  ItemTemplate="{StaticResource ResolutionTemplate}" />
+				<TextBlock
+					Grid.Row="6"
+					Grid.Column="0"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{x:Static resources:Strings.Printer_Configuration_Resolution}" />
+				<ComboBox
+					Grid.Row="6"
+					Grid.Column="1"
+					Height="{StaticResource ControlHeight}"
+					Margin="{StaticResource ControlMargin}"
+					ItemTemplate="{StaticResource ResolutionTemplate}"
+					ItemsSource="{Binding Resolutions}"
+					SelectedItem="{Binding SelectedResolution, Mode=TwoWay}" />
 
-				<TextBlock Grid.Row="7"
-						   Grid.Column="0"
-						   Text="Rotation"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<ComboBox Grid.Row="7"
-						  Grid.Column="1"
-						  Margin="{StaticResource ControlMargin}"
-						  Height="{StaticResource ControlHeight}"
-						  ItemsSource="{Binding Rotations}"
-						  SelectedItem="{Binding SelectedRotation, Mode=TwoWay}"
-						  ItemTemplate="{StaticResource RotationTemplate}" />
+				<TextBlock
+					Grid.Row="7"
+					Grid.Column="0"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{x:Static resources:Strings.Printer_Configuration_Rotation}" />
+				<ComboBox
+					Grid.Row="7"
+					Grid.Column="1"
+					Height="{StaticResource ControlHeight}"
+					Margin="{StaticResource ControlMargin}"
+					ItemTemplate="{StaticResource RotationTemplate}"
+					ItemsSource="{Binding Rotations}"
+					SelectedItem="{Binding SelectedRotation, Mode=TwoWay}" />
 
-				<TextBlock Grid.Row="8"
-						   Grid.Column="0"
-						   Text="Label Cache"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<Grid Grid.Row="8"
-					  Grid.Column="1"
-					  Grid.ColumnSpan="3">
+				<TextBlock
+					Grid.Row="8"
+					Grid.Column="0"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{x:Static resources:Strings.Configuration_View_Label_LabelCache}" />
+				<Grid
+					Grid.Row="8"
+					Grid.Column="1"
+					Grid.ColumnSpan="3">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
 					</Grid.ColumnDefinitions>
 
-					<TextBox Grid.Column="0"
-							 Text="{Binding ImagePath, Mode=TwoWay, Delay=750, UpdateSourceTrigger=PropertyChanged}"
-							 Margin="5,5,0,5"
-							 Height="{StaticResource ControlHeight}"
-							 VerticalContentAlignment="Center"
-							 HorizontalContentAlignment="Left"
-							 InputScope="FullFilePath"
-							 Foreground="{StaticResource ForegroundColor1}" />
-					<Button Grid.Column="1"
-							Style="{DynamicResource ButtonStyle1}"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Right"
-							Command="{Binding BrowseCommand}"
-							Margin="{StaticResource ControlMargin}"
-							ToolTip="Browse for a folder to specify where label images are cached.">
-						<Button.Content>
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="Auto" />
-									<ColumnDefinition Width="*" />
-								</Grid.ColumnDefinitions>
-
-								<Image Source="/Assets/browse.png"
-									   Width="24"
-									   Height="24" />
-							</Grid>
-						</Button.Content>
-					</Button>
-				</Grid>
-
-				<TextBlock Grid.Row="9"
-						   Grid.Column="0"
-						   Text="ZPL Filters"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<Grid Grid.Row="9"
-					  Grid.Column="1"
-					  Grid.ColumnSpan="3">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-
-					<TextBox Grid.Column="0"
-							 Text="{Binding FilterDescription, Mode=OneWay}"
-							 Margin="5,5,0,5"
-							 Height="{StaticResource ControlHeight}"
-							 VerticalContentAlignment="Center"
-							 HorizontalContentAlignment="Left"
-							 InputScope="FullFilePath"
-							 IsReadOnly="true"
-							 Foreground="{StaticResource ForegroundColor1}" />
-					<Button Grid.Column="1"
-							Style="{DynamicResource ButtonStyle1}"
-							VerticalAlignment="Center"
-							HorizontalAlignment="Right"
-							Command="{Binding FilterEditCommand}"
-							Margin="{StaticResource ControlMargin}"
-							ToolTip="Click to edit ZPL filters.">
-						<Button.Content>
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="Auto" />
-									<ColumnDefinition Width="*" />
-								</Grid.ColumnDefinitions>
-
-								<Image Source="/Assets/filter-edit.png"
-									   Width="24"
-									   Height="24" />
-							</Grid>
-						</Button.Content>
-					</Button>
-				</Grid>
-
-				<TextBlock Grid.Row="10"
-						   Grid.Column="0"
-						   Text="Physical Printer"
-						   Margin="{StaticResource ControlMargin}"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Foreground="{StaticResource ForegroundColor1}" />
-				<Button Grid.Row="10"
+					<TextBox
+						Grid.Column="0"
+						Height="{StaticResource ControlHeight}"
+						Margin="5,5,0,5"
+						HorizontalContentAlignment="Left"
+						VerticalContentAlignment="Center"
+						Foreground="{StaticResource ForegroundColor1}"
+						InputScope="FullFilePath"
+						Text="{Binding ImagePath, Mode=TwoWay, Delay=750, UpdateSourceTrigger=PropertyChanged}" />
+					<Button
 						Grid.Column="1"
-						Style="{DynamicResource ButtonStyle1}"
+						Margin="{StaticResource ControlMargin}"
+						HorizontalAlignment="Right"
 						VerticalAlignment="Center"
-						HorizontalAlignment="Stretch"
-						Command="{Binding PrinterEditCommand}"
-						Margin="5,5,195,5"
-						ToolTip="Click to edit the physical printer.">
+						Command="{Binding BrowseCommand}"
+						Style="{DynamicResource ButtonStyle1}"
+							ToolTip="{x:Static resources:Strings.Configuration_Button_Browse_Tooltip}">
+						<Button.Content>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+
+								<Image
+									Width="24"
+									Height="24"
+									Source="/Assets/browse.png" />
+							</Grid>
+						</Button.Content>
+					</Button>
+				</Grid>
+
+				<TextBlock
+					Grid.Row="9"
+					Grid.Column="0"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="ZPL Filters" />
+				<Grid
+					Grid.Row="9"
+					Grid.Column="1"
+					Grid.ColumnSpan="3">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+
+					<TextBox
+						Grid.Column="0"
+						Height="{StaticResource ControlHeight}"
+						Margin="5,5,0,5"
+						HorizontalContentAlignment="Left"
+						VerticalContentAlignment="Center"
+						Foreground="{StaticResource ForegroundColor1}"
+						InputScope="FullFilePath"
+						IsReadOnly="true"
+						Text="{Binding FilterDescription, Mode=OneWay}" />
+					<Button
+						Grid.Column="1"
+						Margin="{StaticResource ControlMargin}"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Center"
+						Command="{Binding FilterEditCommand}"
+						Style="{DynamicResource ButtonStyle1}"
+						ToolTip="{x:Static resources:Strings.Configuration_Button_Filters_Tooltip}">
+						<Button.Content>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+
+								<Image
+									Width="24"
+									Height="24"
+									Source="/Assets/filter-edit.png" />
+							</Grid>
+						</Button.Content>
+					</Button>
+				</Grid>
+
+				<TextBlock
+					Grid.Row="10"
+					Grid.Column="0"
+					Margin="{StaticResource ControlMargin}"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Foreground="{StaticResource ForegroundColor1}"
+					Text="{x:Static resources:Strings.Configuration_View_Label_PhysicalPrinter}" />
+				<Button
+					Grid.Row="10"
+					Grid.Column="1"
+					Margin="5,5,195,5"
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Center"
+					Command="{Binding PrinterEditCommand}"
+					Style="{DynamicResource ButtonStyle1}"
+					ToolTip="{x:Static resources:Strings.Configuration_View_Button_Configure_Tooltip}">
 					<Button.Content>
 						<Grid>
 							<Grid.ColumnDefinitions>
@@ -498,48 +542,51 @@
 								<ColumnDefinition Width="*" />
 							</Grid.ColumnDefinitions>
 
-							<Image Grid.Column="0"
-								   Source="/Assets/filter-edit.png"
-								   Width="24"
-								   Height="24"
-								   Margin="3" />
+							<Image
+								Grid.Column="0"
+								Width="24"
+								Height="24"
+								Margin="3"
+								Source="/Assets/filter-edit.png" />
 
-							<TextBlock Grid.Column="1"
-									   Text="Configure"
-									   VerticalAlignment="Center"
-									   HorizontalAlignment="Center"
-									   Margin="3" />
+							<TextBlock
+								Grid.Column="1"
+								Margin="3"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								Text="{x:Static resources:Strings.Configuration_View_Button_Configure_Text}" />
 						</Grid>
 					</Button.Content>
 				</Button>
 			</Grid>
 		</Border>
 
-		<!-- Buttons -->
-		<Grid Grid.Column="1"
-			  Grid.Row="1"
-			  Margin="0,10,5,5">
+		<!--  Buttons  -->
+		<Grid
+			Grid.Row="1"
+			Grid.Column="1"
+			Margin="0,10,5,5"
+			Grid.IsSharedSizeScope="True">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
+				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />
 			</Grid.ColumnDefinitions>
 
-			<Button Grid.Column="6"
-					Style="{DynamicResource ButtonStyle1}"
-					VerticalAlignment="Center"
-					HorizontalAlignment="Center"
-					Command="{Binding CloseCommand}"
-					Width="{StaticResource StatusButtonWidth}"
-					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,0,3"
-					ToolTip="Close this window."
-					Click="CloseButton_Click">
+			<Button
+				Grid.Column="6"
+				Height="{StaticResource StatusButtonHeight}"
+				Margin="{StaticResource ButtonMargin}"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Center"
+				Click="CloseButton_Click"
+				Command="{Binding CloseCommand}"
+				Style="{DynamicResource ButtonStyle1}"
+				ToolTip="{x:Static resources:Strings.Close_Tooltip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -547,27 +594,31 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Source="/Assets/close.png"
-							   Width="24"
-							   Height="24" />
+						<Image
+							Width="24"
+							Height="24"
+							Margin="{StaticResource ButtonImageMargin}"
+							Source="/Assets/close.png" />
 
-						<TextBlock Grid.Row="1"
-								   Text="Close"
-								   FontSize="11"
-								   HorizontalAlignment="Center" />
+						<TextBlock
+							Grid.Row="1"
+							Margin="{StaticResource ButtonTextMargin}"
+							HorizontalAlignment="Center"
+							FontSize="11"
+							Text="{x:Static resources:Strings.Close}" />
 					</Grid>
 				</Button.Content>
 			</Button>
 
-			<Button Grid.Column="5"
-					Style="{DynamicResource ButtonStyle1}"
-					VerticalAlignment="Center"
-					HorizontalAlignment="Center"
-					Command="{Binding UndoCommand}"
-					Width="{StaticResource StatusButtonWidth}"
-					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,0,3"
-					ToolTip="Undo the current changes.">
+			<Button
+				Grid.Column="5"
+				Height="{StaticResource StatusButtonHeight}"
+				Margin="{StaticResource ButtonMargin}"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Center"
+				Command="{Binding UndoCommand}"
+				Style="{DynamicResource ButtonStyle1}"
+				ToolTip="{x:Static resources:Strings.Configuration_View_Button_Undo_Tooltip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -575,27 +626,31 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Source="/Assets/undo.png"
-							   Width="24"
-							   Height="24" />
+						<Image
+							Width="24"
+							Height="24"
+							Margin="{StaticResource ButtonImageMargin}"
+							Source="/Assets/undo.png" />
 
-						<TextBlock Grid.Row="1"
-								   Text="Undo"
-								   FontSize="11"
-								   HorizontalAlignment="Center" />
+						<TextBlock
+							Grid.Row="1"
+							Margin="{StaticResource ButtonTextMargin}"
+							HorizontalAlignment="Center"
+							FontSize="11"
+							Text="{x:Static resources:Strings.Configuration_View_Button_Undo_Text}" />
 					</Grid>
 				</Button.Content>
 			</Button>
 
-			<Button Grid.Column="4"
-					Style="{DynamicResource ButtonStyle1}"
-					VerticalAlignment="Center"
-					HorizontalAlignment="Center"
-					Command="{Binding SaveCommand}"
-					Width="{StaticResource StatusButtonWidth}"
-					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,0,3"
-					ToolTip="Save changes to the current printer configuration.">
+			<Button
+				Grid.Column="4"
+				Height="{StaticResource StatusButtonHeight}"
+				Margin="{StaticResource ButtonMargin}"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Center"
+				Command="{Binding SaveCommand}"
+				Style="{DynamicResource ButtonStyle1}"
+				ToolTip="{x:Static resources:Strings.Configuration_View_Button_Save_Tooltip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -603,55 +658,63 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Source="/Assets/save-printer-configuration.png"
-							   Width="24"
-							   Height="24" />
+						<Image
+							Width="24"
+							Height="24"
+							Margin="{StaticResource ButtonImageMargin}"
+							Source="/Assets/save-printer-configuration.png" />
 
-						<TextBlock Grid.Row="1"
-								   Text="Save"
-								   FontSize="11"
-								   HorizontalAlignment="Center" />
+						<TextBlock
+							Grid.Row="1"
+							Margin="{StaticResource ButtonTextMargin}"
+							HorizontalAlignment="Center"
+							FontSize="11"
+							Text="{x:Static resources:Strings.Configuration_View_Button_Save_Text}" />
 					</Grid>
 				</Button.Content>
 			</Button>
 
-			<Button Grid.Column="3"
-					Style="{DynamicResource ButtonStyle1}"
-					VerticalAlignment="Center"
-					HorizontalAlignment="Center"
-					Command="{Binding AddCommand}"
-					Width="{StaticResource StatusButtonWidth}"
-					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,0,3"
-					ToolTip="Add a new printer configuration.">
+			<Button
+				Grid.Column="3"
+				Height="{StaticResource StatusButtonHeight}"
+				Margin="{StaticResource ButtonMargin}"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Center"
+				Command="{Binding AddCommand}"
+				Style="{DynamicResource ButtonStyle1}"
+				ToolTip="{x:Static resources:Strings.Configuration_View_Button_Add_Tooltip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
-							<RowDefinition />
+							<RowDefinition Height="Auto" />
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Source="/Assets/add-printer-configuration.png"
-							   Width="24"
-							   Height="24" />
+						<Image
+							Width="24"
+							Height="24"
+							Margin="{StaticResource ButtonImageMargin}"
+							Source="/Assets/add-printer-configuration.png" />
 
-						<TextBlock Grid.Row="1"
-								   Text="Add"
-								   FontSize="11"
-								   HorizontalAlignment="Center" />
+						<TextBlock
+							Grid.Row="1"
+							Margin="{StaticResource ButtonTextMargin}"
+							HorizontalAlignment="Center"
+							FontSize="11"
+							Text="{x:Static resources:Strings.Configuration_View_Button_Add_Text}" />
 					</Grid>
 				</Button.Content>
 			</Button>
 
-			<Button Grid.Column="2"
-					Style="{DynamicResource ButtonStyle1}"
-					VerticalAlignment="Center"
-					HorizontalAlignment="Center"
-					Command="{Binding DeleteCommand}"
-					Width="{StaticResource StatusButtonWidth}"
-					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,0,3"
-					ToolTip="Delete the selected printer configuration.">
+			<Button
+				Grid.Column="2"
+				Height="{StaticResource StatusButtonHeight}"
+				Margin="{StaticResource ButtonMargin}"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Center"
+				Command="{Binding DeleteCommand}"
+				Style="{DynamicResource ButtonStyle1}"
+				ToolTip="{x:Static resources:Strings.Configuration_View_Button_Delete_Tooltip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -659,27 +722,31 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Source="/Assets/delete-printer-configuration.png"
-							   Width="24"
-							   Height="24" />
+						<Image
+							Width="24"
+							Height="24"
+							Margin="{StaticResource ButtonImageMargin}"
+							Source="/Assets/delete-printer-configuration.png" />
 
-						<TextBlock Grid.Row="1"
-								   Text="Delete"
-								   FontSize="11"
-								   HorizontalAlignment="Center" />
+						<TextBlock
+							Grid.Row="1"
+							Margin="{StaticResource ButtonTextMargin}"
+							HorizontalAlignment="Center"
+							FontSize="11"
+							Text="{x:Static resources:Strings.Configuration_View_Button_Delete_Text}" />
 					</Grid>
 				</Button.Content>
 			</Button>
 
-			<Button Grid.Column="1"
-					Style="{DynamicResource ButtonStyle1}"
-					VerticalAlignment="Center"
-					HorizontalAlignment="Center"
-					Command="{Binding CloneCommand}"
-					Width="{StaticResource StatusButtonWidth}"
-					Height="{StaticResource StatusButtonHeight}"
-					Margin="8,3,0,3"
-					ToolTip="Clone the selected printer configuration.">
+			<Button
+				Grid.Column="1"
+				Height="{StaticResource StatusButtonHeight}"
+				Margin="{StaticResource ButtonMargin}"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Center"
+				Command="{Binding CloneCommand}"
+				Style="{DynamicResource ButtonStyle1}"
+				ToolTip="{x:Static resources:Strings.Configuration_View_Button_Clone_Tooltip}">
 				<Button.Content>
 					<Grid>
 						<Grid.RowDefinitions>
@@ -687,14 +754,18 @@
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
-						<Image Source="/Assets/clone-printer-configuration.png"
-							   Width="24"
-							   Height="24" />
+						<Image
+							Width="24"
+							Height="24"
+							Margin="{StaticResource ButtonImageMargin}"
+							Source="/Assets/clone-printer-configuration.png" />
 
-						<TextBlock Grid.Row="1"
-								   Text="Clone"
-								   FontSize="11"
-								   HorizontalAlignment="Center" />
+						<TextBlock
+							Grid.Row="1"
+							Margin="{StaticResource ButtonTextMargin}"
+							HorizontalAlignment="Center"
+							FontSize="11"
+							Text="{x:Static resources:Strings.Configuration_View_Button_Clone_Text}" />
 					</Grid>
 				</Button.Content>
 			</Button>

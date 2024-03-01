@@ -219,13 +219,13 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		public string PhysicalPrinterDescription => $"Printing {(this.PhysicalPrinterInstance.Enabled ? "Enabled" : "Disabled")}{(this.PhysicalPrinterInstance.Enabled ? $": {this.PhysicalPrinterInstance.PrinterName}" : "")}";
+		public string PhysicalPrinterDescription => $"{Properties.Strings.Printer_Configuration_Printing} {(this.PhysicalPrinterInstance.Enabled ? Properties.Strings.Printer_Configuration_Enabled : Properties.Strings.Printer_Configuration_Disabled)}{(this.PhysicalPrinterInstance.Enabled ? $": {this.PhysicalPrinterInstance.PrinterName}" : "")}";
 
-		public string IdSummary => $"ID: {this.Id}";
-		public string HostSummary => $"Host: {this.HostAddress}:{this.Port}";
-		public string SizeSummary => $"Size: {this.LabelWidth} {this.Unit} by {this.LabelHeight} {this.Unit}";
-		public string ResolutionSummary => $"Resolution: {this.ResolutionInDpmm} dpmm";
-		public string RotationSummary => $"Rotation: {this.RotationAngle}˚";
+		public string IdSummary => $"{Properties.Strings.Printer_Configuration_Id}: {this.Id}";
+		public string HostSummary => $"{Properties.Strings.Printer_Configuration_Host}: {this.HostAddress}:{this.Port}";
+		public string SizeSummary => $"{Properties.Strings.Printer_Configuration_Size}: {this.LabelWidth} {this.Unit} {Properties.Strings.PrinterConfigurationViewModel_By} {this.LabelHeight} {this.Unit}";
+		public string ResolutionSummary => $"{Properties.Strings.Printer_Configuration_Resolution}: {this.ResolutionInDpmm} {Properties.Strings.dpmm}";
+		public string RotationSummary => $"{Properties.Strings.Printer_Configuration_Rotation}: {this.RotationAngle}˚";
 		public string Description => $"{this.Name} [{this.HostSummary}, {this.SizeSummary}, {this.ResolutionSummary}, {this.RotationSummary}, {this.PhysicalPrinterDescription}]";
 		public string Unit => $"{(LengthUnit)this.LabelUnit}".ToLower();
 

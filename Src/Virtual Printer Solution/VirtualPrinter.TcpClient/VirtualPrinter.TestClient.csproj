@@ -1,22 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-    <Version>3.2.1</Version>
-    <FileVersion>3.2.1</FileVersion>
-    <AssemblyVersion>3.2.1</AssemblyVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<Version>3.3.0</Version>
+		<FileVersion>3.3.0</FileVersion>
+		<AssemblyVersion>3.3.0</AssemblyVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Services\VirtualPrinter.TcpClient.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Services\VirtualPrinter.TcpClient.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Services\VirtualPrinter.TcpClient.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="Services\VirtualPrinter.TcpClient.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
 </Project>

@@ -23,7 +23,7 @@
 				</Grid.RowDefinitions>
 
 				<TextBlock Grid.Row="0"
-						   Text="{Binding Title,FallbackValue=Application}"
+						   Text="{Binding Title}"
 						   Foreground="{StaticResource ForegroundColor2}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Center"
@@ -38,7 +38,7 @@
 					   Opacity=".9" />
 
 				<TextBlock Grid.Row="2"
-						   Text="{Binding Version,FallbackValue=Version}"
+						   Text="{Binding Version}"
 						   Foreground="{StaticResource ForegroundColor2}"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Center"

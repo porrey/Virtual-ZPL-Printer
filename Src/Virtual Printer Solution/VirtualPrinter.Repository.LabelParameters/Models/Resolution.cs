@@ -23,6 +23,6 @@ namespace VirtualPrinter.Repository.LabelParameters
 		public int Dpmm { get; set; }
 		public double Dpi => this.Dpmm * 25.4;
 
-		public string Display => $"{this.Dpmm}dpmm [{this.Dpi:0}dpi]";
+		public string Display => $"{this.Dpmm} {Properties.Strings.Dpmm} [{this.Dpi:0} {Properties.Strings.Dpi}]";
 	}
 }

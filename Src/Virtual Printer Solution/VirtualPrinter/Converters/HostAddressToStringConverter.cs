@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
-using System;
 using System.Globalization;
 using System.Net;
 using System.Windows.Data;
@@ -26,17 +25,17 @@ namespace VirtualPrinter.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			string returnValue = "Unknown";
+			string returnValue = Properties.Strings.HostAddress_Unknown;
 
 			if (value is IHostAddress hostAddress)
 			{
 				if (hostAddress.IpAddress == IPAddress.Any)
 				{
-					returnValue = "Any";
+					returnValue = Properties.Strings.HostAddress_Any;
 				}
 				else if (hostAddress.IpAddress == IPAddress.Loopback)
 				{
-					returnValue = "Loopback";
+					returnValue = Properties.Strings.HostAddress_Loopback;
 				}
 				else
 				{

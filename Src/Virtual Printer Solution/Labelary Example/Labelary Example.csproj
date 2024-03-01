@@ -5,13 +5,16 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Labelary.Example</RootNamespace>
     <AssemblyName>LabelaryExample</AssemblyName>
-    <Version>3.2.1</Version>
-    <FileVersion>3.2.1</FileVersion>
-    <AssemblyVersion>3.2.1</AssemblyVersion>
+    <Version>3.3.0</Version>
+    <FileVersion>3.3.0</FileVersion>
+    <AssemblyVersion>3.3.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
+	<ItemGroup>
+		<None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
 </Project>

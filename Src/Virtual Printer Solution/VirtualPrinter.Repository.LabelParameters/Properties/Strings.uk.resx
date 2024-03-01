@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="Dpi" xml:space="preserve">
+		<value>dpi</value>
+		<comment>Dots Per Inch</comment>
+	</data>
+	<data name="Dpmm" xml:space="preserve">
+		<value>dpmm</value>
+		<comment>Dots Per Millimeter</comment>
+	</data>
+	<data name="Rotation_Clockwise" xml:space="preserve">
+		<value>За годинниковою стрілкою</value>
+	</data>
+	<data name="Rotation_None" xml:space="preserve">
+		<value>Жодного</value>
+	</data>
+</root>

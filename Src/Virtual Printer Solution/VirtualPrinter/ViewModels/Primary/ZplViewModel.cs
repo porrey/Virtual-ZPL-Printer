@@ -15,8 +15,6 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using Labelary.Abstractions;
 using Prism.Mvvm;
 
@@ -59,7 +57,7 @@ namespace VirtualPrinter.ViewModels
 			set
 			{
 				this.SetProperty(ref this._labelResponse, value);
-				this.Title = $"ZPL Warnings ({this.LabelResponse.Warnings.Count()})";
+				this.Title = $"{Properties.Strings.ZPL_Warnings} ({this.LabelResponse.Warnings.Count()})";
 				this.Zpl = this.LabelResponse.Zpl;
 				this.Warnings.Clear();
 

@@ -2,13 +2,27 @@
 An Ethernet based virtual Zebra Label Printer that can be used to test applications that produce bar code labels. This application uses the Labelary service found at [http://labelary.com](http://labelary.com/service.html).
 
 ## Latest Release
-[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Installer/Virtual%20ZPL%20Printer%20Setup.msi) (v 3.2.1)
+[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Installer/Virtual%20ZPL%20Printer%20Setup.msi) (v 3.3.0)
 
 Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have the .NET 8.0 Framework installed automatically.
 
-###### Version 3.2.1 Updates:
-1. Fixed Issue #51 - Humanizer library caused a crash on unsupported languages. Added exception handling and fallback formatting when language is not supported. Also added all currently supported languages.
-2. Updated button icons.
+###### Version 3.3.0 Updates:
+1. Added multi-language support. Currently added support for Spanish (**es**) and Ukrainian (**uk**). Both translations were done using Google Translate tool and require additional work to be done. These languages can be updated via a pull-request or a new language supported added via same. Right to Left reading languages have not been tested yet. See section on adding, requesting or updating languages. Note that the Labelary API returns messages in English and they are not translated. This language also uses a library called **UnitsNet** that has its own language support. In some cases output from this library may be in English.
+2. Moved core ZPL templates to application folder. Custom templates can still be dropped in the personal folder as before.
+
+## Requesting, Adding or Updating Languages
+### Requesting a new Language/Region
+To request anew language/region add an issue using the label **Add Language**. The language will be added using Google Translate.
+
+### Adding Language/Region Support
+Add a pull-request with the title "**Added Language xx-YY**" or "**Added Language xx**". Only the the XML string files should be included in the pull request. If any other files are modified, the pull request will not be accepted. You must ensure that all strings are included in each of the XML files. Ensure the file names are correct: **Strings.xx-YY.resx** or **Strings.xx.resx**.
+
+Issues posted to correct or change a specific word will not be accepted. If you come across a word that should be translated differently, perform a pull-request to change it.
+
+### Updating Language/Region Support
+Add a pull-request with the title "**Updated Language xx-YY**" or "**Updated Language xx**". Only the the XML string files should be included in the pull request. If any other files are modified, the pull request will not be accepted. Ensure the files are not renamed. If you are not the original creator of the language file, please seek a review from the original creator. If the original creator does not respond within one week, the pull-request can be accepted without their review.
+
+Issues posted to correct or change a specific word will not be accepted. If you come across a word that should be translated differently, perform a pull-request to change it.
 
 ## Screen Shots
 
@@ -29,6 +43,10 @@ Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have th
 ![](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Images/VirtualZplPrinter-08.png)
 
 ## History
+###### Version 3.2.1 Updates:
+1. Fixed Issue #51 - Humanizer library caused a crash on unsupported languages. Added exception handling and fallback formatting when language is not supported. Also added all currently supported languages.
+2. Updated button icons.
+
 ###### Version 3.2.0 Updates:
 1. Added the ability to load **custom TrueType fonts** in the printer and use them in the ZPL.
 2. Clicking the Test button will bring the window to the front if it is already open.

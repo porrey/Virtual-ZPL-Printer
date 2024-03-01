@@ -14,11 +14,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using System.Globalization;
 using Diamond.Core.Repository.EntityFrameworkCore;
 using Labelary.Abstractions;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using UnitsNet;
 using UnitsNet.Units;
 
 namespace VirtualPrinter.Db.Ef
@@ -45,6 +47,18 @@ namespace VirtualPrinter.Db.Ef
 		{
 			string defaultFilters = "[]";
 
+			//
+			// Determine default units.
+			//
+			LengthUnit lengthUnit = RegionInfo.CurrentRegion.IsMetric ? LengthUnit.Millimeter : LengthUnit.Inch;
+
+			//
+			// Calculate the 3 lengths used here.
+			//
+			double six = Math.Round(new Length(6, LengthUnit.Inch).ToUnit(lengthUnit).Value, 1);
+			double four = Math.Round(new Length(4, LengthUnit.Inch).ToUnit(lengthUnit).Value, 1);
+			double two = Math.Round(new Length(2, LengthUnit.Inch).ToUnit(lengthUnit).Value, 1);
+
 			modelBuilder.Entity<PrinterConfiguration>().HasIndex(t => t.Name);
 			modelBuilder.Entity<ApplicationVersion>().HasIndex(t => t.Name);
 
@@ -53,83 +67,83 @@ namespace VirtualPrinter.Db.Ef
 				new()
 				{
 					Id = 1,
-					Name = "4x6 w/0˚ Rotation",
+					Name = $"{Properties.Strings.Data_ShippingLabel} ({string.Format(Properties.Strings.Data_RotationValueFormat, 0)})",
 					HostAddress = "0.0.0.0",
 					Port = 9100,
-					LabelHeight = 6,
-					LabelWidth = 4,
+					LabelHeight = six,
+					LabelWidth = four,
 					ResolutionInDpmm = 8,
 					RotationAngle = 0,
-					LabelUnit = (int)LengthUnit.Inch,
+					LabelUnit = (int)lengthUnit,
 					ImagePath = FileLocations.ImageCache.FullName,
 					Filters = defaultFilters
 				},
 				new()
 				{
 					Id = 2,
-					Name = "4x6 w/90˚ Rotation",
+					Name = $"{Properties.Strings.Data_ShippingLabel} ({string.Format(Properties.Strings.Data_RotationValueFormat, 90)})",
 					HostAddress = "0.0.0.0",
 					Port = 9100,
-					LabelHeight = 6,
-					LabelWidth = 4,
+					LabelHeight = six,
+					LabelWidth = four,
 					ResolutionInDpmm = 8,
 					RotationAngle = 90,
-					LabelUnit = (int)LengthUnit.Inch,
+					LabelUnit = (int)lengthUnit,
 					ImagePath = FileLocations.ImageCache.FullName,
 					Filters = defaultFilters
 				},
 				new()
 				{
 					Id = 3,
-					Name = "4x6 w/180˚ Rotation",
+					Name = $"{Properties.Strings.Data_ShippingLabel} ({string.Format(Properties.Strings.Data_RotationValueFormat, 180)})",
 					HostAddress = "0.0.0.0",
 					Port = 9100,
-					LabelHeight = 6,
-					LabelWidth = 4,
+					LabelHeight = six,
+					LabelWidth = four,
 					ResolutionInDpmm = 8,
 					RotationAngle = 180,
-					LabelUnit = (int)LengthUnit.Inch,
+					LabelUnit = (int)lengthUnit,
 					ImagePath = FileLocations.ImageCache.FullName,
 					Filters = defaultFilters
 				},
 				new()
 				{
 					Id = 4,
-					Name = "4x6 w/270˚ Rotation",
+					Name = $"{Properties.Strings.Data_ShippingLabel} ({string.Format(Properties.Strings.Data_RotationValueFormat, 270)})",
 					HostAddress = "0.0.0.0",
 					Port = 9100,
-					LabelHeight = 6,
-					LabelWidth = 4,
+					LabelHeight = six,
+					LabelWidth = four,
 					ResolutionInDpmm = 8,
 					RotationAngle = 270,
-					LabelUnit = (int)LengthUnit.Inch,
+					LabelUnit = (int)lengthUnit,
 					ImagePath = FileLocations.ImageCache.FullName,
 					Filters = defaultFilters
 				},
 				new()
 				{
 					Id = 5,
-					Name = "2x2",
+					Name = Properties.Strings.Data_AddressLabel,
 					HostAddress = "0.0.0.0",
 					Port = 9100,
-					LabelHeight = 2,
-					LabelWidth = 2,
+					LabelHeight = two,
+					LabelWidth = two,
 					ResolutionInDpmm = 8,
 					RotationAngle = 0,
-					LabelUnit = (int)LengthUnit.Inch,
+					LabelUnit = (int)lengthUnit,
 					ImagePath = FileLocations.ImageCache.FullName,
 					Filters = defaultFilters
 				}
 			]);
 
-			modelBuilder.Entity<ApplicationVersion>().HasData(new ApplicationVersion[]
-			{
+			modelBuilder.Entity<ApplicationVersion>().HasData(
+			[
 				new()
 				{
 					Id = 1,
-					Name = "2.2.0"
+					Name = "3.0.0"
 				}
-			});
+			]);
 		}
 
 		public async Task CheckUpgradeAsync()
