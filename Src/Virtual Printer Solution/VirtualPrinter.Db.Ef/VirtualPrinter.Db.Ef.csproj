@@ -32,8 +32,8 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="UnitsNet" Version="5.43.0" />
-		<PackageReference Include="UnitsNet.NumberExtensions" Version="5.43.0" />
+		<PackageReference Include="UnitsNet" Version="5.48.0" />
+		<PackageReference Include="UnitsNet.NumberExtensions" Version="5.48.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -25,7 +25,7 @@
 		<PackageReference Include="Diamond.Core.System.Text" Version="8.0.1" />
 		<PackageReference Include="Diamond.Core.Wpf" Version="8.0.1" />
 		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.1" />
-		<PackageReference Include="UnitsNet" Version="5.43.0" />
+		<PackageReference Include="UnitsNet" Version="5.48.0" />
 	</ItemGroup>
 
 	<ItemGroup>
