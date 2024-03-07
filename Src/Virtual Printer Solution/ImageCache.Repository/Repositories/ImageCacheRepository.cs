@@ -74,7 +74,7 @@ namespace ImageCache.Repository
 				// Split the file name.
 				//
 				this.Logger.LogDebug("Parsing file name '{name}' to get index.", file.Name);
-				string[] parts = Path.GetFileNameWithoutExtension(file.Name).Split(['-'], StringSplitOptions.TrimEntries & StringSplitOptions.RemoveEmptyEntries);
+				string[] parts = Path.GetFileNameWithoutExtension(file.Name).Split(new char[] { '-' }, StringSplitOptions.TrimEntries & StringSplitOptions.RemoveEmptyEntries);
 
 				if (parts.Last().Contains("Page"))
 				{
