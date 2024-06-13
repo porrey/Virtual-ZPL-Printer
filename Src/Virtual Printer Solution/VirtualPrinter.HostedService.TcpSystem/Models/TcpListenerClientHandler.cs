@@ -103,8 +103,12 @@ namespace VirtualPrinter.HostedService.TcpSystem
 					ms.Write(data, 0, numBytesRead);
 					this.Logger.LogInformation("{count} byte(s) were read from the incoming connection.", numBytesRead);
 
-					while (stream.DataAvailable && numBytesRead > 0)
+					DateTime startTime = DateTime.Now;
+
+					// We read until data is available and wait for the ^XZ to be received, or for a timeout of 1s to occur.
+					while (stream.DataAvailable || (!encoding.GetString(ms.ToArray(), 0, (int)ms.Length).EndsWith("^XZ") && (DateTime.Now - startTime).TotalMilliseconds < 1000))
 					{
+						await Task.Delay(20);
 						numBytesRead = await stream.ReadAsync(data);
 						ms.Write(data, 0, numBytesRead);
 						this.Logger.LogInformation("{count} additional byte(s) were read from the incoming connection.", numBytesRead);
