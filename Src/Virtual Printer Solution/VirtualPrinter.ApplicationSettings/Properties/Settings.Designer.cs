@@ -334,5 +334,17 @@ namespace VirtualPrinter.ApplicationSettings.Properties {
                 this["MaximumLables"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int MaximumWaitTime {
+            get {
+                return ((int)(this["MaximumWaitTime"]));
+            }
+            set {
+                this["MaximumWaitTime"] = value;
+            }
+        }
     }
 }

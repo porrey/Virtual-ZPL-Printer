@@ -22,12 +22,20 @@ namespace VirtualPrinter.TestClient
 {
 	internal class ZplClient : IZplClient
 	{
-		public async Task<(bool, string)> SendStringAsync(IPAddress ipAddress, int port, string text)
+		public async Task<(bool, string)> SendStringAsync(IPAddress ipAddress, int port, string text, int segmentSize = 1024, int delay = 0)
 		{
 			(bool result, string errorMessage) = (false, null);
 
 			try
 			{
+				//
+				// Break the text into segments.
+				//
+				IEnumerable<string> segments = text.Select((c, i) => new { c, i })
+												   .GroupBy(x => x.i / segmentSize)
+												   .Select(g => String.Join("", g.Select(y => y.c)))
+												   .ToArray();
+
 				using (TcpClient client = new())
 				{
 					//
@@ -38,17 +46,25 @@ namespace VirtualPrinter.TestClient
 					//
 					// Create a stream to send the text.
 					//
-					using (Stream stream = client.GetStream())
+					using (NetworkStream stream = client.GetStream())
 					{
-						//
-						// Convert the text to a byte array.
-						//
-						byte[] buffer = ASCIIEncoding.UTF8.GetBytes(text);
+						foreach (string segment in segments)
+						{
+							//
+							// Convert the text to a byte array.
+							//
+							byte[] buffer = ASCIIEncoding.UTF8.GetBytes(segment);
 
-						//
-						// Send the text.
-						//
-						await stream.WriteAsync(buffer.AsMemory(0, buffer.Length));
+							//
+							// Send the text.
+							//
+							await stream.WriteAsync(buffer.AsMemory(0, buffer.Length));
+
+							//
+							// Delay.
+							//
+							await Task.Delay(delay);
+						}
 
 						//
 						// Close the connection.

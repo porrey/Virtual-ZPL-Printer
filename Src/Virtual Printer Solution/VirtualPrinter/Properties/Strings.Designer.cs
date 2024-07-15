@@ -1024,6 +1024,24 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maximum Wait Time.
+        /// </summary>
+        public static string Global_Settings_Label_MaximumWaitTime {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_MaximumWaitTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum amount of time in milliseconds to wait for data before closing the connection..
+        /// </summary>
+        public static string Global_Settings_Label_MaximumWaitTime_Description {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_MaximumWaitTime_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Method.
         /// </summary>
         public static string Global_Settings_Label_Method {

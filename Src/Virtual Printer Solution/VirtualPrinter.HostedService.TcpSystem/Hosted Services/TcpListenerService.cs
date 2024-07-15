@@ -67,6 +67,7 @@ namespace VirtualPrinter.HostedService.TcpSystem
 		protected ManualResetEvent ResetEvent { get; } = new(false);
 		protected string ImagePathRoot { get; set; }
 		protected CancellationTokenSource SocketCancellationTokenSource { get; set; }
+		protected IList<TcpListenerClientHandler> Clients { get; } = [];
 
 		protected override void OnStarted()
 		{
@@ -102,6 +103,7 @@ namespace VirtualPrinter.HostedService.TcpSystem
 										  // Start the client.
 										  //
 										  TcpListenerClientHandler clientService = scope.ServiceProvider.GetRequiredService<TcpListenerClientHandler>();
+										  this.Clients.Add(clientService);
 										  this.Logger.LogInformation("Handing request to client service.");
 										  _ = clientService.StartSessionAsync(tcpClient, this.PrinterConfiguration, this.LabelConfiguration);
 									  }
@@ -191,7 +193,6 @@ namespace VirtualPrinter.HostedService.TcpSystem
 			{
 				this.Logger.LogDebug("Calling Cancel() on the cancellation token to stop the listener.");
 				await this.SocketCancellationTokenSource.CancelAsync();
-				//await this.ZplClient.SendStringAsync(this.IpAddress, this.Port, "NOP");
 				this.Logger.LogDebug("Calling Stop() on the listener.");
 				this.Listener.Stop();
 				this.Logger.LogDebug("Raising the Running State Changed Event.");

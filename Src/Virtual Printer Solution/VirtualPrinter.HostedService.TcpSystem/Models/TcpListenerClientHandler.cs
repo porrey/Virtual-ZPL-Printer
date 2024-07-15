@@ -68,132 +68,144 @@ namespace VirtualPrinter.HostedService.TcpSystem
 			// Get the network stream.
 			//
 			this.Logger.LogDebug("Getting the network stream for communications.");
-			NetworkStream stream = client.GetStream();
-
-			//
-			// Prepare a memory stream to read data into.
-			//
-			using (MemoryStream ms = new())
+			using (NetworkStream networkStream = client.GetStream())
 			{
-				if (client.Connected && stream.CanRead)
-				{
-					this.Logger.LogInformation("The incoming connection is connected and can be read.");
-
-					//
-					// Set up a temporary buffer.
-					//
-					this.Logger.LogDebug("Creating buffer of 1024 bytes to read incoming data.");
-					byte[] data = new byte[1024];
-
-					//
-					// Read from the NetworkStream until there isn't any data to read available anymore.
-					//
-					// See https://stackoverflow.com/questions/26058594/how-to-get-all-data-from-networkstream
-					//
-					// Unfortunately, that doesn't mean that all data has necessarily been received from the client,
-					// so we could still haven't received some data after all, e.g. due to network delays. It would
-					// be better to try to read all data until the connection is terminated by the client, however,
-					// there isn't an easy way to detect a closed connection with a NetworkStream.
-					//
-					// By reading the data in small chunks, we're giving the client additional time to send
-					// data - the larger the data to be received, the more time available. Finally, by increasing
-					// the read timeout, we can further easily increase the time available to the client.
-					//
-					int numBytesRead = await stream.ReadAsync(data);
-					ms.Write(data, 0, numBytesRead);
-					this.Logger.LogInformation("{count} byte(s) were read from the incoming connection.", numBytesRead);
-
-					while (stream.DataAvailable && numBytesRead > 0)
-					{
-						numBytesRead = await stream.ReadAsync(data);
-						ms.Write(data, 0, numBytesRead);
-						this.Logger.LogInformation("{count} additional byte(s) were read from the incoming connection.", numBytesRead);
-					}
-				}
-				else
-				{
-					this.Logger.LogWarning("The incoming connection is not connected or cannot be read.");
-				}
-
 				//
-				// Only process the request if data was received.
+				// Prepare a memory stream to read data into.
 				//
-				if (ms.Length > 0)
+				using (MemoryStream ms = new())
 				{
-					//
-					// Get the request data.
-					//
-					this.Logger.LogInformation("{count} byte(s) total were received.", ms.Length);
-					string requestData = encoding.GetString(ms.ToArray(), 0, (int)ms.Length);
-					this.Logger.LogDebug("Incoming data: '{data}'.", requestData);
-
-					//
-					// Get the request handler.
-					//
-					IRequestHandler requestHandler = await this.RequestHandlerFactory.GetHandlerAsync(requestData);
-					this.Logger.LogDebug("Using request handler '{handler}' to handle the incoming request.", requestHandler.GetType().Name);
-
-					//
-					//  Call the handler.
-					//
-					(bool closeConnection, string responseData) = (true, string.Empty);
-
-					try
+					if (client.Connected && networkStream.CanRead)
 					{
-						//
-						// Get the handler for this request.
-						//
-						this.Logger.LogDebug("Calling {handler}.handleRequest().", requestHandler.GetType().Name);
-						(closeConnection, responseData) = await requestHandler.HandleRequest(printerConfiguration, labelConfiguration, requestData);
+						this.Logger.LogInformation("The incoming connection is connected and can be read.");
 
 						//
-						// If the handler provided a response, send it back.
+						// Set up a temporary buffer.
 						//
-						if (responseData != null)
-						{
-							this.Logger.LogDebug("Sending response data: '{data}'.", responseData);
-							byte[] buffer = encoding.GetBytes(responseData);
-							await stream.WriteAsync(buffer);
-						}
-						else
-						{
-							this.Logger.LogDebug("The handler did not return any response data.");
-						}
-					}
-					catch (Exception ex)
-					{
-						this.Logger.LogError(ex, $"Exception occurred in {nameof(TcpListenerClientHandler)} while calling the request handler.");
-					}
-					finally
-					{
-						//
-						// Close the connection if the handler indicated to do so.
-						//
-						if (closeConnection)
-						{
-							this.Logger.LogInformation("Closing the client connection.");
+						int bufferSize = client.ReceiveBufferSize == -1 ? 1024 : client.ReceiveBufferSize;
+						this.Logger.LogDebug("Creating buffer of {size} bytes to read incoming data.", bufferSize);
+						byte[] data = new byte[bufferSize];
 
-							if (stream != null)
+						//
+						// Create time stamp and cancellation token.
+						//
+						DateTime timestamp = DateTime.Now;
+						CancellationTokenSource tokenSource = new();
+
+						while ((networkStream.DataAvailable && networkStream.CanRead) || !tokenSource.Token.IsCancellationRequested)
+						{
+							//
+							// Read available data.
+							//
+							int numBytesRead = await networkStream.ReadAsync(data);
+							string requestData = encoding.GetString(data);
+							this.Logger.LogDebug("Data received: '{data}'.", requestData);
+
+							//
+							// Add to the memory stream.
+							//
+							ms.Write(data, 0, numBytesRead);
+
+							if (numBytesRead > 0)
 							{
-								stream.Close();
-								stream.Dispose();
+								timestamp = DateTime.Now;
+							}
+							else
+							{
+								if (DateTime.Now.Subtract(timestamp) > TimeSpan.FromMilliseconds(this.Settings.MaximumWaitTime))
+								{
+									tokenSource.Cancel();
+								}
 							}
 
-							if (client != null)
-							{
-								client.Close();
-								client.Dispose();
-							}
-						}
-						else
-						{
-							this.Logger.LogInformation("Leaving the client connection open.");
+							this.Logger.LogInformation("{count} additional byte(s) were read from the incoming connection.", numBytesRead);
 						}
 					}
-				}
-				else
-				{
-					this.Logger.LogWarning("There was no data available on the incoming connection.");
+					else
+					{
+						this.Logger.LogWarning("The incoming connection is not connected or cannot be read.");
+					}
+
+					//
+					// Only process the request if data was received.
+					//
+					if (ms.Length > 0)
+					{
+						//
+						// Get the request data.
+						//
+						this.Logger.LogInformation("{count} byte(s) total were received.", ms.Length);
+						string requestData = encoding.GetString(ms.ToArray(), 0, (int)ms.Length);
+						this.Logger.LogDebug("Incoming data: '{data}'.", requestData);
+
+						//
+						// Get the request handler.
+						//
+						IRequestHandler requestHandler = await this.RequestHandlerFactory.GetHandlerAsync(requestData);
+						this.Logger.LogDebug("Using request handler '{handler}' to handle the incoming request.", requestHandler.GetType().Name);
+
+						//
+						//  Call the handler.
+						//
+						(bool closeConnection, string responseData) = (true, string.Empty);
+
+						try
+						{
+							//
+							// Get the handler for this request.
+							//
+							this.Logger.LogDebug("Calling {handler}.handleRequest().", requestHandler.GetType().Name);
+							(closeConnection, responseData) = await requestHandler.HandleRequest(printerConfiguration, labelConfiguration, requestData);
+
+							//
+							// If the handler provided a response, send it back.
+							//
+							if (responseData != null)
+							{
+								this.Logger.LogDebug("Sending response data: '{data}'.", responseData);
+								byte[] buffer = encoding.GetBytes(responseData);
+								await networkStream.WriteAsync(buffer);
+							}
+							else
+							{
+								this.Logger.LogDebug("The handler did not return any response data.");
+							}
+						}
+						catch (Exception ex)
+						{
+							this.Logger.LogError(ex, $"Exception occurred in {nameof(TcpListenerClientHandler)} while calling the request handler.");
+						}
+						finally
+						{
+							//
+							// Close the connection if the handler indicated to do so.
+							//
+							if (closeConnection)
+							{
+								this.Logger.LogInformation("Closing the client connection.");
+
+								if (networkStream != null)
+								{
+									networkStream.Close();
+									networkStream.Dispose();
+								}
+
+								if (client != null)
+								{
+									client.Close();
+									client.Dispose();
+								}
+							}
+							else
+							{
+								this.Logger.LogInformation("Leaving the client connection open.");
+							}
+						}
+					}
+					else
+					{
+						this.Logger.LogWarning("There was no data available on the incoming connection.");
+					}
 				}
 			}
 		}

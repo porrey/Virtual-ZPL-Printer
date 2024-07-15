@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <Version>3.3.0</Version>
-    <FileVersion>3.3.0</FileVersion>
-    <AssemblyVersion>3.3.0</AssemblyVersion>
+    <Version>3.4.0</Version>
+    <FileVersion>3.4.0</FileVersion>
+    <AssemblyVersion>3.4.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
