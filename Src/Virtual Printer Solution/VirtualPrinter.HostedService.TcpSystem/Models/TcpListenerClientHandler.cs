@@ -49,6 +49,8 @@ namespace VirtualPrinter.HostedService.TcpSystem
 			client.SendBufferSize = this.Settings.SendBufferSize;
 			client.LingerState = new LingerOption(this.Settings.Linger, this.Settings.LingerTime);
 
+			Socket s;
+
 			//
 			// Use user-specified encoding in order to display special characters correctly.
 			//
@@ -97,21 +99,27 @@ namespace VirtualPrinter.HostedService.TcpSystem
 							//
 							// Read available data.
 							//
-							int numBytesRead = await networkStream.ReadAsync(data);
+							int numBytesRead = await networkStream.ReadAsync(data, tokenSource.Token);
 							string requestData = encoding.GetString(data);
 							this.Logger.LogDebug("Data received: '{data}'.", requestData);
 
 							//
-							// Add to the memory stream.
+							// Add the new data to the memory stream.
 							//
 							ms.Write(data, 0, numBytesRead);
 
 							if (numBytesRead > 0)
 							{
+								//
+								// Reset the timestamp if data has been received.
+								//
 								timestamp = DateTime.Now;
 							}
 							else
 							{
+								//
+								// Check if we are past the wait time.
+								//
 								if (DateTime.Now.Subtract(timestamp) > TimeSpan.FromMilliseconds(this.Settings.MaximumWaitTime))
 								{
 									tokenSource.Cancel();
