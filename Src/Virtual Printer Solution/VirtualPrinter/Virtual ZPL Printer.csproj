@@ -79,6 +79,7 @@
 		<None Remove="Assets\warning-overlay.png" />
 		<None Remove="Assets\warning.png" />
 		<None Remove="Assets\zpl-viewer-close.png" />
+		<None Remove="License\LICENSE" />
 		<None Remove="Services\VirtualPrinter.json" />
 		<None Remove="Services\VirtualPrinter.ViewModels.json" />
 		<None Remove="Services\VirtualPrinter.Views.json" />
@@ -327,6 +328,9 @@
 		</Content>
 		<Content Include="Assets\zpl-viewer-close.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="License\LICENSE">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Services\VirtualPrinter.ViewModels.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
