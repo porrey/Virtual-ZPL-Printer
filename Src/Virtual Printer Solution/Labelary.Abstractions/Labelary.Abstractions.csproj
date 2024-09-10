@@ -20,6 +20,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageTags>labelary; zpl</PackageTags>
 		<Copyright>Copyright(C) 2021-2024, Daniel M. Porrey. All rights reserved.</Copyright>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>

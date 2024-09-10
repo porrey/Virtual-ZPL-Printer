@@ -8,6 +8,7 @@
     <Version>3.4.0</Version>
     <FileVersion>3.4.0</FileVersion>
     <AssemblyVersion>3.4.0</AssemblyVersion>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

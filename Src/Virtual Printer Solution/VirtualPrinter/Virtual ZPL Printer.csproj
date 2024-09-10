@@ -16,6 +16,7 @@
 		<SignAssembly>False</SignAssembly>
 		<GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
 		<UICulture>en-US</UICulture>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>

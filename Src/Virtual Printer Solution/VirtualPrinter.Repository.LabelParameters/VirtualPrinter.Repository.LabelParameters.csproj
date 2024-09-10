@@ -9,6 +9,7 @@
 		<AssemblyVersion>3.4.0</AssemblyVersion>
 		<GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
 		<UICulture>en-US</UICulture>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>
