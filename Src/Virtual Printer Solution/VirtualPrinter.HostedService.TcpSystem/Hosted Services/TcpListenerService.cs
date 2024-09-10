@@ -103,6 +103,7 @@ namespace VirtualPrinter.HostedService.TcpSystem
 										  // Start the client.
 										  //
 										  TcpListenerClientHandler clientService = scope.ServiceProvider.GetRequiredService<TcpListenerClientHandler>();
+										  clientService.OnCompleted += this.ClientService_OnCompleted;
 										  this.Clients.Add(clientService);
 										  this.Logger.LogInformation("Handing request to client service.");
 										  _ = clientService.StartSessionAsync(tcpClient, this.PrinterConfiguration, this.LabelConfiguration);
@@ -134,6 +135,15 @@ namespace VirtualPrinter.HostedService.TcpSystem
 					  }
 				  }
 			  });
+		}
+
+		private void ClientService_OnCompleted(object sender, EventArgs e)
+		{
+			if (sender is TcpListenerClientHandler client)
+			{
+				client.OnCompleted -= this.ClientService_OnCompleted;
+				this.Clients.Remove(client);
+			}
 		}
 
 		protected override async Task OnBeginStopAsync()

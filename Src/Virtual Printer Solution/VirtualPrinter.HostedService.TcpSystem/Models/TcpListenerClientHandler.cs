@@ -15,6 +15,7 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System.Net.Sockets;
+using System.Security.RightsManagement;
 using System.Text;
 using ImageCache.Abstractions;
 using Labelary.Abstractions;
@@ -35,6 +36,8 @@ namespace VirtualPrinter.HostedService.TcpSystem
 		protected ILabelService LabelService { get; set; } = labelService;
 		protected IImageCacheRepository ImageCacheRepository { get; set; } = imageCacheRepository;
 
+		public event EventHandler OnCompleted = null;
+
 		public async Task StartSessionAsync(TcpClient client, IPrinterConfiguration printerConfiguration, ILabelConfiguration labelConfiguration)
 		{
 			this.Logger.LogInformation("Handling incoming request from {endpoint}.", client.Client.LocalEndPoint);
@@ -48,8 +51,6 @@ namespace VirtualPrinter.HostedService.TcpSystem
 			client.ReceiveBufferSize = this.Settings.ReceiveBufferSize;
 			client.SendBufferSize = this.Settings.SendBufferSize;
 			client.LingerState = new LingerOption(this.Settings.Linger, this.Settings.LingerTime);
-
-			Socket s;
 
 			//
 			// Use user-specified encoding in order to display special characters correctly.
@@ -216,6 +217,11 @@ namespace VirtualPrinter.HostedService.TcpSystem
 					}
 				}
 			}
+
+			//
+			// Fire the completion event.
+			//
+			this.OnCompleted?.Invoke(this, new EventArgs());
 		}
 	}
 }
