@@ -80,5 +80,8 @@
     <Setting Name="MaximumLables" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">250</Value>
     </Setting>
+    <Setting Name="MaximumWaitTime" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -4,9 +4,9 @@
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
-		<Version>3.3.0</Version>
-		<FileVersion>3.3.0</FileVersion>
-		<AssemblyVersion>3.3.0</AssemblyVersion>
+		<Version>3.4.0</Version>
+		<FileVersion>3.4.0</FileVersion>
+		<AssemblyVersion>3.4.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -14,11 +14,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Repository" Version="8.0.1" />
-		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="8.0.1" />
-		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.1" />
+		<PackageReference Include="Diamond.Core.Repository" Version="8.0.4" />
+		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="8.0.4" />
+		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.4" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="System.Drawing.Common" Version="8.0.2" />
+		<PackageReference Include="System.Drawing.Common" Version="8.0.7" />
 		<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
 	</ItemGroup>
 
@@ -33,10 +33,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\8.0.1\contentFiles\any\net8.0\Services\Diamond.Core.Repository.Abstractions.json">
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\8.0.4\contentFiles\any\net8.0\Services\Diamond.Core.Repository.Abstractions.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.1\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.4\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

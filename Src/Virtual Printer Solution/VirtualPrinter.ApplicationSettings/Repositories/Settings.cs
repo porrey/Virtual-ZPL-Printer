@@ -49,5 +49,6 @@ namespace VirtualPrinter.ApplicationSettings
 		public string ApiMethod { get => Properties.Settings.Default.ApiMethod; set => Properties.Settings.Default.ApiMethod = value; }
 		public bool ApiLinting { get => Properties.Settings.Default.ApiLinting; set => Properties.Settings.Default.ApiLinting = value; }
 		public int MaximumLabels { get => Properties.Settings.Default.MaximumLables; set => Properties.Settings.Default.MaximumLables = value; }
+		public int MaximumWaitTime { get => Properties.Settings.Default.MaximumWaitTime; set => Properties.Settings.Default.MaximumWaitTime = value; }
 	}
 }

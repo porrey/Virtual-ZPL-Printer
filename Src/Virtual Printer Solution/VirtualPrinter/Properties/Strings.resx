@@ -439,6 +439,12 @@
   <data name="Global_Settings_Label_LingerTime" xml:space="preserve">
     <value>Linger Time (seconds)</value>
   </data>
+  <data name="Global_Settings_Label_MaximumWaitTime" xml:space="preserve">
+    <value>Maximum Wait Time</value>
+  </data>
+  <data name="Global_Settings_Label_MaximumWaitTime_Description" xml:space="preserve">
+    <value>The maximum amount of time in milliseconds to wait for data before closing the connection.</value>
+  </data>
   <data name="Global_Settings_Label_Method" xml:space="preserve">
     <value>Method</value>
   </data>

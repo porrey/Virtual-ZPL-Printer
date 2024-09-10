@@ -14,6 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
+using System.IO;
 using System.Reflection;
 
 namespace VirtualPrinter.ViewModels
@@ -34,6 +35,29 @@ namespace VirtualPrinter.ViewModels
 			{
 				Version version = Assembly.GetEntryAssembly().GetName().Version;
 				return $"{Properties.Strings.About_Version} {version.Major}.{version.Minor}.{version.Build}";
+			}
+		}
+
+		public string License
+		{
+			get
+			{
+				return File.ReadAllText(this.LicenseFile);
+			}
+		}
+
+		public string LicenseFile
+		{
+			get
+			{
+				string returnValue = $"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}/License/LICENSE";
+
+				if (File.Exists($"{returnValue}.{Thread.CurrentThread.CurrentCulture.Name}"))
+				{
+					returnValue = $"{returnValue}.{Thread.CurrentThread.CurrentCulture.Name}";
+				}
+
+				return returnValue;
 			}
 		}
 	}

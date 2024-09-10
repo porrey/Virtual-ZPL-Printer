@@ -6,12 +6,12 @@
 		xmlns:resources="clr-namespace:VirtualPrinter.Properties"
 		mc:Ignorable="d"
 		Title="{x:Static resources:Strings.About_Title}"
-		Height="300"
 		Width="600"
+		Height="420"
 		WindowStyle="ThreeDBorderWindow"
 		ResizeMode="NoResize"
 		WindowStartupLocation="CenterOwner">
-	<Grid >
+	<Grid>
 		<Border BorderBrush="White"
 				BorderThickness="1"
 				Margin="4">
@@ -19,7 +19,8 @@
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 
@@ -30,12 +31,14 @@
 						   HorizontalAlignment="Center"
 						   FontSize="22"
 						   Margin="0,15,0,5" />
-				
+
 				<Image Grid.Row="1"
 					   Source="/Assets/printer-running.png"
 					   Margin="5"
 					   VerticalAlignment="Center"
 					   HorizontalAlignment="Center"
+					   Height="128"
+					   Width="128"
 					   Opacity=".9" />
 
 				<TextBlock Grid.Row="2"
@@ -45,6 +48,24 @@
 						   HorizontalAlignment="Center"
 						   FontSize="18"
 						   Margin="0,5,0,5" />
+
+				<Border Grid.Row="3"
+						BorderBrush="{StaticResource BorderColor}"
+						BorderThickness=".5"
+						Margin="10">
+					<ScrollViewer MaxHeight="125"
+								  VerticalScrollBarVisibility="Auto"
+								  HorizontalScrollBarVisibility="Disabled">
+						<TextBlock Text="{Binding License}"
+								   Foreground="{StaticResource ForegroundColor1}"
+								   VerticalAlignment="Top"
+								   HorizontalAlignment="Center"
+								   MinHeight="100"
+								   Margin="0,5,0,5"
+								   FontFamily="Courrier New"
+								   FontSize="10" />
+					</ScrollViewer>
+				</Border>
 			</Grid>
 		</Border>
 	</Grid>

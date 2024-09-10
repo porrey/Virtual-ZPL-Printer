@@ -4,9 +4,9 @@
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
-		<Version>3.3.0</Version>
-		<FileVersion>3.3.0</FileVersion>
-		<AssemblyVersion>3.3.0</AssemblyVersion>
+		<Version>3.4.0</Version>
+		<FileVersion>3.4.0</FileVersion>
+		<AssemblyVersion>3.4.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.1" />
+		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.4" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
 	</ItemGroup>
 

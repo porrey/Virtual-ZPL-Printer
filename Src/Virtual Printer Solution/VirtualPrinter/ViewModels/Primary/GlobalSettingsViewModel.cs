@@ -187,6 +187,19 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
+		private int _maximumWaitTime = 0;
+		public int MaximumWaitTime
+		{
+			get
+			{
+				return this._maximumWaitTime;
+			}
+			set
+			{
+				this.SetProperty(ref this._maximumWaitTime, value);
+			}
+		}
+
 		public Task InitializeAsync()
 		{
 			try
@@ -212,6 +225,7 @@ namespace VirtualPrinter.ViewModels
 				this.ApiUrl = this.Settings.ApiUrl;
 				this.ApiMethod = this.ApiMethods.Where(t => t.Value == this.Settings.ApiMethod).FirstOrDefault();
 				this.ApiLinting = this.Settings.ApiLinting;
+				this.MaximumWaitTime = this.Settings.MaximumWaitTime;
 			}
 			catch (Exception ex)
 			{
@@ -237,6 +251,7 @@ namespace VirtualPrinter.ViewModels
 				this.Settings.Linger = this.Linger;
 				this.Settings.LingerTime = this.LingerTime;
 				this.Settings.ReceivedDataEncoding = this.ReceivedDataEncoding?.Value;
+				this.Settings.MaximumWaitTime = this.MaximumWaitTime;
 
 				this.Settings.ApiUrl = this.ApiUrl;
 				this.LabelServiceConfiguration.BaseUrl = this.ApiUrl;

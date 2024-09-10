@@ -45,5 +45,6 @@ namespace VirtualPrinter.ApplicationSettings
 		string ApiMethod { get; set; }
 		bool ApiLinting { get; set; }
 		int MaximumLabels { get; set; }
+		int MaximumWaitTime { get; set; }
 	}
 }
