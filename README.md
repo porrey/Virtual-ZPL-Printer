@@ -9,6 +9,23 @@ Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have th
 ###### Version 3.4.0 Updates:
 1. Updated listener to handle larger document transmissions.
 
+## 💖 Support This Project
+
+Hey there! If you find this project useful, consider supporting its development. Your contributions help keep this project alive, improve features, and ensure regular updates.
+
+### 🚀 How You Can Help
+- ⭐ Star this repository – It helps others discover the project!
+
+- 💵 Sponsor on GitHub Sponsors – Recurring support keeps the project sustainable.
+
+- ☕ Buy Me a Coffee – One-time support via Buy Me a Coffee.
+
+- 💳 PayPal Donations – Direct support via PayPal.
+
+- 🏢 Business Support – If your company uses this project, consider a sponsorship.
+
+Your support means a lot and helps me continue improving this project. Thank you! ❤️
+
 ## Requesting, Adding or Updating Languages
 ### Requesting a new Language/Region
 To request anew language/region add an issue using the label **Add Language**. The language will be added using Google Translate.
