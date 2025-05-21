@@ -14,9 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
-using System;
 using Labelary.Abstractions;
-using Prism.Events;
 using VirtualPrinter.Db.Abstractions;
 
 namespace VirtualPrinter.PublishSubscribe

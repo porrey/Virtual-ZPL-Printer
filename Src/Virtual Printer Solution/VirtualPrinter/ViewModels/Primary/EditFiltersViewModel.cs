@@ -16,9 +16,6 @@
  */
 using System.Collections.ObjectModel;
 using System.Windows;
-using Prism.Commands;
-using Prism.Events;
-using Prism.Mvvm;
 using VirtualPrinter.PublishSubscribe;
 
 namespace VirtualPrinter.ViewModels

@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-windows</TargetFramework>
+		<TargetFramework>net9.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
-		<Version>3.4.0</Version>
-		<FileVersion>3.4.0</FileVersion>
-		<AssemblyVersion>3.4.0</AssemblyVersion>
+		<Version>3.5.0</Version>
+		<FileVersion>3.5.0</FileVersion>
+		<AssemblyVersion>3.5.0</AssemblyVersion>
 		<GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
 		<UICulture>en-US</UICulture>
 		<Platforms>AnyCPU;x64</Platforms>
@@ -23,18 +23,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Extensions.DependencyInjection.Sqlite" Version="8.0.4" />
-		<PackageReference Include="Diamond.Core.Repository" Version="8.0.4" />
-		<PackageReference Include="Diamond.Core.System.Text" Version="8.0.4" />
-		<PackageReference Include="Diamond.Core.Repository.EntityFrameworkCore" Version="8.0.4" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.7" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+		<PackageReference Include="Diamond.Core.Extensions.DependencyInjection.Sqlite" Version="9.0.1" />
+		<PackageReference Include="Diamond.Core.Repository" Version="9.0.1" />
+		<PackageReference Include="Diamond.Core.System.Text" Version="9.0.1" />
+		<PackageReference Include="Diamond.Core.Repository.EntityFrameworkCore" Version="9.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.5">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="UnitsNet" Version="5.54.0" />
-		<PackageReference Include="UnitsNet.NumberExtensions" Version="5.54.0" />
+		<PackageReference Include="UnitsNet" Version="5.74.0" />
+		<PackageReference Include="UnitsNet.NumberExtensions" Version="5.74.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -51,7 +51,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.4\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\9.0.1\contentFiles\any\net9.0\Services\Diamond.Core.Repository.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

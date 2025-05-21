@@ -139,7 +139,7 @@ namespace Labelary.Service
 							//
 							// Force US formatting for Labelary REST API.
 							//
-							CultureInfo culture = new("us-EN");
+							CultureInfo culture = new("en-US");
 							culture.NumberFormat.NumberDecimalSeparator = ".";
 
 							string widthString = width.ToString("#.##", culture);
@@ -288,9 +288,9 @@ namespace Labelary.Service
 						//
 						// Force US formatting for Labelary REST API.
 						//
-						string widthString = width.ToString("#.##", new CultureInfo("us-EN"));
+						string widthString = width.ToString("#.##", new CultureInfo("en-US"));
 						this.Logger.LogDebug("The Width parameter is '{value}'.", widthString);
-						string heightString = height.ToString("#.##", new CultureInfo("us-EN"));
+						string heightString = height.ToString("#.##", new CultureInfo("en-US"));
 						this.Logger.LogDebug("The Height parameter is '{value}'.", heightString);
 
 						//

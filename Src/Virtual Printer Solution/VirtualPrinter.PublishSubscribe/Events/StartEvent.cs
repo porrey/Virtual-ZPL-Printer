@@ -16,7 +16,6 @@
  */
 using System.Net;
 using Labelary.Abstractions;
-using Prism.Events;
 using VirtualPrinter.Db.Abstractions;
 
 namespace VirtualPrinter.PublishSubscribe

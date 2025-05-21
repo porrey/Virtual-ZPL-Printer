@@ -15,7 +15,6 @@
  *  along with Virtual ZPL Printer.  If not, see <https://www.gnu.org/licenses/>.
  */
 using System.Windows;
-using Prism.Events;
 
 namespace VirtualPrinter.PublishSubscribe
 {
