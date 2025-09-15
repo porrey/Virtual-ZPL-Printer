@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <data name="About_Title" xml:space="preserve">
     <value>Acerca de</value>
@@ -10,7 +10,7 @@
     <value>Cancelar</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Cerca</value>
+    <value>Cerrar</value>
   </data>
   <data name="Close_Tooltip" xml:space="preserve">
     <value>Cerrar la ventana.</value>
@@ -28,7 +28,7 @@
     <value>Agregue una nueva configuración de impresora.</value>
   </data>
   <data name="Configuration_View_Button_Clone_Text" xml:space="preserve">
-    <value>Clon</value>
+    <value>Clonar</value>
   </data>
   <data name="Configuration_View_Button_Clone_Tooltip" xml:space="preserve">
     <value>Clona la configuración de la impresora seleccionada.</value>
@@ -46,10 +46,10 @@
     <value>Elimine la configuración de la impresora seleccionada.</value>
   </data>
   <data name="Configuration_View_Button_Save_Text" xml:space="preserve">
-    <value>Ahorrar</value>
+    <value>Guardar</value>
   </data>
   <data name="Configuration_View_Button_Save_Tooltip" xml:space="preserve">
-    <value>Guarde los cambios en la configuración actual de la impresora.</value>
+    <value>Guardar los cambios en la configuración actual de la impresora.</value>
   </data>
   <data name="Configuration_View_Button_Undo_Text" xml:space="preserve">
     <value>Deshacer</value>
@@ -85,7 +85,7 @@
     <value>Editar la configuración de la impresora</value>
   </data>
   <data name="Configure_Printer_Button_Save_Tooltip" xml:space="preserve">
-    <value>Guarde los cambios en la impresora actual.</value>
+    <value>Guardar los cambios en la impresora actual.</value>
   </data>
   <data name="Configure_Printer_Title" xml:space="preserve">
     <value>Configurar impresora</value>
@@ -166,7 +166,7 @@
     <value>Los filtros se procesan en el orden en que aparecen, de arriba a abajo.</value>
   </data>
   <data name="Edit_Filters_Label_Find" xml:space="preserve">
-    <value>Encontrar</value>
+    <value>Buscar</value>
   </data>
   <data name="Edit_Filters_Label_Replace" xml:space="preserve">
     <value>Reemplazar</value>
@@ -217,7 +217,7 @@
     <value>Medio</value>
   </data>
   <data name="Edit_Printer_RadioButton_Right" xml:space="preserve">
-    <value>Bien</value>
+    <value>Derecha</value>
   </data>
   <data name="Edit_Printer_RadioButton_Top" xml:space="preserve">
     <value>Arriba</value>
@@ -268,7 +268,7 @@
     <value>Caracteres</value>
   </data>
   <data name="Font_Manager_Label_FontSource" xml:space="preserve">
-    <value>Fuente de fuente</value>
+    <value>Origen de fuente</value>
   </data>
   <data name="Font_Manager_Label_PrinterPath" xml:space="preserve">
     <value>Ruta de la impresora</value>
@@ -277,7 +277,7 @@
     <value>Administrador de fuentes</value>
   </data>
   <data name="Font_Source_Found" xml:space="preserve">
-    <value>Encontró</value>
+    <value>Encontrado</value>
   </data>
   <data name="Font_Source_Missing" xml:space="preserve">
     <value>Desaparecido</value>
@@ -304,7 +304,7 @@
     <value>Guarde los cambios y cierre el cuadro de diálogo.</value>
   </data>
   <data name="Global_Settings_Checkbox_EnableLinting_Text" xml:space="preserve">
-    <value>Habilitar la pelusa</value>
+    <value>Habilitar linting</value>
   </data>
   <data name="Global_Settings_Group_Header_Labelary" xml:space="preserve">
     <value>Etiquetario</value>
@@ -355,10 +355,10 @@
     <value>Ajustes globales</value>
   </data>
   <data name="Global_Settings_WebMethod_Get" xml:space="preserve">
-    <value>CONSEGUIR</value>
+    <value>GET</value>
   </data>
   <data name="Global_Settings_WebMethod_Post" xml:space="preserve">
-    <value>CORREO</value>
+    <value>POST</value>
   </data>
   <data name="HostAddress_Any" xml:space="preserve">
     <value>Cualquier</value>
@@ -397,7 +397,7 @@
     <value>Prueba</value>
   </data>
   <data name="Main_Button_Test_Tooltip" xml:space="preserve">
-    <value>Envíe una etiqueta de prueba.</value>
+    <value>Envíar una etiqueta de prueba.</value>
   </data>
   <data name="Main_Button_View_Text" xml:space="preserve">
     <value>Vista</value>
@@ -406,7 +406,7 @@
     <value>Ver la imagen de la etiqueta en un visor externo.</value>
   </data>
   <data name="Main_ButtonClear_Text" xml:space="preserve">
-    <value>Claro</value>
+    <value>Limpiar</value>
   </data>
   <data name="Main_ButtonClear_Tooltip" xml:space="preserve">
     <value>Borrar todas las etiquetas.</value>
@@ -433,7 +433,7 @@
     <value>Impresora</value>
   </data>
   <data name="Main_Menu_Printer_Clear" xml:space="preserve">
-    <value>Claro</value>
+    <value>Limpiar</value>
   </data>
   <data name="Main_Menu_Printer_Delete" xml:space="preserve">
     <value>Borrar</value>
