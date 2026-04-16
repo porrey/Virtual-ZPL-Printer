@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <Platforms>AnyCPU;x64</Platforms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
+    <ProjectReference Include="..\Labelary.Service\Labelary.Service.csproj" />
+    <ProjectReference Include="..\VirtualPrinter.Repository.LabelParameters\VirtualPrinter.Repository.LabelParameters.csproj" />
+    <ProjectReference Include="..\VirtualPrinter.Repository.HostAddresses\VirtualPrinter.Repository.HostAddresses.csproj" />
+    <ProjectReference Include="..\VirtualPrinter.Handler.HostStatus\VirtualPrinter.Handler.HostStatus.csproj" />
+    <ProjectReference Include="..\VirtualPrinter.Handler.Nop\VirtualPrinter.Handler.Nop.csproj" />
+    <ProjectReference Include="..\VirtualPrinter.Handler.Abstractions\VirtualPrinter.Handler.Abstractions.csproj" />
+    <ProjectReference Include="..\ImageCache.Repository\ImageCache.Repository.csproj" />
+    <ProjectReference Include="..\VirtualPrinter.FontService\VirtualPrinter.FontService.csproj" />
+  </ItemGroup>
+
+</Project>
