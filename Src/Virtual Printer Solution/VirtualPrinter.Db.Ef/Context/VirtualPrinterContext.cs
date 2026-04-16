@@ -168,7 +168,61 @@ namespace VirtualPrinter.Db.Ef
 			}
 			catch (SqliteException ex)
 			{
-				if (ex.Message == "SQLite Error 1: 'no such column: p.PhysicalPrinter'.")
+				if (ex.Message.Contains("no such column: p.Filters"))
+				{
+					//
+					// Update the table.
+					//
+					this.Database.ExecuteSqlRaw("ALTER TABLE PrinterConfiguration ADD Filters TEXT;");
+
+					//
+					// Set the default field value.
+					//
+					foreach (PrinterConfiguration item in this.PrinterConfigurations)
+					{
+						item.Filters = "[]";
+					}
+
+					//
+					// Update the version.
+					//
+					this.ApplicationVersions.First().Name = "3.0.0";
+
+					await this.SaveChangesAsync();
+
+					//
+					// Chain into PhysicalPrinter check in case it is also missing.
+					// Calling First() intentionally triggers a SqliteException when
+					// a required column does not yet exist in the database schema.
+					//
+					try
+					{
+						_ = this.PrinterConfigurations.First();
+					}
+					catch (SqliteException innerEx) when (innerEx.Message.Contains("no such column: p.PhysicalPrinter"))
+					{
+						//
+						// Update the table.
+						//
+						this.Database.ExecuteSqlRaw("ALTER TABLE PrinterConfiguration ADD PhysicalPrinter TEXT;");
+
+						//
+						// Set the default field value.
+						//
+						foreach (PrinterConfiguration item in this.PrinterConfigurations)
+						{
+							item.PhysicalPrinter = "{}";
+						}
+
+						//
+						// Update the version.
+						//
+						this.ApplicationVersions.First().Name = "3.0.0";
+
+						await this.SaveChangesAsync();
+					}
+				}
+				else if (ex.Message.Contains("no such column: p.PhysicalPrinter"))
 				{
 					//
 					// Update the table.

@@ -115,6 +115,20 @@ namespace VirtualPrinter.HostedService.TcpSystem
 								// Reset the timestamp if data has been received.
 								//
 								timestamp = DateTime.Now;
+
+								//
+								// Exit as soon as a complete ZPL job has been received so
+								// that the label is processed without waiting for the
+								// sender to close the connection. Only decode the newly
+								// received chunk to avoid re-decoding the entire buffer
+								// on every read.
+								//
+								string newChunk = encoding.GetString(data, 0, numBytesRead);
+
+								if (newChunk.TrimEnd().EndsWith("^XZ", StringComparison.OrdinalIgnoreCase))
+								{
+									tokenSource.Cancel();
+								}
 							}
 							else
 							{

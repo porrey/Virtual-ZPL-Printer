@@ -38,7 +38,7 @@ namespace VirtualPrinter.ApplicationSettings
 		public double SendTestLabelWidth { get => Properties.Settings.Default.SendTestLabelWidth; set => Properties.Settings.Default.SendTestLabelWidth = value; }
 		public double SendTestLabelHeight { get => Properties.Settings.Default.SendTestLabelHeight; set => Properties.Settings.Default.SendTestLabelHeight = value; }
 		public int ReceiveTimeout { get => Properties.Settings.Default.ReceiveTimeout; set => Properties.Settings.Default.ReceiveTimeout = value; }
-		public int SendTimeout { get => Properties.Settings.Default.ReceiveTimeout; set => Properties.Settings.Default.ReceiveTimeout = value; }
+		public int SendTimeout { get => Properties.Settings.Default.SendTimeout; set => Properties.Settings.Default.SendTimeout = value; }
 		public bool NoDelay { get => Properties.Settings.Default.NoDelay; set => Properties.Settings.Default.NoDelay = value; }
 		public bool Linger { get => Properties.Settings.Default.Linger; set => Properties.Settings.Default.Linger = value; }
 		public int LingerTime { get => Properties.Settings.Default.LingerTime; set => Properties.Settings.Default.LingerTime = value; }
