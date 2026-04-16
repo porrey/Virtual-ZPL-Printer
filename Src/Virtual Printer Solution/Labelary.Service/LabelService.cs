@@ -137,14 +137,11 @@ namespace Labelary.Service
 						if (width <= 15 && height <= 15)
 						{
 							//
-							// Force US formatting for Labelary REST API.
+							// Force invariant (US) formatting for Labelary REST API.
 							//
-							CultureInfo culture = new("us-EN");
-							culture.NumberFormat.NumberDecimalSeparator = ".";
-
-							string widthString = width.ToString("#.##", culture);
+							string widthString = width.ToString("#.##", CultureInfo.InvariantCulture);
 							this.Logger.LogDebug("The Width parameter is '{value}'.", widthString);
-							string heightString = height.ToString("#.##", culture);
+							string heightString = height.ToString("#.##", CultureInfo.InvariantCulture);
 							this.Logger.LogDebug("The Height parameter is '{value}'.", heightString);
 
 							//
@@ -286,11 +283,11 @@ namespace Labelary.Service
 					if (width <= 15 && height <= 15)
 					{
 						//
-						// Force US formatting for Labelary REST API.
+						// Force invariant (US) formatting for Labelary REST API.
 						//
-						string widthString = width.ToString("#.##", new CultureInfo("us-EN"));
+						string widthString = width.ToString("#.##", CultureInfo.InvariantCulture);
 						this.Logger.LogDebug("The Width parameter is '{value}'.", widthString);
-						string heightString = height.ToString("#.##", new CultureInfo("us-EN"));
+						string heightString = height.ToString("#.##", CultureInfo.InvariantCulture);
 						this.Logger.LogDebug("The Height parameter is '{value}'.", heightString);
 
 						//

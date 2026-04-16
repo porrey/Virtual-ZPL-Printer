@@ -115,6 +115,18 @@ namespace VirtualPrinter.HostedService.TcpSystem
 								// Reset the timestamp if data has been received.
 								//
 								timestamp = DateTime.Now;
+
+								//
+								// Exit as soon as a complete ZPL job has been received so
+								// that the label is processed without waiting for the
+								// sender to close the connection.
+								//
+								string accumulatedData = encoding.GetString(ms.ToArray(), 0, (int)ms.Length);
+
+								if (accumulatedData.TrimEnd().EndsWith("^XZ", StringComparison.OrdinalIgnoreCase))
+								{
+									tokenSource.Cancel();
+								}
 							}
 							else
 							{
