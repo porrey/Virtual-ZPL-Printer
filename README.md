@@ -2,9 +2,16 @@
 An Ethernet based virtual Zebra Label Printer that can be used to test applications that produce bar code labels. This application uses the Labelary service found at [http://labelary.com](http://labelary.com/service.html).
 
 ## Latest Release
-[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Installer/Virtual%20ZPL%20Printer%20Setup.msi) (v 3.4.0)
+[Download the installer](https://github.com/porrey/Virtual-ZPL-Printer/raw/main/Installer/Virtual%20ZPL%20Printer%20Setup.msi) (v 3.5.0)
 
-Now requires **.NET 8.0**. Download Setup.exe and the MSI if you need to have the .NET 8.0 Framework installed automatically.
+Now requires **.NET 10.0**. Download Setup.exe and the MSI if you need to have the .NET 10.0 Framework installed automatically.
+
+###### Version 3.5.0 Updates:
+1. Upgraded to .NET 10.0.
+2. Fixed culture bug in Labelary service — replaced invalid `"us-EN"` culture with `CultureInfo.InvariantCulture` to ensure consistent decimal formatting in REST API calls.
+3. Fixed SQLite migration — added missing schema migration for the `Filters` column in `PrinterConfiguration` so existing databases upgrade correctly.
+4. Fixed TCP end-of-document detection — `^XZ` marker is now reliably detected in large multi-chunk transmissions.
+5. Fixed copy-paste bug in `SendTimeout` property that caused it to read/write `ReceiveTimeout` instead.
 
 ###### Version 3.4.0 Updates:
 1. Updated listener to handle larger document transmissions.
