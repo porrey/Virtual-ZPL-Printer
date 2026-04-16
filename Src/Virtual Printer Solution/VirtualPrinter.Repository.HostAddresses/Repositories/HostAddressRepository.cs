@@ -49,5 +49,8 @@ namespace VirtualPrinter.Repository.HostAddresses
 		{
 			return Task.FromResult<IEnumerable<IHostAddress>>(this.Items.Where(predicate.Compile()).ToArray());
 		}
+
+		public Task<IEnumerable<IHostAddress>> GetAllAsync(IRepositoryContext context) => throw new NotImplementedException();
+		public Task<IEnumerable<IHostAddress>> GetAsync(IRepositoryContext context, Expression<Func<IHostAddress, bool>> predicate) => throw new NotImplementedException();
 	}
 }

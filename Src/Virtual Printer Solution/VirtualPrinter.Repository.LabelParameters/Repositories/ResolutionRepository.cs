@@ -42,5 +42,8 @@ namespace VirtualPrinter.Repository.LabelParameters
 		{
 			return Task.FromResult<IEnumerable<IResolution>>(this.Items.Where(predicate.Compile()).ToArray());
 		}
+
+		public Task<IEnumerable<IResolution>> GetAllAsync(IRepositoryContext context) => throw new NotImplementedException();
+		public Task<IEnumerable<IResolution>> GetAsync(IRepositoryContext context, Expression<Func<IResolution, bool>> predicate) => throw new NotImplementedException();
 	}
 }

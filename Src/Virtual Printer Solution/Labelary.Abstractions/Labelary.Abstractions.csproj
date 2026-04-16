@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<Version>3.4.0</Version>
 		<FileVersion>3.4.0</FileVersion>
 		<AssemblyVersion>3.4.0</AssemblyVersion>
@@ -41,12 +41,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Repository" Version="8.0.4" />
-		<PackageReference Include="UnitsNet" Version="5.54.0" />
+		<PackageReference Include="Diamond.Core.Repository" Version="10.1.1" />
+		<PackageReference Include="UnitsNet" Version="5.75.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.4\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="C:\Users\Danie\.nuget\packages\diamond.core.repository\10.1.1\contentFiles\any\net10.0\Services\Diamond.Core.Repository.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

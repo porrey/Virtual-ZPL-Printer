@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-Windows</TargetFramework>
+		<TargetFramework>net10.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
 		<Version>3.4.0</Version>
@@ -21,9 +21,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Repository" Version="8.0.4" />
-		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="8.0.4" />
-		<PackageReference Include="System.DisposableObject" Version="8.0.0" />
+		<PackageReference Include="Diamond.Core.Repository" Version="10.1.1" />
+		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="10.1.1" />
+		<PackageReference Include="System.DisposableObject" Version="10.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -35,6 +35,12 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.4\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\Danie\.nuget\packages\diamond.core.repository.abstractions\10.1.1\contentFiles\any\net10.0\Services\Diamond.Core.Repository.Abstractions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="C:\Users\Danie\.nuget\packages\diamond.core.repository\10.1.1\contentFiles\any\net10.0\Services\Diamond.Core.Repository.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	</ItemGroup>
