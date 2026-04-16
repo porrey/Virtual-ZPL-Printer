@@ -8,6 +8,8 @@ jobs:
   test:
     name: Build and Test (.NET 10)
     runs-on: windows-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repository
