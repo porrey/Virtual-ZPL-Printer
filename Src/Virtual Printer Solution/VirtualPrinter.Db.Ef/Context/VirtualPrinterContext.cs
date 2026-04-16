@@ -192,6 +192,8 @@ namespace VirtualPrinter.Db.Ef
 
 					//
 					// Chain into PhysicalPrinter check in case it is also missing.
+					// Calling First() intentionally triggers a SqliteException when
+					// a required column does not yet exist in the database schema.
 					//
 					try
 					{
