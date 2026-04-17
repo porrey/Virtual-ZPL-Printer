@@ -28,4 +28,10 @@
 	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>VirtualPrinter.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 </Project>

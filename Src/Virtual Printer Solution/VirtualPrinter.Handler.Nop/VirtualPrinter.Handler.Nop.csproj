@@ -11,13 +11,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Services\VirtualPrinter.Handler.Nop.json" />
+		<None Remove="Services\VirtualPrinter.Handler.Nop.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="Services\VirtualPrinter.Handler.Nop.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+		<Content Include="Services\VirtualPrinter.Handler.Nop.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -30,19 +30,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\VirtualPrinter.Handler.Abstractions\VirtualPrinter.Handler.Abstractions.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Handler.Abstractions\VirtualPrinter.Handler.Abstractions.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\10.1.1\contentFiles\any\net10.0\Services\Diamond.Core.Repository.Abstractions.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\10.1.1\contentFiles\any\net10.0\Services\Diamond.Core.Repository.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\10.1.1\contentFiles\any\net10.0\Services\Diamond.Core.Repository.Abstractions.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\10.1.1\contentFiles\any\net10.0\Services\Diamond.Core.Repository.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>VirtualPrinter.Tests</_Parameter1>
+		</AssemblyAttribute>
 	</ItemGroup>
 </Project>
