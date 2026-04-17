@@ -1,0 +1,39 @@
+name: Run Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: Build and Test (.NET 10)
+    runs-on: windows-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore "Src/Virtual Printer Solution/VirtualPrinter.Tests/VirtualPrinter.Tests.csproj"
+
+      - name: Build
+        run: dotnet build "Src/Virtual Printer Solution/VirtualPrinter.Tests/VirtualPrinter.Tests.csproj" --no-restore --configuration Release
+
+      - name: Run tests
+        run: dotnet test "Src/Virtual Printer Solution/VirtualPrinter.Tests/VirtualPrinter.Tests.csproj" --no-build --configuration Release --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: test-results
+          path: |
+            **/TestResults/*.trx
+            **/TestResults/*/coverage.cobertura.xml

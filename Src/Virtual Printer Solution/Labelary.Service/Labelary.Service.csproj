@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-windows</TargetFramework>
-		<Version>3.4.0</Version>
-		<FileVersion>3.4.0</FileVersion>
-		<AssemblyVersion>3.4.0</AssemblyVersion>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<Version>3.5.0</Version>
+		<FileVersion>3.5.0</FileVersion>
+		<AssemblyVersion>3.5.0</AssemblyVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Title>Labelary Library Abstractions</Title>
 		<Description>Provides an easy way to call the Labelary API to get labels from ZPL. This library is used by the Virtual ZPL Printer application.</Description>
@@ -18,7 +18,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 		<PackageTags>labelary; zpl</PackageTags>
-		<Copyright>Copyright(C) 2021-2024, Daniel M. Porrey. All rights reserved.</Copyright>
+		<Copyright>Copyright(C) 2021-2026, Daniel M. Porrey. All rights reserved.</Copyright>
 		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
@@ -44,7 +44,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Drawing.Common" Version="8.0.7" />
+		<PackageReference Include="System.Drawing.Common" Version="10.0.6" />
 	</ItemGroup>
 
 	<ItemGroup>

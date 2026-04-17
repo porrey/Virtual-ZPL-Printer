@@ -89,5 +89,8 @@ namespace VirtualPrinter.TemplateManager
 		{
 			return Task.FromResult<IEnumerable<ILabelTemplate>>(this.Items.Where(predicate.Compile()).ToArray());
 		}
+
+		public Task<IEnumerable<ILabelTemplate>> GetAllAsync(IRepositoryContext context) => throw new NotImplementedException();
+		public Task<IEnumerable<ILabelTemplate>> GetAsync(IRepositoryContext context, Expression<Func<ILabelTemplate, bool>> predicate) => throw new NotImplementedException();
 	}
 }

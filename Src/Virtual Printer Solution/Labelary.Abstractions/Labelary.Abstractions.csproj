@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<Version>3.4.0</Version>
-		<FileVersion>3.4.0</FileVersion>
-		<AssemblyVersion>3.4.0</AssemblyVersion>
+		<TargetFramework>net10.0</TargetFramework>
+		<Version>3.5.0</Version>
+		<FileVersion>3.5.0</FileVersion>
+		<AssemblyVersion>3.5.0</AssemblyVersion>
 		<Nullable>disable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -19,7 +19,7 @@
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageTags>labelary; zpl</PackageTags>
-		<Copyright>Copyright(C) 2021-2024, Daniel M. Porrey. All rights reserved.</Copyright>
+		<Copyright>Copyright(C) 2021-2026, Daniel M. Porrey. All rights reserved.</Copyright>
 		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
@@ -41,12 +41,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Repository" Version="8.0.4" />
-		<PackageReference Include="UnitsNet" Version="5.54.0" />
+		<PackageReference Include="Diamond.Core.Repository" Version="10.1.1" />
+		<PackageReference Include="UnitsNet" Version="5.75.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.4\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\10.1.1\contentFiles\any\net10.0\Services\Diamond.Core.Repository.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

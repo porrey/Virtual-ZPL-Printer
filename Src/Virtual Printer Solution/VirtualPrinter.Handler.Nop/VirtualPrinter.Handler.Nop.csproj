@@ -1,48 +1,54 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-Windows</TargetFramework>
+		<TargetFramework>net10.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
-		<Version>3.4.0</Version>
-		<FileVersion>3.4.0</FileVersion>
-		<AssemblyVersion>3.4.0</AssemblyVersion>
+		<Version>3.5.0</Version>
+		<FileVersion>3.5.0</FileVersion>
+		<AssemblyVersion>3.5.0</AssemblyVersion>
 		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Services\VirtualPrinter.Handler.Nop.json" />
+		<None Remove="Services\VirtualPrinter.Handler.Nop.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="Services\VirtualPrinter.Handler.Nop.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+		<Content Include="Services\VirtualPrinter.Handler.Nop.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Diamond.Core.Repository" Version="8.0.4" />
-		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="8.0.4" />
-		<PackageReference Include="Diamond.Core.System.Text" Version="8.0.4" />
-		<PackageReference Include="Diamond.Core.Wpf" Version="8.0.4" />
-		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="8.0.4" />
-		<PackageReference Include="UnitsNet" Version="5.54.0" />
+		<PackageReference Include="Diamond.Core.Repository" Version="10.1.1" />
+		<PackageReference Include="Diamond.Core.Repository.Abstractions" Version="10.1.1" />
+		<PackageReference Include="Diamond.Core.System.Text" Version="10.1.1" />
+		<PackageReference Include="Diamond.Core.Wpf" Version="10.1.1" />
+		<PackageReference Include="Diamond.Core.Extensions.Hosting" Version="10.1.1" />
+		<PackageReference Include="UnitsNet" Version="5.75.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\VirtualPrinter.Handler.Abstractions\VirtualPrinter.Handler.Abstractions.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.Handler.Abstractions\VirtualPrinter.Handler.Abstractions.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\8.0.4\contentFiles\any\net8.0\Services\Diamond.Core.Repository.Abstractions.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\8.0.4\contentFiles\any\net8.0\Services\Diamond.Core.Repository.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository.abstractions\10.1.1\contentFiles\any\net10.0\Services\Diamond.Core.Repository.Abstractions.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="$(UserProfile)\.nuget\packages\diamond.core.repository\10.1.1\contentFiles\any\net10.0\Services\Diamond.Core.Repository.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>VirtualPrinter.Tests</_Parameter1>
+		</AssemblyAttribute>
 	</ItemGroup>
 </Project>

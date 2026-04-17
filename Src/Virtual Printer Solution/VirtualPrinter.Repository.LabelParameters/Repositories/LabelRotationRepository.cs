@@ -43,5 +43,8 @@ namespace VirtualPrinter.Repository.LabelParameters
 		{
 			return Task.FromResult<IEnumerable<ILabelRotation>>(this.Items.Where(predicate.Compile()).ToArray());
 		}
+
+		public Task<IEnumerable<ILabelRotation>> GetAllAsync(IRepositoryContext context) => throw new NotImplementedException();
+		public Task<IEnumerable<ILabelRotation>> GetAsync(IRepositoryContext context, Expression<Func<ILabelRotation, bool>> predicate) => throw new NotImplementedException();
 	}
 }

@@ -10,8 +10,8 @@
 	],
 	"services": [
 		{
-			"ServiceType": "Prism.Events.IEventAggregator, Prism",
-			"ImplementationType": "Prism.Events.EventAggregator, Prism",
+			"ServiceType": "Prism.Events.IEventAggregator, Prism.Events",
+			"ImplementationType": "Prism.Events.EventAggregator, Prism.Events",
 			"Lifetime": "Singleton"
 		}
 	]
