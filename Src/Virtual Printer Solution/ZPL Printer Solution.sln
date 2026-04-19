@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.4.11626.88 stable
+VisualStudioVersion = 18.4.11626.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Virtual ZPL Printer", "VirtualPrinter\Virtual ZPL Printer.csproj", "{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}"
 EndProject
@@ -73,8 +73,8 @@ Global
 		{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}.Debug|x64.ActiveCfg = Debug|x64
 		{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}.Debug|x64.Build.0 = Debug|x64
-		{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}.Release|Any CPU.ActiveCfg = Release|x64
+		{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}.Release|Any CPU.Build.0 = Release|x64
 		{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}.Release|x64.ActiveCfg = Release|x64
 		{CC5E27BD-64BE-4D5A-91B9-388BCC20FA56}.Release|x64.Build.0 = Release|x64
 		{471F6992-FEFC-40AD-BCBB-8C3365FC8A58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -280,13 +280,13 @@ Global
 		{FF57D022-B7CA-4FC1-943C-03E8F27C294A} = {998059AA-CE27-45C5-BF89-D60A5DDEC3C7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_RemoveEmptyEntries = False
-		RESX_SaveFilesImmediatelyUponChange = True
-		SolutionGuid = {B044B05A-9DC2-4AC1-9957-9EBE460C2EDD}
-		RESX_ResXSortingComparison = InvariantCultureIgnoreCase
-		RESX_ConfirmAddLanguageFile = True
-		RESX_SortFileContentOnSave = True
-		RESX_AutoCreateNewLanguageFiles = True
 		RESX_CultureCountyOverrides = es=es-CO
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_SortFileContentOnSave = True
+		RESX_ConfirmAddLanguageFile = True
+		RESX_ResXSortingComparison = InvariantCultureIgnoreCase
+		SolutionGuid = {B044B05A-9DC2-4AC1-9957-9EBE460C2EDD}
+		RESX_SaveFilesImmediatelyUponChange = True
+		RESX_RemoveEmptyEntries = False
 	EndGlobalSection
 EndGlobal
