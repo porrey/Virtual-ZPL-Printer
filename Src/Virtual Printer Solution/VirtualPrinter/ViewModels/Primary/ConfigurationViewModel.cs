@@ -48,7 +48,7 @@ namespace VirtualPrinter.ViewModels
 			this.CloseCommand = new(() => { }, () => !this.Changes);
 			this.AddCommand = new(async () => await this.AddCommandAsync(), () => !this.Changes);
 			this.DeleteCommand = new(async () => await this.DeleteCommandAsync(), () => !this.Changes && this.SelectedPrinterConfiguration != null && this.PrinterConfigurations.Count > 1);
-			this.SaveCommand = new(async () => await this.SaveCommandAsync(), () => this.Changes);
+			this.SaveCommand = new(async () => await this.SaveCommandAsync(), () => this.Changes && this.SelectedLabelUnit != null && this.SelectedResolution != null && this.SelectedRotation != null);
 			this.CloneCommand = new(async () => await this.CloneCommandAsync(), () => !this.Changes && this.SelectedPrinterConfiguration != null);
 			this.FilterEditCommand = new(async () => await this.FilterEditCommandAsync(), () => this.SelectedPrinterConfiguration != null);
 			this.PrinterEditCommand = new(async () => await this.PrinterEditCommandAsync(), () => this.SelectedPrinterConfiguration != null);
@@ -468,11 +468,11 @@ namespace VirtualPrinter.ViewModels
 					this.Name = this.SelectedPrinterConfiguration.Name;
 					this.SelectedHostAddress = this.SelectedPrinterConfiguration.HostAddress;
 					this.Port = this.SelectedPrinterConfiguration.Port;
-					this.SelectedLabelUnit = this.LabelUnits.Where(t => t.Unit == (LengthUnit)this.SelectedPrinterConfiguration.LabelUnit).SingleOrDefault();
+					this.SelectedLabelUnit = this.LabelUnits.Where(t => t.Unit == (LengthUnit)this.SelectedPrinterConfiguration.LabelUnit).SingleOrDefault() ?? new NullLabelUnit();
 					this.LabelWidth = this.SelectedPrinterConfiguration.LabelWidth;
 					this.LabelHeight = this.SelectedPrinterConfiguration.LabelHeight;
-					this.SelectedResolution = this.Resolutions.Where(t => t.Dpmm == this.SelectedPrinterConfiguration.ResolutionInDpmm).SingleOrDefault();
-					this.SelectedRotation = this.Rotations.Where(t => t.Value == this.SelectedPrinterConfiguration.RotationAngle).SingleOrDefault();
+					this.SelectedResolution = this.Resolutions.Where(t => t.Dpmm == this.SelectedPrinterConfiguration.ResolutionInDpmm).SingleOrDefault() ?? new NullLabelResolution();
+					this.SelectedRotation = this.Rotations.Where(t => t.Value == this.SelectedPrinterConfiguration.RotationAngle).SingleOrDefault() ?? new NullLabelRotation();
 					this.ImagePath = this.SelectedPrinterConfiguration.ImagePath;
 					this.PhysicalPrinter = await this.PhysicalPrinterFactory.DeserializeAsync(this.SelectedPrinterConfiguration.PhysicalPrinter);
 				}

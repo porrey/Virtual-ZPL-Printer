@@ -4,9 +4,9 @@
 		<TargetFramework>net10.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
-		<Version>3.5.0</Version>
-		<FileVersion>3.5.0</FileVersion>
-		<AssemblyVersion>3.5.0</AssemblyVersion>
+		<Version>3.5.1</Version>
+		<FileVersion>3.5.1</FileVersion>
+		<AssemblyVersion>3.5.1</AssemblyVersion>
 		<GenerateSatelliteAssembliesForCore>true</GenerateSatelliteAssembliesForCore>
 		<UICulture>en-US</UICulture>
 		<Platforms>x64</Platforms>

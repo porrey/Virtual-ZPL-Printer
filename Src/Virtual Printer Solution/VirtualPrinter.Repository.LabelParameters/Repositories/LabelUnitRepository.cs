@@ -16,6 +16,7 @@
  */
 using System.Linq.Expressions;
 using Diamond.Core.Repository;
+using UnitsNet.Units;
 
 namespace VirtualPrinter.Repository.LabelParameters
 {
@@ -24,9 +25,9 @@ namespace VirtualPrinter.Repository.LabelParameters
 		public LabelUnitRepository()
 		{
 			this.Name = this.GetType().Name.Replace("Repository", "");
-			this.Items.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Inch });
-			this.Items.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Millimeter });
-			this.Items.Add(new LabelUnit() { Unit = UnitsNet.Units.LengthUnit.Centimeter });
+			this.Items.Add(new LabelUnit() { Unit = LengthUnit.Inch });
+			this.Items.Add(new LabelUnit() { Unit = LengthUnit.Millimeter });
+			this.Items.Add(new LabelUnit() { Unit = LengthUnit.Centimeter });
 		}
 
 		protected IList<ILabelUnit> Items { get; } = [];
@@ -39,7 +40,7 @@ namespace VirtualPrinter.Repository.LabelParameters
 
 		public Task<IEnumerable<ILabelUnit>> GetAsync(Expression<Func<ILabelUnit, bool>> predicate)
 		{
-			return Task.FromResult<IEnumerable<ILabelUnit>>(this.Items.Where(predicate.Compile()).ToArray());
+			return Task.FromResult<IEnumerable<ILabelUnit>>([.. this.Items.Where(predicate.Compile())]);
 		}
 
 		public Task<IEnumerable<ILabelUnit>> GetAllAsync(IRepositoryContext context) => throw new NotImplementedException();

@@ -18,9 +18,6 @@ using System.Collections.ObjectModel;
 using System.Drawing.Printing;
 using System.Windows;
 using Microsoft.Extensions.Logging;
-using Prism.Commands;
-using Prism.Events;
-using Prism.Mvvm;
 using VirtualPrinter.HostedService.PrintSystem;
 using VirtualPrinter.Models;
 
@@ -271,7 +268,7 @@ namespace VirtualPrinter.ViewModels
 				IPhysicalPrinter returnValue = this.PhysicalPrinterFactory.Create();
 
 				returnValue.Enabled = this.Enabled;
-				returnValue.PrinterName = this.SelectedSystemPrinter.Name;
+				returnValue.PrinterName = this.SelectedSystemPrinter?.Name;
 				returnValue.VerticalAlignTop = this.VerticalAlignLeft;
 				returnValue.VerticalAlignMiddle = this.VerticalAlignCenter;
 				returnValue.VerticalAlignBottom = this.VerticalAlignRight;

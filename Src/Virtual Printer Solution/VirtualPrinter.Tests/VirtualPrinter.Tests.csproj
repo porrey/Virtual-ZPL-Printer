@@ -9,6 +9,7 @@
 		<IsTestProject>true</IsTestProject>
 		<Platforms>x64</Platforms>
 		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+		<Version>3.5.1</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
