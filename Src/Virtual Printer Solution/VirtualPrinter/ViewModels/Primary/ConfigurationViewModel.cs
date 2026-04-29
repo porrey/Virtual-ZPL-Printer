@@ -235,7 +235,7 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
-		private IPhysicalPrinter _physicalPrinter = null;
+		private IPhysicalPrinter _physicalPrinter = new NullPhysicalPrinter();
 		public IPhysicalPrinter PhysicalPrinter
 		{
 			get
@@ -296,8 +296,8 @@ namespace VirtualPrinter.ViewModels
 					// Load the printer configurations.
 					//
 					IEnumerable<PrinterConfigurationViewModel> items = [.. (from tbl in repository.GetQueryable(context)
-																	orderby tbl.Id
-																	select new PrinterConfigurationViewModel(this.PhysicalPrinterFactory ,tbl))];
+																			orderby tbl.Id
+																			select new PrinterConfigurationViewModel(this.PhysicalPrinterFactory ,tbl))];
 
 					this.PrinterConfigurations.AddRange(items);
 
@@ -468,11 +468,11 @@ namespace VirtualPrinter.ViewModels
 					this.Name = this.SelectedPrinterConfiguration.Name;
 					this.SelectedHostAddress = this.SelectedPrinterConfiguration.HostAddress;
 					this.Port = this.SelectedPrinterConfiguration.Port;
-					this.SelectedLabelUnit = this.LabelUnits.Where(t => t.Unit == (LengthUnit)this.SelectedPrinterConfiguration.LabelUnit).SingleOrDefault() ?? new NullLabelUnit();
+					this.SelectedLabelUnit = this.LabelUnits.Where(t => t.Unit == (LengthUnit)this.SelectedPrinterConfiguration.LabelUnit).SingleOrDefault() ?? new DefaultLabelUnit();
 					this.LabelWidth = this.SelectedPrinterConfiguration.LabelWidth;
 					this.LabelHeight = this.SelectedPrinterConfiguration.LabelHeight;
-					this.SelectedResolution = this.Resolutions.Where(t => t.Dpmm == this.SelectedPrinterConfiguration.ResolutionInDpmm).SingleOrDefault() ?? new NullLabelResolution();
-					this.SelectedRotation = this.Rotations.Where(t => t.Value == this.SelectedPrinterConfiguration.RotationAngle).SingleOrDefault() ?? new NullLabelRotation();
+					this.SelectedResolution = this.Resolutions.Where(t => t.Dpmm == this.SelectedPrinterConfiguration.ResolutionInDpmm).SingleOrDefault() ?? new DefaultLabelResolution();
+					this.SelectedRotation = this.Rotations.Where(t => t.Value == this.SelectedPrinterConfiguration.RotationAngle).SingleOrDefault() ?? new DefaultLabelRotation();
 					this.ImagePath = this.SelectedPrinterConfiguration.ImagePath;
 					this.PhysicalPrinter = await this.PhysicalPrinterFactory.DeserializeAsync(this.SelectedPrinterConfiguration.PhysicalPrinter);
 				}
@@ -588,13 +588,13 @@ namespace VirtualPrinter.ViewModels
 				IPrinterConfiguration item = await repository.ModelFactory.CreateAsync();
 				item.Name = this.GetNewName(Properties.Strings.New_Printer_Configuration_Name);
 				item.HostAddress = IPAddress.Loopback.ToString();
-				item.Port = 9100;
-				item.LabelHeight = 6;
-				item.LabelWidth = 4;
-				item.LabelUnit = (int)LengthUnit.Inch;
-				item.ResolutionInDpmm = 8;
-				item.RotationAngle = 0;
-				item.ImagePath = FileLocations.ImageCache.FullName;
+				item.Port = DefaultPrinterConfiguration.Instance.Port;
+				item.LabelHeight = DefaultPrinterConfiguration.Instance.LabelHeight;
+				item.LabelWidth = DefaultPrinterConfiguration.Instance.LabelWidth;
+				item.LabelUnit = DefaultPrinterConfiguration.Instance.LabelUnit;
+				item.ResolutionInDpmm = DefaultPrinterConfiguration.Instance.ResolutionInDpmm;
+				item.RotationAngle = DefaultPrinterConfiguration.Instance.RotationAngle;
+				item.ImagePath = DefaultPrinterConfiguration.Instance.ImagePath;
 
 				PrinterConfigurationViewModel viewModelItem = new(this.PhysicalPrinterFactory, item);
 				this.PrinterConfigurations.Add(viewModelItem);
@@ -635,13 +635,13 @@ namespace VirtualPrinter.ViewModels
 						this.SelectedPrinterConfiguration.Name = this.Name;
 						this.SelectedPrinterConfiguration.HostAddress = this.SelectedHostAddress;
 						this.SelectedPrinterConfiguration.Port = this.Port;
-						this.SelectedPrinterConfiguration.LabelUnit = (int)this.SelectedLabelUnit.Unit;
+						this.SelectedPrinterConfiguration.LabelUnit = ((int?)this.SelectedLabelUnit?.Unit ?? DefaultPrinterConfiguration.Instance.LabelUnit);
 						this.SelectedPrinterConfiguration.LabelHeight = this.LabelHeight;
 						this.SelectedPrinterConfiguration.LabelWidth = this.LabelWidth;
-						this.SelectedPrinterConfiguration.ResolutionInDpmm = this.SelectedResolution.Dpmm;
-						this.SelectedPrinterConfiguration.RotationAngle = this.SelectedRotation.Value;
+						this.SelectedPrinterConfiguration.ResolutionInDpmm = this.SelectedResolution?.Dpmm ?? DefaultPrinterConfiguration.Instance.ResolutionInDpmm;
+						this.SelectedPrinterConfiguration.RotationAngle = this.SelectedRotation?.Value ?? DefaultPrinterConfiguration.Instance.RotationAngle;
 						this.SelectedPrinterConfiguration.ImagePath = this.ImagePath;
-						this.SelectedPrinterConfiguration.Filters = JsonConvert.SerializeObject(this.Filters.ToArray());
+						this.SelectedPrinterConfiguration.Filters = JsonConvert.SerializeObject(this.Filters?.ToArray() ?? []);
 						this.SelectedPrinterConfiguration.PhysicalPrinter = JsonConvert.SerializeObject(this.PhysicalPrinter);
 
 						//
@@ -744,15 +744,15 @@ namespace VirtualPrinter.ViewModels
 					using IWritableRepository<IPrinterConfiguration> repository = await this.RepositoryFactory.GetWritableAsync<IPrinterConfiguration>();
 
 					IPrinterConfiguration item = await repository.ModelFactory.CreateAsync();
-					item.Name = this.GetNewName($"{this.SelectedPrinterConfiguration.Name}-Copy");
-					item.HostAddress = this.SelectedPrinterConfiguration.HostAddress;
-					item.Port = this.SelectedPrinterConfiguration.Port;
-					item.LabelHeight = this.SelectedPrinterConfiguration.LabelHeight;
-					item.LabelWidth = this.SelectedPrinterConfiguration.LabelWidth;
-					item.LabelUnit = this.SelectedPrinterConfiguration.LabelUnit;
-					item.ResolutionInDpmm = this.SelectedPrinterConfiguration.ResolutionInDpmm;
-					item.RotationAngle = this.SelectedPrinterConfiguration.RotationAngle;
-					item.ImagePath = this.SelectedPrinterConfiguration.ImagePath;
+					item.Name = this.GetNewName($"{this.SelectedPrinterConfiguration?.Name ?? this.GetNewName(Properties.Strings.New_Printer_Configuration_Name)}-Copy");
+					item.HostAddress = this.SelectedPrinterConfiguration?.HostAddress ?? DefaultPrinterConfiguration.Instance.HostAddress;
+					item.Port = this.SelectedPrinterConfiguration?.Port ?? DefaultPrinterConfiguration.Instance.Port;
+					item.LabelHeight = this.SelectedPrinterConfiguration?.LabelHeight ?? DefaultPrinterConfiguration.Instance.LabelHeight;
+					item.LabelWidth = this.SelectedPrinterConfiguration?.LabelWidth ?? DefaultPrinterConfiguration.Instance.LabelWidth;
+					item.LabelUnit = this.SelectedPrinterConfiguration?.LabelUnit ?? DefaultPrinterConfiguration.Instance.LabelUnit;
+					item.ResolutionInDpmm = this.SelectedPrinterConfiguration?.ResolutionInDpmm ?? DefaultPrinterConfiguration.Instance.ResolutionInDpmm;
+					item.RotationAngle = this.SelectedPrinterConfiguration?.RotationAngle ?? DefaultPrinterConfiguration.Instance.RotationAngle;
+					item.ImagePath = this.SelectedPrinterConfiguration?.ImagePath ?? DefaultPrinterConfiguration.Instance.ImagePath;
 					item.Filters = this.SelectedPrinterConfiguration?.Filters;
 					item.PhysicalPrinter = this.SelectedPrinterConfiguration?.PhysicalPrinter;
 
