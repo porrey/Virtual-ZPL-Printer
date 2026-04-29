@@ -46,6 +46,10 @@ namespace VirtualPrinter.HostedService.PrintSystem
 			{
 				returnValue = JsonConvert.DeserializeObject<PhysicalPrinter>(json);
 			}
+			else
+			{
+				return new NullPhysicalPrinter();
+			}
 
 			return returnValue;
 		}
