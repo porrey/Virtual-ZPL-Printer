@@ -27,10 +27,11 @@ namespace VirtualPrinter.GrfStorageService
 		protected IMemoryCache MemoryCache { get; } = memoryCache;
 
 		// Matches the full ~DG blob, including multi-line hex data.
-		// GRF data never contains '^', so [^\^]+ captures all continuation
-		// lines and stops naturally at the next ZPL command (e.g. ^XZ).
+		// (?:(?!~DG)[^\^])+ matches any character that is neither '^' nor the
+		// start of the next ~DG command, so multiple GRF entries in one ZPL
+		// file are each captured as separate matches.
 		private static readonly Regex DgPattern = new(
-			@"~DG(?<device>[A-Z]):(?<filename>[\w]+\.GRF),[^\^]+",
+			@"~DG(?<device>[A-Z]):(?<filename>[\w]+\.GRF),(?:(?!~DG)[^\^])+",
 			RegexOptions.Compiled);
 
 		// Matches:  ^XGE:NFRC.GRF  or  ^XGE:10ALL.GRF  etc.
