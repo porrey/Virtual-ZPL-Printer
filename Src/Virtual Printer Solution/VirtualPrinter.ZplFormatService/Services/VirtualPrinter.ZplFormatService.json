@@ -1,0 +1,15 @@
+{
+	"aliases": [
+		{
+			"Key": "IZplFormatService",
+			"TypeDefinition": "VirtualPrinter.ZplFormatService.IZplFormatService, VirtualPrinter.ZplFormatService"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "<IZplFormatService>",
+			"ImplementationType": "VirtualPrinter.ZplFormatService.ZplFormatService, VirtualPrinter.ZplFormatService",
+			"Lifetime": "Singleton"
+		}
+	]
+}

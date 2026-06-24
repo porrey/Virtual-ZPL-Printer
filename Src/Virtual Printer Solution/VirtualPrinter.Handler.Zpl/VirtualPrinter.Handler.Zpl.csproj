@@ -31,6 +31,8 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\VirtualPrinter.Handler.Abstractions\VirtualPrinter.Handler.Abstractions.csproj" />
+	  <ProjectReference Include="..\VirtualPrinter.GrfStorageService\VirtualPrinter.GrfStorageService.csproj" />
+	  <ProjectReference Include="..\VirtualPrinter.ZplFormatService\VirtualPrinter.ZplFormatService.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

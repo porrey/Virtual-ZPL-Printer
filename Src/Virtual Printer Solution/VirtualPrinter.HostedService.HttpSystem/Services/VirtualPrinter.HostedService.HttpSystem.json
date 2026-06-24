@@ -1,0 +1,9 @@
+{
+	"services": [
+		{
+			"ServiceType": "<IHostedService>",
+			"ImplementationType": "VirtualPrinter.HostedService.HttpSystem.HttpListenerService, VirtualPrinter.HostedService.HttpSystem",
+			"Lifetime": "Singleton"
+		}
+	]
+}
