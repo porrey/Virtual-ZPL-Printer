@@ -226,3 +226,47 @@ The active culture is set at startup in `App.xaml.cs` and applied to all WPF fra
 ## Installer
 
 `VirtualPrinter-Setup/` (WiX) produces a standard Windows MSI. A companion `Setup.exe` bootstrapper ensures the .NET 8 runtime is present before installation.
+
+---
+
+## Flash Memory Simulation (NFRC / Labelary Extensions)
+
+A set of additions was made to support Zebra flash-memory workflows used by the NFRC label templates. These are not part of the original open-source project.
+
+### What Was Added
+
+| Project | Purpose |
+|---|---|
+| `VirtualPrinter.GrfStorageService` | Captures `~DG` (Download Graphics) blobs from incoming ZPL and persists them as files under `Documents\Virtual ZPL Printer\Graphics\`. Before forwarding ZPL to Labelary, injects stored blobs for any `^XG` (recall graphic) references so Labelary can render them. |
+| `VirtualPrinter.ZplFormatService` | Captures `^DF` (Download Format) commands and stores the template body under `Documents\Virtual ZPL Printer\Formats\`. On `^XF` (recall format) jobs, loads the template, substitutes `^FN` field-number placeholders with the `^FD` field-data values from the print job, and expands the result before passing it to Labelary. |
+| `VirtualPrinter.HostedService.HttpSystem` | Runs a raw `TcpListener` on port 9200 with protocol detection. HTTP requests (`GET`/`POST`) are served as a Zebra-compatible web UI; raw ZPL connections are saved through the flash-storage pipeline. Endpoints: `/printer` (browser index), `/printer/dir` (ZebraLabelUpdate-compatible format listing), `/printer/zpl` (format content), `/printer/grf` (Labelary-rendered GRF preview), `/printer/upload` (file upload), `/printer/delete` (file delete). |
+
+Both `GrfStorageService` and `ZplFormatService` are wired into `ZplRequestHandler` before the Labelary call, so any ZPL job containing `~DG` or `^DF` automatically populates flash storage as a side-effect of normal printing.
+
+### Testing
+
+**Send a GRF template to flash:**
+```powershell
+# Replace <file> with a .zpl containing ~DG lines
+$zpl = Get-Content <file> -Raw
+$tcp = [System.Net.Sockets.TcpClient]::new('127.0.0.1', 9100)
+$stream = $tcp.GetStream()
+$bytes = [System.Text.Encoding]::UTF8.GetBytes($zpl)
+$stream.Write($bytes, 0, $bytes.Length)
+$tcp.Close()
+```
+
+**Verify storage and preview via browser:**
+Navigate to `http://localhost:9200/printer`. The page lists stored Formats (ZPL) and Graphics (GRF). Each GRF has a **View** link that renders the image live via Labelary. Files can be uploaded directly or deleted from this page.
+
+**ZebraLabelUpdate compatibility:**
+- Set the printer name in ZebraLabelUpdate to `localhost:9200`.
+- The **Process** button converts `^FD<%N%>` field markers to `^FN` placeholders correctly.
+- The **Save** button sends ZPL back via TCP; the format file is updated in flash storage and the updated content is visible on the next reload from ZebraLabelUpdate.
+  - **Known issue:** As of this writing, ZebraLabelUpdate Save does not update the stored file. Root cause is under investigation — Delphi's `TClientSocket` may be connecting to port 9100 (hardcoded) rather than 9200, so the raw ZPL reaches the standard TCP listener but the `^DF` job is treated as a storage-only job and skips Labelary without updating the HTTP-served copy. Workaround: use the browser upload at `http://localhost:9200/printer` to replace a format file manually.
+
+**Regex for multi-GRF ZPL files** (`GrfStorageService`):
+```
+~DG(?<device>[A-Z]):(?<filename>[\w]+\.GRF),(?:(?!~DG)[^\^])+
+```
+The negative lookahead `(?!~DG)` ensures each `~DG` block is captured separately even when multiple graphics appear in a single ZPL file.
