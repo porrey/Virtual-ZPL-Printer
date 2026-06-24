@@ -33,13 +33,14 @@ using VirtualPrinter.Db.Abstractions;
 using VirtualPrinter.Db.Ef;
 using VirtualPrinter.HostedService.PrintSystem;
 using VirtualPrinter.PublishSubscribe;
+using Microsoft.Extensions.Configuration;
 using VirtualPrinter.Views;
 
 namespace VirtualPrinter.ViewModels
 {
 	public class MainViewModel : BindableBase
 	{
-		public MainViewModel(IEventAggregator eventAggregator, ISettings settings, IServiceProvider serviceProvider, IImageCacheRepository imageCacheRepository, IRepositoryFactory repositoryFactory, IPhysicalPrinterFactory physicalPrinterFactory)
+		public MainViewModel(IEventAggregator eventAggregator, ISettings settings, IServiceProvider serviceProvider, IImageCacheRepository imageCacheRepository, IRepositoryFactory repositoryFactory, IPhysicalPrinterFactory physicalPrinterFactory, IConfiguration configuration)
 		{
 			this.EventAggregator = eventAggregator;
 			this.Settings = settings;
@@ -60,6 +61,10 @@ namespace VirtualPrinter.ViewModels
 			this.AboutCommand = new(() => _ = this.AboutAsync(), () => !this.IsBusy && !this.IsRunning);
 			this.TestLabelaryCommand = new(() => _ = this.TestLabelaryAsync(), () => !this.IsBusy && !this.IsRunning);
 			this.FontManagerCommand = new(() => _ = this.FontManagerAsync(), () => !this.IsBusy && !this.IsRunning);
+
+			int httpPort = configuration.GetValue<int>("HttpSystem:Port", 9200);
+			this.HttpWebUrl = $"http://localhost:{httpPort}/printer";
+			this.OpenWebInterfaceCommand = new(() => Process.Start(new ProcessStartInfo(this.HttpWebUrl) { UseShellExecute = true }), () => this.IsRunning && !string.IsNullOrEmpty(this.HttpWebUrl));
 
 			//
 			// Load the printer configurations.
@@ -164,6 +169,14 @@ namespace VirtualPrinter.ViewModels
 		public DelegateCommand GlobalSettingsCommand { get; set; }
 		public DelegateCommand TestLabelaryCommand { get; set; }
 		public DelegateCommand FontManagerCommand { get; set; }
+		public DelegateCommand OpenWebInterfaceCommand { get; set; }
+
+		private string _httpWebUrl = string.Empty;
+		public string HttpWebUrl
+		{
+			get => this._httpWebUrl;
+			set => this.SetProperty(ref this._httpWebUrl, value);
+		}
 
 		private PrinterConfigurationViewModel _printerConfiguration = null;
 		public PrinterConfigurationViewModel SelectedPrinterConfiguration
@@ -371,6 +384,7 @@ namespace VirtualPrinter.ViewModels
 			this.GlobalSettingsCommand.RaiseCanExecuteChanged();
 			this.TestLabelaryCommand.RaiseCanExecuteChanged();
 			this.FontManagerCommand.RaiseCanExecuteChanged();
+			this.OpenWebInterfaceCommand.RaiseCanExecuteChanged();
 
 			await Task.Delay(1);
 		}

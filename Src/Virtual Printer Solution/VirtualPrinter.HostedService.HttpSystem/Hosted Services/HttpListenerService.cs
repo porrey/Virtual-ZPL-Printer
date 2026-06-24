@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Virtual ZPL Printer.
  *
  *  Virtual ZPL Printer is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Prism.Events;
 using Labelary.Abstractions;
+using Microsoft.Extensions.Configuration;
 using VirtualPrinter.GrfStorageService;
 using VirtualPrinter.PublishSubscribe;
 using VirtualPrinter.ZplFormatService;
@@ -40,15 +41,18 @@ namespace VirtualPrinter.HostedService.HttpSystem
 	// In ZebraLabelUpdate, type "localhost:9200" (or "127.0.0.1:9200") as the printer name.
 	public class HttpListenerService : HostedServiceTemplate
 	{
-		public const int HttpPort = 9200;
+		public const int DefaultHttpPort = 9200;
 
-		public HttpListenerService(ILogger<HttpListenerService> logger, IHostApplicationLifetime hostApplicationLifetime, IEventAggregator eventAggregator, IServiceScopeFactory serviceScopeFactory, IZplFormatService zplFormatService, IGrfStorageService grfStorageService, ILabelService labelService)
+		public HttpListenerService(ILogger<HttpListenerService> logger, IHostApplicationLifetime hostApplicationLifetime, IEventAggregator eventAggregator, IServiceScopeFactory serviceScopeFactory, IZplFormatService zplFormatService, IGrfStorageService grfStorageService, ILabelService labelService,
+			IConfiguration configuration)
 			: base(hostApplicationLifetime, logger, serviceScopeFactory)
 		{
 			this.EventAggregator   = eventAggregator;
 			this.ZplFormatService  = zplFormatService;
 			this.GrfStorageService = grfStorageService;
 			this.LabelService      = labelService;
+			this.HttpPort          = configuration.GetValue<int>("HttpSystem:Port", DefaultHttpPort);
+			this.HttpPort          = configuration.GetValue<int>("HttpSystem:Port", DefaultHttpPort);
 
 			_ = this.EventAggregator.GetEvent<StartEvent>().Subscribe(async (e) =>
 			  {
@@ -67,6 +71,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 		protected IGrfStorageService GrfStorageService { get; set; }
 		protected ILabelService LabelService { get; set; }
 		protected ILabelConfiguration LabelConfiguration { get; set; }
+		protected int HttpPort { get; }
 		protected HttpListener Listener { get; set; }
 		protected bool IsRunning { get; set; }
 		protected CancellationTokenSource ListenerCts { get; set; }
@@ -249,12 +254,14 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			else if (statusParam.Equals("err", StringComparison.OrdinalIgnoreCase))
 				sb.AppendLine($"<div class='msg err'>Upload failed: {System.Net.WebUtility.HtmlEncode(statusMsg)}</div>");
 
-			// --- Formats (ZPL) ---
-			sb.AppendLine("<h2>Formats (ZPL)</h2>");
+			// --- Single upload form (auto-detects ^DF vs ~DG) ---
 			sb.AppendLine("<form class='upload' method='post' action='/printer/upload' enctype='multipart/form-data'>");
 			sb.AppendLine("  <input type='file' name='file' accept='.zpl,.pl'>");
-			sb.AppendLine("  <button type='submit'>Upload ZPL</button>");
+			sb.AppendLine("  <button type='submit'>Upload</button>");
+			sb.AppendLine("  <small>Files with ^DF are stored as Formats; files with ~DG are stored as Graphics; files with neither are imported as a Format using the filename.</small>");
 			sb.AppendLine("</form>");
+			// --- Formats (ZPL) ---
+			sb.AppendLine("<h2>Formats (ZPL)</h2>");
 
 			DirectoryInfo fmtDir = this.ZplFormatService.FormatDirectory;
 			FileInfo[] fmtFiles  = fmtDir.Exists ? fmtDir.GetFiles() : [];
@@ -291,10 +298,6 @@ namespace VirtualPrinter.HostedService.HttpSystem
 
 			// --- Graphics (GRF) ---
 			sb.AppendLine("<h2>Graphics (GRF)</h2>");
-			sb.AppendLine("<form class='upload' method='post' action='/printer/upload' enctype='multipart/form-data'>");
-			sb.AppendLine("  <input type='file' name='file' accept='.zpl,.pl'>");
-			sb.AppendLine("  <button type='submit'>Upload GRF</button>");
-			sb.AppendLine("</form>");
 
 			DirectoryInfo grfDir = this.GrfStorageService.GrfDirectory;
 			FileInfo[] grfFiles  = grfDir.Exists ? grfDir.GetFiles() : [];
