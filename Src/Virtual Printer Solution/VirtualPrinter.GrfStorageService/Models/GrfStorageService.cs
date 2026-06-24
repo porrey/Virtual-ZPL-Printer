@@ -34,7 +34,7 @@ namespace VirtualPrinter.GrfStorageService
 			@"~DG(?<device>[A-Z]):(?<filename>[\w]+\.GRF),(?:(?!~DG)[^\^])+",
 			RegexOptions.Compiled);
 
-		// Matches:  ^XGE:NFRC.GRF  or  ^XGE:10ALL.GRF  etc.
+		// Matches:  ^XGE:IMAGE.GRF
 		private static readonly Regex XgPattern = new(
 			@"\^XG(?<device>[A-Z]):(?<filename>[\w]+\.GRF)",
 			RegexOptions.Compiled);

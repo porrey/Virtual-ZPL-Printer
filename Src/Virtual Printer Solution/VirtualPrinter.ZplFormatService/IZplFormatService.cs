@@ -25,8 +25,7 @@ namespace VirtualPrinter.ZplFormatService
 
 		/// <summary>
 		/// Detects ^DF commands in the ZPL and saves each format body to the flash
-		/// library. Call this for every incoming ZPL job so that ZebraLabelUpdate
-		/// template saves are automatically captured.
+		/// library. 
 		/// </summary>
 		Task SaveFormatFromZplAsync(string zpl);
 

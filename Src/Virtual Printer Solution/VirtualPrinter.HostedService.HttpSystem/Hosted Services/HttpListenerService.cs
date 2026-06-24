@@ -30,15 +30,9 @@ using VirtualPrinter.ZplFormatService;
 
 namespace VirtualPrinter.HostedService.HttpSystem
 {
-	// Implements the Zebra printer HTTP web server endpoints used by ZebraLabelUpdate:
+	// Implements the Zebra printer HTTP web server endpoints:
 	//   GET /printer/dir  — lists stored .ZPL format files
 	//   GET /printer/zpl  — returns the content of a specific stored format
-	//
-	// ZebraLabelUpdate connects to http://<hostname>:<HttpPort>/ to read and edit
-	// formats; the Save button writes back via TCP port 9100 (handled by ZplRequestHandler).
-	//
-	// HttpListener on http://localhost:<port>/ does not require admin or a netsh urlacl.
-	// In ZebraLabelUpdate, type "localhost:9200" (or "127.0.0.1:9200") as the printer name.
 	public class HttpListenerService : HostedServiceTemplate
 	{
 		public const int DefaultHttpPort = 9200;
@@ -108,7 +102,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				this.Listener.Start();
 				this.IsRunning = true;
 
-				this.Logger.LogInformation("HTTP listener started. In ZebraLabelUpdate, use 'localhost:{port}' as the printer name.", HttpPort);
+				this.Logger.LogInformation("HTTP listener started. Use 'http://localhost:{port}/printer' to access.", HttpPort);
 
 				_ = Task.Run(() => this.AcceptLoopAsync(this.ListenerCts.Token));
 
@@ -337,14 +331,6 @@ namespace VirtualPrinter.HostedService.HttpSystem
 		private async Task HandleDirAsync(HttpListenerContext context)
 		{
 			// Build an HTML page listing stored .ZPL format files.
-			//
-			// ZebraLabelUpdate's Delphi parser looks for the text "zpl?dev=" in the
-			// page, then extracts the anchor's inner text as the display name. The
-			// inner text must end in ".zpl" (case-insensitive) to be added to the list.
-			//
-			// Format files on disk are stored as "E_NFRC_AL.ZPL" (device_filename).
-			// We convert that back to "E:NFRC_AL.ZPL" for display and "E" / "NFRC_AL" / "ZPL"
-			// for the query-string parameters.
 
 			var sb = new StringBuilder();
 			sb.AppendLine("<html><body>");
@@ -362,13 +348,13 @@ namespace VirtualPrinter.HostedService.HttpSystem
 					if (underscore <= 0) continue;
 
 					string dev  = storedName[..underscore];
-					string rest = storedName[(underscore + 1)..];   // "NFRC_AL.ZPL"
+					string rest = storedName[(underscore + 1)..];
 					int dot     = rest.LastIndexOf('.');
 					if (dot <= 0) continue;
 
-					string oname       = rest[..dot];               // "NFRC_AL"
-					string otype       = rest[(dot + 1)..];         // "ZPL"
-					string displayName = $"{dev}:{rest}";           // "E:NFRC_AL.ZPL"
+					string oname       = rest[..dot];
+					string otype       = rest[(dot + 1)..];
+					string displayName = $"{dev}:{rest}";
 
 					sb.AppendLine($"  <li><a href=\"zpl?dev={dev}&oname={oname}&otype={otype}\">{displayName}</a></li>");
 				}
@@ -383,7 +369,6 @@ namespace VirtualPrinter.HostedService.HttpSystem
 
 		private async Task HandleZplAsync(HttpListenerContext context)
 		{
-			// Parse query string: ?dev=E&oname=NFRC_AL&otype=ZPL
 			NameValueCollection qs = context.Request.QueryString;
 			string dev   = qs["dev"]   ?? string.Empty;
 			string oname = qs["oname"] ?? string.Empty;
@@ -396,7 +381,6 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			// Reconstruct the storage key: E_NFRC_AL.ZPL
 			string key      = $"{dev}_{oname}.{otype}";
 			string filePath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, key);
 
@@ -408,8 +392,6 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			// ZebraLabelUpdate's getZIPL extracts content between ^XA and ^XZ, so
-			// wrap the stored body in those markers before sending.
 			string body = await File.ReadAllTextAsync(filePath);
 			string zpl  = $"^XA\r\n{body.Trim()}\r\n^XZ";
 
@@ -535,7 +517,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 
 		private async Task HandleDeleteAsync(HttpListenerContext context)
 		{
-			// Read application/x-www-form-urlencoded body to get the storage key (e.g. "E_NFRC_AL.ZPL").
+			// Read application/x-www-form-urlencoded body to get the storage key (e.g. "E_FILENAME.ZPL").
 			using MemoryStream ms = new();
 			await context.Request.InputStream.CopyToAsync(ms);
 			string body = Encoding.UTF8.GetString(ms.ToArray());
@@ -590,7 +572,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			// Renders a stored GRF image by constructing minimal ZPL that inlines the
 			// ~DG blob and references it with ^XG, then passes it to Labelary.
 			//
-			// Query string: ?dev=E&filename=NFRC.GRF
+			// Query string: ?dev=E&filename=IMAGE.GRF
 
 			NameValueCollection qs = context.Request.QueryString;
 			string dev      = qs["dev"]      ?? string.Empty;

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Virtual ZPL Printer.
  *
  *  Virtual ZPL Printer is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ namespace VirtualPrinter.ZplFormatService
 
 		// ^XFE:FILENAME.ZPL^FS  — recall format command
 		private static readonly Regex XfPattern = new(
-			@"\^XF(?<device>[A-Z]):(?<filename>[^\^]+)\^FS",
+			@"\^XF(?<device>[A-Z]):(?<filename>[^\^]+)",
 			RegexOptions.Compiled);
 
 		// ^FN1^FDvalue^FS  — field data provided in a print job
@@ -103,8 +103,7 @@ namespace VirtualPrinter.ZplFormatService
 
 			if (templateBody == null)
 			{
-				this.Logger.LogWarning("Format '{device}:{filename}' referenced via ^XF but not found in flash library. " +
-									   "Send the ZebraLabelUpdate template save to the virtual printer first.", device, filename);
+				this.Logger.LogWarning("Format '{device}:{filename}' referenced via ^XF but not found in flash library.", device, filename);
 				return zpl;
 			}
 
