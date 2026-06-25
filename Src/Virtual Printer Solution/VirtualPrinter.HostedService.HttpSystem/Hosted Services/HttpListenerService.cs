@@ -191,7 +191,12 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				{
 					await this.HandlePreviewAsync(context);
 				}
-				else if (path.Equals("/printer/grf", StringComparison.OrdinalIgnoreCase))
+				else if (path.Equals("/printer/zpl/meta", StringComparison.OrdinalIgnoreCase) &&
+				         context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+				{
+					await this.HandleZplMetaSaveAsync(context);
+				}
+								else if (path.Equals("/printer/grf", StringComparison.OrdinalIgnoreCase))
 				{
 					await this.HandleGrfAsync(context);
 				}
@@ -400,19 +405,37 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			return;
 		}
 
-		string fileContent  = await File.ReadAllTextAsync(filePath);
-		string displayName  = $"{dev}:{oname}.{otype}";
-		string statusParam  = qs["status"] ?? string.Empty;
+		string fileContent = await File.ReadAllTextAsync(filePath);
+		string displayName = $"{dev}:{oname}.{otype}";
+		string statusParam = qs["status"] ?? string.Empty;
+
+		// Load saved ^FN preview values from meta sidecar file.
+		string metaPath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, $"{key}.meta.json");
+		string metaJson = File.Exists(metaPath) ? await File.ReadAllTextAsync(metaPath) : "{}";
+
+		// Serialize dynamic values as JS literals to avoid injection.
+		string jsdev         = System.Text.Json.JsonSerializer.Serialize(dev);
+		string jsoname       = System.Text.Json.JsonSerializer.Serialize(oname);
+		string jsotype       = System.Text.Json.JsonSerializer.Serialize(otype);
+		string jsContent     = System.Text.Json.JsonSerializer.Serialize(fileContent);
+		string jsDisplayName = System.Net.WebUtility.HtmlEncode(displayName);
 
 		var sb = new StringBuilder();
 		sb.AppendLine("<!DOCTYPE html><html><head><meta charset='utf-8'>");
-		sb.AppendLine($"<title>Edit ZPL Script — {System.Net.WebUtility.HtmlEncode(displayName)}</title>");
+		sb.AppendLine($"<title>Edit ZPL Script -- {jsDisplayName}</title>");
 		sb.AppendLine("<style>");
 		sb.AppendLine("  body { font-family: monospace; margin: 2em; }");
 		sb.AppendLine("  h2 { border-bottom: 1px solid #ccc; padding-bottom: 4px; }");
 		sb.AppendLine("  textarea { width: 100%; height: 320px; font-family: monospace; font-size: 13px; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; resize: vertical; }");
 		sb.AppendLine("  .btn-row { margin-top: 8px; display: flex; gap: 8px; align-items: center; }");
 		sb.AppendLine("  .btn-row button { padding: 4px 14px; cursor: pointer; }");
+		sb.AppendLine("  .fn-section { margin-top: 12px; }");
+		sb.AppendLine("  .fn-section summary { cursor: pointer; color: #555; font-size: 13px; user-select: none; }");
+		sb.AppendLine("  .fn-table { border-collapse: collapse; margin-top: 6px; }");
+		sb.AppendLine("  .fn-table th { text-align: left; padding: 3px 12px 3px 0; color: #555; font-size: 12px; border-bottom: 1px solid #ddd; }");
+		sb.AppendLine("  .fn-table td { padding: 3px 12px 3px 0; }");
+		sb.AppendLine("  .fn-table td:first-child { color: #888; font-size: 12px; min-width: 55px; }");
+		sb.AppendLine("  .fn-table input { font-family: monospace; font-size: 13px; padding: 2px 6px; border: 1px solid #ccc; width: 320px; }");
 		sb.AppendLine("  .preview-area { margin-top: 1.5em; }");
 		sb.AppendLine("  .preview-area img { border: 1px solid #ccc; background: #fff; max-width: 100%; display: block; }");
 		sb.AppendLine("  .placeholder { color: #999; font-style: italic; margin-top: 8px; }");
@@ -421,8 +444,8 @@ namespace VirtualPrinter.HostedService.HttpSystem
 		sb.AppendLine("  .msg.err { background: #f8d7da; color: #721c24; }");
 		sb.AppendLine("  a { color: #00c; }");
 		sb.AppendLine("</style></head><body>");
-		sb.AppendLine($"<h2>Edit ZPL Script</h2>");
-		sb.AppendLine($"<p><strong>{System.Net.WebUtility.HtmlEncode(displayName)}</strong> &nbsp; <a href='/printer'>&#8592; Directory</a></p>");
+		sb.AppendLine("<h2>Edit ZPL Script</h2>");
+		sb.AppendLine($"<p><strong>{jsDisplayName}</strong> &nbsp; <a href='/printer'>&#8592; Directory</a></p>");
 
 		if (statusParam.Equals("ok", StringComparison.OrdinalIgnoreCase))
 			sb.AppendLine("<div class='msg ok'>Saved successfully.</div>");
@@ -430,6 +453,15 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			sb.AppendLine($"<div class='msg err'>Save failed: {System.Net.WebUtility.HtmlEncode(qs["msg"] ?? string.Empty)}</div>");
 
 		sb.AppendLine($"<textarea id='zpl'>{System.Net.WebUtility.HtmlEncode(fileContent)}</textarea>");
+
+		sb.AppendLine("<details class='fn-section' id='fn-details'>");
+		sb.AppendLine("  <summary id='fn-summary'>Field Values (^FN) -- loading...</summary>");
+		sb.AppendLine("  <table class='fn-table'>");
+		sb.AppendLine("    <thead><tr><th>Field</th><th>Preview Value</th></tr></thead>");
+		sb.AppendLine("    <tbody id='fn-body'></tbody>");
+		sb.AppendLine("  </table>");
+		sb.AppendLine("</details>");
+
 		sb.AppendLine("<div class='btn-row'>");
 		sb.AppendLine("  <button onclick='previewLabel()'>Preview Label</button>");
 		sb.AppendLine("  <button onclick='saveLabel()'>Save</button>");
@@ -437,33 +469,93 @@ namespace VirtualPrinter.HostedService.HttpSystem
 		sb.AppendLine("</div>");
 		sb.AppendLine("<div class='preview-area'>");
 		sb.AppendLine("  <img id='preview-img' style='display:none' alt='Label preview'>");
-		sb.AppendLine("  <p class='placeholder' id='preview-ph'>Click \"Preview Label\" to render via Labelary.</p>");
+		sb.AppendLine("  <p class='placeholder' id='preview-ph'>Click Preview Label to render via Labelary.</p>");
 		sb.AppendLine("</div>");
 		sb.AppendLine("<script>");
-		sb.AppendLine($"  const dev = {System.Text.Json.JsonSerializer.Serialize(dev)};");
-		sb.AppendLine($"  const oname = {System.Text.Json.JsonSerializer.Serialize(oname)};");
-		sb.AppendLine($"  const otype = {System.Text.Json.JsonSerializer.Serialize(otype)};");
-		sb.AppendLine($"  const originalContent = {System.Text.Json.JsonSerializer.Serialize(fileContent)};");
-		sb.AppendLine("  function resetLabel() { document.getElementById('zpl').value = originalContent; }");
-		sb.AppendLine("  async function previewLabel() {");
-		sb.AppendLine("    const zpl = document.getElementById('zpl').value;");
-		sb.AppendLine("    const ph = document.getElementById('preview-ph');");
-		sb.AppendLine("    const img = document.getElementById('preview-img');");
-		sb.AppendLine("    ph.textContent = 'Rendering…';");
-		sb.AppendLine("    img.style.display = 'none';");
-		sb.AppendLine("    try {");
-		sb.AppendLine("      const resp = await fetch('/printer/preview', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: zpl });");
-		sb.AppendLine("      if (!resp.ok) { ph.textContent = 'Preview failed: ' + await resp.text(); return; }");
-		sb.AppendLine("      img.src = URL.createObjectURL(await resp.blob());");
-		sb.AppendLine("      img.style.display = 'block';");
-		sb.AppendLine("      ph.textContent = '';");
-		sb.AppendLine("    } catch(e) { ph.textContent = 'Preview error: ' + e; }");
+		sb.AppendLine("var dev = " + jsdev + ";");
+		sb.AppendLine("var oname = " + jsoname + ";");
+		sb.AppendLine("var otype = " + jsotype + ";");
+		sb.AppendLine("var originalContent = " + jsContent + ";");
+		sb.AppendLine("var savedMeta = " + metaJson + ";");
+		sb.AppendLine("function resetLabel() {");
+		sb.AppendLine("  document.getElementById('zpl').value = originalContent;");
+		sb.AppendLine("  buildFnTable();");
+		sb.AppendLine("}");
+		sb.AppendLine("function parseFnFields(zpl) {");
+		sb.AppendLine("  var nums = []; var seen = {};");
+		sb.AppendLine("  var re = /\\^FN(\\d+)/gi; var m;");
+		sb.AppendLine("  while ((m = re.exec(zpl)) !== null) {");
+		sb.AppendLine("    var n = parseInt(m[1], 10);");
+		sb.AppendLine("    if (!seen[n]) { seen[n] = true; nums.push(n); }");
 		sb.AppendLine("  }");
-		sb.AppendLine("  async function saveLabel() {");
-		sb.AppendLine("    const params = new URLSearchParams({ dev, oname, otype, content: document.getElementById('zpl').value });");
-		sb.AppendLine("    const resp = await fetch('/printer/zpl', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString(), redirect: 'follow' });");
-		sb.AppendLine("    window.location.href = resp.url || window.location.href;");
+		sb.AppendLine("  nums.sort(function(a,b){return a-b;}); return nums;");
+		sb.AppendLine("}");
+		sb.AppendLine("function getFnValues() {");
+		sb.AppendLine("  var vals = {};");
+		sb.AppendLine("  document.querySelectorAll('#fn-body tr').forEach(function(tr) {");
+		sb.AppendLine("    var num = tr.getAttribute('data-fn');");
+		sb.AppendLine("    var inp = tr.querySelector('input');");
+		sb.AppendLine("    if (num && inp) vals[num] = inp.value;");
+		sb.AppendLine("  });");
+		sb.AppendLine("  return vals;");
+		sb.AppendLine("}");
+		sb.AppendLine("function buildFnTable() {");
+		sb.AppendLine("  var zpl = document.getElementById('zpl').value;");
+		sb.AppendLine("  var nums = parseFnFields(zpl);");
+		sb.AppendLine("  var tbody = document.getElementById('fn-body');");
+		sb.AppendLine("  var summary = document.getElementById('fn-summary');");
+		sb.AppendLine("  var details = document.getElementById('fn-details');");
+		sb.AppendLine("  tbody.innerHTML = '';");
+		sb.AppendLine("  if (nums.length === 0) {");
+		sb.AppendLine("    summary.textContent = 'No ^FN fields found'; details.open = false; return;");
 		sb.AppendLine("  }");
+		sb.AppendLine("  summary.textContent = 'Field Values (^FN) -- ' + nums.length + ' field' + (nums.length > 1 ? 's' : '');");
+		sb.AppendLine("  details.open = true;");
+		sb.AppendLine("  nums.forEach(function(n) {");
+		sb.AppendLine("    var tr = document.createElement('tr');");
+		sb.AppendLine("    tr.setAttribute('data-fn', String(n));");
+		sb.AppendLine("    var td1 = document.createElement('td'); td1.textContent = '^FN' + n;");
+		sb.AppendLine("    var td2 = document.createElement('td');");
+		sb.AppendLine("    var inp = document.createElement('input');");
+		sb.AppendLine("    inp.type = 'text'; inp.value = savedMeta[String(n)] || '';");
+		sb.AppendLine("    inp.placeholder = '(leave blank to skip)';");
+		sb.AppendLine("    inp.addEventListener('input', scheduleSaveMeta);");
+		sb.AppendLine("    td2.appendChild(inp); tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);");
+		sb.AppendLine("  });");
+		sb.AppendLine("}");
+		sb.AppendLine("function injectFnValues(zpl, vals) {");
+		sb.AppendLine("  return zpl.replace(/\\^FN(\\d+)\\^FS/gi, function(m, n) {");
+		sb.AppendLine("    var v = vals[n]; return v ? '^FN' + n + '^FV' + v + '^FS' : m;");
+		sb.AppendLine("  });");
+		sb.AppendLine("}");
+		sb.AppendLine("var metaSaveTimer = null;");
+		sb.AppendLine("function scheduleSaveMeta() { clearTimeout(metaSaveTimer); metaSaveTimer = setTimeout(saveMeta, 800); }");
+		sb.AppendLine("function saveMeta() {");
+		sb.AppendLine("  var vals = getFnValues(); savedMeta = vals;");
+		sb.AppendLine("  var p = 'dev=' + encodeURIComponent(dev) + '&oname=' + encodeURIComponent(oname)");
+		sb.AppendLine("        + '&otype=' + encodeURIComponent(otype) + '&meta=' + encodeURIComponent(JSON.stringify(vals));");
+		sb.AppendLine("  fetch('/printer/zpl/meta', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p });");
+		sb.AppendLine("}");
+		sb.AppendLine("async function previewLabel() {");
+		sb.AppendLine("  saveMeta();");
+		sb.AppendLine("  var zpl = document.getElementById('zpl').value;");
+		sb.AppendLine("  var ph = document.getElementById('preview-ph');");
+		sb.AppendLine("  var img = document.getElementById('preview-img');");
+		sb.AppendLine("  var injected = injectFnValues(zpl, getFnValues());");
+		sb.AppendLine("  ph.textContent = 'Rendering...'; img.style.display = 'none';");
+		sb.AppendLine("  try {");
+		sb.AppendLine("    var resp = await fetch('/printer/preview', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: injected });");
+		sb.AppendLine("    if (!resp.ok) { ph.textContent = 'Preview failed: ' + await resp.text(); return; }");
+		sb.AppendLine("    img.src = URL.createObjectURL(await resp.blob()); img.style.display = 'block'; ph.textContent = '';");
+		sb.AppendLine("  } catch(e) { ph.textContent = 'Preview error: ' + e; }");
+		sb.AppendLine("}");
+		sb.AppendLine("async function saveLabel() {");
+		sb.AppendLine("  var p = 'dev=' + encodeURIComponent(dev) + '&oname=' + encodeURIComponent(oname)");
+		sb.AppendLine("        + '&otype=' + encodeURIComponent(otype) + '&content=' + encodeURIComponent(document.getElementById('zpl').value);");
+		sb.AppendLine("  var resp = await fetch('/printer/zpl', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p, redirect: 'follow' });");
+		sb.AppendLine("  window.location.href = resp.url || window.location.href;");
+		sb.AppendLine("}");
+		sb.AppendLine("buildFnTable();");
 		sb.AppendLine("</script>");
 		sb.AppendLine("</body></html>");
 
@@ -549,6 +641,44 @@ namespace VirtualPrinter.HostedService.HttpSystem
 		this.Logger.LogInformation("Rendered label preview via Labelary ({bytes} bytes).", response.Label.Length);
 	}
 
+	private async Task HandleZplMetaSaveAsync(HttpListenerContext context)
+	{
+		using MemoryStream ms = new();
+		await context.Request.InputStream.CopyToAsync(ms);
+		string body = Encoding.UTF8.GetString(ms.ToArray());
+
+		string dev = null, oname = null, otype = null, meta = null;
+
+		foreach (string pair in body.Split('&'))
+		{
+			int eq = pair.IndexOf('=');
+			if (eq < 0) continue;
+			string name  = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
+			string value = Uri.UnescapeDataString(pair[(eq + 1)..].Replace('+', ' '));
+			switch (name.ToLowerInvariant())
+			{
+				case "dev":   dev   = value; break;
+				case "oname": oname = value; break;
+				case "otype": otype = value; break;
+				case "meta":  meta  = value; break;
+			}
+		}
+
+		if (string.IsNullOrEmpty(dev) || string.IsNullOrEmpty(oname) || string.IsNullOrEmpty(otype) || meta == null)
+		{
+			context.Response.StatusCode = 400;
+			context.Response.Close();
+			return;
+		}
+
+		string key      = $"{dev}_{oname}.{otype}";
+		string metaPath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, $"{key}.meta.json");
+		await File.WriteAllTextAsync(metaPath, meta);
+
+		context.Response.StatusCode = 204;
+		context.Response.Close();
+		this.Logger.LogDebug("Saved FN meta for '{key}'.", key);
+	}
 	private async Task HandleUploadAsync(HttpListenerContext context)
 		{
 			// Parse multipart/form-data, extract the file content as ZPL text, then
