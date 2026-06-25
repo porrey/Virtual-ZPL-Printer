@@ -7,20 +7,39 @@
   th, td { text-align: left; padding: 4px 12px; border-bottom: 1px solid #eee; }
   th { background: #f4f4f4; }
   .none { color: #999; font-style: italic; }
-  .upload { margin-bottom: 2em; display: flex; align-items: center; gap: 8px; }
-  .upload input[type=file] { font-family: monospace; }
-  .upload button { padding: 3px 10px; cursor: pointer; }
+  .toolbar { margin-bottom: 1.5em; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
+  .tool-form { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; background: #fafafa; }
+  .tool-form select, .tool-form input[type=text] { font-family: monospace; padding: 2px 6px; border: 1px solid #ccc; }
+  .tool-form input[type=file] { font-family: monospace; }
+  .tool-form input[type=text] { width: 140px; }
+  .tool-form button { padding: 3px 10px; cursor: pointer; }
+  .tool-form small { color: #777; }
   .msg { padding: 6px 12px; border-radius: 4px; margin-bottom: 1em; }
   .msg.ok  { background: #d4edda; color: #155724; }
   .msg.err { background: #f8d7da; color: #721c24; }
 </style></head><body>
 <h1>Virtual ZPL Printer — Flash Memory</h1>
 {{STATUS_BANNER}}
-<form class='upload' method='post' action='/printer/upload' enctype='multipart/form-data'>
-  <input type='file' name='file' accept='.zpl,.pl'>
-  <button type='submit'>Upload</button>
-  <small>Files with ^DF are stored as Formats; files with ~DG are stored as Graphics; files with neither are imported as a Format using the filename.</small>
-</form>
+<div class='toolbar'>
+  <form class='tool-form' method='post' action='/printer/upload' enctype='multipart/form-data'>
+    <input type='file' name='file' accept='.zpl,.pl,.grf'>
+    <button type='submit'>Upload ZPL/GRF</button>
+    <small>^DF files → Formats &nbsp;|&nbsp; ~DG files → Graphics</small>
+  </form>
+  <form class='tool-form' method='post' action='/printer/zpl/new'>
+    <select name='dev'><option value='E'>E:</option><option value='R'>R:</option><option value='B'>B:</option></select>
+    <input type='text' name='name' placeholder='SCRIPTNAME' title='Alphanumeric, no extension' required>
+    <button type='submit'>New Script</button>
+  </form>
+  <form class='tool-form' method='post' enctype='multipart/form-data'
+        onsubmit="this.action='/printer/image/upload?dev='+encodeURIComponent(this.elements['dev'].value)+'&name='+encodeURIComponent(this.elements['name'].value)">
+    <select name='dev'><option value='E'>E:</option><option value='R'>R:</option><option value='B'>B:</option></select>
+    <input type='text' name='name' placeholder='IMAGENAME' title='Alphanumeric, no extension' required>
+    <input type='file' name='file' accept='.png,.jpg,.jpeg,.gif,.bmp' required>
+    <button type='submit'>Convert &amp; Upload Image</button>
+    <small>PNG/JPG/GIF/BMP → GRF via Labelary</small>
+  </form>
+</div>
 <h2>Formats (ZPL)</h2>
 {{FORMAT_TABLE}}
 <h2>Graphics (GRF)</h2>

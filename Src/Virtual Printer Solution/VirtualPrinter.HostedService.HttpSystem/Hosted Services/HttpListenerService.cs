@@ -195,6 +195,16 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				{
 					await this.HandleZplMetaSaveAsync(context);
 				}
+				else if (path.Equals("/printer/zpl/new", StringComparison.OrdinalIgnoreCase) &&
+				         context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+				{
+					await this.HandleNewScriptAsync(context);
+				}
+				else if (path.Equals("/printer/image/upload", StringComparison.OrdinalIgnoreCase) &&
+				         context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+				{
+					await this.HandleImageUploadAsync(context);
+				}
 				else if (path.Equals("/printer/grf", StringComparison.OrdinalIgnoreCase))
 				{
 					await this.HandleGrfAsync(context);

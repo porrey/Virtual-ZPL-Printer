@@ -21,5 +21,11 @@ namespace Labelary.Abstractions
 		ILabelServiceConfiguration LabelServiceConfiguration { get; }
 		Task<IEnumerable<IGetLabelResponse>> GetLabelsAsync(ILabelConfiguration labelConfiguration, string zpl);
 		Task<IGetLabelResponse> GetLabelAsync(ILabelConfiguration labelConfiguration, string zpl, int labelIndex = 0);
+
+		/// <summary>
+		/// Converts an image (PNG/JPG/GIF/BMP) to a ZPL ~DG blob via the Labelary /v1/graphics endpoint.
+		/// Returns the raw ZPL string on success, or null on failure.
+		/// </summary>
+		Task<string> ConvertImageToZplAsync(Stream imageStream, string imageFileName);
 	}
 }

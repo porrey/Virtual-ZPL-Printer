@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Virtual ZPL Printer.
  *
  *  Virtual ZPL Printer is free software: you can redistribute it and/or modify
@@ -538,6 +538,218 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			context.Response.Close();
 
 			this.Logger.LogInformation("Rendered GRF '{dev}:{filename}' via Labelary.", dev, filename);
+		}
+
+		private async Task HandleNewScriptAsync(HttpListenerContext context)
+		{
+			using MemoryStream ms = new();
+			await context.Request.InputStream.CopyToAsync(ms);
+			string body = Encoding.UTF8.GetString(ms.ToArray());
+
+			string dev = null, name = null;
+
+			foreach (string pair in body.Split('&'))
+			{
+				int eq = pair.IndexOf('=');
+				if (eq < 0) continue;
+				string pname  = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
+				string pvalue = Uri.UnescapeDataString(pair[(eq + 1)..].Replace('+', ' '));
+				switch (pname.ToLowerInvariant())
+				{
+					case "dev":  dev  = pvalue; break;
+					case "name": name = pvalue; break;
+				}
+			}
+
+			if (string.IsNullOrWhiteSpace(dev) || string.IsNullOrWhiteSpace(name))
+			{
+				this.Redirect(context, "/printer?status=err&msg=Device+and+name+are+required");
+				return;
+			}
+
+			// Sanitize: keep only alphanumeric + underscore, max 16 chars, uppercase.
+			name = new string(name.ToUpperInvariant().Where(c => char.IsLetterOrDigit(c) || c == '_').ToArray());
+			if (name.Length > 16) name = name[..16];
+
+			if (string.IsNullOrEmpty(name))
+			{
+				this.Redirect(context, "/printer?status=err&msg=Invalid+script+name");
+				return;
+			}
+
+			string key      = $"{dev}_{name}.ZPL";
+			string filePath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, key);
+
+			if (File.Exists(filePath))
+			{
+				this.Redirect(context, $"/printer/zpl?dev={dev}&oname={name}&otype=ZPL");
+				return;
+			}
+
+			this.ZplFormatService.FormatDirectory.Create();
+			await File.WriteAllTextAsync(filePath, "^XA\r\n\r\n^XZ");
+
+			this.Logger.LogInformation("Created new blank script '{dev}:{name}.ZPL'.", dev, name);
+			this.Redirect(context, $"/printer/zpl?dev={dev}&oname={name}&otype=ZPL");
+		}
+
+		private async Task HandleImageUploadAsync(HttpListenerContext context)
+		{
+			// dev and name arrive as query-string params (set by the form's onsubmit);
+			// the image file is in one of the multipart parts (name="file").
+			NameValueCollection qs = context.Request.QueryString;
+			string dev  = (qs["dev"]  ?? "E").ToUpperInvariant().Trim();
+			string name = (qs["name"] ?? string.Empty).Trim();
+
+			if (string.IsNullOrWhiteSpace(name))
+			{
+				this.Redirect(context, "/printer?status=err&msg=Image+name+is+required");
+				return;
+			}
+
+			// Sanitize name: uppercase alphanumeric + underscore only.
+			name = new string(name.ToUpperInvariant().Where(c => char.IsLetterOrDigit(c) || c == '_').ToArray());
+			if (name.Length > 16) name = name[..16];
+
+			string contentType = context.Request.ContentType ?? string.Empty;
+
+			if (!contentType.Contains("multipart/form-data", StringComparison.OrdinalIgnoreCase))
+			{
+				this.Redirect(context, "/printer?status=err&msg=Expected+multipart/form-data");
+				return;
+			}
+
+			string boundary = null;
+			foreach (string ct in contentType.Split(';'))
+			{
+				string t = ct.Trim();
+				if (t.StartsWith("boundary=", StringComparison.OrdinalIgnoreCase))
+				{
+					boundary = t["boundary=".Length..].Trim('"');
+					break;
+				}
+			}
+
+			if (string.IsNullOrEmpty(boundary))
+			{
+				this.Redirect(context, "/printer?status=err&msg=Missing+multipart+boundary");
+				return;
+			}
+
+			// Read the full body as raw bytes — must not decode as text (binary image data).
+			using MemoryStream ms = new();
+			await context.Request.InputStream.CopyToAsync(ms);
+			byte[] bodyBytes = ms.ToArray();
+
+			byte[] partDelim  = Encoding.ASCII.GetBytes($"--{boundary}\r\n");
+			byte[] headerSep  = "\r\n\r\n"u8.ToArray();
+			byte[] partEnd    = Encoding.ASCII.GetBytes($"\r\n--{boundary}");
+
+			// Walk every part until we find the one with name="file".
+			byte[] imageBytes   = null;
+			string origFilename = "image.png";
+			int    searchFrom   = 0;
+
+			while (imageBytes == null)
+			{
+				int partStart = IndexOf(bodyBytes, partDelim, searchFrom);
+				if (partStart < 0) break;
+
+				int headerStart = partStart + partDelim.Length;
+				int headerEnd   = IndexOf(bodyBytes, headerSep, headerStart);
+				if (headerEnd < 0) break;
+
+				string headers     = Encoding.UTF8.GetString(bodyBytes, headerStart, headerEnd - headerStart);
+				int    dataStart   = headerEnd + headerSep.Length;
+				int    dataEnd     = IndexOf(bodyBytes, partEnd, dataStart);
+				if (dataEnd < 0) dataEnd = bodyBytes.Length;
+
+				searchFrom = dataEnd;
+
+				if (!headers.Contains("name=\"file\"", StringComparison.OrdinalIgnoreCase))
+					continue;
+
+				imageBytes = bodyBytes[dataStart..dataEnd];
+
+				foreach (string line in headers.Split('\n'))
+				{
+					if (!line.TrimStart().StartsWith("Content-Disposition", StringComparison.OrdinalIgnoreCase)) continue;
+					foreach (string token in line.Split(';'))
+					{
+						string t = token.Trim();
+						if (t.StartsWith("filename=", StringComparison.OrdinalIgnoreCase))
+							origFilename = t["filename=".Length..].Trim('"', '\'', '\r', '\n');
+					}
+					break;
+				}
+			}
+
+			if (imageBytes == null || imageBytes.Length == 0)
+			{
+				this.Redirect(context, "/printer?status=err&msg=Could+not+find+image+in+upload");
+				return;
+			}
+
+			const int LabelaryMaxBytes = 200 * 1024;
+			if (imageBytes.Length > LabelaryMaxBytes)
+			{
+				double kb = imageBytes.Length / 1024.0;
+				string sizeMsg = Uri.EscapeDataString($"Image is {kb:F0} KB — Labelary limit is 200 KB. Please resize the image first.");
+				this.Redirect(context, $"/printer?status=err&msg={sizeMsg}");
+				return;
+			}
+
+			// Call Labelary to convert the image to a ZPL ~DG blob.
+			string zplFromLabelary;
+			using (MemoryStream imgStream = new(imageBytes))
+				zplFromLabelary = await this.LabelService.ConvertImageToZplAsync(imgStream, origFilename);
+
+			if (string.IsNullOrWhiteSpace(zplFromLabelary))
+			{
+				this.Redirect(context, $"/printer?status=err&msg=Labelary+image+conversion+failed+(check+app+log+for+details)");
+				return;
+			}
+
+			// Labelary returns ^GFA (inline graphic field), not ~DG (flash storage).
+			// ^GF format: ^GFA,<data-len>,<total-len>,<bytes-per-row>,<hex-data>^FS
+			// ~DG format: ~DG{dev}:{name}.GRF,<data-len>,<bytes-per-row>,<hex-data>
+			string grfFilename = $"{name}.GRF";
+			var gfMatch = System.Text.RegularExpressions.Regex.Match(
+				zplFromLabelary,
+				@"\^GFA,(\d+),\d+,(\d+),([\s\S]+?)\^FS",
+				System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+			if (!gfMatch.Success)
+			{
+				this.Logger.LogWarning("Labelary response did not contain ^GFA. Preview: {zpl}", zplFromLabelary[..Math.Min(200, zplFromLabelary.Length)]);
+				this.Redirect(context, "/printer?status=err&msg=Could+not+parse+Labelary+GRF+response");
+				return;
+			}
+
+			string dgContent = $"~DG{dev}:{grfFilename},{gfMatch.Groups[1].Value},{gfMatch.Groups[2].Value},{gfMatch.Groups[3].Value}";
+
+			this.GrfStorageService.GrfDirectory.Create();
+			await File.WriteAllTextAsync(
+				Path.Combine(this.GrfStorageService.GrfDirectory.FullName, $"{dev}_{grfFilename}"),
+				dgContent);
+
+			this.Logger.LogInformation("Converted and stored image as GRF '{dev}:{grfFilename}'.", dev, grfFilename);
+			this.Redirect(context, $"/printer?status=ok&file={Uri.EscapeDataString(grfFilename)}");
+		}
+
+		// Finds the first occurrence of 'pattern' bytes within 'source' starting at 'startIndex'.
+		private static int IndexOf(byte[] source, byte[] pattern, int startIndex = 0)
+		{
+			for (int i = startIndex; i <= source.Length - pattern.Length; i++)
+			{
+				bool found = true;
+				for (int j = 0; j < pattern.Length; j++)
+				{
+					if (source[i + j] != pattern[j]) { found = false; break; }
+				}
+				if (found) return i;
+			}
+			return -1;
 		}
 	}
 }
