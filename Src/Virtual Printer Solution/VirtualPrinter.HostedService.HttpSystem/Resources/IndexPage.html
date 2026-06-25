@@ -26,22 +26,26 @@
     <button type='submit'>Upload ZPL/GRF</button>
     <small>^DF files → Formats &nbsp;|&nbsp; ~DG files → Graphics</small>
   </form>
-  <form class='tool-form' method='post' action='/printer/zpl/new'>
-    <select name='dev'><option value='E'>E:</option><option value='R'>R:</option><option value='B'>B:</option></select>
-    <input type='text' name='name' placeholder='SCRIPTNAME' title='Alphanumeric, no extension' required>
-    <button type='submit'>New Script</button>
-  </form>
-  <form class='tool-form' method='post' enctype='multipart/form-data'
-        onsubmit="this.action='/printer/image/upload?dev='+encodeURIComponent(this.elements['dev'].value)+'&name='+encodeURIComponent(this.elements['name'].value)">
-    <select name='dev'><option value='E'>E:</option><option value='R'>R:</option><option value='B'>B:</option></select>
-    <input type='text' name='name' placeholder='IMAGENAME' title='Alphanumeric, no extension' required>
-    <input type='file' name='file' accept='.png,.jpg,.jpeg,.gif,.bmp' required>
-    <button type='submit'>Convert &amp; Upload Image</button>
-    <small>PNG/JPG/GIF/BMP → GRF via Labelary</small>
-  </form>
 </div>
 <h2>Formats (ZPL)</h2>
 {{FORMAT_TABLE}}
+<div class='toolbar'>
+    <form class='tool-form' method='post' action='/printer/zpl/new'>
+        <select name='dev'><option value='E'>E:</option><option value='R'>R:</option><option value='B'>B:</option></select>
+        <input type='text' name='name' placeholder='SCRIPTNAME' title='Alphanumeric, no extension' required>
+        <button type='submit'>New Script</button>
+    </form>
+</div>
 <h2>Graphics (GRF)</h2>
 {{GRF_TABLE}}
+<div class='toolbar'>
+    <form class='tool-form' method='post' enctype='multipart/form-data'
+            onsubmit="this.action='/printer/image/upload?dev='+encodeURIComponent(this.elements['dev'].value)+'&name='+encodeURIComponent(this.elements['name'].value)">
+        <select name='dev'><option value='E'>E:</option><option value='R'>R:</option><option value='B'>B:</option></select>
+        <input type='text' name='name' placeholder='IMAGENAME' title='Alphanumeric, no extension' required>
+        <input type='file' name='file' accept='.png,.jpg,.jpeg,.gif,.bmp' required>
+        <button type='submit'>Convert &amp; Upload Image</button>
+        <small>PNG/JPG/GIF/BMP → GRF via Labelary</small>
+    </form>
+</div>
 </body></html>

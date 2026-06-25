@@ -73,7 +73,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				string displayName = $"{dev}:{rest}";
 				string viewHref    = $"/printer/zpl?dev={dev}&oname={oname}&otype={otype}";
 
-				string deleteForm = $"<form method='post' action='/printer/delete' style='display:inline'><input type='hidden' name='key' value='{file.Name}'><button type='submit'>Delete</button></form>";
+				string deleteForm = $"<form method='post' action='/printer/delete' style='display:inline'><input type='hidden' name='key' value='{file.Name}'><button type='submit' onclick='return confirm(\"Delete {displayName}? This cannot be undone.\")'>Delete</button></form>";
 				sb.AppendLine($"<tr><td>{displayName}</td><td>{file.Length:N0} B</td><td>{file.LastWriteTime:yyyy-MM-dd HH:mm:ss}</td><td><a href='{viewHref}'>View</a>&nbsp;&nbsp;{deleteForm}</td></tr>");
 			}
 
@@ -101,7 +101,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				string displayName = $"{dev}:{rest}";
 				string viewHref    = $"/printer/grf?dev={dev}&filename={rest}";
 
-				string deleteForm = $"<form method='post' action='/printer/delete' style='display:inline'><input type='hidden' name='key' value='{file.Name}'><button type='submit'>Delete</button></form>";
+				string deleteForm = $"<form method='post' action='/printer/delete' style='display:inline'><input type='hidden' name='key' value='{file.Name}'><button type='submit' onclick='return confirm(\"Delete {displayName}? This cannot be undone.\")'>Delete</button></form>";
 				sb.AppendLine($"<tr><td>{displayName}</td><td>{file.Length:N0} B</td><td>{file.LastWriteTime:yyyy-MM-dd HH:mm:ss}</td><td><a href='{viewHref}'>View</a>&nbsp;&nbsp;{deleteForm}</td></tr>");
 			}
 
@@ -473,6 +473,11 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			}
 
 			File.Delete(matched);
+
+			// Also delete the sidecar meta file if it exists (Formats only).
+			string metaSidecar = matched + ".meta.json";
+			if (File.Exists(metaSidecar)) File.Delete(metaSidecar);
+
 			this.Logger.LogInformation("Deleted flash file '{key}'.", key);
 
 			string encodedKey = Uri.EscapeDataString(key);
@@ -567,9 +572,8 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			// Sanitize: keep only alphanumeric + underscore, max 16 chars, uppercase.
+			// Sanitize: keep only alphanumeric + underscore, uppercase.
 			name = new string(name.ToUpperInvariant().Where(c => char.IsLetterOrDigit(c) || c == '_').ToArray());
-			if (name.Length > 16) name = name[..16];
 
 			if (string.IsNullOrEmpty(name))
 			{
@@ -609,7 +613,6 @@ namespace VirtualPrinter.HostedService.HttpSystem
 
 			// Sanitize name: uppercase alphanumeric + underscore only.
 			name = new string(name.ToUpperInvariant().Where(c => char.IsLetterOrDigit(c) || c == '_').ToArray());
-			if (name.Length > 16) name = name[..16];
 
 			string contentType = context.Request.ContentType ?? string.Empty;
 

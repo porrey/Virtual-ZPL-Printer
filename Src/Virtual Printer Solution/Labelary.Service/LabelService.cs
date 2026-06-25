@@ -389,9 +389,9 @@ namespace Labelary.Service
 			string mimeType = Path.GetExtension(safeFilename).ToLowerInvariant() switch
 			{
 				".jpg" or ".jpeg" => "image/jpeg",
-				".gif"            => "image/gif",
-				".bmp"            => "image/bmp",
-				_                 => "image/png"
+				".gif" => "image/gif",
+				".bmp" => "image/bmp",
+				_ => "image/png"
 			};
 
 			this.Logger.LogInformation("Calling Labelary to convert image '{file}' ({mime}) to ZPL GRF.", safeFilename, mimeType);
