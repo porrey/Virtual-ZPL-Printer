@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  This file is part of Virtual ZPL Printer.
  *
  *  Virtual ZPL Printer is free software: you can redistribute it and/or modify
@@ -181,7 +181,15 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				}
 				else if (path.Equals("/printer/zpl", StringComparison.OrdinalIgnoreCase))
 				{
-					await this.HandleZplAsync(context);
+					if (context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+						await this.HandleZplSaveAsync(context);
+					else
+						await this.HandleZplAsync(context);
+				}
+				else if (path.Equals("/printer/preview", StringComparison.OrdinalIgnoreCase) &&
+				         context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+				{
+					await this.HandlePreviewAsync(context);
 				}
 				else if (path.Equals("/printer/grf", StringComparison.OrdinalIgnoreCase))
 				{
@@ -368,39 +376,180 @@ namespace VirtualPrinter.HostedService.HttpSystem
 		}
 
 		private async Task HandleZplAsync(HttpListenerContext context)
+	{
+		NameValueCollection qs = context.Request.QueryString;
+		string dev   = qs["dev"]   ?? string.Empty;
+		string oname = qs["oname"] ?? string.Empty;
+		string otype = qs["otype"] ?? string.Empty;
+
+		if (string.IsNullOrEmpty(dev) || string.IsNullOrEmpty(oname) || string.IsNullOrEmpty(otype))
 		{
-			NameValueCollection qs = context.Request.QueryString;
-			string dev   = qs["dev"]   ?? string.Empty;
-			string oname = qs["oname"] ?? string.Empty;
-			string otype = qs["otype"] ?? string.Empty;
-
-			if (string.IsNullOrEmpty(dev) || string.IsNullOrEmpty(oname) || string.IsNullOrEmpty(otype))
-			{
-				context.Response.StatusCode = 400;
-				context.Response.Close();
-				return;
-			}
-
-			string key      = $"{dev}_{oname}.{otype}";
-			string filePath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, key);
-
-			if (!File.Exists(filePath))
-			{
-				this.Logger.LogWarning("HTTP /printer/zpl: format '{key}' not found.", key);
-				context.Response.StatusCode = 404;
-				context.Response.Close();
-				return;
-			}
-
-			string body = await File.ReadAllTextAsync(filePath);
-			string zpl  = $"^XA\r\n{body.Trim()}\r\n^XZ";
-
-			await WriteResponseAsync(context, "text/plain", zpl);
-
-			this.Logger.LogInformation("Responded to /printer/zpl for '{dev}:{oname}.{otype}'.", dev, oname, otype);
+			context.Response.StatusCode = 400;
+			context.Response.Close();
+			return;
 		}
 
-		private async Task HandleUploadAsync(HttpListenerContext context)
+		string key      = $"{dev}_{oname}.{otype}";
+		string filePath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, key);
+
+		if (!File.Exists(filePath))
+		{
+			this.Logger.LogWarning("HTTP /printer/zpl: format '{key}' not found.", key);
+			context.Response.StatusCode = 404;
+			context.Response.Close();
+			return;
+		}
+
+		string fileContent  = await File.ReadAllTextAsync(filePath);
+		string displayName  = $"{dev}:{oname}.{otype}";
+		string statusParam  = qs["status"] ?? string.Empty;
+
+		var sb = new StringBuilder();
+		sb.AppendLine("<!DOCTYPE html><html><head><meta charset='utf-8'>");
+		sb.AppendLine($"<title>Edit ZPL Script — {System.Net.WebUtility.HtmlEncode(displayName)}</title>");
+		sb.AppendLine("<style>");
+		sb.AppendLine("  body { font-family: monospace; margin: 2em; }");
+		sb.AppendLine("  h2 { border-bottom: 1px solid #ccc; padding-bottom: 4px; }");
+		sb.AppendLine("  textarea { width: 100%; height: 320px; font-family: monospace; font-size: 13px; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; resize: vertical; }");
+		sb.AppendLine("  .btn-row { margin-top: 8px; display: flex; gap: 8px; align-items: center; }");
+		sb.AppendLine("  .btn-row button { padding: 4px 14px; cursor: pointer; }");
+		sb.AppendLine("  .preview-area { margin-top: 1.5em; }");
+		sb.AppendLine("  .preview-area img { border: 1px solid #ccc; background: #fff; max-width: 100%; display: block; }");
+		sb.AppendLine("  .placeholder { color: #999; font-style: italic; margin-top: 8px; }");
+		sb.AppendLine("  .msg { padding: 6px 12px; border-radius: 4px; margin-bottom: 1em; }");
+		sb.AppendLine("  .msg.ok  { background: #d4edda; color: #155724; }");
+		sb.AppendLine("  .msg.err { background: #f8d7da; color: #721c24; }");
+		sb.AppendLine("  a { color: #00c; }");
+		sb.AppendLine("</style></head><body>");
+		sb.AppendLine($"<h2>Edit ZPL Script</h2>");
+		sb.AppendLine($"<p><strong>{System.Net.WebUtility.HtmlEncode(displayName)}</strong> &nbsp; <a href='/printer'>&#8592; Directory</a></p>");
+
+		if (statusParam.Equals("ok", StringComparison.OrdinalIgnoreCase))
+			sb.AppendLine("<div class='msg ok'>Saved successfully.</div>");
+		else if (statusParam.Equals("err", StringComparison.OrdinalIgnoreCase))
+			sb.AppendLine($"<div class='msg err'>Save failed: {System.Net.WebUtility.HtmlEncode(qs["msg"] ?? string.Empty)}</div>");
+
+		sb.AppendLine($"<textarea id='zpl'>{System.Net.WebUtility.HtmlEncode(fileContent)}</textarea>");
+		sb.AppendLine("<div class='btn-row'>");
+		sb.AppendLine("  <button onclick='previewLabel()'>Preview Label</button>");
+		sb.AppendLine("  <button onclick='saveLabel()'>Save</button>");
+		sb.AppendLine("  <button onclick='resetLabel()'>Reset</button>");
+		sb.AppendLine("</div>");
+		sb.AppendLine("<div class='preview-area'>");
+		sb.AppendLine("  <img id='preview-img' style='display:none' alt='Label preview'>");
+		sb.AppendLine("  <p class='placeholder' id='preview-ph'>Click \"Preview Label\" to render via Labelary.</p>");
+		sb.AppendLine("</div>");
+		sb.AppendLine("<script>");
+		sb.AppendLine($"  const dev = {System.Text.Json.JsonSerializer.Serialize(dev)};");
+		sb.AppendLine($"  const oname = {System.Text.Json.JsonSerializer.Serialize(oname)};");
+		sb.AppendLine($"  const otype = {System.Text.Json.JsonSerializer.Serialize(otype)};");
+		sb.AppendLine($"  const originalContent = {System.Text.Json.JsonSerializer.Serialize(fileContent)};");
+		sb.AppendLine("  function resetLabel() { document.getElementById('zpl').value = originalContent; }");
+		sb.AppendLine("  async function previewLabel() {");
+		sb.AppendLine("    const zpl = document.getElementById('zpl').value;");
+		sb.AppendLine("    const ph = document.getElementById('preview-ph');");
+		sb.AppendLine("    const img = document.getElementById('preview-img');");
+		sb.AppendLine("    ph.textContent = 'Rendering…';");
+		sb.AppendLine("    img.style.display = 'none';");
+		sb.AppendLine("    try {");
+		sb.AppendLine("      const resp = await fetch('/printer/preview', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: zpl });");
+		sb.AppendLine("      if (!resp.ok) { ph.textContent = 'Preview failed: ' + await resp.text(); return; }");
+		sb.AppendLine("      img.src = URL.createObjectURL(await resp.blob());");
+		sb.AppendLine("      img.style.display = 'block';");
+		sb.AppendLine("      ph.textContent = '';");
+		sb.AppendLine("    } catch(e) { ph.textContent = 'Preview error: ' + e; }");
+		sb.AppendLine("  }");
+		sb.AppendLine("  async function saveLabel() {");
+		sb.AppendLine("    const params = new URLSearchParams({ dev, oname, otype, content: document.getElementById('zpl').value });");
+		sb.AppendLine("    const resp = await fetch('/printer/zpl', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString(), redirect: 'follow' });");
+		sb.AppendLine("    window.location.href = resp.url || window.location.href;");
+		sb.AppendLine("  }");
+		sb.AppendLine("</script>");
+		sb.AppendLine("</body></html>");
+
+		await WriteResponseAsync(context, "text/html", sb.ToString());
+		this.Logger.LogInformation("Responded to /printer/zpl edit page for '{dev}:{oname}.{otype}'.", dev, oname, otype);
+	}
+
+	private async Task HandleZplSaveAsync(HttpListenerContext context)
+	{
+		using MemoryStream ms = new();
+		await context.Request.InputStream.CopyToAsync(ms);
+		string body = Encoding.UTF8.GetString(ms.ToArray());
+
+		string dev = null, oname = null, otype = null, content = null;
+
+		foreach (string pair in body.Split('&'))
+		{
+			int eq = pair.IndexOf('=');
+			if (eq < 0) continue;
+			string name  = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
+			string value = Uri.UnescapeDataString(pair[(eq + 1)..].Replace('+', ' '));
+			switch (name.ToLowerInvariant())
+			{
+				case "dev":     dev     = value; break;
+				case "oname":   oname   = value; break;
+				case "otype":   otype   = value; break;
+				case "content": content = value; break;
+			}
+		}
+
+		if (string.IsNullOrEmpty(dev) || string.IsNullOrEmpty(oname) || string.IsNullOrEmpty(otype) || content == null)
+		{
+			this.Redirect(context, $"/printer/zpl?dev={dev}&oname={oname}&otype={otype}&status=err&msg=Missing+parameters");
+			return;
+		}
+
+		string key      = $"{dev}_{oname}.{otype}";
+		string filePath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, key);
+
+		if (!File.Exists(filePath))
+		{
+			this.Redirect(context, $"/printer/zpl?dev={dev}&oname={oname}&otype={otype}&status=err&msg=File+not+found");
+			return;
+		}
+
+		await File.WriteAllTextAsync(filePath, content);
+		this.Logger.LogInformation("Saved ZPL edit for '{dev}:{oname}.{otype}'.", dev, oname, otype);
+		this.Redirect(context, $"/printer/zpl?dev={dev}&oname={oname}&otype={otype}&status=ok");
+	}
+
+	private async Task HandlePreviewAsync(HttpListenerContext context)
+	{
+		if (this.LabelConfiguration == null)
+		{
+			context.Response.StatusCode = 503;
+			await WriteResponseAsync(context, "text/plain", "No printer running. Start a virtual printer first.");
+			return;
+		}
+
+		using MemoryStream ms = new();
+		await context.Request.InputStream.CopyToAsync(ms);
+		string zplContent = Encoding.UTF8.GetString(ms.ToArray()).Trim();
+
+		if (!zplContent.StartsWith("^XA", StringComparison.OrdinalIgnoreCase))
+			zplContent = $"^XA\r\n{zplContent}\r\n^XZ";
+
+		IGetLabelResponse response = await this.LabelService.GetLabelAsync(this.LabelConfiguration, zplContent);
+
+		if (!response.Result || response.Label == null || response.Label.Length == 0)
+		{
+			string error = response.Error ?? "Labelary returned no image.";
+			this.Logger.LogWarning("HTTP /printer/preview: Labelary render failed: {error}", error);
+			context.Response.StatusCode = 502;
+			await WriteResponseAsync(context, "text/plain", $"Render failed: {error}");
+			return;
+		}
+
+		context.Response.ContentType     = "image/png";
+		context.Response.ContentLength64 = response.Label.Length;
+		context.Response.StatusCode      = 200;
+		await context.Response.OutputStream.WriteAsync(response.Label);
+		context.Response.Close();
+		this.Logger.LogInformation("Rendered label preview via Labelary ({bytes} bytes).", response.Label.Length);
+	}
+
+	private async Task HandleUploadAsync(HttpListenerContext context)
 		{
 			// Parse multipart/form-data, extract the file content as ZPL text, then
 			// run it through the same storage pipeline as a live ZPL print job.
