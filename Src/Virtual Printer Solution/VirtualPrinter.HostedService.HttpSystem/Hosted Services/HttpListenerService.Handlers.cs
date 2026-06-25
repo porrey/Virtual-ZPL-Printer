@@ -259,6 +259,8 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			if (!zplContent.StartsWith("^XA", StringComparison.OrdinalIgnoreCase))
 				zplContent = $"^XA\r\n{zplContent}\r\n^XZ";
 
+			zplContent = await this.GrfStorageService.ApplyReferencedGrfAsync(zplContent);
+
 			IGetLabelResponse response = await this.LabelService.GetLabelAsync(this.LabelConfiguration, zplContent);
 
 			if (!response.Result || response.Label == null || response.Label.Length == 0)
