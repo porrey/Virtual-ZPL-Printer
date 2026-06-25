@@ -36,4 +36,9 @@
 		<None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\IndexPage.html" />
+		<EmbeddedResource Include="Resources\ZplEditorPage.html" />
+	</ItemGroup>
+
 </Project>

@@ -1,0 +1,28 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'>
+<title>Virtual ZPL Printer — Flash Memory</title>
+<style>
+  body { font-family: monospace; margin: 2em; }
+  h2 { border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+  table { border-collapse: collapse; width: 100%; margin-bottom: 1em; }
+  th, td { text-align: left; padding: 4px 12px; border-bottom: 1px solid #eee; }
+  th { background: #f4f4f4; }
+  .none { color: #999; font-style: italic; }
+  .upload { margin-bottom: 2em; display: flex; align-items: center; gap: 8px; }
+  .upload input[type=file] { font-family: monospace; }
+  .upload button { padding: 3px 10px; cursor: pointer; }
+  .msg { padding: 6px 12px; border-radius: 4px; margin-bottom: 1em; }
+  .msg.ok  { background: #d4edda; color: #155724; }
+  .msg.err { background: #f8d7da; color: #721c24; }
+</style></head><body>
+<h1>Virtual ZPL Printer — Flash Memory</h1>
+{{STATUS_BANNER}}
+<form class='upload' method='post' action='/printer/upload' enctype='multipart/form-data'>
+  <input type='file' name='file' accept='.zpl,.pl'>
+  <button type='submit'>Upload</button>
+  <small>Files with ^DF are stored as Formats; files with ~DG are stored as Graphics; files with neither are imported as a Format using the filename.</small>
+</form>
+<h2>Formats (ZPL)</h2>
+{{FORMAT_TABLE}}
+<h2>Graphics (GRF)</h2>
+{{GRF_TABLE}}
+</body></html>
