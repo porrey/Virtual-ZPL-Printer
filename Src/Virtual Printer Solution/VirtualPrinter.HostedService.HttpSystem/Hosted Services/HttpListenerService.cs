@@ -283,6 +283,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 
 				foreach (FileInfo file in fmtFiles.OrderBy(f => f.Name))
 				{
+					if (file.Name.EndsWith(".meta.json", StringComparison.OrdinalIgnoreCase)) continue;
 					int underscore = file.Name.IndexOf('_');
 					if (underscore <= 0) continue;
 
@@ -555,6 +556,12 @@ namespace VirtualPrinter.HostedService.HttpSystem
 		sb.AppendLine("  var resp = await fetch('/printer/zpl', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p, redirect: 'follow' });");
 		sb.AppendLine("  window.location.href = resp.url || window.location.href;");
 		sb.AppendLine("}");
+		sb.AppendLine("function refreshFnTable() {");
+		sb.AppendLine("  var cur = getFnValues();");
+		sb.AppendLine("  Object.keys(cur).forEach(function(k) { if (cur[k]) savedMeta[k] = cur[k]; });");
+		sb.AppendLine("  buildFnTable();");
+		sb.AppendLine("}");
+		sb.AppendLine("document.getElementById('zpl').addEventListener('blur', refreshFnTable);");
 		sb.AppendLine("buildFnTable();");
 		sb.AppendLine("</script>");
 		sb.AppendLine("</body></html>");
