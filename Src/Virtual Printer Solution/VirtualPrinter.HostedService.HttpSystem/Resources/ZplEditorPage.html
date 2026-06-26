@@ -132,7 +132,7 @@ async function previewLabel() {
   var img = document.getElementById('preview-img');
   ph.textContent = 'Rendering...'; img.style.display = 'none';
   showWarnings(null);
-  var payload = JSON.stringify({ template: zpl, fields: getFnValues() });
+  var payload = JSON.stringify({ template: zpl, dev: dev, oname: oname, otype: otype, fields: getFnValues() });
   try {
     var resp = await fetch('/printer/preview', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload });
     if (!resp.ok) { ph.textContent = 'Preview failed: ' + await resp.text(); return; }

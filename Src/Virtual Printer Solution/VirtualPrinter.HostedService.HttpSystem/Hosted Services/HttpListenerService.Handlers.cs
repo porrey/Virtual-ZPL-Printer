@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  This file is part of Virtual ZPL Printer.
  *
  *  Virtual ZPL Printer is free software: you can redistribute it and/or modify
@@ -258,28 +258,36 @@ namespace VirtualPrinter.HostedService.HttpSystem
 
 			if (contentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase))
 			{
-				// Structured preview from the web editor: template body + field values.
-				// Runs through the same substitution logic as the TCP recall path so
-				// preview results are identical to what the real printer would render.
+				// Structured preview from the web editor: build a combined ^DF + ^XF payload
+				// so Labelary resolves the recall natively — identical to how real hardware works.
 				using JsonDocument doc = await JsonDocument.ParseAsync(context.Request.InputStream);
 				JsonElement root = doc.RootElement;
 
 				string templateBody = root.TryGetProperty("template", out JsonElement tpl) ? tpl.GetString() ?? string.Empty : string.Empty;
+				string pDev   = root.TryGetProperty("dev",   out JsonElement devEl)   ? devEl.GetString()   ?? "E"       : "E";
+				string pOname = root.TryGetProperty("oname", out JsonElement onameEl) ? onameEl.GetString() ?? "PREVIEW" : "PREVIEW";
+				string pOtype = root.TryGetProperty("otype", out JsonElement otypeEl) ? otypeEl.GetString() ?? "ZPL"     : "ZPL";
+				string dfName = $"{pDev}:{pOname}.{pOtype}";
 
-				var fields = new Dictionary<int, string>();
+				// Strip ^XA/^XZ — the textarea includes them but ^DF embeds only the body.
+				int xaIdx = templateBody.IndexOf("^XA", StringComparison.OrdinalIgnoreCase);
+				if (xaIdx >= 0) templateBody = templateBody[(xaIdx + 3)..].TrimStart();
+				int xzIdx = templateBody.LastIndexOf("^XZ", StringComparison.OrdinalIgnoreCase);
+				if (xzIdx >= 0) templateBody = templateBody[..xzIdx].TrimEnd();
+
+				// Build ^FN^FD lines for each non-empty field value.
+				var fnLines = new System.Text.StringBuilder();
 				if (root.TryGetProperty("fields", out JsonElement fieldsEl))
 				{
 					foreach (JsonProperty prop in fieldsEl.EnumerateObject())
 					{
 						string v = prop.Value.GetString();
 						if (int.TryParse(prop.Name, out int fn) && !string.IsNullOrEmpty(v))
-							fields[fn] = v;
+							fnLines.AppendLine($"^FN{fn}^FD{v}^FS");
 					}
 				}
 
-				string populated = this.ZplFormatService.PopulateTemplateBody(templateBody, fields);
-				zplContent = $"^XA\r\n{populated}\r\n^XZ";
-			}
+				zplContent = $"^XA\r\n^DF{dfName}^FS\r\n{templateBody}\r\n^XZ\r\n^XA\r\n^XF{dfName}^FS\r\n{fnLines}^XZ";		}
 			else
 			{
 				using MemoryStream ms = new();

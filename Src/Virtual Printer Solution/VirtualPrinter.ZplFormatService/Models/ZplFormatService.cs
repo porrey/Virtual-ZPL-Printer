@@ -39,18 +39,6 @@ namespace VirtualPrinter.ZplFormatService
 			@"\^XF(?<device>[A-Z]):(?<filename>[^\^]+)(?:\^FS)?",
 			RegexOptions.Compiled);
 
-		// ^FN1^FDvalue^FS  — field data provided in a print job
-		// Also handles ^FN1"hint"^FDvalue^FS
-		private static readonly Regex FdPattern = new(
-			@"\^FN(?<num>\d+)(?:""[^""]*"")?\^FD(?<value>.*?)\^FS",
-			RegexOptions.Compiled);
-
-		// ^FN1  or  ^FN1"hint"  or  ^FN1^FS  — field-number placeholder inside a stored template.
-		// The trailing ^FS is optional: ZPL templates use ^FNn^FS to close the field position;
-		// consuming it avoids a stray double-^FS after the injected ^FDvalue^FS.
-		private static readonly Regex FnPlaceholderPattern = new(
-			@"\^FN(?<num>\d+)(?:""[^""]*"")?(?:\^FS)?",
-			RegexOptions.Compiled);
 
 		public DirectoryInfo FormatDirectory => new(
 			Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -112,53 +100,13 @@ namespace VirtualPrinter.ZplFormatService
 				return zpl;
 			}
 
-			// Collect field values from the print job: ^FN1^FDvalue^FS → {1: "value"}
-			Dictionary<int, string> fieldValues = FdPattern.Matches(zpl)
-				.ToDictionary(
-					m => int.Parse(m.Groups["num"].Value),
-					m => m.Groups["value"].Value);
+			this.Logger.LogDebug("Prepending ^DF for '{device}:{filename}' to enable Labelary native recall.", device, filename);
 
-			this.Logger.LogDebug("Recalling format '{device}:{filename}' with {count} field value(s).", device, filename, fieldValues.Count);
-
-			string populatedBody = this.PopulateTemplateBody(templateBody, fieldValues);
-
-			// Build the replacement ZPL: keep the outer ^XA/^XZ from the print job
-			// and replace the ^XF line (plus the loose ^FN^FD lines) with the body.
-			// Remove all ^FN^FD lines from the print job since they've been merged,
-			// then collapse any runs of blank lines left behind.
-			string withoutFd = FdPattern.Replace(zpl, string.Empty);
-			withoutFd = Regex.Replace(withoutFd, @"(\r?\n){2,}", "\r\n");
-			string withBody = withoutFd.Replace(xfMatch.Value, populatedBody);
-
-			return withBody;
-		}
-
-		public string PopulateTemplateBody(string templateBody, IReadOnlyDictionary<int, string> fieldValues)
-		{
-			// Strip ^XA/^XZ wrapper if present — templates stored via ^DF already have
-			// these removed, but templates created or edited via the HTTP editor retain them.
-			int xaIdx = templateBody.IndexOf("^XA", StringComparison.OrdinalIgnoreCase);
-			if (xaIdx >= 0) templateBody = templateBody[(xaIdx + 3)..].TrimStart();
-			int xzIdx = templateBody.LastIndexOf("^XZ", StringComparison.OrdinalIgnoreCase);
-			if (xzIdx >= 0) templateBody = templateBody[..xzIdx].TrimEnd();
-
-			// Pass 1: ^FD^FNn^FS style — consume the whole block so surrounding ^FD/^FS
-			//         are replaced rather than left as stray delimiters.
-			string result = Regex.Replace(templateBody, @"\^FD\^FN(?<num>\d+)\^FS", match =>
-			{
-				int num = int.Parse(match.Groups["num"].Value);
-				return fieldValues.TryGetValue(num, out string value) ? $"^FD{value}^FS" : "^FD^FS";
-			});
-
-			// Pass 2: bare ^FNn style (inSight-style template, no surrounding ^FD/^FS).
-			//         Wrap the injected value in ^FD/^FS to produce valid ZPL.
-			result = FnPlaceholderPattern.Replace(result, match =>
-			{
-				int num = int.Parse(match.Groups["num"].Value);
-				return fieldValues.TryGetValue(num, out string value) ? $"^FD{value}^FS" : "^FD^FS";
-			});
-
-			return result;
+			// Prepend a ^DF label so Labelary can resolve the ^XF natively — same as
+			// sending a format-definition job before the print job on real hardware.
+			// Labelary treats the ^DF label as non-printing, so the ^XF recall label
+			// remains at index 0 in the response.
+			return $"^XA\r\n^DF{device}:{filename}^FS\r\n{templateBody}\r\n^XZ\r\n{zpl}";
 		}
 
 		public void InvalidateCache(string device, string filename)
