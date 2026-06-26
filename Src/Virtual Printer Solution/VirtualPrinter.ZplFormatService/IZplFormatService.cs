@@ -38,5 +38,11 @@ namespace VirtualPrinter.ZplFormatService
 		/// Returns the original ZPL unchanged if no ^XF commands are found.
 		/// </summary>
 		Task<string> ApplyRecalledFormatsAsync(string zpl);
+
+		/// <summary>
+		/// Evicts a cached format body so the next read reloads from disk.
+		/// Call this after editing a format file outside of SaveFormatFromZplAsync.
+		/// </summary>
+		void InvalidateCache(string device, string filename);
 	}
 }

@@ -38,5 +38,11 @@ namespace VirtualPrinter.GrfStorageService
 		/// no matching blobs are in the library.
 		/// </summary>
 		Task<string> ApplyReferencedGrfAsync(string zpl);
+
+		/// <summary>
+		/// Evicts a cached GRF blob so the next read reloads from disk.
+		/// Call this after writing or deleting a GRF file outside of SaveGrfFromZplAsync.
+		/// </summary>
+		void InvalidateCache(string device, string filename);
 	}
 }

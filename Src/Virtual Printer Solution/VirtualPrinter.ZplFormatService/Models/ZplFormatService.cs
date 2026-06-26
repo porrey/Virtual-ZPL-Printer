@@ -140,6 +140,11 @@ namespace VirtualPrinter.ZplFormatService
 			return withBody;
 		}
 
+		public void InvalidateCache(string device, string filename)
+		{
+			this.MemoryCache.Remove($"{device}_{filename}");
+		}
+
 		private async Task<string> GetFormatBodyAsync(string device, string filename)
 		{
 			string key = $"{device}_{filename}";

@@ -239,6 +239,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			}
 
 			await File.WriteAllTextAsync(filePath, content);
+			this.ZplFormatService.InvalidateCache(dev, $"{oname}.{otype}");
 			this.Logger.LogInformation("Saved ZPL edit for '{dev}:{oname}.{otype}'.", dev, oname, otype);
 			this.Redirect(context, $"/printer/zpl?dev={dev}&oname={oname}&otype={otype}&status=ok");
 		}
@@ -480,6 +481,10 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			}
 
 			File.Delete(matched);
+
+			// Invalidate the in-memory cache for whichever service owns this file.
+			int sep = key.IndexOf('_');
+			if (sep > 0) { string cdev = key[..sep]; string cfn = key[(sep+1)..]; this.ZplFormatService.InvalidateCache(cdev, cfn); this.GrfStorageService.InvalidateCache(cdev, cfn); }
 
 			// Also delete the sidecar meta file if it exists (Formats only).
 			string metaSidecar = matched + ".meta.json";
@@ -744,6 +749,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				Path.Combine(this.GrfStorageService.GrfDirectory.FullName, $"{dev}_{grfFilename}"),
 				dgContent);
 
+			this.GrfStorageService.InvalidateCache(dev, grfFilename);
 			this.Logger.LogInformation("Converted and stored image as GRF '{dev}:{grfFilename}'.", dev, grfFilename);
 			this.Redirect(context, $"/printer?status=ok&file={Uri.EscapeDataString(grfFilename)}");
 		}

@@ -131,6 +131,11 @@ namespace VirtualPrinter.GrfStorageService
 			return injected + zpl;
 		}
 
+		public void InvalidateCache(string device, string filename)
+		{
+			this.MemoryCache.Remove($"{device}_{filename}");
+		}
+
 		private async Task<string> GetGrfBlobAsync(string device, string filename)
 		{
 			string key = $"{device}_{filename}";
