@@ -287,7 +287,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 					}
 				}
 
-				zplContent = $"^XA\r\n^DF{dfName}^FS\r\n{templateBody}\r\n^XZ\r\n^XA\r\n^XF{dfName}^FS\r\n{fnLines}^XZ";		}
+				zplContent = $"^XA\r\n^DF{dfName}\r\n{templateBody}\r\n^XZ\r\n^XA\r\n^XF{dfName}\r\n{fnLines}^XZ";		}
 			else
 			{
 				using MemoryStream ms = new();

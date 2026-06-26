@@ -102,11 +102,23 @@ namespace VirtualPrinter.ZplFormatService
 
 			this.Logger.LogDebug("Prepending ^DF for '{device}:{filename}' to enable Labelary native recall.", device, filename);
 
+			// Strip ^XA/^XZ wrapper — web-editor templates store the full label envelope;
+			// ^DF-stored templates don't. Either way we want only the inner body.
+			int xaIdx = templateBody.IndexOf("^XA", StringComparison.OrdinalIgnoreCase);
+			if (xaIdx >= 0) templateBody = templateBody[(xaIdx + 3)..].TrimStart();
+			int xzIdx = templateBody.LastIndexOf("^XZ", StringComparison.OrdinalIgnoreCase);
+			if (xzIdx >= 0) templateBody = templateBody[..xzIdx].TrimEnd();
+
+			// Collapse consecutive blank lines in both the template body and the incoming job.
+			templateBody = Regex.Replace(templateBody, @"(\r?\n){2,}", "\r\n");
+			string normalizedZpl = Regex.Replace(zpl.Trim(), @"(\r?\n){2,}", "\r\n");
+
 			// Prepend a ^DF label so Labelary can resolve the ^XF natively — same as
 			// sending a format-definition job before the print job on real hardware.
 			// Labelary treats the ^DF label as non-printing, so the ^XF recall label
-			// remains at index 0 in the response.
-			return $"^XA\r\n^DF{device}:{filename}^FS\r\n{templateBody}\r\n^XZ\r\n{zpl}";
+			// remains at index 0 in the response. ^FS is omitted after ^DF — it is not
+			// required by ZPL and triggers an "Unnecessary ^FS" linter warning.
+			return $"^XA\r\n^DF{device}:{filename}\r\n{templateBody}\r\n^XZ\r\n{normalizedZpl}";
 		}
 
 		public void InvalidateCache(string device, string filename)

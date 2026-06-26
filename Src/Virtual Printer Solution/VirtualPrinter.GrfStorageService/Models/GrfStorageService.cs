@@ -125,7 +125,10 @@ namespace VirtualPrinter.GrfStorageService
 
 			if (trimmed.StartsWith("^XA"))
 			{
-				return zpl.Replace("^XA", $"^XA\r\n{injected}");
+				// Insert after the first ^XA only — the combined ^DF + ^XF payload has
+				// multiple ^XA commands and string.Replace would inject into every one.
+				int idx = zpl.IndexOf("^XA", StringComparison.OrdinalIgnoreCase);
+				return zpl[..(idx + 3)] + $"\r\n{injected}" + zpl[(idx + 3)..];
 			}
 
 			return injected + zpl;
