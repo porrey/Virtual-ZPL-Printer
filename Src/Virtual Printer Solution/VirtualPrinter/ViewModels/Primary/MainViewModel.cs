@@ -40,7 +40,7 @@ namespace VirtualPrinter.ViewModels
 {
 	public class MainViewModel : BindableBase
 	{
-		public MainViewModel(IEventAggregator eventAggregator, ISettings settings, IServiceProvider serviceProvider, IImageCacheRepository imageCacheRepository, IRepositoryFactory repositoryFactory, IPhysicalPrinterFactory physicalPrinterFactory, IConfiguration configuration)
+		public MainViewModel(IEventAggregator eventAggregator, ISettings settings, IServiceProvider serviceProvider, IImageCacheRepository imageCacheRepository, IRepositoryFactory repositoryFactory, IPhysicalPrinterFactory physicalPrinterFactory)
 		{
 			this.EventAggregator = eventAggregator;
 			this.Settings = settings;
@@ -62,8 +62,6 @@ namespace VirtualPrinter.ViewModels
 			this.TestLabelaryCommand = new(() => _ = this.TestLabelaryAsync(), () => !this.IsBusy && !this.IsRunning);
 			this.FontManagerCommand = new(() => _ = this.FontManagerAsync(), () => !this.IsBusy && !this.IsRunning);
 
-			int httpPort = configuration.GetValue<int>("HttpSystem:Port", 9200);
-			this.HttpWebUrl = $"http://localhost:{httpPort}/printer";
 			this.OpenWebInterfaceCommand = new(() => Process.Start(new ProcessStartInfo(this.HttpWebUrl) { UseShellExecute = true }), () => this.IsRunning && !string.IsNullOrEmpty(this.HttpWebUrl));
 
 			//
@@ -171,11 +169,26 @@ namespace VirtualPrinter.ViewModels
 		public DelegateCommand FontManagerCommand { get; set; }
 		public DelegateCommand OpenWebInterfaceCommand { get; set; }
 
-		private string _httpWebUrl = string.Empty;
+		private bool _httpEnabled;
+
+		public bool HttpEnabled
+		{
+			get => this._httpEnabled;
+			set
+			{
+				this.SetProperty(ref this._httpEnabled, value);
+			}
+		}
+
+		private string _httpWebUrl;
+
 		public string HttpWebUrl
 		{
-			get => this._httpWebUrl;
-			set => this.SetProperty(ref this._httpWebUrl, value);
+			get => this._httpWebUrl; 
+			set
+			{
+				this.SetProperty(ref this._httpWebUrl, value);
+			}
 		}
 
 		private PrinterConfigurationViewModel _printerConfiguration = null;
@@ -279,6 +292,7 @@ namespace VirtualPrinter.ViewModels
 		}
 
 		private bool _autoStart = false;
+
 		public bool AutoStart
 		{
 			get
@@ -311,6 +325,7 @@ namespace VirtualPrinter.ViewModels
 			finally
 			{
 				this.RefreshCommands();
+				this.RefreshSettings();
 			}
 		}
 
@@ -435,6 +450,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			finally
 			{
+				this.RefreshSettings();
 				this.RefreshCommands();
 			}
 
@@ -748,10 +764,17 @@ namespace VirtualPrinter.ViewModels
 			}
 			finally
 			{
+				this.RefreshSettings();
 				this.RefreshCommands();
 			}
 
 			return Task.CompletedTask;
+		}
+
+		private void RefreshSettings()
+		{
+			this.HttpEnabled = this.Settings.HttpEnabled;
+			this.HttpWebUrl = this.Settings.HttpEnabled ? $"http://localhost:{this.Settings.HttpPort}/printer" : string.Empty;
 		}
 
 		public Task TestLabelaryAsync()

@@ -23,6 +23,7 @@ using Microsoft.Extensions.Logging;
 using Prism.Events;
 using Labelary.Abstractions;
 using Microsoft.Extensions.Configuration;
+using VirtualPrinter.ApplicationSettings;
 using VirtualPrinter.GrfStorageService;
 using VirtualPrinter.PublishSubscribe;
 using VirtualPrinter.ZplFormatService;
@@ -37,15 +38,15 @@ namespace VirtualPrinter.HostedService.HttpSystem
 		public const int DefaultHttpPort = 9200;
 
 		public HttpListenerService(ILogger<HttpListenerService> logger, IHostApplicationLifetime hostApplicationLifetime, IEventAggregator eventAggregator, IServiceScopeFactory serviceScopeFactory, IZplFormatService zplFormatService, IGrfStorageService grfStorageService, ILabelService labelService,
-			IConfiguration configuration)
+			IConfiguration configuration, ISettings settings)
 			: base(hostApplicationLifetime, logger, serviceScopeFactory)
 		{
-			this.EventAggregator   = eventAggregator;
-			this.ZplFormatService  = zplFormatService;
+			this.EventAggregator = eventAggregator;
+			this.ZplFormatService = zplFormatService;
 			this.GrfStorageService = grfStorageService;
-			this.LabelService      = labelService;
-			this.HttpPort          = configuration.GetValue<int>("HttpSystem:Port", DefaultHttpPort);
-			this.HttpPort          = configuration.GetValue<int>("HttpSystem:Port", DefaultHttpPort);
+			this.LabelService = labelService;
+			this.Settings = settings;
+			this.HttpPort = settings.HttpPort > 0 ? settings.HttpPort : configuration.GetValue<int>("HttpSystem:Port", DefaultHttpPort);
 
 			_ = this.EventAggregator.GetEvent<StartEvent>().Subscribe(async (e) =>
 			  {
@@ -63,6 +64,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 		protected IZplFormatService ZplFormatService { get; set; }
 		protected IGrfStorageService GrfStorageService { get; set; }
 		protected ILabelService LabelService { get; set; }
+		protected ISettings Settings { get; set; }
 		protected ILabelConfiguration LabelConfiguration { get; set; }
 		protected int HttpPort { get; }
 		protected HttpListener Listener { get; set; }
@@ -89,6 +91,12 @@ namespace VirtualPrinter.HostedService.HttpSystem
 
 			try
 			{
+				if (!this.Settings.HttpEnabled)
+				{
+					this.Logger.LogInformation("HTTP listener is disabled; skipping start.");
+					return Task.FromResult(false);
+				}
+
 				if (this.IsRunning)
 				{
 					return Task.FromResult(true);
@@ -96,7 +104,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 
 				this.Logger.LogInformation("Starting HTTP listener on port {port}.", HttpPort);
 				this.ListenerCts = new CancellationTokenSource();
-				this.Listener    = new HttpListener();
+				this.Listener = new HttpListener();
 				this.Listener.Prefixes.Add($"http://localhost:{HttpPort}/");
 				this.Listener.Start();
 				this.IsRunning = true;
@@ -120,7 +128,10 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			try
 			{
 				this.Logger.LogInformation("Stopping HTTP listener.");
-				await this.ListenerCts.CancelAsync();
+				if (this.ListenerCts != null)
+				{
+					await this.ListenerCts.CancelAsync();
+				}
 				this.Listener?.Stop();
 				this.Listener?.Close();
 			}
@@ -130,9 +141,9 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			}
 			finally
 			{
-				this.Listener    = null;
+				this.Listener = null;
 				this.ListenerCts = null;
-				this.IsRunning   = false;
+				this.IsRunning = false;
 			}
 		}
 
@@ -170,7 +181,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			try
 			{
 				if (path.Equals("/printer", StringComparison.OrdinalIgnoreCase) ||
-				    path.Equals("/printer/", StringComparison.OrdinalIgnoreCase))
+					path.Equals("/printer/", StringComparison.OrdinalIgnoreCase))
 				{
 					await this.HandlePrinterIndexAsync(context);
 				}
@@ -186,22 +197,22 @@ namespace VirtualPrinter.HostedService.HttpSystem
 						await this.HandleZplAsync(context);
 				}
 				else if (path.Equals("/printer/preview", StringComparison.OrdinalIgnoreCase) &&
-				         context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+						 context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
 				{
 					await this.HandlePreviewAsync(context);
 				}
 				else if (path.Equals("/printer/zpl/meta", StringComparison.OrdinalIgnoreCase) &&
-				         context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+						 context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
 				{
 					await this.HandleZplMetaSaveAsync(context);
 				}
 				else if (path.Equals("/printer/zpl/new", StringComparison.OrdinalIgnoreCase) &&
-				         context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+						 context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
 				{
 					await this.HandleNewScriptAsync(context);
 				}
 				else if (path.Equals("/printer/image/upload", StringComparison.OrdinalIgnoreCase) &&
-				         context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+						 context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
 				{
 					await this.HandleImageUploadAsync(context);
 				}
@@ -210,12 +221,12 @@ namespace VirtualPrinter.HostedService.HttpSystem
 					await this.HandleGrfAsync(context);
 				}
 				else if (path.Equals("/printer/upload", StringComparison.OrdinalIgnoreCase) &&
-				         context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+						 context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
 				{
 					await this.HandleUploadAsync(context);
 				}
 				else if (path.Equals("/printer/delete", StringComparison.OrdinalIgnoreCase) &&
-				         context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+						 context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
 				{
 					await this.HandleDeleteAsync(context);
 				}
@@ -240,17 +251,17 @@ namespace VirtualPrinter.HostedService.HttpSystem
 
 		private void Redirect(HttpListenerContext context, string location)
 		{
-			context.Response.StatusCode        = 302;
-			context.Response.RedirectLocation  = location;
+			context.Response.StatusCode = 302;
+			context.Response.RedirectLocation = location;
 			context.Response.Close();
 		}
 
 		private static async Task WriteResponseAsync(HttpListenerContext context, string contentType, string body)
 		{
 			byte[] buffer = Encoding.UTF8.GetBytes(body);
-			context.Response.ContentType     = contentType;
+			context.Response.ContentType = contentType;
 			context.Response.ContentLength64 = buffer.Length;
-			context.Response.StatusCode      = 200;
+			context.Response.StatusCode = 200;
 
 			await context.Response.OutputStream.WriteAsync(buffer);
 			context.Response.Close();

@@ -46,5 +46,7 @@ namespace VirtualPrinter.ApplicationSettings
 		bool ApiLinting { get; set; }
 		int MaximumLabels { get; set; }
 		int MaximumWaitTime { get; set; }
+		bool HttpEnabled { get; set; }
+		int HttpPort { get; set; }
 	}
 }

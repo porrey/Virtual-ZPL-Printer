@@ -200,6 +200,32 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
+		private bool _httpEnabled = true;
+		public bool HttpEnabled
+		{
+			get
+			{
+				return this._httpEnabled;
+			}
+			set
+			{
+				this.SetProperty(ref this._httpEnabled, value);
+			}
+		}
+
+		private int _httpPort = 9200;
+		public int HttpPort
+		{
+			get
+			{
+				return this._httpPort;
+			}
+			set
+			{
+				this.SetProperty(ref this._httpPort, value);
+			}
+		}
+
 		public Task InitializeAsync()
 		{
 			try
@@ -226,6 +252,8 @@ namespace VirtualPrinter.ViewModels
 				this.ApiMethod = this.ApiMethods.Where(t => t.Value == this.Settings.ApiMethod).FirstOrDefault();
 				this.ApiLinting = this.Settings.ApiLinting;
 				this.MaximumWaitTime = this.Settings.MaximumWaitTime;
+				this.HttpEnabled = this.Settings.HttpEnabled;
+				this.HttpPort = this.Settings.HttpPort;
 			}
 			catch (Exception ex)
 			{
@@ -252,6 +280,8 @@ namespace VirtualPrinter.ViewModels
 				this.Settings.LingerTime = this.LingerTime;
 				this.Settings.ReceivedDataEncoding = this.ReceivedDataEncoding?.Value;
 				this.Settings.MaximumWaitTime = this.MaximumWaitTime;
+				this.Settings.HttpEnabled = this.HttpEnabled;
+				this.Settings.HttpPort = this.HttpPort;
 
 				this.Settings.ApiUrl = this.ApiUrl;
 				this.LabelServiceConfiguration.BaseUrl = this.ApiUrl;

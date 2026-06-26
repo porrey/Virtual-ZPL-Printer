@@ -574,7 +574,9 @@
 								Foreground="{StaticResource ForegroundColor1}"
 								Text="{x:Static resources:Strings.Main_Status_Listening}" />
 						</StackPanel>
-						<TextBlock Margin="29,1,0,0" FontSize="11">
+						<TextBlock Margin="29,1,0,0" 
+                                   FontSize="11"
+                                   Visibility="{Binding HttpEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
 							<Hyperlink Command="{Binding OpenWebInterfaceCommand}" Foreground="#0066cc">
 								<Run Text="{Binding HttpWebUrl, Mode=OneWay}" />
 							</Hyperlink>

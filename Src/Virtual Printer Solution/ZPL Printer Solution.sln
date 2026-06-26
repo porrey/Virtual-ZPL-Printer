@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageCache.Abstractions", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageCache.Repository", "ImageCache.Repository\ImageCache.Repository.csproj", "{184BBFDD-E5EB-477F-BC6A-6990E92BDC0C}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Virtual ZPL Printer Setup", "VirtualPrinter-Setup\VirtualPrinter-Setup.vdproj", "{6F2A4B7F-333D-4910-87F8-E9A255C50F65}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.Db.Abstractions", "VirtualPrinter.Db.Abstractions\VirtualPrinter.Db.Abstractions.csproj", "{B83F85EB-BCF6-43DA-8A07-F6F2049D899D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualPrinter.Db.Ef", "VirtualPrinter.Db.Ef\VirtualPrinter.Db.Ef.csproj", "{B1AF2E8D-3350-4B00-8A4F-4101B234325F}"
@@ -95,6 +97,10 @@ Global
 		{184BBFDD-E5EB-477F-BC6A-6990E92BDC0C}.Debug|x64.Build.0 = Debug|x64
 		{184BBFDD-E5EB-477F-BC6A-6990E92BDC0C}.Release|x64.ActiveCfg = Release|x64
 		{184BBFDD-E5EB-477F-BC6A-6990E92BDC0C}.Release|x64.Build.0 = Release|x64
+		{6F2A4B7F-333D-4910-87F8-E9A255C50F65}.Debug|x64.ActiveCfg = Debug
+		{6F2A4B7F-333D-4910-87F8-E9A255C50F65}.Debug|x64.Build.0 = Debug
+		{6F2A4B7F-333D-4910-87F8-E9A255C50F65}.Release|x64.ActiveCfg = Release
+		{6F2A4B7F-333D-4910-87F8-E9A255C50F65}.Release|x64.Build.0 = Release
 		{B83F85EB-BCF6-43DA-8A07-F6F2049D899D}.Debug|x64.ActiveCfg = Debug|x64
 		{B83F85EB-BCF6-43DA-8A07-F6F2049D899D}.Debug|x64.Build.0 = Debug|x64
 		{B83F85EB-BCF6-43DA-8A07-F6F2049D899D}.Release|x64.ActiveCfg = Release|x64

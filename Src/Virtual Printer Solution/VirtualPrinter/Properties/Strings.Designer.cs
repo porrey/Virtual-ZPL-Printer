@@ -19,7 +19,7 @@ namespace VirtualPrinter.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -970,11 +970,29 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable HTTP Interface.
+        /// </summary>
+        public static string Global_Settings_Checkbox_EnableHttp_Text {
+            get {
+                return ResourceManager.GetString("Global_Settings_Checkbox_EnableHttp_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable Linting.
         /// </summary>
         public static string Global_Settings_Checkbox_EnableLinting_Text {
             get {
                 return ResourceManager.GetString("Global_Settings_Checkbox_EnableLinting_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTTP Settings.
+        /// </summary>
+        public static string Global_Settings_Group_Header_HTTP {
+            get {
+                return ResourceManager.GetString("Global_Settings_Group_Header_HTTP", resourceCulture);
             }
         }
         
@@ -1002,6 +1020,15 @@ namespace VirtualPrinter.Properties {
         public static string Global_Settings_Label_ApiUrl {
             get {
                 return ResourceManager.GetString("Global_Settings_Label_ApiUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTTP Port.
+        /// </summary>
+        public static string Global_Settings_Label_HttpPort {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_HttpPort", resourceCulture);
             }
         }
         

@@ -50,5 +50,7 @@ namespace VirtualPrinter.ApplicationSettings
 		public bool ApiLinting { get => Properties.Settings.Default.ApiLinting; set => Properties.Settings.Default.ApiLinting = value; }
 		public int MaximumLabels { get => Properties.Settings.Default.MaximumLables; set => Properties.Settings.Default.MaximumLables = value; }
 		public int MaximumWaitTime { get => Properties.Settings.Default.MaximumWaitTime; set => Properties.Settings.Default.MaximumWaitTime = value; }
+		public bool HttpEnabled { get => Properties.Settings.Default.HttpEnabled; set => Properties.Settings.Default.HttpEnabled = value; }
+		public int HttpPort { get => Properties.Settings.Default.HttpPort; set => Properties.Settings.Default.HttpPort = value; }
 	}
 }

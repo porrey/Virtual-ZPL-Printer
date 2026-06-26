@@ -27,6 +27,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Labelary.Abstractions\Labelary.Abstractions.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.ApplicationSettings\VirtualPrinter.ApplicationSettings.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.GrfStorageService\VirtualPrinter.GrfStorageService.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.PublishSubscribe\VirtualPrinter.PublishSubscribe.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.ZplFormatService\VirtualPrinter.ZplFormatService.csproj" />

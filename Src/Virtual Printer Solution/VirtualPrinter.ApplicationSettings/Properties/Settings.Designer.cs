@@ -346,5 +346,29 @@ namespace VirtualPrinter.ApplicationSettings.Properties {
                 this["MaximumWaitTime"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool HttpEnabled {
+            get {
+                return ((bool)(this["HttpEnabled"]));
+            }
+            set {
+                this["HttpEnabled"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9200")]
+        public int HttpPort {
+            get {
+                return ((int)(this["HttpPort"]));
+            }
+            set {
+                this["HttpPort"] = value;
+            }
+        }
     }
 }
