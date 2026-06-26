@@ -8,6 +8,8 @@
   .btn-row button { padding: 4px 14px; cursor: pointer; }
   .fn-section { margin-top: 12px; }
   .fn-section summary { cursor: pointer; color: #555; font-size: 13px; user-select: none; }
+  .wrap-fd-label { display: block; margin: 6px 0 4px; font-size: 13px; color: #555; cursor: pointer; }
+  .wrap-fd-hint { color: #999; font-size: 11px; }
   .fn-table { border-collapse: collapse; margin-top: 6px; }
   .fn-table th { text-align: left; padding: 3px 12px 3px 0; color: #555; font-size: 12px; border-bottom: 1px solid #ddd; }
   .fn-table td { padding: 3px 12px 3px 0; }
@@ -20,6 +22,12 @@
   .msg.ok  { background: #d4edda; color: #155724; }
   .msg.err { background: #f8d7da; color: #721c24; }
   a { color: #00c; }
+  .warnings-panel { margin-top: 10px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 8px 12px; color: #856404; font-size: 13px; }
+  .warnings-panel strong { display: block; margin-bottom: 4px; }
+  .warnings-panel ul { margin: 0; padding-left: 18px; }
+  .warnings-panel li { margin: 2px 0; }
+  .warnings-panel .warn-cmd { font-weight: bold; }
+  .warnings-panel .warn-pos { color: #b8860b; font-size: 11px; }
 </style></head><body>
 <h2>Edit ZPL Script</h2>
 <p><strong>{{DISPLAY_NAME}}</strong> &nbsp; <a href='/printer'>&#8592; Directory</a></p>
@@ -27,6 +35,9 @@
 <textarea id='zpl'>{{ZPL_CONTENT_ENCODED}}</textarea>
 <details class='fn-section' id='fn-details'>
   <summary id='fn-summary'>Field Values (^FN) -- loading...</summary>
+  <label class='wrap-fd-label'>
+    <input type='checkbox' id='wrap-fd' onchange='scheduleSaveMeta()'> Wrap values in ^FD/^FS &nbsp;
+  </label>
   <table class='fn-table'>
     <thead><tr><th>Field</th><th>Preview Value</th></tr></thead>
     <tbody id='fn-body'></tbody>
@@ -40,6 +51,7 @@
 <div class='preview-area'>
   <img id='preview-img' style='display:none' alt='Label preview'>
   <p class='placeholder' id='preview-ph'>Click Preview Label to render via Labelary.</p>
+  <div id='warnings-panel' class='warnings-panel' style='display:none'></div>
 </div>
 <script>
 {{JS_VARS}}
@@ -90,29 +102,65 @@ function buildFnTable() {
   });
 }
 function injectFnValues(zpl, vals) {
-  return zpl.replace(/\^FN(\d+)\^FS/gi, function(m, n) {
-    var v = vals[n]; return v ? '^FN' + n + '^FV' + v + '^FS' : m;
-  });
+  if (document.getElementById('wrap-fd').checked) {
+    // template has bare ^FNn (no ^FD, no ^FS); inject ^FNn^FDvalue^FS.
+    // ^FS is optional in the match so it's consumed if present, avoiding a double ^FS.
+    var injected = {};
+    zpl = zpl.replace(/\^FN(\d+)(\^FS)?/gi, function(m, n) {
+      var v = vals[n];
+      if (!v || injected[n]) return m;
+      injected[n] = true;
+      return '^FN' + n + '^FD' + v + '^FS';
+    });
+  } else {
+    // Standard style: template has ^FD^FNn^FS; replace the whole FD block with the value.
+    zpl = zpl.replace(/\^FD\^FN(\d+)\^FS/gi, function(m, n) {
+      var v = vals[n]; return v ? '^FD' + v + '^FS' : m;
+    });
+  }
+  return zpl;
 }
 var metaSaveTimer = null;
 function scheduleSaveMeta() { clearTimeout(metaSaveTimer); metaSaveTimer = setTimeout(saveMeta, 800); }
 function saveMeta() {
-  var vals = getFnValues(); savedMeta = vals;
+  var vals = getFnValues();
+  vals['__wrapFd__'] = document.getElementById('wrap-fd').checked ? '1' : '';
+  savedMeta = vals;
   var p = 'dev=' + encodeURIComponent(dev) + '&oname=' + encodeURIComponent(oname)
         + '&otype=' + encodeURIComponent(otype) + '&meta=' + encodeURIComponent(JSON.stringify(vals));
   fetch('/printer/zpl/meta', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p });
 }
+function showWarnings(headerValue) {
+  var panel = document.getElementById('warnings-panel');
+  if (!headerValue) { panel.style.display = 'none'; panel.innerHTML = ''; return; }
+  var parts = headerValue.split('|');
+  var html = '<strong>&#9888; Linter Warnings</strong><ul>';
+  for (var i = 0; i + 4 < parts.length; i += 5) {
+    var cmd   = parts[i + 2] || '(unknown)';
+    var param = parts[i + 3];
+    var msg   = parts[i + 4];
+    var byte  = parts[i];
+    html += '<li><span class="warn-cmd">' + cmd + '</span>';
+    if (param) html += ' param&nbsp;' + param;
+    html += ': ' + msg + ' <span class="warn-pos">(byte&nbsp;' + byte + ')</span></li>';
+  }
+  html += '</ul>';
+  panel.innerHTML = html;
+  panel.style.display = 'block';
+}
 async function previewLabel() {
   saveMeta();
   var zpl = document.getElementById('zpl').value;
-  var ph = document.getElementById('preview-ph');
+  var ph  = document.getElementById('preview-ph');
   var img = document.getElementById('preview-img');
   var injected = injectFnValues(zpl, getFnValues());
   ph.textContent = 'Rendering...'; img.style.display = 'none';
+  showWarnings(null);
   try {
     var resp = await fetch('/printer/preview', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: injected });
     if (!resp.ok) { ph.textContent = 'Preview failed: ' + await resp.text(); return; }
     img.src = URL.createObjectURL(await resp.blob()); img.style.display = 'block'; ph.textContent = '';
+    showWarnings(resp.headers.get('X-Warnings'));
   } catch(e) { ph.textContent = 'Preview error: ' + e; }
 }
 async function saveLabel() {
@@ -127,6 +175,7 @@ function refreshFnTable() {
   buildFnTable();
 }
 document.getElementById('zpl').addEventListener('blur', refreshFnTable);
+document.getElementById('wrap-fd').checked = !!savedMeta['__wrapFd__'];
 buildFnTable();
 </script>
 </body></html>

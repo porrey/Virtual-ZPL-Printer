@@ -272,6 +272,13 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
+			if (response.Warnings != null && response.Warnings.Any())
+			{
+				string warningsHeader = string.Join("|", response.Warnings.Select(
+					w => $"{w.ByteIndex}|{w.ByteSize}|{w.ZplCommand}|{w.ParameterNumber}|{w.Message}"));
+				context.Response.Headers["X-Warnings"] = warningsHeader;
+			}
+
 			context.Response.ContentType = "image/png";
 			context.Response.ContentLength64 = response.Label.Length;
 			context.Response.StatusCode = 200;
