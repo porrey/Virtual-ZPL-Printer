@@ -28,9 +28,9 @@ namespace VirtualPrinter.HostedService.HttpSystem
 		private async Task HandlePrinterIndexAsync(HttpListenerContext context)
 		{
 			NameValueCollection qs = context.Request.QueryString;
-			string statusParam     = qs["status"] ?? string.Empty;
-			string statusFile      = qs["file"]   ?? string.Empty;
-			string statusMsg       = qs["msg"]    ?? string.Empty;
+			string statusParam = qs["status"] ?? string.Empty;
+			string statusFile = qs["file"] ?? string.Empty;
+			string statusMsg = qs["msg"] ?? string.Empty;
 
 			string statusBanner = string.Empty;
 			if (statusParam.Equals("ok", StringComparison.OrdinalIgnoreCase))
@@ -39,7 +39,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				statusBanner = $"<div class='msg err'>Upload failed: {WebUtility.HtmlEncode(statusMsg)}</div>";
 
 			string formatTable = BuildFormatTable(this.ZplFormatService.FormatDirectory);
-			string grfTable    = BuildGrfTable(this.GrfStorageService.GrfDirectory);
+			string grfTable = BuildGrfTable(this.GrfStorageService.GrfDirectory);
 
 			string html = HttpResponseTemplates.BuildIndexPage(statusBanner, formatTable, grfTable);
 			await WriteResponseAsync(context, "text/html", html);
@@ -63,15 +63,15 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				int underscore = file.Name.IndexOf('_');
 				if (underscore <= 0) continue;
 
-				string dev  = file.Name[..underscore];
+				string dev = file.Name[..underscore];
 				string rest = file.Name[(underscore + 1)..];
-				int dot     = rest.LastIndexOf('.');
+				int dot = rest.LastIndexOf('.');
 				if (dot <= 0) continue;
 
-				string oname       = rest[..dot];
-				string otype       = rest[(dot + 1)..];
+				string oname = rest[..dot];
+				string otype = rest[(dot + 1)..];
 				string displayName = $"{dev}:{rest}";
-				string viewHref    = $"/printer/zpl?dev={dev}&oname={oname}&otype={otype}";
+				string viewHref = $"/printer/zpl?dev={dev}&oname={oname}&otype={otype}";
 
 				string deleteForm = $"<form method='post' action='/printer/delete' style='display:inline'><input type='hidden' name='key' value='{file.Name}'><button type='submit' onclick='return confirm(\"Delete {displayName}? This cannot be undone.\")'>Delete</button></form>";
 				sb.AppendLine($"<tr><td>{displayName}</td><td>{file.Length:N0} B</td><td>{file.LastWriteTime:yyyy-MM-dd HH:mm:ss}</td><td><a href='{viewHref}'>View</a>&nbsp;&nbsp;{deleteForm}</td></tr>");
@@ -96,10 +96,10 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				int underscore = file.Name.IndexOf('_');
 				if (underscore <= 0) continue;
 
-				string dev         = file.Name[..underscore];
-				string rest        = file.Name[(underscore + 1)..];
+				string dev = file.Name[..underscore];
+				string rest = file.Name[(underscore + 1)..];
 				string displayName = $"{dev}:{rest}";
-				string viewHref    = $"/printer/grf?dev={dev}&filename={rest}";
+				string viewHref = $"/printer/grf?dev={dev}&filename={rest}";
 
 				string deleteForm = $"<form method='post' action='/printer/delete' style='display:inline'><input type='hidden' name='key' value='{file.Name}'><button type='submit' onclick='return confirm(\"Delete {displayName}? This cannot be undone.\")'>Delete</button></form>";
 				sb.AppendLine($"<tr><td>{displayName}</td><td>{file.Length:N0} B</td><td>{file.LastWriteTime:yyyy-MM-dd HH:mm:ss}</td><td><a href='{viewHref}'>View</a>&nbsp;&nbsp;{deleteForm}</td></tr>");
@@ -119,16 +119,16 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				foreach (FileInfo file in dir.GetFiles())
 				{
 					string storedName = file.Name;
-					int underscore    = storedName.IndexOf('_');
+					int underscore = storedName.IndexOf('_');
 					if (underscore <= 0) continue;
 
-					string dev  = storedName[..underscore];
+					string dev = storedName[..underscore];
 					string rest = storedName[(underscore + 1)..];
-					int dot     = rest.LastIndexOf('.');
+					int dot = rest.LastIndexOf('.');
 					if (dot <= 0) continue;
 
-					string oname       = rest[..dot];
-					string otype       = rest[(dot + 1)..];
+					string oname = rest[..dot];
+					string otype = rest[(dot + 1)..];
 					string displayName = $"{dev}:{rest}";
 
 					sb.AppendLine($"  <li><a href=\"zpl?dev={dev}&oname={oname}&otype={otype}\">{displayName}</a></li>");
@@ -144,7 +144,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 		private async Task HandleZplAsync(HttpListenerContext context)
 		{
 			NameValueCollection qs = context.Request.QueryString;
-			string dev   = qs["dev"]   ?? string.Empty;
+			string dev = qs["dev"] ?? string.Empty;
 			string oname = qs["oname"] ?? string.Empty;
 			string otype = qs["otype"] ?? string.Empty;
 
@@ -155,7 +155,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			string key      = $"{dev}_{oname}.{otype}";
+			string key = $"{dev}_{oname}.{otype}";
 			string filePath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, key);
 
 			if (!File.Exists(filePath))
@@ -173,7 +173,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			string metaPath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, $"{key}.meta.json");
 			string metaJson = File.Exists(metaPath) ? await File.ReadAllTextAsync(metaPath) : "{}";
 
-			string pageTitle     = $"Edit ZPL Script -- {WebUtility.HtmlEncode(displayName)}";
+			string pageTitle = $"Edit ZPL Script -- {WebUtility.HtmlEncode(displayName)}";
 			string displayNameHtml = WebUtility.HtmlEncode(displayName);
 
 			string statusBanner = string.Empty;
@@ -212,13 +212,13 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			{
 				int eq = pair.IndexOf('=');
 				if (eq < 0) continue;
-				string name  = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
+				string name = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
 				string value = Uri.UnescapeDataString(pair[(eq + 1)..].Replace('+', ' '));
 				switch (name.ToLowerInvariant())
 				{
-					case "dev":     dev     = value; break;
-					case "oname":   oname   = value; break;
-					case "otype":   otype   = value; break;
+					case "dev": dev = value; break;
+					case "oname": oname = value; break;
+					case "otype": otype = value; break;
 					case "content": content = value; break;
 				}
 			}
@@ -229,7 +229,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			string key      = $"{dev}_{oname}.{otype}";
+			string key = $"{dev}_{oname}.{otype}";
 			string filePath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, key);
 
 			if (!File.Exists(filePath))
@@ -272,9 +272,9 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			context.Response.ContentType     = "image/png";
+			context.Response.ContentType = "image/png";
 			context.Response.ContentLength64 = response.Label.Length;
-			context.Response.StatusCode      = 200;
+			context.Response.StatusCode = 200;
 			await context.Response.OutputStream.WriteAsync(response.Label);
 			context.Response.Close();
 			this.Logger.LogInformation("Rendered label preview via Labelary ({bytes} bytes).", response.Label.Length);
@@ -292,14 +292,14 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			{
 				int eq = pair.IndexOf('=');
 				if (eq < 0) continue;
-				string name  = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
+				string name = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
 				string value = Uri.UnescapeDataString(pair[(eq + 1)..].Replace('+', ' '));
 				switch (name.ToLowerInvariant())
 				{
-					case "dev":   dev   = value; break;
+					case "dev": dev = value; break;
 					case "oname": oname = value; break;
 					case "otype": otype = value; break;
-					case "meta":  meta  = value; break;
+					case "meta": meta = value; break;
 				}
 			}
 
@@ -310,7 +310,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			string key      = $"{dev}_{oname}.{otype}";
+			string key = $"{dev}_{oname}.{otype}";
 			string metaPath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, $"{key}.meta.json");
 			await File.WriteAllTextAsync(metaPath, meta);
 
@@ -359,11 +359,11 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			string body = Encoding.UTF8.GetString(ms.ToArray());
 
 			// Locate the file part: skip boundary + part headers, read until closing boundary.
-			string partStart  = $"--{boundary}\r\n";
-			string partEnd    = $"\r\n--{boundary}";
-			int headerEnd     = body.IndexOf("\r\n\r\n", StringComparison.Ordinal);
-			int contentStart  = headerEnd >= 0 ? headerEnd + 4 : 0;
-			int contentEnd    = body.IndexOf(partEnd, contentStart, StringComparison.Ordinal);
+			string partStart = $"--{boundary}\r\n";
+			string partEnd = $"\r\n--{boundary}";
+			int headerEnd = body.IndexOf("\r\n\r\n", StringComparison.Ordinal);
+			int contentStart = headerEnd >= 0 ? headerEnd + 4 : 0;
+			int contentEnd = body.IndexOf(partEnd, contentStart, StringComparison.Ordinal);
 			string zplContent = contentEnd >= 0
 				? body[contentStart..contentEnd]
 				: body[contentStart..];
@@ -401,15 +401,15 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				// No explicit ^DF or ~DG — treat the whole file as a format template and
 				// wrap it automatically using the uploaded filename as the format name.
 				string baseName = Path.GetFileNameWithoutExtension(filename);
-				string ext      = Path.GetExtension(filename).TrimStart('.').ToUpperInvariant();
+				string ext = Path.GetExtension(filename).TrimStart('.').ToUpperInvariant();
 				if (string.IsNullOrEmpty(ext)) ext = "ZPL";
-				string dfName   = $"E:{baseName}.{ext}";
+				string dfName = $"E:{baseName}.{ext}";
 
 				// Strip the outer ^XA / ^XZ so the inner content can be re-wrapped cleanly.
 				string inner = zplContent;
-				int xaIdx    = inner.IndexOf("^XA", StringComparison.OrdinalIgnoreCase);
+				int xaIdx = inner.IndexOf("^XA", StringComparison.OrdinalIgnoreCase);
 				if (xaIdx >= 0) inner = inner[(xaIdx + 3)..];
-				int xzIdx    = inner.LastIndexOf("^XZ", StringComparison.OrdinalIgnoreCase);
+				int xzIdx = inner.LastIndexOf("^XZ", StringComparison.OrdinalIgnoreCase);
 				if (xzIdx >= 0) inner = inner[..xzIdx];
 
 				zplContent = $"^XA\r\n^DF{dfName}^FS\r\n{inner.Trim()}\r\n^XZ";
@@ -441,7 +441,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				int eq = pair.IndexOf('=');
 				if (eq < 0) continue;
 
-				string name  = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
+				string name = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
 				string value = Uri.UnescapeDataString(pair[(eq + 1)..].Replace('+', ' '));
 
 				if (name.Equals("key", StringComparison.OrdinalIgnoreCase))
@@ -492,7 +492,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			// Query string: ?dev=E&filename=IMAGE.GRF
 
 			NameValueCollection qs = context.Request.QueryString;
-			string dev      = qs["dev"]      ?? string.Empty;
+			string dev = qs["dev"] ?? string.Empty;
 			string filename = qs["filename"] ?? string.Empty;
 
 			if (string.IsNullOrEmpty(dev) || string.IsNullOrEmpty(filename))
@@ -508,7 +508,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			string key      = $"{dev}_{filename}";
+			string key = $"{dev}_{filename}";
 			string filePath = Path.Combine(this.GrfStorageService.GrfDirectory.FullName, key);
 
 			if (!File.Exists(filePath))
@@ -535,9 +535,9 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			context.Response.ContentType     = "image/png";
+			context.Response.ContentType = "image/png";
 			context.Response.ContentLength64 = response.Label.Length;
-			context.Response.StatusCode      = 200;
+			context.Response.StatusCode = 200;
 
 			await context.Response.OutputStream.WriteAsync(response.Label);
 			context.Response.Close();
@@ -557,11 +557,11 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			{
 				int eq = pair.IndexOf('=');
 				if (eq < 0) continue;
-				string pname  = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
+				string pname = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
 				string pvalue = Uri.UnescapeDataString(pair[(eq + 1)..].Replace('+', ' '));
 				switch (pname.ToLowerInvariant())
 				{
-					case "dev":  dev  = pvalue; break;
+					case "dev": dev = pvalue; break;
 					case "name": name = pvalue; break;
 				}
 			}
@@ -572,8 +572,9 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			// Sanitize: keep only alphanumeric + underscore, uppercase.
-			name = new string(name.ToUpperInvariant().Where(c => char.IsLetterOrDigit(c) || c == '_').ToArray());
+			// Sanitize: keep only alphanumeric + underscore, uppercase dev name.
+			dev = dev.ToUpperInvariant();
+			name = new string(name.Where(c => char.IsLetterOrDigit(c) || c == '_').ToArray());
 
 			if (string.IsNullOrEmpty(name))
 			{
@@ -581,7 +582,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			string key      = $"{dev}_{name}.ZPL";
+			string key = $"{dev}_{name}.ZPL";
 			string filePath = Path.Combine(this.ZplFormatService.FormatDirectory.FullName, key);
 
 			if (File.Exists(filePath))
@@ -602,7 +603,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			// dev and name arrive as query-string params (set by the form's onsubmit);
 			// the image file is in one of the multipart parts (name="file").
 			NameValueCollection qs = context.Request.QueryString;
-			string dev  = (qs["dev"]  ?? "E").ToUpperInvariant().Trim();
+			string dev = (qs["dev"] ?? "E").ToUpperInvariant().Trim();
 			string name = (qs["name"] ?? string.Empty).Trim();
 
 			if (string.IsNullOrWhiteSpace(name))
@@ -644,14 +645,14 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			await context.Request.InputStream.CopyToAsync(ms);
 			byte[] bodyBytes = ms.ToArray();
 
-			byte[] partDelim  = Encoding.ASCII.GetBytes($"--{boundary}\r\n");
-			byte[] headerSep  = "\r\n\r\n"u8.ToArray();
-			byte[] partEnd    = Encoding.ASCII.GetBytes($"\r\n--{boundary}");
+			byte[] partDelim = Encoding.ASCII.GetBytes($"--{boundary}\r\n");
+			byte[] headerSep = "\r\n\r\n"u8.ToArray();
+			byte[] partEnd = Encoding.ASCII.GetBytes($"\r\n--{boundary}");
 
 			// Walk every part until we find the one with name="file".
-			byte[] imageBytes   = null;
+			byte[] imageBytes = null;
 			string origFilename = "image.png";
-			int    searchFrom   = 0;
+			int searchFrom = 0;
 
 			while (imageBytes == null)
 			{
@@ -659,12 +660,12 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				if (partStart < 0) break;
 
 				int headerStart = partStart + partDelim.Length;
-				int headerEnd   = IndexOf(bodyBytes, headerSep, headerStart);
+				int headerEnd = IndexOf(bodyBytes, headerSep, headerStart);
 				if (headerEnd < 0) break;
 
-				string headers     = Encoding.UTF8.GetString(bodyBytes, headerStart, headerEnd - headerStart);
-				int    dataStart   = headerEnd + headerSep.Length;
-				int    dataEnd     = IndexOf(bodyBytes, partEnd, dataStart);
+				string headers = Encoding.UTF8.GetString(bodyBytes, headerStart, headerEnd - headerStart);
+				int dataStart = headerEnd + headerSep.Length;
+				int dataEnd = IndexOf(bodyBytes, partEnd, dataStart);
 				if (dataEnd < 0) dataEnd = bodyBytes.Length;
 
 				searchFrom = dataEnd;

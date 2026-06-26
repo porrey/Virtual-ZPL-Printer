@@ -46,7 +46,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			this.GrfStorageService = grfStorageService;
 			this.LabelService = labelService;
 			this.Settings = settings;
-			this.HttpPort = settings.HttpPort > 0 ? settings.HttpPort : configuration.GetValue<int>("HttpSystem:Port", DefaultHttpPort);
+			this.HttpPort = settings.HttpPort > 0 ? settings.HttpPort : DefaultHttpPort;
 
 			_ = this.EventAggregator.GetEvent<StartEvent>().Subscribe(async (e) =>
 			  {
