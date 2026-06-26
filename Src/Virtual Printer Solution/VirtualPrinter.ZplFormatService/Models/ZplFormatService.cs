@@ -31,9 +31,12 @@ namespace VirtualPrinter.ZplFormatService
 			@"\^DF(?<device>[A-Z]):(?<filename>[^\^]+)\^FS",
 			RegexOptions.Compiled);
 
-		// ^XFE:FILENAME.ZPL^FS  — recall format command
+		// ^XFE:FILENAME.ZPL^FS  — recall format command.
+		// Optionally captures the trailing ^FS so the Replace call removes it
+		// along with the ^XF command (otherwise it's left as a stray ^FS after
+		// the expanded template body).
 		private static readonly Regex XfPattern = new(
-			@"\^XF(?<device>[A-Z]):(?<filename>[^\^]+)",
+			@"\^XF(?<device>[A-Z]):(?<filename>[^\^]+)(?:\^FS)?",
 			RegexOptions.Compiled);
 
 		// ^FN1^FDvalue^FS  — field data provided in a print job
@@ -42,9 +45,11 @@ namespace VirtualPrinter.ZplFormatService
 			@"\^FN(?<num>\d+)(?:""[^""]*"")?\^FD(?<value>.*?)\^FS",
 			RegexOptions.Compiled);
 
-		// ^FN1  or  ^FN1"hint"  — field-number placeholder inside a stored template
+		// ^FN1  or  ^FN1"hint"  or  ^FN1^FS  — field-number placeholder inside a stored template.
+		// The trailing ^FS is optional: ZPL templates use ^FNn^FS to close the field position;
+		// consuming it avoids a stray double-^FS after the injected ^FDvalue^FS.
 		private static readonly Regex FnPlaceholderPattern = new(
-			@"\^FN(?<num>\d+)(?:""[^""]*"")?",
+			@"\^FN(?<num>\d+)(?:""[^""]*"")?(?:\^FS)?",
 			RegexOptions.Compiled);
 
 		public DirectoryInfo FormatDirectory => new(
@@ -66,15 +71,15 @@ namespace VirtualPrinter.ZplFormatService
 			// Strip the outer ^XA and ^XZ so we store only the template body —
 			// the ^XA/^XZ of the print job itself will wrap the expanded body on recall.
 			int bodyStart = dfMatch.Index + dfMatch.Length;
-			int xzIndex   = zpl.IndexOf("^XZ", bodyStart, StringComparison.OrdinalIgnoreCase);
-			string body   = xzIndex >= 0
+			int xzIndex = zpl.IndexOf("^XZ", bodyStart, StringComparison.OrdinalIgnoreCase);
+			string body = xzIndex >= 0
 							? zpl.Substring(bodyStart, xzIndex - bodyStart).Trim()
 							: zpl.Substring(bodyStart).Trim();
 
-			string device   = dfMatch.Groups["device"].Value;
+			string device = dfMatch.Groups["device"].Value;
 			string filename = dfMatch.Groups["filename"].Value.Trim();
-			string key      = $"{device}_{filename}";
-			string path     = Path.Combine(this.FormatDirectory.FullName, key);
+			string key = $"{device}_{filename}";
+			string path = Path.Combine(this.FormatDirectory.FullName, key);
 
 			await File.WriteAllTextAsync(path, body);
 			this.MemoryCache.Remove(key);
@@ -96,7 +101,7 @@ namespace VirtualPrinter.ZplFormatService
 				return zpl;
 			}
 
-			string device   = xfMatch.Groups["device"].Value;
+			string device = xfMatch.Groups["device"].Value;
 			string filename = xfMatch.Groups["filename"].Value.Trim();
 
 			string templateBody = await this.GetFormatBodyAsync(device, filename);
@@ -115,29 +120,45 @@ namespace VirtualPrinter.ZplFormatService
 
 			this.Logger.LogDebug("Recalling format '{device}:{filename}' with {count} field value(s).", device, filename, fieldValues.Count);
 
-			// Substitute ^FN placeholders in the template body with their ^FD values.
-			string populatedBody = FnPlaceholderPattern.Replace(templateBody, match =>
-			{
-				int num = int.Parse(match.Groups["num"].Value);
-
-				if (fieldValues.TryGetValue(num, out string value))
-				{
-					return $"^FD{value}^FS";
-				}
-
-				// No value supplied for this field — emit empty ^FD so the label
-				// renders with a blank field rather than a raw ^FN placeholder.
-				this.Logger.LogWarning("No ^FD value supplied for ^FN{num} in format '{device}:{filename}'.", num, device, filename);
-				return "^FD^FS";
-			});
+			string populatedBody = this.PopulateTemplateBody(templateBody, fieldValues);
 
 			// Build the replacement ZPL: keep the outer ^XA/^XZ from the print job
 			// and replace the ^XF line (plus the loose ^FN^FD lines) with the body.
-			// Remove all ^FN^FD lines from the print job since they've been merged.
-			string withoutFd  = FdPattern.Replace(zpl, string.Empty);
-			string withBody   = withoutFd.Replace(xfMatch.Value, populatedBody);
+			// Remove all ^FN^FD lines from the print job since they've been merged,
+			// then collapse any runs of blank lines left behind.
+			string withoutFd = FdPattern.Replace(zpl, string.Empty);
+			withoutFd = Regex.Replace(withoutFd, @"(\r?\n){2,}", "\r\n");
+			string withBody = withoutFd.Replace(xfMatch.Value, populatedBody);
 
 			return withBody;
+		}
+
+		public string PopulateTemplateBody(string templateBody, IReadOnlyDictionary<int, string> fieldValues)
+		{
+			// Strip ^XA/^XZ wrapper if present — templates stored via ^DF already have
+			// these removed, but templates created or edited via the HTTP editor retain them.
+			int xaIdx = templateBody.IndexOf("^XA", StringComparison.OrdinalIgnoreCase);
+			if (xaIdx >= 0) templateBody = templateBody[(xaIdx + 3)..].TrimStart();
+			int xzIdx = templateBody.LastIndexOf("^XZ", StringComparison.OrdinalIgnoreCase);
+			if (xzIdx >= 0) templateBody = templateBody[..xzIdx].TrimEnd();
+
+			// Pass 1: ^FD^FNn^FS style — consume the whole block so surrounding ^FD/^FS
+			//         are replaced rather than left as stray delimiters.
+			string result = Regex.Replace(templateBody, @"\^FD\^FN(?<num>\d+)\^FS", match =>
+			{
+				int num = int.Parse(match.Groups["num"].Value);
+				return fieldValues.TryGetValue(num, out string value) ? $"^FD{value}^FS" : "^FD^FS";
+			});
+
+			// Pass 2: bare ^FNn style (inSight-style template, no surrounding ^FD/^FS).
+			//         Wrap the injected value in ^FD/^FS to produce valid ZPL.
+			result = FnPlaceholderPattern.Replace(result, match =>
+			{
+				int num = int.Parse(match.Groups["num"].Value);
+				return fieldValues.TryGetValue(num, out string value) ? $"^FD{value}^FS" : "^FD^FS";
+			});
+
+			return result;
 		}
 
 		public void InvalidateCache(string device, string filename)
@@ -166,7 +187,7 @@ namespace VirtualPrinter.ZplFormatService
 			this.MemoryCache.Set(key, body, new MemoryCacheEntryOptions
 			{
 				AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1),
-				SlidingExpiration              = TimeSpan.FromMinutes(15)
+				SlidingExpiration = TimeSpan.FromMinutes(15)
 			});
 
 			return body;

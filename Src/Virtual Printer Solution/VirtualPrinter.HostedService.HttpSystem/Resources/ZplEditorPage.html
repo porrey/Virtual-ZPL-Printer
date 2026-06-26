@@ -8,8 +8,6 @@
   .btn-row button { padding: 4px 14px; cursor: pointer; }
   .fn-section { margin-top: 12px; }
   .fn-section summary { cursor: pointer; color: #555; font-size: 13px; user-select: none; }
-  .wrap-fd-label { display: block; margin: 6px 0 4px; font-size: 13px; color: #555; cursor: pointer; }
-  .wrap-fd-hint { color: #999; font-size: 11px; }
   .fn-table { border-collapse: collapse; margin-top: 6px; }
   .fn-table th { text-align: left; padding: 3px 12px 3px 0; color: #555; font-size: 12px; border-bottom: 1px solid #ddd; }
   .fn-table td { padding: 3px 12px 3px 0; }
@@ -28,6 +26,7 @@
   .warnings-panel li { margin: 2px 0; }
   .warnings-panel .warn-cmd { font-weight: bold; }
   .warnings-panel .warn-pos { color: #b8860b; font-size: 11px; }
+  .fn-hint { color: #999; font-size: 11px; margin: 4px 0 6px; }
 </style></head><body>
 <h2>Edit ZPL Script</h2>
 <p><strong>{{DISPLAY_NAME}}</strong> &nbsp; <a href='/printer'>&#8592; Directory</a></p>
@@ -35,9 +34,7 @@
 <textarea id='zpl'>{{ZPL_CONTENT_ENCODED}}</textarea>
 <details class='fn-section' id='fn-details'>
   <summary id='fn-summary'>Field Values (^FN) -- loading...</summary>
-  <label class='wrap-fd-label'>
-    <input type='checkbox' id='wrap-fd' onchange='scheduleSaveMeta()'> Wrap values in ^FD/^FS &nbsp;
-  </label>
+  <p class='fn-hint'>Values are injected server-side using the same logic as the TCP print path.</p>
   <table class='fn-table'>
     <thead><tr><th>Field</th><th>Preview Value</th></tr></thead>
     <tbody id='fn-body'></tbody>
@@ -101,30 +98,10 @@ function buildFnTable() {
     td2.appendChild(inp); tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
   });
 }
-function injectFnValues(zpl, vals) {
-  if (document.getElementById('wrap-fd').checked) {
-    // template has bare ^FNn (no ^FD, no ^FS); inject ^FNn^FDvalue^FS.
-    // ^FS is optional in the match so it's consumed if present, avoiding a double ^FS.
-    var injected = {};
-    zpl = zpl.replace(/\^FN(\d+)(\^FS)?/gi, function(m, n) {
-      var v = vals[n];
-      if (!v || injected[n]) return m;
-      injected[n] = true;
-      return '^FN' + n + '^FD' + v + '^FS';
-    });
-  } else {
-    // Standard style: template has ^FD^FNn^FS; replace the whole FD block with the value.
-    zpl = zpl.replace(/\^FD\^FN(\d+)\^FS/gi, function(m, n) {
-      var v = vals[n]; return v ? '^FD' + v + '^FS' : m;
-    });
-  }
-  return zpl;
-}
 var metaSaveTimer = null;
 function scheduleSaveMeta() { clearTimeout(metaSaveTimer); metaSaveTimer = setTimeout(saveMeta, 800); }
 function saveMeta() {
   var vals = getFnValues();
-  vals['__wrapFd__'] = document.getElementById('wrap-fd').checked ? '1' : '';
   savedMeta = vals;
   var p = 'dev=' + encodeURIComponent(dev) + '&oname=' + encodeURIComponent(oname)
         + '&otype=' + encodeURIComponent(otype) + '&meta=' + encodeURIComponent(JSON.stringify(vals));
@@ -153,11 +130,11 @@ async function previewLabel() {
   var zpl = document.getElementById('zpl').value;
   var ph  = document.getElementById('preview-ph');
   var img = document.getElementById('preview-img');
-  var injected = injectFnValues(zpl, getFnValues());
   ph.textContent = 'Rendering...'; img.style.display = 'none';
   showWarnings(null);
+  var payload = JSON.stringify({ template: zpl, fields: getFnValues() });
   try {
-    var resp = await fetch('/printer/preview', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: injected });
+    var resp = await fetch('/printer/preview', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload });
     if (!resp.ok) { ph.textContent = 'Preview failed: ' + await resp.text(); return; }
     img.src = URL.createObjectURL(await resp.blob()); img.style.display = 'block'; ph.textContent = '';
     showWarnings(resp.headers.get('X-Warnings'));
@@ -175,7 +152,6 @@ function refreshFnTable() {
   buildFnTable();
 }
 document.getElementById('zpl').addEventListener('blur', refreshFnTable);
-document.getElementById('wrap-fd').checked = !!savedMeta['__wrapFd__'];
 buildFnTable();
 </script>
 </body></html>

@@ -36,7 +36,7 @@ namespace VirtualPrinter.Handler.Zpl
 		//   ~DG without ^FD — image download; no field data means no visible label
 		private static bool IsStorageOnlyJob(string original, string expanded)
 		{
-			if (original.Contains("^DF"))  return true;
+			if (original.Contains("^DF")) return true;
 			if (original.Contains("~DG") && !expanded.Contains("^FD")) return true;
 			return false;
 		}

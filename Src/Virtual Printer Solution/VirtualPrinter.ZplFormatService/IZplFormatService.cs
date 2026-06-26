@@ -40,6 +40,14 @@ namespace VirtualPrinter.ZplFormatService
 		Task<string> ApplyRecalledFormatsAsync(string zpl);
 
 		/// <summary>
+		/// Substitutes ^FN field-number placeholders in a template body with the supplied
+		/// field values, using the same two-pass logic as ApplyRecalledFormatsAsync.
+		/// Strips any ^XA/^XZ wrapper first. Returns the populated body ready to be
+		/// wrapped in ^XA/^XZ for rendering.
+		/// </summary>
+		string PopulateTemplateBody(string templateBody, IReadOnlyDictionary<int, string> fieldValues);
+
+		/// <summary>
 		/// Evicts a cached format body so the next read reloads from disk.
 		/// Call this after editing a format file outside of SaveFormatFromZplAsync.
 		/// </summary>

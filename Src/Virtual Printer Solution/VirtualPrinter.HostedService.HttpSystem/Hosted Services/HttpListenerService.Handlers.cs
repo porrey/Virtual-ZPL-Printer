@@ -253,12 +253,42 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				return;
 			}
 
-			using MemoryStream ms = new();
-			await context.Request.InputStream.CopyToAsync(ms);
-			string zplContent = Encoding.UTF8.GetString(ms.ToArray()).Trim();
+			string contentType = context.Request.ContentType ?? string.Empty;
+			string zplContent;
 
-			if (!zplContent.StartsWith("^XA", StringComparison.OrdinalIgnoreCase))
-				zplContent = $"^XA\r\n{zplContent}\r\n^XZ";
+			if (contentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase))
+			{
+				// Structured preview from the web editor: template body + field values.
+				// Runs through the same substitution logic as the TCP recall path so
+				// preview results are identical to what the real printer would render.
+				using JsonDocument doc = await JsonDocument.ParseAsync(context.Request.InputStream);
+				JsonElement root = doc.RootElement;
+
+				string templateBody = root.TryGetProperty("template", out JsonElement tpl) ? tpl.GetString() ?? string.Empty : string.Empty;
+
+				var fields = new Dictionary<int, string>();
+				if (root.TryGetProperty("fields", out JsonElement fieldsEl))
+				{
+					foreach (JsonProperty prop in fieldsEl.EnumerateObject())
+					{
+						string v = prop.Value.GetString();
+						if (int.TryParse(prop.Name, out int fn) && !string.IsNullOrEmpty(v))
+							fields[fn] = v;
+					}
+				}
+
+				string populated = this.ZplFormatService.PopulateTemplateBody(templateBody, fields);
+				zplContent = $"^XA\r\n{populated}\r\n^XZ";
+			}
+			else
+			{
+				using MemoryStream ms = new();
+				await context.Request.InputStream.CopyToAsync(ms);
+				zplContent = Encoding.UTF8.GetString(ms.ToArray()).Trim();
+
+				if (!zplContent.StartsWith("^XA", StringComparison.OrdinalIgnoreCase))
+					zplContent = $"^XA\r\n{zplContent}\r\n^XZ";
+			}
 
 			zplContent = await this.GrfStorageService.ApplyReferencedGrfAsync(zplContent);
 
@@ -484,7 +514,7 @@ namespace VirtualPrinter.HostedService.HttpSystem
 
 			// Invalidate the in-memory cache for whichever service owns this file.
 			int sep = key.IndexOf('_');
-			if (sep > 0) { string cdev = key[..sep]; string cfn = key[(sep+1)..]; this.ZplFormatService.InvalidateCache(cdev, cfn); this.GrfStorageService.InvalidateCache(cdev, cfn); }
+			if (sep > 0) { string cdev = key[..sep]; string cfn = key[(sep + 1)..]; this.ZplFormatService.InvalidateCache(cdev, cfn); this.GrfStorageService.InvalidateCache(cdev, cfn); }
 
 			// Also delete the sidecar meta file if it exists (Formats only).
 			string metaSidecar = matched + ".meta.json";
