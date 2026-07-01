@@ -687,4 +687,7 @@
   <data name="ZPL_Warnings" xml:space="preserve">
     <value>Попередження ZPL</value>
   </data>
+  <data name="Global_Settings_Label_Request_Delay" xml:space="preserve">
+    <value>Затримка запиту (MS)</value>
+  </data>
 </root>

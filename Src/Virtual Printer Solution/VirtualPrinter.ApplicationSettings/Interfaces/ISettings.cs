@@ -48,5 +48,6 @@ namespace VirtualPrinter.ApplicationSettings
 		int MaximumWaitTime { get; set; }
 		bool HttpEnabled { get; set; }
 		int HttpPort { get; set; }
+		int LabelaryRequestDelayMs { get; set; }
 	}
 }

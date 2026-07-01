@@ -370,5 +370,17 @@ namespace VirtualPrinter.ApplicationSettings.Properties {
                 this["HttpPort"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        public int LabelaryRequestDelayMs {
+            get {
+                return ((int)(this["LabelaryRequestDelayMs"]));
+            }
+            set {
+                this["LabelaryRequestDelayMs"] = value;
+            }
+        }
     }
 }

@@ -1114,6 +1114,15 @@ namespace VirtualPrinter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request Delay (ms).
+        /// </summary>
+        public static string Global_Settings_Label_Request_Delay {
+            get {
+                return ResourceManager.GetString("Global_Settings_Label_Request_Delay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send Buffer Size (bytes).
         /// </summary>
         public static string Global_Settings_Label_SendBufferSize {

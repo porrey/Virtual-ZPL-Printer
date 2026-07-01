@@ -52,5 +52,6 @@ namespace VirtualPrinter.ApplicationSettings
 		public int MaximumWaitTime { get => Properties.Settings.Default.MaximumWaitTime; set => Properties.Settings.Default.MaximumWaitTime = value; }
 		public bool HttpEnabled { get => Properties.Settings.Default.HttpEnabled; set => Properties.Settings.Default.HttpEnabled = value; }
 		public int HttpPort { get => Properties.Settings.Default.HttpPort; set => Properties.Settings.Default.HttpPort = value; }
+		public int LabelaryRequestDelayMs { get => Properties.Settings.Default.LabelaryRequestDelayMs; set => Properties.Settings.Default.LabelaryRequestDelayMs = value; }
 	}
 }

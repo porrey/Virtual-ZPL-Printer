@@ -18,6 +18,7 @@ using ImageCache.Abstractions;
 using Labelary.Abstractions;
 using Microsoft.Extensions.Logging;
 using Prism.Events;
+using VirtualPrinter.ApplicationSettings;
 using VirtualPrinter.Db.Abstractions;
 using VirtualPrinter.GrfStorageService;
 using VirtualPrinter.Handler.Abstractions;
@@ -26,10 +27,15 @@ using VirtualPrinter.ZplFormatService;
 
 namespace VirtualPrinter.Handler.Zpl
 {
-	internal class ZplRequestHandler(ILogger<ZplRequestHandler> logger, IEventAggregator eventAggregator, ILabelService labelService, IImageCacheRepository imageCacheRepository, IGrfStorageService grfStorageService, IZplFormatService zplFormatService) : TemplateRequestHandler(logger, eventAggregator, labelService, imageCacheRepository)
+	internal class ZplRequestHandler(ILogger<ZplRequestHandler> logger, IEventAggregator eventAggregator, ILabelService labelService, IImageCacheRepository imageCacheRepository, IGrfStorageService grfStorageService, IZplFormatService zplFormatService, ISettings settings) : TemplateRequestHandler(logger, eventAggregator, labelService, imageCacheRepository)
 	{
 		protected IGrfStorageService GrfStorageService { get; } = grfStorageService;
 		protected IZplFormatService ZplFormatService { get; } = zplFormatService;
+		protected ISettings Settings { get; } = settings;
+
+		// Serializes Labelary API calls across concurrent TCP connections and enforces
+		// a minimum inter-request gap to stay under the free-tier limit (3 req/sec).
+		private readonly SemaphoreSlim _labelarySemaphore = new(1, 1);
 
 		// A storage-only job has no printable output:
 		//   ^DF  — template download; the real printer stores and produces nothing
@@ -55,45 +61,58 @@ namespace VirtualPrinter.Handler.Zpl
 			(bool closeConnection, string responseData) = (true, null);
 
 			//
-			// Capture any ~DG image blobs into the flash library.
+			// Acquire the semaphore before any pipeline work so that TCP jobs are
+			// processed strictly in acceptance order. Without this, concurrent async
+			// pre-processing (GRF/format I/O) can cause a later job to reach the
+			// Labelary call first, producing out-of-sequence label images.
 			//
-			await this.GrfStorageService.SaveGrfFromZplAsync(requestData);
-
-			//
-			// Capture any ^DF format templates into the flash library.
-			//
-			await this.ZplFormatService.SaveFormatFromZplAsync(requestData);
-
-			//
-			// Expand ^XF recall commands: load the stored template, substitute
-			// ^FN placeholders with the ^FD field values from this print job.
-			// This must run before GRF injection so that ^XG references inside
-			// the recalled template body are also resolved.
-			//
-			string zplExpanded = await this.ZplFormatService.ApplyRecalledFormatsAsync(requestData);
-
-			//
-			// Inject ~DG blobs for any ^XG references (including those inside
-			// a just-expanded template) so Labelary can resolve them inline.
-			//
-			string zplForLabelary = await this.GrfStorageService.ApplyReferencedGrfAsync(zplExpanded);
-
-			//
-			// Skip Labelary for pure flash-storage jobs — a ^DF template download
-			// or a ~DG-only image load has no printable content. Sending these to
-			// Labelary wastes API quota and the real Zebra printer produces no
-			// output for them either.
-			//
-			if (IsStorageOnlyJob(requestData, zplForLabelary))
+			await this._labelarySemaphore.WaitAsync();
+			IEnumerable<IGetLabelResponse> responses;
+			try
 			{
-				this.Logger.LogInformation("ZPL job is a flash storage operation (^DF or ~DG only) — skipping Labelary render.");
-				return (closeConnection, responseData);
-			}
+				//
+				// Capture any ~DG image blobs into the flash library.
+				//
+				await this.GrfStorageService.SaveGrfFromZplAsync(requestData);
 
-			//
-			// Get the label images from Labelary.
-			//
-			IEnumerable<IGetLabelResponse> responses = await this.LabelService.GetLabelsAsync(labelConfiguration, zplForLabelary);
+				//
+				// Capture any ^DF format templates into the flash library.
+				//
+				await this.ZplFormatService.SaveFormatFromZplAsync(requestData);
+
+				//
+				// Expand ^XF recall commands: load the stored template, substitute
+				// ^FN placeholders with the ^FD field values from this print job.
+				// This must run before GRF injection so that ^XG references inside
+				// the recalled template body are also resolved.
+				//
+				string zplExpanded = await this.ZplFormatService.ApplyRecalledFormatsAsync(requestData);
+
+				//
+				// Inject ~DG blobs for any ^XG references (including those inside
+				// a just-expanded template) so Labelary can resolve them inline.
+				//
+				string zplForLabelary = await this.GrfStorageService.ApplyReferencedGrfAsync(zplExpanded);
+
+				//
+				// Skip Labelary for pure flash-storage jobs — a ^DF template download
+				// or a ~DG-only image load has no printable content. Sending these to
+				// Labelary wastes API quota and the real Zebra printer produces no
+				// output for them either.
+				//
+				if (IsStorageOnlyJob(requestData, zplForLabelary))
+				{
+					this.Logger.LogInformation("ZPL job is a flash storage operation (^DF or ~DG only) — skipping Labelary render.");
+					return (closeConnection, responseData);
+				}
+
+				responses = await this.LabelService.GetLabelsAsync(labelConfiguration, zplForLabelary);
+			}
+			finally
+			{
+				await Task.Delay(this.Settings.LabelaryRequestDelayMs);
+				this._labelarySemaphore.Release();
+			}
 			this.Logger.LogInformation("The ZPL handler retrieved {count} response(s) from Labelary.", responses.Count());
 
 			if (responses.Any())

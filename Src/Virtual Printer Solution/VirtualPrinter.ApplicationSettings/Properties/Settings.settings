@@ -89,5 +89,8 @@
     <Setting Name="HttpPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">9200</Value>
     </Setting>
+    <Setting Name="LabelaryRequestDelayMs" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">400</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

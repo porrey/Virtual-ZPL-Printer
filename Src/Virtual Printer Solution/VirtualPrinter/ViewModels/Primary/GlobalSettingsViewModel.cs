@@ -226,6 +226,19 @@ namespace VirtualPrinter.ViewModels
 			}
 		}
 
+		private int _labelaryRequestDelayMs = 400;
+		public int LabelaryRequestDelayMs
+		{
+			get
+			{
+				return this._labelaryRequestDelayMs;
+			}
+			set
+			{
+				this.SetProperty(ref this._labelaryRequestDelayMs, value);
+			}
+		}
+
 		public Task InitializeAsync()
 		{
 			try
@@ -254,6 +267,7 @@ namespace VirtualPrinter.ViewModels
 				this.MaximumWaitTime = this.Settings.MaximumWaitTime;
 				this.HttpEnabled = this.Settings.HttpEnabled;
 				this.HttpPort = this.Settings.HttpPort;
+				this.LabelaryRequestDelayMs = this.Settings.LabelaryRequestDelayMs;
 			}
 			catch (Exception ex)
 			{
@@ -282,6 +296,7 @@ namespace VirtualPrinter.ViewModels
 				this.Settings.MaximumWaitTime = this.MaximumWaitTime;
 				this.Settings.HttpEnabled = this.HttpEnabled;
 				this.Settings.HttpPort = this.HttpPort;
+				this.Settings.LabelaryRequestDelayMs = this.LabelaryRequestDelayMs;
 
 				this.Settings.ApiUrl = this.ApiUrl;
 				this.LabelServiceConfiguration.BaseUrl = this.ApiUrl;
