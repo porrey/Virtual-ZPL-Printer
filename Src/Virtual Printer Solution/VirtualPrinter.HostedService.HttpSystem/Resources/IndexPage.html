@@ -12,7 +12,9 @@
   .tool-form select, .tool-form input[type=text] { font-family: monospace; padding: 2px 6px; border: 1px solid #ccc; }
   .tool-form input[type=file] { font-family: monospace; }
   .tool-form input[type=text] { width: 140px; }
+  .tool-form input[type=text].folder-path { width: 300px; }
   .tool-form button { padding: 3px 10px; cursor: pointer; }
+  .tool-form button.danger { background: #f8d7da; border-color: #f1aeb5; }
   .tool-form small { color: #777; }
   .msg { padding: 6px 12px; border-radius: 4px; margin-bottom: 1em; }
   .msg.ok  { background: #d4edda; color: #155724; }
@@ -25,6 +27,26 @@
     <input type='file' name='file' accept='.zpl,.pl,.grf'>
     <button type='submit'>Upload ZPL/GRF</button>
     <small>^DF files → Formats &nbsp;|&nbsp; ~DG files → Graphics</small>
+  </form>
+</div>
+<h2>Flash Memory Batch Tools</h2>
+<div class='toolbar'>
+  <form class='tool-form' method='post' action='/printer/flash/backup'
+        onsubmit="if(!this.elements['folder'].value.trim()){alert('Enter a folder path.');return false;}return true;">
+    <input type='text' class='folder-path' name='folder' placeholder='C:\Path\To\Folder' required>
+    <button type='submit'>Save Flash to Folder</button>
+    <small>ZPL → folder root, GRF → its <code>GRF</code> subfolder, local <code>E_</code> prefix stripped</small>
+  </form>
+  <form class='tool-form' method='post' action='/printer/flash/restore'
+        onsubmit="if(!this.elements['folder'].value.trim()){alert('Enter a folder path.');return false;}return true;">
+    <input type='text' class='folder-path' name='folder' placeholder='C:\Path\To\Folder' required>
+    <button type='submit'>Load Flash from Folder</button>
+    <small>Reads ZPL from the folder root, GRF from its <code>GRF</code> subfolder — loads onto drive E:</small>
+  </form>
+  <form class='tool-form' method='post' action='/printer/flash/clear'
+        onsubmit="return confirm('Delete ALL stored formats and graphics from flash? This cannot be undone.')">
+    <button type='submit' class='danger'>Delete All Flash</button>
+    <small>Clears every stored format and graphic</small>
   </form>
 </div>
 <h2>Formats (ZPL)</h2>

@@ -8,6 +8,13 @@ An Ethernet based virtual Zebra Label Printer that can be used to test applicati
 
 Requires **.NET 10.0**. Download Setup.exe and the MSI if you need to have the .NET 10.0 Framework installed automatically.
 
+###### Version 3.6.0 Updates:
+1. Added HTTP interface with a built-in ZPL editor and label preview. Templates can be created and managed via browser; previews render through Labelary using the same pipeline as TCP.
+2. Added ZPL flash memory simulation — `^DF` format download and `^XF` format recall are now fully supported. Templates are persisted to disk and resolved natively by Labelary on recall.
+3. Added GRF image flash memory simulation — `~DG` image blobs are stored and automatically injected for `^XG` references at render time.
+4. Added Labelary API rate-limit protection — concurrent TCP jobs are serialized with a configurable inter-request delay (default 400 ms) to stay within the free-tier limit of 3 requests/second. Label output order is preserved.
+5. Added configurable HTTP port and Labelary request delay to Global Settings.
+
 ###### Version 3.5.1 Updates:
 1. Fixed "object reference not set" error when saving configurations (issue #100).
 2. Fixed "Missing dll while installing package". Installer was missing localized resources for VirtualPrinter.Repository.LabelParameters.dll (issue #99).

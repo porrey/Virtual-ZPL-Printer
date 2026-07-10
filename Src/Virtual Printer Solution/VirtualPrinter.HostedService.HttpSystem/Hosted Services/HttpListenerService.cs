@@ -230,6 +230,21 @@ namespace VirtualPrinter.HostedService.HttpSystem
 				{
 					await this.HandleDeleteAsync(context);
 				}
+				else if (path.Equals("/printer/flash/clear", StringComparison.OrdinalIgnoreCase) &&
+						 context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+				{
+					await this.HandleFlashClearAsync(context);
+				}
+				else if (path.Equals("/printer/flash/backup", StringComparison.OrdinalIgnoreCase) &&
+						 context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+				{
+					await this.HandleFlashBackupAsync(context);
+				}
+				else if (path.Equals("/printer/flash/restore", StringComparison.OrdinalIgnoreCase) &&
+						 context.Request.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase))
+				{
+					await this.HandleFlashRestoreAsync(context);
+				}
 				else
 				{
 					context.Response.StatusCode = 404;

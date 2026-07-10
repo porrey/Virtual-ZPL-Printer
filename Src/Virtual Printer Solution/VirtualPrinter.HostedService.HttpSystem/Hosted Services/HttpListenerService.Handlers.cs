@@ -534,6 +534,194 @@ namespace VirtualPrinter.HostedService.HttpSystem
 			this.Redirect(context, $"/printer?status=ok&file={encodedKey}+deleted");
 		}
 
+		private static string StripDevicePrefix(string storedName)
+		{
+			int underscore = storedName.IndexOf('_');
+			return underscore > 0 ? storedName[(underscore + 1)..] : null;
+		}
+
+		private static async Task<Dictionary<string, string>> ParseFormBodyAsync(HttpListenerContext context)
+		{
+			using MemoryStream ms = new();
+			await context.Request.InputStream.CopyToAsync(ms);
+			string body = Encoding.UTF8.GetString(ms.ToArray());
+
+			var values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+			foreach (string pair in body.Split('&'))
+			{
+				int eq = pair.IndexOf('=');
+				if (eq < 0) continue;
+
+				string name = Uri.UnescapeDataString(pair[..eq].Replace('+', ' '));
+				string value = Uri.UnescapeDataString(pair[(eq + 1)..].Replace('+', ' '));
+				values[name] = value;
+			}
+
+			return values;
+		}
+
+		private async Task HandleFlashClearAsync(HttpListenerContext context)
+		{
+			// Deletes every stored format and graphic. The browser confirms before submitting
+			// this form — there is no server-side confirmation step.
+			int count = 0;
+
+			foreach (DirectoryInfo dir in new[] { this.ZplFormatService.FormatDirectory, this.GrfStorageService.GrfDirectory })
+			{
+				if (!dir.Exists) continue;
+
+				foreach (FileInfo file in dir.GetFiles())
+				{
+					int sep = file.Name.IndexOf('_');
+					if (sep > 0)
+					{
+						string cdev = file.Name[..sep];
+						string cfn = file.Name[(sep + 1)..];
+						this.ZplFormatService.InvalidateCache(cdev, cfn);
+						this.GrfStorageService.InvalidateCache(cdev, cfn);
+					}
+
+					file.Delete();
+					count++;
+				}
+			}
+
+			this.Logger.LogInformation("Cleared flash memory — deleted {count} file(s).", count);
+			this.Redirect(context, $"/printer?status=ok&file={Uri.EscapeDataString($"Flash memory cleared ({count} files deleted)")}");
+		}
+
+		private async Task HandleFlashBackupAsync(HttpListenerContext context)
+		{
+			// Copies every stored format/graphic to a folder, stripping the local "{device}_"
+			// flash-key prefix so the files are ready to package/distribute (e.g. E_NFRC.ZPL -> NFRC.ZPL).
+			// ZPL goes in the folder root, GRF images in a "GRF" subfolder — the layout this repo's
+			// label folders already use.
+			Dictionary<string, string> form = await ParseFormBodyAsync(context);
+
+			if (!form.TryGetValue("folder", out string folder) || string.IsNullOrWhiteSpace(folder))
+			{
+				this.Redirect(context, "/printer?status=err&msg=Missing+folder+path");
+				return;
+			}
+
+			try
+			{
+				DirectoryInfo target = new(folder);
+				target.Create();
+				int count = 0;
+
+				DirectoryInfo fmtDir = this.ZplFormatService.FormatDirectory;
+
+				if (fmtDir.Exists)
+				{
+					foreach (FileInfo file in fmtDir.GetFiles())
+					{
+						if (file.Name.EndsWith(".meta.json", StringComparison.OrdinalIgnoreCase)) continue;
+
+						string rest = StripDevicePrefix(file.Name);
+						if (rest == null) continue;
+
+						File.Copy(file.FullName, Path.Combine(target.FullName, rest), overwrite: true);
+						count++;
+
+						string metaSrc = file.FullName + ".meta.json";
+						if (File.Exists(metaSrc))
+							File.Copy(metaSrc, Path.Combine(target.FullName, rest + ".meta.json"), overwrite: true);
+					}
+				}
+
+				DirectoryInfo grfDir = this.GrfStorageService.GrfDirectory;
+
+				if (grfDir.Exists)
+				{
+					DirectoryInfo grfTarget = target.CreateSubdirectory("GRF");
+
+					foreach (FileInfo file in grfDir.GetFiles())
+					{
+						string rest = StripDevicePrefix(file.Name);
+						if (rest == null) continue;
+
+						File.Copy(file.FullName, Path.Combine(grfTarget.FullName, rest), overwrite: true);
+						count++;
+					}
+				}
+
+				this.Logger.LogInformation("Backed up {count} flash file(s) to '{folder}'.", count, target.FullName);
+				this.Redirect(context, $"/printer?status=ok&file={Uri.EscapeDataString($"Flash memory backed up to {target.FullName} ({count} files)")}");
+			}
+			catch (Exception ex)
+			{
+				this.Logger.LogError(ex, "Failed to back up flash memory to '{folder}'.", folder);
+				this.Redirect(context, $"/printer?status=err&msg={Uri.EscapeDataString(ex.Message)}");
+			}
+		}
+
+		private async Task HandleFlashRestoreAsync(HttpListenerContext context)
+		{
+			// Loads every ZPL/GRF file from a folder into flash, re-adding the "{device}_" storage
+			// prefix. Assumes drive E: — the only flash drive this shop's labels ever reference.
+			const string device = "E";
+
+			Dictionary<string, string> form = await ParseFormBodyAsync(context);
+
+			if (!form.TryGetValue("folder", out string folder) || string.IsNullOrWhiteSpace(folder))
+			{
+				this.Redirect(context, "/printer?status=err&msg=Missing+folder+path");
+				return;
+			}
+
+			DirectoryInfo source = new(folder);
+
+			if (!source.Exists)
+			{
+				this.Redirect(context, $"/printer?status=err&msg={Uri.EscapeDataString($"Folder not found: {folder}")}");
+				return;
+			}
+
+			try
+			{
+				int count = 0;
+
+				this.ZplFormatService.FormatDirectory.Create();
+
+				foreach (FileInfo file in source.GetFiles("*.ZPL"))
+				{
+					string key = $"{device}_{file.Name}";
+					File.Copy(file.FullName, Path.Combine(this.ZplFormatService.FormatDirectory.FullName, key), overwrite: true);
+					this.ZplFormatService.InvalidateCache(device, file.Name);
+					count++;
+
+					string metaSrc = file.FullName + ".meta.json";
+					if (File.Exists(metaSrc))
+						File.Copy(metaSrc, Path.Combine(this.ZplFormatService.FormatDirectory.FullName, key + ".meta.json"), overwrite: true);
+				}
+
+				DirectoryInfo grfSource = new(Path.Combine(source.FullName, "GRF"));
+
+				if (grfSource.Exists)
+				{
+					this.GrfStorageService.GrfDirectory.Create();
+
+					foreach (FileInfo file in grfSource.GetFiles("*.GRF"))
+					{
+						string key = $"{device}_{file.Name}";
+						File.Copy(file.FullName, Path.Combine(this.GrfStorageService.GrfDirectory.FullName, key), overwrite: true);
+						this.GrfStorageService.InvalidateCache(device, file.Name);
+						count++;
+					}
+				}
+
+				this.Logger.LogInformation("Loaded {count} flash file(s) from '{folder}'.", count, source.FullName);
+				this.Redirect(context, $"/printer?status=ok&file={Uri.EscapeDataString($"Flash memory loaded from {source.FullName} ({count} files)")}");
+			}
+			catch (Exception ex)
+			{
+				this.Logger.LogError(ex, "Failed to load flash memory from '{folder}'.", folder);
+				this.Redirect(context, $"/printer?status=err&msg={Uri.EscapeDataString(ex.Message)}");
+			}
+		}
+
 		private async Task HandleGrfAsync(HttpListenerContext context)
 		{
 			// Renders a stored GRF image by constructing minimal ZPL that inlines the
