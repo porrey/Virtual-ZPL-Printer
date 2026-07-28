@@ -129,7 +129,6 @@
 		<ProjectReference Include="..\VirtualPrinter.PublishSubscribe\VirtualPrinter.PublishSubscribe.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.Repository.HostAddresses\VirtualPrinter.Repository.HostAddresses.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.Repository.LabelParameters\VirtualPrinter.Repository.LabelParameters.csproj" />
-		<ProjectReference Include="..\VirtualPrinter.TcpClient\VirtualPrinter.TestClient.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.TemplateManager\VirtualPrinter.TemplateManager.csproj" />
 	</ItemGroup>
 
