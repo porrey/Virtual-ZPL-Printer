@@ -7,7 +7,7 @@
 		<Version>3.5.1</Version>
 		<FileVersion>3.5.1</FileVersion>
 		<AssemblyVersion>3.5.1</AssemblyVersion>
-		<Platforms>x64</Platforms>
+		<PlatformTarget>x64</PlatformTarget>
 	</PropertyGroup>
 
 	<ItemGroup>
