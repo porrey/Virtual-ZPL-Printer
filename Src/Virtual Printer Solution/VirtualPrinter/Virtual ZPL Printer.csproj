@@ -124,11 +124,11 @@
 		<ProjectReference Include="..\VirtualPrinter.Handler.Nop\VirtualPrinter.Handler.Nop.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.Handler.Zpl\VirtualPrinter.Handler.Zpl.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.HostedService.PrintSystem\VirtualPrinter.HostedService.PrintSystem.csproj" />
+		<ProjectReference Include="..\VirtualPrinter.HostedService.HttpSystem\VirtualPrinter.HostedService.HttpSystem.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.HostedService.TcpSystem\VirtualPrinter.HostedService.TcpSystem.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.PublishSubscribe\VirtualPrinter.PublishSubscribe.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.Repository.HostAddresses\VirtualPrinter.Repository.HostAddresses.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.Repository.LabelParameters\VirtualPrinter.Repository.LabelParameters.csproj" />
-		<ProjectReference Include="..\VirtualPrinter.TcpClient\VirtualPrinter.TestClient.csproj" />
 		<ProjectReference Include="..\VirtualPrinter.TemplateManager\VirtualPrinter.TemplateManager.csproj" />
 	</ItemGroup>
 

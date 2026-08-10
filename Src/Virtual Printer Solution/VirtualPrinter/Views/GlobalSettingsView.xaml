@@ -62,6 +62,7 @@
 	<Grid Grid.IsSharedSizeScope="true">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
@@ -76,6 +77,7 @@
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
@@ -119,11 +121,67 @@
 					VerticalAlignment="Center"
 					Content="{x:Static resources:Strings.Global_Settings_Checkbox_EnableLinting_Text}"
 					IsChecked="{Binding ApiLinting, Mode=TwoWay}" />
+
+				<TextBlock
+					Grid.Row="3"
+					Grid.Column="0"
+					Margin="0,5,5,5"
+					VerticalAlignment="Center"
+					Text="{x:Static resources:Strings.Global_Settings_Label_Request_Delay}" />
+				<TextBox
+					Grid.Row="3"
+					Grid.Column="1"
+					Margin="0,5,0,5"
+					VerticalAlignment="Center"
+					InputScope="NumberFullWidth"
+					Text="{Binding LabelaryRequestDelayMs, Mode=TwoWay}" />
 			</Grid>
 		</GroupBox>
 
 		<GroupBox
 			Grid.Row="1"
+			Margin="10"
+			Header="{x:Static resources:Strings.Global_Settings_Group_Header_HTTP}">
+			<Grid Margin="10">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="1*" MinWidth="120" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="1*" MinWidth="120" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<CheckBox
+					x:Name="HttpEnabled"
+					Grid.Row="0"
+					Grid.Column="0"
+					Margin="0,5,5,5"
+					VerticalAlignment="Center"
+					Content="{x:Static resources:Strings.Global_Settings_Checkbox_EnableHttp_Text}"
+					IsChecked="{Binding HttpEnabled, Mode=TwoWay}" />
+
+				<TextBlock
+					Grid.Row="0"
+					Grid.Column="2"
+					Margin="5,5,5,5"
+					VerticalAlignment="Center"
+					IsEnabled="{Binding IsChecked, ElementName=HttpEnabled}"
+					Text="{x:Static resources:Strings.Global_Settings_Label_HttpPort}" />
+				<TextBox
+					Grid.Row="0"
+					Grid.Column="3"
+					Margin="0,5,0,5"
+					VerticalAlignment="Center"
+					InputScope="NumberFullWidth"
+					IsEnabled="{Binding IsChecked, ElementName=HttpEnabled}"
+					Text="{Binding HttpPort, Mode=TwoWay}" />
+			</Grid>
+		</GroupBox>
+
+		<GroupBox
+			Grid.Row="2"
 			Margin="10"
 			Header="{x:Static resources:Strings.Global_Settings_Group_Header_TCP}">
 
@@ -275,7 +333,7 @@
 		</GroupBox>
 
 		<!--  Buttons  -->
-		<Grid Grid.Row="2" Margin="0,10,5,5">
+		<Grid Grid.Row="3" Margin="0,10,5,5">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition SharedSizeGroup="ButtonGroup1" />

@@ -1,0 +1,120 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'>
+<title>Virtual ZPL Printer — Flash Memory</title>
+<style>
+  body { font-family: monospace; margin: 2em; }
+  h2 { border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+  table { border-collapse: collapse; width: 100%; margin-bottom: 1em; }
+  th, td { text-align: left; padding: 4px 12px; border-bottom: 1px solid #eee; }
+  th { background: #f4f4f4; }
+  .none { color: #999; font-style: italic; }
+  .menubar { display: flex; align-items: center; gap: 4px; padding: 6px 8px; margin-bottom: 0.5em; border: 1px solid #ddd; border-radius: 6px; background: #fafafa; }
+  .menu-sep { width: 1px; height: 22px; background: #ddd; margin: 0 4px; }
+  .menu-icon { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; padding: 0; border: 1px solid transparent; border-radius: 4px; background: transparent; color: #444; cursor: pointer; }
+  .menu-icon:hover { background: #eee; border-color: #ccc; }
+  .menu-icon.danger { color: #a33; }
+  .menu-icon.danger:hover { background: #f8d7da; border-color: #f1aeb5; }
+  .panel { display: none; margin-bottom: 1.5em; }
+  .panel.open { display: block; }
+  .tool-form { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; background: #fafafa; flex-wrap: wrap; }
+  .tool-form select, .tool-form input[type=text] { font-family: monospace; padding: 2px 6px; border: 1px solid #ccc; }
+  .tool-form input[type=file] { font-family: monospace; }
+  .tool-form input[type=text] { width: 140px; }
+  .tool-form input[type=text].folder-path { flex: 1; min-width: 300px; }
+  .tool-form button { padding: 3px 10px; cursor: pointer; }
+  .tool-form small { color: #777; }
+  .msg { padding: 6px 12px; border-radius: 4px; margin-bottom: 1em; }
+  .msg.ok  { background: #d4edda; color: #155724; }
+  .msg.err { background: #f8d7da; color: #721c24; }
+</style></head><body>
+<h1>Virtual ZPL Printer — Flash Memory</h1>
+{{STATUS_BANNER}}
+
+<div class='menubar'>
+  <button type='button' class='menu-icon' onclick="togglePanel('panel-upload')" title='Upload ZPL/GRF'>
+    <svg viewBox='0 0 24 24' width='18' height='18' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 16V4M6 10l6-6 6 6M4 20h16'/></svg>
+  </button>
+  <button type='button' class='menu-icon' onclick="togglePanel('panel-newscript')" title='New Script'>
+    <svg viewBox='0 0 24 24' width='18' height='18' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z'/><path d='M14 3v6h6'/><path d='M12 12v6M9 15h6'/></svg>
+  </button>
+  <button type='button' class='menu-icon' onclick="togglePanel('panel-image')" title='Convert &amp; Upload Image'>
+    <svg viewBox='0 0 24 24' width='18' height='18' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><path d='M21 15l-5-5L5 21'/></svg>
+  </button>
+  <span class='menu-sep'></span>
+  <button type='button' class='menu-icon' onclick="togglePanel('panel-backup')" title='Save Flash to Folder'>
+    <svg viewBox='0 0 24 24' width='18' height='18' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><path d='M12 10v6M9 13l3 3 3-3'/></svg>
+  </button>
+  <button type='button' class='menu-icon' onclick="togglePanel('panel-restore')" title='Load Flash from Folder'>
+    <svg viewBox='0 0 24 24' width='18' height='18' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><path d='M12 16v-6M9 13l3-3 3 3'/></svg>
+  </button>
+  <button type='button' class='menu-icon danger' onclick='confirmClearAll()' title='Delete All Flash'>
+    <svg viewBox='0 0 24 24' width='18' height='18' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6h16z'/><path d='M10 11v6M14 11v6'/></svg>
+  </button>
+</div>
+
+<div id='panel-upload' class='panel'>
+  <form class='tool-form' method='post' action='/printer/upload' enctype='multipart/form-data'>
+    <input type='file' name='file' accept='.zpl,.pl,.grf'>
+    <button type='submit'>Upload ZPL/GRF</button>
+    <small>^DF files → Formats &nbsp;|&nbsp; ~DG files → Graphics</small>
+  </form>
+</div>
+
+<div id='panel-newscript' class='panel'>
+  <form class='tool-form' method='post' action='/printer/zpl/new'>
+    <input type='hidden' name='dev' value='E'>
+    <input type='text' name='name' placeholder='SCRIPTNAME' title='Alphanumeric, no extension' required>
+    <button type='submit'>New Script</button>
+  </form>
+</div>
+
+<div id='panel-image' class='panel'>
+  <form class='tool-form' method='post' enctype='multipart/form-data'
+        onsubmit="this.action='/printer/image/upload?dev='+encodeURIComponent(this.elements['dev'].value)+'&name='+encodeURIComponent(this.elements['name'].value)">
+    <input type='hidden' name='dev' value='E'>
+    <input type='text' name='name' placeholder='IMAGENAME' title='Alphanumeric, no extension' required>
+    <input type='file' name='file' accept='.png,.jpg,.jpeg,.gif,.bmp' required>
+    <button type='submit'>Convert &amp; Upload Image</button>
+    <small>PNG/JPG/GIF/BMP → GRF via Labelary</small>
+  </form>
+</div>
+
+<div id='panel-backup' class='panel'>
+  <form class='tool-form' method='post' action='/printer/flash/backup'
+        onsubmit="if(!this.elements['folder'].value.trim()){alert('Enter a folder path.');return false;}return true;">
+    <input type='text' class='folder-path' name='folder' placeholder='C:\Path\To\Folder' required>
+    <button type='submit'>Save Flash to Folder</button>
+    <small>ZPL → folder root, GRF → its <code>GRF</code> subfolder, local <code>E_</code> prefix stripped</small>
+  </form>
+</div>
+
+<div id='panel-restore' class='panel'>
+  <form class='tool-form' method='post' action='/printer/flash/restore'
+        onsubmit="if(!this.elements['folder'].value.trim()){alert('Enter a folder path.');return false;}return true;">
+    <input type='text' class='folder-path' name='folder' placeholder='C:\Path\To\Folder' required>
+    <button type='submit'>Load Flash from Folder</button>
+    <small>Reads ZPL from the folder root, GRF from its <code>GRF</code> subfolder — loads onto drive E:</small>
+  </form>
+</div>
+
+<form id='clearAllForm' method='post' action='/printer/flash/clear' style='display:none'></form>
+
+<h2>Formats (ZPL)</h2>
+{{FORMAT_TABLE}}
+
+<h2>Graphics (GRF)</h2>
+{{GRF_TABLE}}
+
+<script>
+function togglePanel(id) {
+  document.querySelectorAll('.panel').forEach(function (p) {
+    if (p.id !== id) p.classList.remove('open');
+  });
+  document.getElementById(id).classList.toggle('open');
+}
+function confirmClearAll() {
+  if (confirm('Delete ALL stored formats and graphics from flash? This cannot be undone.')) {
+    document.getElementById('clearAllForm').submit();
+  }
+}
+</script>
+</body></html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'>
+<title>{{PAGE_TITLE}}</title>
+<style>
+  body { font-family: monospace; margin: 2em; }
+  h2 { border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+  textarea { width: 100%; height: 320px; font-family: monospace; font-size: 13px; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; resize: vertical; }
+  .btn-row { margin-top: 8px; display: flex; gap: 8px; align-items: center; }
+  .btn-row button { padding: 4px 14px; cursor: pointer; }
+  .fn-section { margin-top: 12px; }
+  .fn-section summary { cursor: pointer; color: #555; font-size: 13px; user-select: none; }
+  .fn-table { border-collapse: collapse; margin-top: 6px; }
+  .fn-table th { text-align: left; padding: 3px 12px 3px 0; color: #555; font-size: 12px; border-bottom: 1px solid #ddd; }
+  .fn-table td { padding: 3px 12px 3px 0; }
+  .fn-table td:first-child { color: #888; font-size: 12px; min-width: 55px; }
+  .fn-table input { font-family: monospace; font-size: 13px; padding: 2px 6px; border: 1px solid #ccc; width: 320px; }
+  .preview-area { margin-top: 1.5em; }
+  .preview-area img { border: 1px solid #ccc; background: #fff; max-width: 100%; display: block; }
+  .placeholder { color: #999; font-style: italic; margin-top: 8px; }
+  .msg { padding: 6px 12px; border-radius: 4px; margin-bottom: 1em; }
+  .msg.ok  { background: #d4edda; color: #155724; }
+  .msg.err { background: #f8d7da; color: #721c24; }
+  a { color: #00c; }
+  .warnings-panel { margin-top: 10px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 8px 12px; color: #856404; font-size: 13px; }
+  .warnings-panel strong { display: block; margin-bottom: 4px; }
+  .warnings-panel ul { margin: 0; padding-left: 18px; }
+  .warnings-panel li { margin: 2px 0; }
+  .warnings-panel .warn-cmd { font-weight: bold; }
+  .warnings-panel .warn-pos { color: #b8860b; font-size: 11px; }
+  .fn-hint { color: #999; font-size: 11px; margin: 4px 0 6px; }
+</style></head><body>
+<h2>Edit ZPL Script</h2>
+<p><strong>{{DISPLAY_NAME}}</strong> &nbsp; <a href='/printer'>&#8592; Directory</a></p>
+{{STATUS_BANNER}}
+<textarea id='zpl'>{{ZPL_CONTENT_ENCODED}}</textarea>
+<details class='fn-section' id='fn-details'>
+  <summary id='fn-summary'>Field Values (^FN) -- loading...</summary>
+  <p class='fn-hint'>Values are injected server-side using the same logic as the TCP print path.</p>
+  <table class='fn-table'>
+    <thead><tr><th>Field</th><th>Preview Value</th></tr></thead>
+    <tbody id='fn-body'></tbody>
+  </table>
+</details>
+<div class='btn-row'>
+  <button onclick='previewLabel()'>Preview Label</button>
+  <button onclick='saveLabel()'>Save</button>
+  <button onclick='resetLabel()'>Reset</button>
+</div>
+<div class='preview-area'>
+  <img id='preview-img' style='display:none' alt='Label preview'>
+  <p class='placeholder' id='preview-ph'>Click Preview Label to render via Labelary.</p>
+  <div id='warnings-panel' class='warnings-panel' style='display:none'></div>
+</div>
+<script>
+{{JS_VARS}}
+function resetLabel() {
+  document.getElementById('zpl').value = originalContent;
+  buildFnTable();
+}
+function parseFnFields(zpl) {
+  var nums = []; var seen = {};
+  var re = /\^FN(\d+)/gi; var m;
+  while ((m = re.exec(zpl)) !== null) {
+    var n = parseInt(m[1], 10);
+    if (!seen[n]) { seen[n] = true; nums.push(n); }
+  }
+  nums.sort(function(a,b){return a-b;}); return nums;
+}
+function getFnValues() {
+  var vals = {};
+  document.querySelectorAll('#fn-body tr').forEach(function(tr) {
+    var num = tr.getAttribute('data-fn');
+    var inp = tr.querySelector('input');
+    if (num && inp) vals[num] = inp.value;
+  });
+  return vals;
+}
+function buildFnTable() {
+  var zpl = document.getElementById('zpl').value;
+  var nums = parseFnFields(zpl);
+  var tbody = document.getElementById('fn-body');
+  var summary = document.getElementById('fn-summary');
+  var details = document.getElementById('fn-details');
+  tbody.innerHTML = '';
+  if (nums.length === 0) {
+    summary.textContent = 'No ^FN fields found'; details.open = false; return;
+  }
+  summary.textContent = 'Field Values (^FN) -- ' + nums.length + ' field' + (nums.length > 1 ? 's' : '');
+  details.open = true;
+  nums.forEach(function(n) {
+    var tr = document.createElement('tr');
+    tr.setAttribute('data-fn', String(n));
+    var td1 = document.createElement('td'); td1.textContent = '^FN' + n;
+    var td2 = document.createElement('td');
+    var inp = document.createElement('input');
+    inp.type = 'text'; inp.value = savedMeta[String(n)] || '';
+    inp.placeholder = '(leave blank to skip)';
+    inp.addEventListener('input', scheduleSaveMeta);
+    td2.appendChild(inp); tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
+  });
+}
+var metaSaveTimer = null;
+function scheduleSaveMeta() { clearTimeout(metaSaveTimer); metaSaveTimer = setTimeout(saveMeta, 800); }
+function saveMeta() {
+  var vals = getFnValues();
+  savedMeta = vals;
+  var p = 'dev=' + encodeURIComponent(dev) + '&oname=' + encodeURIComponent(oname)
+        + '&otype=' + encodeURIComponent(otype) + '&meta=' + encodeURIComponent(JSON.stringify(vals));
+  fetch('/printer/zpl/meta', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p });
+}
+function showWarnings(headerValue) {
+  var panel = document.getElementById('warnings-panel');
+  if (!headerValue) { panel.style.display = 'none'; panel.innerHTML = ''; return; }
+  var parts = headerValue.split('|');
+  var html = '<strong>&#9888; Linter Warnings</strong><ul>';
+  for (var i = 0; i + 4 < parts.length; i += 5) {
+    var cmd   = parts[i + 2] || '(unknown)';
+    var param = parts[i + 3];
+    var msg   = parts[i + 4];
+    var byte  = parts[i];
+    html += '<li><span class="warn-cmd">' + cmd + '</span>';
+    if (param) html += ' param&nbsp;' + param;
+    html += ': ' + msg + ' <span class="warn-pos">(byte&nbsp;' + byte + ')</span></li>';
+  }
+  html += '</ul>';
+  panel.innerHTML = html;
+  panel.style.display = 'block';
+}
+async function previewLabel() {
+  saveMeta();
+  var zpl = document.getElementById('zpl').value;
+  var ph  = document.getElementById('preview-ph');
+  var img = document.getElementById('preview-img');
+  ph.textContent = 'Rendering...'; img.style.display = 'none';
+  showWarnings(null);
+  var payload = JSON.stringify({ template: zpl, dev: dev, oname: oname, otype: otype, fields: getFnValues() });
+  try {
+    var resp = await fetch('/printer/preview', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload });
+    if (!resp.ok) { ph.textContent = 'Preview failed: ' + await resp.text(); return; }
+    img.src = URL.createObjectURL(await resp.blob()); img.style.display = 'block'; ph.textContent = '';
+    showWarnings(resp.headers.get('X-Warnings'));
+  } catch(e) { ph.textContent = 'Preview error: ' + e; }
+}
+async function saveLabel() {
+  var p = 'dev=' + encodeURIComponent(dev) + '&oname=' + encodeURIComponent(oname)
+        + '&otype=' + encodeURIComponent(otype) + '&content=' + encodeURIComponent(document.getElementById('zpl').value);
+  var resp = await fetch('/printer/zpl', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: p, redirect: 'follow' });
+  window.location.href = resp.url || window.location.href;
+}
+function refreshFnTable() {
+  var cur = getFnValues();
+  Object.keys(cur).forEach(function(k) { if (cur[k]) savedMeta[k] = cur[k]; });
+  buildFnTable();
+}
+document.getElementById('zpl').addEventListener('blur', refreshFnTable);
+buildFnTable();
+</script>
+</body></html>

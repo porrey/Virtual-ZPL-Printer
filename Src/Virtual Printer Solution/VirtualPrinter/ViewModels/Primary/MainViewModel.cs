@@ -33,6 +33,7 @@ using VirtualPrinter.Db.Abstractions;
 using VirtualPrinter.Db.Ef;
 using VirtualPrinter.HostedService.PrintSystem;
 using VirtualPrinter.PublishSubscribe;
+using Microsoft.Extensions.Configuration;
 using VirtualPrinter.Views;
 
 namespace VirtualPrinter.ViewModels
@@ -60,6 +61,8 @@ namespace VirtualPrinter.ViewModels
 			this.AboutCommand = new(() => _ = this.AboutAsync(), () => !this.IsBusy && !this.IsRunning);
 			this.TestLabelaryCommand = new(() => _ = this.TestLabelaryAsync(), () => !this.IsBusy && !this.IsRunning);
 			this.FontManagerCommand = new(() => _ = this.FontManagerAsync(), () => !this.IsBusy && !this.IsRunning);
+
+			this.OpenWebInterfaceCommand = new(() => Process.Start(new ProcessStartInfo(this.HttpWebUrl) { UseShellExecute = true }), () => this.IsRunning && !string.IsNullOrEmpty(this.HttpWebUrl));
 
 			//
 			// Load the printer configurations.
@@ -164,6 +167,29 @@ namespace VirtualPrinter.ViewModels
 		public DelegateCommand GlobalSettingsCommand { get; set; }
 		public DelegateCommand TestLabelaryCommand { get; set; }
 		public DelegateCommand FontManagerCommand { get; set; }
+		public DelegateCommand OpenWebInterfaceCommand { get; set; }
+
+		private bool _httpEnabled;
+
+		public bool HttpEnabled
+		{
+			get => this._httpEnabled;
+			set
+			{
+				this.SetProperty(ref this._httpEnabled, value);
+			}
+		}
+
+		private string _httpWebUrl;
+
+		public string HttpWebUrl
+		{
+			get => this._httpWebUrl; 
+			set
+			{
+				this.SetProperty(ref this._httpWebUrl, value);
+			}
+		}
 
 		private PrinterConfigurationViewModel _printerConfiguration = null;
 		public PrinterConfigurationViewModel SelectedPrinterConfiguration
@@ -266,6 +292,7 @@ namespace VirtualPrinter.ViewModels
 		}
 
 		private bool _autoStart = false;
+
 		public bool AutoStart
 		{
 			get
@@ -298,6 +325,7 @@ namespace VirtualPrinter.ViewModels
 			finally
 			{
 				this.RefreshCommands();
+				this.RefreshSettings();
 			}
 		}
 
@@ -371,6 +399,7 @@ namespace VirtualPrinter.ViewModels
 			this.GlobalSettingsCommand.RaiseCanExecuteChanged();
 			this.TestLabelaryCommand.RaiseCanExecuteChanged();
 			this.FontManagerCommand.RaiseCanExecuteChanged();
+			this.OpenWebInterfaceCommand.RaiseCanExecuteChanged();
 
 			await Task.Delay(1);
 		}
@@ -421,6 +450,7 @@ namespace VirtualPrinter.ViewModels
 			}
 			finally
 			{
+				this.RefreshSettings();
 				this.RefreshCommands();
 			}
 
@@ -734,10 +764,17 @@ namespace VirtualPrinter.ViewModels
 			}
 			finally
 			{
+				this.RefreshSettings();
 				this.RefreshCommands();
 			}
 
 			return Task.CompletedTask;
+		}
+
+		private void RefreshSettings()
+		{
+			this.HttpEnabled = this.Settings.HttpEnabled;
+			this.HttpWebUrl = this.Settings.HttpEnabled ? $"http://localhost:{this.Settings.HttpPort}/printer" : string.Empty;
 		}
 
 		public Task TestLabelaryAsync()

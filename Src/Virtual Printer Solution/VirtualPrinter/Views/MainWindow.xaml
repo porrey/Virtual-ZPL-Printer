@@ -561,16 +561,26 @@
 					<StackPanel
 						Grid.Column="3"
 						Margin="20,0,20,0"
-						Orientation="Horizontal"
+						Orientation="Vertical"
+						VerticalAlignment="Center"
 						Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}">
-						<Image Width="24" Source="/Assets/listening.png" />
-						<TextBlock
-							Margin="5,0,0,0"
-							HorizontalAlignment="Center"
-							VerticalAlignment="Center"
-							FontSize="18"
-							Foreground="{StaticResource ForegroundColor1}"
-							Text="{x:Static resources:Strings.Main_Status_Listening}" />
+						<StackPanel Orientation="Horizontal">
+							<Image Width="24" Source="/Assets/listening.png" />
+							<TextBlock
+								Margin="5,0,0,0"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								FontSize="18"
+								Foreground="{StaticResource ForegroundColor1}"
+								Text="{x:Static resources:Strings.Main_Status_Listening}" />
+						</StackPanel>
+						<TextBlock Margin="29,1,0,0" 
+                                   FontSize="11"
+                                   Visibility="{Binding HttpEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
+							<Hyperlink Command="{Binding OpenWebInterfaceCommand}" Foreground="#0066cc">
+								<Run Text="{Binding HttpWebUrl, Mode=OneWay}" />
+							</Hyperlink>
+						</TextBlock>
 					</StackPanel>
 
 					<Button

@@ -427,6 +427,15 @@
   <data name="Global_Settings_Group_Header_Labelary" xml:space="preserve">
     <value>Labelary</value>
   </data>
+  <data name="Global_Settings_Group_Header_HTTP" xml:space="preserve">
+    <value>HTTP Settings</value>
+  </data>
+  <data name="Global_Settings_Checkbox_EnableHttp_Text" xml:space="preserve">
+    <value>Enable HTTP Interface</value>
+  </data>
+  <data name="Global_Settings_Label_HttpPort" xml:space="preserve">
+    <value>HTTP Port</value>
+  </data>
   <data name="Global_Settings_Group_Header_TCP" xml:space="preserve">
     <value>TCP Settings</value>
   </data>
@@ -678,5 +687,8 @@
   </data>
   <data name="ZPL_Warnings" xml:space="preserve">
     <value>ZPL Warnings</value>
+  </data>
+  <data name="Global_Settings_Label_Request_Delay" xml:space="preserve">
+    <value>Request Delay (ms)</value>
   </data>
 </root>

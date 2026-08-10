@@ -1,0 +1,15 @@
+{
+	"aliases": [
+		{
+			"Key": "IGrfStorageService",
+			"TypeDefinition": "VirtualPrinter.GrfStorageService.IGrfStorageService, VirtualPrinter.GrfStorageService"
+		}
+	],
+	"services": [
+		{
+			"ServiceType": "<IGrfStorageService>",
+			"ImplementationType": "VirtualPrinter.GrfStorageService.GrfStorageService, VirtualPrinter.GrfStorageService",
+			"Lifetime": "Singleton"
+		}
+	]
+}

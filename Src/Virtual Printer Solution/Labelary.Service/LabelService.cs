@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -377,6 +378,59 @@ namespace Labelary.Service
 			}
 
 			return returnValue;
+		}
+
+		public async Task<string> ConvertImageToZplAsync(Stream imageStream, string imageFileName)
+		{
+			// Browser multipart may supply the full local path — strip to just the filename.
+			string safeFilename = Path.GetFileName(imageFileName);
+			if (string.IsNullOrEmpty(safeFilename)) safeFilename = "image.png";
+
+			string mimeType = Path.GetExtension(safeFilename).ToLowerInvariant() switch
+			{
+				".jpg" or ".jpeg" => "image/jpeg",
+				".gif" => "image/gif",
+				".bmp" => "image/bmp",
+				_ => "image/png"
+			};
+
+			this.Logger.LogInformation("Calling Labelary to convert image '{file}' ({mime}) to ZPL GRF.", safeFilename, mimeType);
+
+			try
+			{
+				using HttpClient client = new();
+
+				// .NET wraps the multipart boundary in quotes by default, which nginx rejects with 415.
+				// Specify the boundary explicitly and override Content-Type to strip the quotes.
+				string boundary = "----LabelaryBoundary" + Guid.NewGuid().ToString("N")[..16];
+				using MultipartFormDataContent content = new(boundary);
+				content.Headers.Remove("Content-Type");
+				content.Headers.TryAddWithoutValidation("Content-Type", $"multipart/form-data; boundary={boundary}");
+
+				using StreamContent fileContent = new(imageStream);
+				fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mimeType);
+				content.Add(fileContent, "file", safeFilename);
+
+				// BaseUrl is e.g. "https://api.labelary.com/v1/printers"; graphics lives at /v1/graphics.
+				string url = this.LabelServiceConfiguration.BaseUrl.Replace("printers", "graphics", StringComparison.OrdinalIgnoreCase);
+				client.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "application/zpl");
+
+				using HttpResponseMessage response = await client.PostAsync(url, content);
+
+				if (response.IsSuccessStatusCode)
+				{
+					return await response.Content.ReadAsStringAsync();
+				}
+
+				string error = await response.Content.ReadAsStringAsync();
+				this.Logger.LogError("Labelary image conversion failed ({status}): {error}", (int)response.StatusCode, error);
+				return null;
+			}
+			catch (Exception ex)
+			{
+				this.Logger.LogError(ex, "Exception calling Labelary image conversion API.");
+				return null;
+			}
 		}
 
 		protected IEnumerable<Warning> ParseWarnings(string warnings)
